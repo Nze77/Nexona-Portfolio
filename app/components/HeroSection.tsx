@@ -66,10 +66,10 @@ export default function HeroSection({ sectionRef }: Props) {
                 playsInline
                 style={{
                     position: 'absolute',
-                    top: '-10%', left: 0,
-                    width: '100%', height: '120%',
+                    top: '-15%', left: 0,
+                    width: '100%', height: '130%',
                     objectFit: 'cover',
-                    objectPosition: '60% center',
+                    objectPosition: 'center',
                     opacity: 1.0,
                 }}
             >
