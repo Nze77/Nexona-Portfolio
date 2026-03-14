@@ -69,7 +69,7 @@ export default function HeroSection({ sectionRef }: Props) {
                     top: '-10%', left: 0,
                     width: '100%', height: '120%',
                     objectFit: 'cover',
-                    objectPosition: 'center',
+                    objectPosition: '40% center',
                     opacity: 1.0,
                 }}
             >
