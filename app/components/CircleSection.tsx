@@ -1,6 +1,7 @@
 'use client'
 
 import { useRef, useEffect } from 'react'
+import Image from 'next/image'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { SAND, DARK } from '../lib/constants'
@@ -122,17 +123,19 @@ export default function CircleSection() {
                 <div
                     ref={circleRef}
                     style={{
+                        position: 'relative',
                         overflow: 'hidden',
                         willChange: 'width, height, border-radius',
                         flexShrink: 0,
                     }}
                 >
-                    <img
+                    <Image
                         ref={imgRef}
                         src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1400&q=85"
                         alt="minimal sofa"
+                        fill
+                        sizes="100vw"
                         style={{
-                            width: '100%',
                             height: '124%',     // extra height budget for parallax
                             objectFit: 'cover',
                             objectPosition: 'center',

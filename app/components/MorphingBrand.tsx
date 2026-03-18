@@ -3,7 +3,7 @@
 import { useRef, useEffect } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { SAND, HELVETICA, NAV_H, INTER } from '../lib/constants'
+import { SAND, INTER } from '../lib/constants'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -72,7 +72,7 @@ export default function MorphingBrand({ heroRef }: Props) {
 
         return () => {
             ScrollTrigger.getAll()
-                .filter(st => st.trigger === heroRef.current)
+                .filter(st => st.trigger === hero)
                 .forEach(st => st.kill())
         }
     }, [heroRef])

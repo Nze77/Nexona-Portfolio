@@ -1,7 +1,9 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import Link from 'next/link'
+import Image from 'next/image'
 import { DARK, SAND, HELVETICA, INTER } from '../lib/constants'
 import StickyHeader from '../components/StickyHeader'
 import Footer from '../components/Footer'
@@ -34,7 +36,7 @@ export default function ProjectsPage() {
 
             {/* Brand Link matching MorphingBrand's docked state */}
             <div style={{ position: 'fixed', top: '15px', left: '50%', transform: 'translateX(-50%)', zIndex: 100, pointerEvents: 'none' }}>
-                <a href="/" className="brand-wordmark" style={{
+                <Link href="/" className="brand-wordmark" style={{
                     fontFamily: INTER,
                     fontWeight: 700,
                     fontSize: '60px',
@@ -47,7 +49,7 @@ export default function ProjectsPage() {
                     lineHeight: 1
                 }}>
                     Nexona
-                </a>
+                </Link>
             </div>
             <section style={{ padding: '8rem 5% 4rem' }}>
                 <div style={{ maxWidth: 1200, margin: '0 auto' }}>
@@ -138,12 +140,12 @@ export default function ProjectsPage() {
                                         cursor: 'pointer',
                                     }}
                                 >
-                                    <img
+                                    <Image
                                         src={project.image}
                                         alt={project.title}
+                                        fill
+                                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                         style={{
-                                            width: '100%',
-                                            height: '100%',
                                             objectFit: 'cover',
                                         }}
                                     />

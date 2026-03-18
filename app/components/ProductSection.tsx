@@ -2,6 +2,7 @@
 
 import { useRef, useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
+import Image from 'next/image'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { DARK, SAND, HELVETICA } from '../lib/constants'
@@ -149,12 +150,12 @@ export default function ProductSection({ data }: Props) {
                                         overflow: 'hidden',
                                     }}
                                 >
-                                    <img
+                                    <Image
                                         src={img.src}
                                         alt={img.alt}
+                                        fill
+                                        sizes="(max-width: 768px) 100vw, 33vw"
                                         style={{
-                                            width: '100%',
-                                            height: '100%',
                                             objectFit: 'cover',
                                             display: 'block',
                                             pointerEvents: 'none',

@@ -37,6 +37,7 @@ export default function HomePage() {
       {/* Replaced the map with a single call passing the filtered array */}
       <ProductSection data={filteredSections} />
 
+      <Footer />
     </main>
   )
 }

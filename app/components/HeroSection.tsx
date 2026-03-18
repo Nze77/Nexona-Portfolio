@@ -1,9 +1,10 @@
 'use client'
 
 import { useRef, useEffect } from 'react'
+import Image from 'next/image'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { DARK, HELVETICA } from '../lib/constants'
+import { DARK } from '../lib/constants'
 
 import ParticleEffect from './ParticleEffect'
 
@@ -58,14 +59,16 @@ export default function HeroSection({ sectionRef }: Props) {
             <ParticleEffect />
 
             {/* Parallax image background */}
-            <img
+            <Image
                 ref={imageRef}
                 src="/hero.png"
                 alt="Nexona Hero"
+                fill
+                priority
                 style={{
                     position: 'absolute',
-                    top: '-15%', left: 0,
-                    width: '100%', height: '130%',
+                    top: '-15%',
+                    height: '130%',
                     objectFit: 'cover',
                     objectPosition: '65% center',
                     opacity: 1.0,
