@@ -29,12 +29,15 @@ export default function ParticleEffect() {
             vy: number
             size: number
 
+            color: string
+
             constructor() {
                 this.x = Math.random() * canvas!.width
                 this.y = Math.random() * canvas!.height
                 this.vx = (Math.random() - 0.5) * 0.5
                 this.vy = (Math.random() - 0.5) * 0.5
                 this.size = Math.random() * 1.5 + 0.5
+                this.color = Math.random() > 0.5 ? '#E8E2DA' : '#2E2A26'
             }
 
             update() {
@@ -59,8 +62,10 @@ export default function ParticleEffect() {
                 if (!ctx) return
                 ctx.beginPath()
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2)
-                ctx.fillStyle = 'rgba(130, 160, 255, 0.5)'
+                ctx.fillStyle = this.color
+                ctx.globalAlpha = 0.6
                 ctx.fill()
+                ctx.globalAlpha = 1.0
             }
         }
 
@@ -81,7 +86,7 @@ export default function ParticleEffect() {
 
                     if (dist < 120) {
                         const opacity = 1 - dist / 120
-                        ctx.strokeStyle = `rgba(130, 160, 255, ${opacity * 0.2})`
+                        ctx.strokeStyle = `rgba(232, 226, 218, ${opacity * 0.15})`
                         ctx.lineWidth = 1
                         ctx.beginPath()
                         ctx.moveTo(particles[a].x, particles[a].y)

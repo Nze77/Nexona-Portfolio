@@ -26,11 +26,11 @@ interface Props {
  * and then locks in place at the top of the viewport.
  */
 export default function HeroSection({ sectionRef }: Props) {
-    const videoRef = useRef<HTMLVideoElement>(null)
+    const imageRef = useRef<HTMLImageElement>(null)
 
     useEffect(() => {
         const ctx = gsap.context(() => {
-            gsap.to(videoRef.current, {
+            gsap.to(imageRef.current, {
                 yPercent: -18,
                 ease: 'none',
                 scrollTrigger: {
@@ -57,13 +57,11 @@ export default function HeroSection({ sectionRef }: Props) {
         >
             <ParticleEffect />
 
-            {/* Parallax video background */}
-            <video
-                ref={videoRef}
-                autoPlay
-                muted
-                loop
-                playsInline
+            {/* Parallax image background */}
+            <img
+                ref={imageRef}
+                src="/hero.png"
+                alt="Nexona Hero"
                 style={{
                     position: 'absolute',
                     top: '-15%', left: 0,
@@ -72,9 +70,7 @@ export default function HeroSection({ sectionRef }: Props) {
                     objectPosition: '65% center',
                     opacity: 1.0,
                 }}
-            >
-                <source src="/hero vid/Circle_rotating_like_planet_f77fec32f7.mp4" type="video/mp4" />
-            </video>
+            />
 
             {/* Nexona — flush to the bottom edge, zero padding bottom,
                 matching StickyHeader's brand exactly */}

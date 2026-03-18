@@ -9,9 +9,13 @@ if (typeof window !== 'undefined') {
     gsap.registerPlugin(ScrollTrigger)
 }
 
-export default function StickyHeader() {
+export default function StickyHeader({ theme = 'dark' }: { theme?: 'dark' | 'light' }) {
     const headerRef = useRef<HTMLElement>(null)
     const dividerRef = useRef<HTMLDivElement>(null)
+
+    const initialBg = theme === 'light' ? SAND : DARK
+    const initialColor = theme === 'light' ? DARK : SAND
+    const initialDiv = theme === 'light' ? 'rgba(46,42,38,0.2)' : 'rgba(232,223,211,0.2)'
 
     useEffect(() => {
         if (!headerRef.current) return
@@ -21,10 +25,10 @@ export default function StickyHeader() {
             const brand = document.querySelector('.brand-wordmark')
 
             themedElements.forEach(el => {
-                const theme = el.getAttribute('data-theme')
-                if (!theme) return
+                const themeAttr = el.getAttribute('data-theme')
+                if (!themeAttr) return
 
-                if (theme === 'circle') {
+                if (themeAttr === 'circle') {
                     const scrubConfig = {
                         trigger: el,
                         start: 'top top',
@@ -70,7 +74,7 @@ export default function StickyHeader() {
                     }
                 } else {
                     // Hard transitions for standard themed sections AND ProductSections
-                    const isLight = theme === 'light'
+                    const isLight = themeAttr === 'light'
                     const targetBg = isLight ? SAND : DARK
                     const targetColor = isLight ? DARK : SAND
                     const targetDiv = isLight ? 'rgba(46,42,38,0.2)' : 'rgba(232,223,211,0.2)'
@@ -115,8 +119,8 @@ export default function StickyHeader() {
                 position: 'sticky',
                 top: 0,
                 zIndex: 80,
-                backgroundColor: DARK,
-                color: SAND,
+                backgroundColor: initialBg,
+                color: initialColor,
                 fontFamily: INTER,
                 willChange: 'background-color, color',
             }}
@@ -160,7 +164,7 @@ export default function StickyHeader() {
                 ref={dividerRef}
                 style={{
                     height: '1px',
-                    backgroundColor: 'rgba(232,223,211,0.2)',
+                    backgroundColor: initialDiv,
                     margin: '0 2rem',
                     willChange: 'background-color',
                 }}
