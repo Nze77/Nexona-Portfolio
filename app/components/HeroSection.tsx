@@ -27,7 +27,7 @@ interface Props {
  * and then locks in place at the top of the viewport.
  */
 export default function HeroSection({ sectionRef }: Props) {
-    const imageRef = useRef<HTMLImageElement>(null)
+    const imageRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
         const ctx = gsap.context(() => {
@@ -59,21 +59,28 @@ export default function HeroSection({ sectionRef }: Props) {
             <ParticleEffect />
 
             {/* Parallax image background */}
-            <Image
+            <div
                 ref={imageRef}
-                src="/hero.png"
-                alt="Nexona Hero"
-                fill
-                priority
                 style={{
                     position: 'absolute',
                     top: '-15%',
+                    left: 0,
+                    width: '100%',
                     height: '130%',
-                    objectFit: 'cover',
-                    objectPosition: '65% center',
-                    opacity: 1.0,
                 }}
-            />
+            >
+                <Image
+                    src="/hero.png"
+                    alt="Nexona Hero"
+                    fill
+                    priority
+                    style={{
+                        objectFit: 'cover',
+                        objectPosition: '65% center',
+                        opacity: 1.0,
+                    }}
+                />
+            </div>
 
             {/* Nexona — flush to the bottom edge, zero padding bottom,
                 matching StickyHeader's brand exactly */}

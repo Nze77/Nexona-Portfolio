@@ -20,7 +20,7 @@ export default function HomePage() {
 
   // Filter the data to only include the 4 requested categories.
   // Note: Make sure these strings perfectly match the casing in your data/sections.ts file.
-  const targetCategories = ['FULL STACK WEBSITE', 'AI AGENTS', 'AUTOMATION', 'BUSINESS OPTIMIZATION']
+  const targetCategories = ['FULL STACK DEVELOPMENT', 'AI AGENTS', 'AUTOMATION', 'BUSINESS OPTIMIZATION']
   const filteredSections = SECTIONS.filter(section =>
     targetCategories.includes(section.category)
   )

@@ -6,7 +6,7 @@ import { DARK, SAND, HELVETICA } from '../lib/constants'
 import { stagger, pill } from '../lib/variants'
 
 const CATEGORIES = [
-    'AUTOMATION', 'FULL STACK WEBSITE', 'BUSINESS OPTIMIZATION', 'AI AGENTS',
+    'FULL STACK DEVELOPMENT', 'AUTOMATION', 'BUSINESS OPTIMIZATION', 'AI AGENTS',
 ]
 
 /**

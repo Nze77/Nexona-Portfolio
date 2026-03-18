@@ -29,7 +29,7 @@ export default function DiscoverSection() {
     const minimalMask = useTransform(
         scrollYProgress,
         [0.44, 0.68],
-        ['inset(0% 0% 0% 0%)', 'inset(0% 0% 100% 0%)']
+        ['inset(0% -20% 0% 0%)', 'inset(0% -20% 100% 0%)']
     )
 
     const designMask = useTransform(
@@ -86,7 +86,7 @@ export default function DiscoverSection() {
                         y: discoverDrop
                     }}
                 >
-                    Discover
+                    Custom
                 </motion.h1>
 
                 <motion.p
@@ -99,7 +99,7 @@ export default function DiscoverSection() {
                         y: bestDrop
                     }}
                 >
-                    the best in
+                    tailored
                 </motion.p>
 
                 <motion.h2
@@ -110,7 +110,7 @@ export default function DiscoverSection() {
                         y: minimalDrop
                     }}
                 >
-                    minimal
+                    solutions
                 </motion.h2>
 
                 <motion.h2
@@ -121,7 +121,7 @@ export default function DiscoverSection() {
                         y: designDrop
                     }}
                 >
-                    design
+                    for businesses
                 </motion.h2>
             </motion.div>
         </section>

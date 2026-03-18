@@ -21,7 +21,7 @@ export default function CircleSection() {
     const sectionRef = useRef<HTMLElement>(null)
     const stickyRef = useRef<HTMLDivElement>(null)
     const circleRef = useRef<HTMLDivElement>(null)
-    const imgRef = useRef<HTMLImageElement>(null)
+    const imgRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
         if (!sectionRef.current || !circleRef.current) return
@@ -129,19 +129,28 @@ export default function CircleSection() {
                         flexShrink: 0,
                     }}
                 >
-                    <Image
+                    <div
                         ref={imgRef}
-                        src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1400&q=85"
-                        alt="minimal sofa"
-                        fill
-                        sizes="100vw"
                         style={{
-                            height: '124%',     // extra height budget for parallax
-                            objectFit: 'cover',
-                            objectPosition: 'center',
-                            display: 'block',
+                            position: 'absolute',
+                            top: '-12%',
+                            left: 0,
+                            width: '100%',
+                            height: '124%',
                         }}
-                    />
+                    >
+                        <Image
+                            src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1400&q=85"
+                            alt="minimal sofa"
+                            fill
+                            sizes="100vw"
+                            style={{
+                                objectFit: 'cover',
+                                objectPosition: 'center',
+                                display: 'block',
+                            }}
+                        />
+                    </div>
                 </div>
             </div>
         </section>

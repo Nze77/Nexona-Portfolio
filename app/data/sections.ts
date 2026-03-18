@@ -2,23 +2,19 @@ import { SectionData } from '../lib/types'
 
 export const SECTIONS: SectionData[] = [
     {
-        id: 'furniture', category: 'FULL STACK WEBSITE', dark: false,
+        id: 'fullstack', category: 'FULL STACK DEVELOPMENT', dark: false,
         products: [
             {
-                src: 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=500&q=80',
-                alt: 'lamp', style: { top: '8%', left: '2%', width: '25%', maxWidth: 370, aspectRatio: '4/5' }, parallaxY: 90
+                src: '/logos/1327.png',
+                alt: '1327', style: { top: '40%', left: '3%', width: '25%', maxWidth: 370, aspectRatio: '1.1/1', clipPath: 'inset(0 2% 0 0)' }, parallaxY: 90
             },
             {
-                src: 'https://images.unsplash.com/photo-1538688525198-9b88f6f53126?w=400&q=80',
-                alt: 'cube lamp', style: { top: '12%', right: '8%', width: '16%', maxWidth: 200, aspectRatio: '1/1' }, parallaxY: 55
+                src: '/logos/dariza.jpg',
+                alt: 'dariza', style: { top: '38%', left: '40%', width: '17%', maxWidth: 260, aspectRatio: '1/1' }, parallaxY: 115
             },
             {
-                src: 'https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=450&q=80',
-                alt: 'chair', style: { top: '38%', left: '32%', width: '17%', maxWidth: 260, aspectRatio: '4/5' }, parallaxY: 115
-            },
-            {
-                src: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=700&q=80',
-                alt: 'sofa', style: { top: '30%', right: '1%', width: '29%', maxWidth: 430, aspectRatio: '4/3' }, parallaxY: 70
+                src: '/logos/autoparts.png',
+                alt: 'autoparts', style: { top: '30%', right: '10%', width: '20%', maxWidth: 430, aspectRatio: '1/1' }, parallaxY: 70
             },
         ],
     },
