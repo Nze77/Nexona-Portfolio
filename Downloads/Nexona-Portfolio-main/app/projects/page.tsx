@@ -1,0 +1,200 @@
+'use client'
+
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import Link from 'next/link'
+import Image from 'next/image'
+import { DARK, SAND, HELVETICA, INTER } from '../lib/constants'
+import StickyHeader from '../components/StickyHeader'
+import Footer from '../components/Footer'
+import { useLenis } from '../lib/useLenis'
+
+const DUMMY_PROJECTS = [
+    { id: 1, title: 'Quantum Automation', category: 'AUTOMATION', image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80' },
+    { id: 2, title: 'Nebula E-commerce', category: 'FULL STACK WEBSITE', image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80' },
+    { id: 3, title: 'Aegis Security Bot', category: 'AI AGENTS', image: 'https://images.unsplash.com/photo-1531746790731-6c087fec07a8?w=800&q=80' },
+    { id: 4, title: 'Zenith Optimization', category: 'BUSINESS OPTIMIZATION', image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80' },
+    { id: 5, title: 'Lumina Dashboard', category: 'FULL STACK WEBSITE', image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80' },
+    { id: 6, title: 'Orion Analytics', category: 'BUSINESS OPTIMIZATION', image: 'https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&q=80' },
+    { id: 7, title: 'Titan Crawler', category: 'AUTOMATION', image: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&q=80' },
+    { id: 8, title: 'Echo Assistant', category: 'AI AGENTS', image: 'https://images.unsplash.com/photo-1589254065878-42c9da997008?w=800&q=80' },
+    { id: 9, title: 'Solaris Web App', category: 'FULL STACK WEBSITE', image: 'https://images.unsplash.com/photo-1547658719-da2b51169166?w=800&q=80' },
+]
+
+export default function ProjectsPage() {
+    const [search, setSearch] = useState('')
+    useLenis()
+
+    const filteredProjects = DUMMY_PROJECTS.filter(p =>
+        p.title.toLowerCase().includes(search.toLowerCase()) ||
+        p.category.toLowerCase().includes(search.toLowerCase())
+    )
+
+    return (
+        <main style={{ backgroundColor: SAND, minHeight: '100vh', color: DARK }}>
+            <StickyHeader theme="light" />
+
+            {/* Brand Link matching MorphingBrand's docked state */}
+            <div style={{ position: 'fixed', top: '15px', left: '50%', transform: 'translateX(-50%)', zIndex: 100, pointerEvents: 'none' }}>
+                <Link href="/" className="brand-wordmark" style={{
+                    fontFamily: INTER,
+                    fontWeight: 700,
+                    fontSize: '60px',
+                    letterSpacing: '-0.08em',
+                    color: DARK,
+                    textDecoration: 'none',
+                    pointerEvents: 'auto',
+                    opacity: 1,
+                    whiteSpace: 'nowrap',
+                    lineHeight: 1
+                }}>
+                    Nexona
+                </Link>
+            </div>
+            <section style={{ padding: '8rem 5% 4rem' }}>
+                <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+
+                    {/* Page Title */}
+                    <div style={{ marginBottom: '4rem' }}>
+                        <h1 style={{
+                            fontFamily: HELVETICA,
+                            fontSize: 'clamp(3rem, 8vw, 6rem)',
+                            fontWeight: 800,
+                            letterSpacing: '-0.04em',
+                            margin: 0,
+                            textTransform: 'uppercase',
+                            lineHeight: 0.9
+                        }}>
+                            Projects
+                        </h1>
+                        <p style={{
+                            fontFamily: INTER,
+                            fontSize: '0.9rem',
+                            textTransform: 'uppercase',
+                            letterSpacing: '0.1em',
+                            marginTop: '1.5rem',
+                            opacity: 0.6
+                        }}>
+                            Archive of our latest explorations
+                        </p>
+                    </div>
+
+                    {/* Search Bar */}
+                    <div style={{ marginBottom: '5rem', position: 'relative', maxWidth: 600 }}>
+                        <input
+                            type="text"
+                            placeholder="SEARCH BY NAME OR CATEGORY..."
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
+                            style={{
+                                width: '100%',
+                                backgroundColor: 'transparent',
+                                border: 'none',
+                                borderBottom: `1.5px solid ${DARK}`,
+                                padding: '1rem 0',
+                                fontFamily: HELVETICA,
+                                fontSize: '1rem',
+                                fontWeight: 600,
+                                letterSpacing: '0.05em',
+                                color: DARK,
+                                outline: 'none',
+                            }}
+                        />
+                        <div style={{
+                            position: 'absolute',
+                            right: 0,
+                            top: '50%',
+                            transform: 'translateY(-50%)',
+                            opacity: 0.4,
+                            fontSize: '0.8rem'
+                        }}>
+                            {filteredProjects.length} RESULTS
+                        </div>
+                    </div>
+
+                    {/* Project Grid */}
+                    <motion.div
+                        layout
+                        style={{
+                            display: 'grid',
+                            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+                            gap: '2.5rem',
+                        }}
+                    >
+                        <AnimatePresence mode="popLayout">
+                            {filteredProjects.map((project) => (
+                                <motion.div
+                                    key={project.id}
+                                    layout
+                                    initial={{ opacity: 0, scale: 0.9 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    exit={{ opacity: 0, scale: 0.9 }}
+                                    transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
+                                    whileHover={{ y: -10 }}
+                                    style={{
+                                        position: 'relative',
+                                        aspectRatio: '16/10',
+                                        backgroundColor: '#fff',
+                                        borderRadius: '24px',
+                                        overflow: 'hidden',
+                                        cursor: 'pointer',
+                                    }}
+                                >
+                                    <Image
+                                        src={project.image}
+                                        alt={project.title}
+                                        fill
+                                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                        style={{
+                                            objectFit: 'cover',
+                                        }}
+                                    />
+                                    <div style={{
+                                        position: 'absolute',
+                                        bottom: 0,
+                                        left: 0,
+                                        right: 0,
+                                        padding: '1.5rem 2rem',
+                                        background: 'linear-gradient(to top, rgba(0,0,0,0.6), transparent)',
+                                        color: '#fff',
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        justifyContent: 'flex-end',
+                                    }}>
+                                        <span style={{
+                                            fontSize: '0.7rem',
+                                            fontWeight: 600,
+                                            textTransform: 'uppercase',
+                                            letterSpacing: '0.1em',
+                                            opacity: 0.8,
+                                            marginBottom: '0.25rem'
+                                        }}>
+                                            {project.category}
+                                        </span>
+                                        <h3 style={{
+                                            fontFamily: HELVETICA,
+                                            fontSize: '1.4rem',
+                                            fontWeight: 700,
+                                            margin: 0,
+                                            letterSpacing: '-0.02em'
+                                        }}>
+                                            {project.title}
+                                        </h3>
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </AnimatePresence>
+                    </motion.div>
+
+                    {filteredProjects.length === 0 && (
+                        <div style={{ textAlign: 'center', padding: '5rem 0', opacity: 0.4 }}>
+                            NO PROJECTS FOUND MATCHING YOUR SEARCH.
+                        </div>
+                    )}
+                </div>
+            </section>
+
+            <Footer />
+        </main>
+    )
+}
