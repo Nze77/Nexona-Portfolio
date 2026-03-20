@@ -100,8 +100,8 @@ export default function ProductSection({ data }: Props) {
             >
                 <h2
                     style={{
-                        fontFamily: HELVETICA,
-                        fontWeight: 800,
+                        fontFamily: "'Montserrat', sans-serif",
+                        fontWeight: 600,
                         fontSize: 'clamp(2.5rem, 6.5vw, 8rem)',
                         letterSpacing: '-0.04em',
                         lineHeight: 0.85,
@@ -139,7 +139,7 @@ export default function ProductSection({ data }: Props) {
                                 <motion.div
                                     key={iIdx}
                                     ref={(el) => { imgRefs.current[sIdx][iIdx] = el }}
-                                    whileHover={{ scale: 1.05, zIndex: 10 }}
+                                    className="group rounded-lg"
                                     transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
                                     style={{
                                         position: 'absolute',
@@ -148,19 +148,35 @@ export default function ProductSection({ data }: Props) {
                                         willChange: 'transform',
                                         cursor: 'pointer',
                                         overflow: 'hidden',
+                                        backgroundColor: 'var(--color-dark)',
                                     }}
                                 >
-                                    <Image
-                                        src={img.src}
-                                        alt={img.alt}
-                                        fill
-                                        sizes="(max-width: 768px) 100vw, 33vw"
-                                        style={{
-                                            objectFit: 'cover',
-                                            display: 'block',
-                                            pointerEvents: 'none',
-                                        }}
-                                    />
+                                    <div className="absolute inset-0 transition-transform duration-500 group-hover:scale-95 origin-top rounded-t-lg overflow-hidden">
+                                        <Image
+                                            src={img.src}
+                                            alt={img.alt}
+                                            fill
+                                            sizes="(max-width: 768px) 100vw, 33vw"
+                                            style={{
+                                                objectFit: 'cover',
+                                                display: 'block',
+                                                pointerEvents: 'none',
+                                            }}
+                                        />
+                                    </div>
+                                    <div className="absolute bottom-0 left-0 right-0 h-[75%] bg-black/60 backdrop-blur-md p-6 transform translate-y-[calc(100%-68px)] group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] z-10 flex flex-col">
+                                        <div className="flex justify-between items-center h-5 shrink-0">
+                                            <h3 className="text-xl font-medium text-white">{img.alt || 'Canyon Echo'}</h3>
+                                        </div>
+                                        <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-200 flex-1 flex flex-col mt-4">
+                                            <p className="text-white/80 text-sm leading-relaxed mb-6">
+                                                A study on natural erosion patterns and the rhythmic flow of riverbeds across the high desert plateaus.
+                                            </p>
+                                            <button className="w-full mt-auto py-3 bg-white text-black text-xs font-bold uppercase tracking-widest rounded transition-colors hover:bg-gray-200">
+                                                View Details
+                                            </button>
+                                        </div>
+                                    </div>
                                 </motion.div>
                             ))}
                         </section>
