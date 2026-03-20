@@ -61,7 +61,7 @@ export const SECTIONS: SectionData[] = [
         products: [
             {
                 src: '/logos/chatapp.png',
-                alt: 'book', style: { top: '8%', left: '2%', width: '%', maxWidth: 370, aspectRatio: '1/1' }, parallaxY: 88
+                alt: 'chat', style: { top: '8%', left: '2%', width: '%', maxWidth: 370, aspectRatio: '1/1' }, parallaxY: 88
             },
             // {
             //     src: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=450&q=80',
