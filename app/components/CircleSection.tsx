@@ -137,19 +137,20 @@ export default function CircleSection() {
                             left: 0,
                             width: '100%',
                             height: '124%',
+                            backgroundColor: DARK,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            color: SAND,
+                            padding: '4rem',
+                            textAlign: 'center',
                         }}
                     >
-                        <Image
-                            src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1400&q=85"
-                            alt="minimal sofa"
-                            fill
-                            sizes="100vw"
-                            style={{
-                                objectFit: 'cover',
-                                objectPosition: 'center',
-                                display: 'block',
-                            }}
-                        />
+                        <h2 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 'clamp(3rem, 8vw, 6rem)', fontWeight: 600, letterSpacing: '-0.02em', marginBottom: '2rem' }}>WELCOME TO NEXONA</h2>
+                        <p style={{ fontSize: 'clamp(1.2rem, 3vw, 2rem)', maxWidth: '900px', lineHeight: 1.5, opacity: 0.9 }}>
+                            We craft seamless digital experiences, automate the mundane, and elevate businesses with next-generation AI agents.
+                        </p>
                     </div>
                 </div>
             </div>

@@ -125,6 +125,7 @@ export default function ProductSection({ data }: Props) {
                     return (
                         <section
                             key={section.id}
+                            id={section.id}
                             className="product-theme-trigger" // Tells StickyHeader to trigger at 50%
                             data-theme={themeString} // Tells StickyHeader which color to become
                             ref={(el) => { sectionRefs.current[sIdx] = el }}
@@ -170,7 +171,7 @@ export default function ProductSection({ data }: Props) {
                                         </div>
                                         <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-200 flex-1 flex flex-col mt-4">
                                             <p className="text-white/80 text-sm leading-relaxed mb-6">
-                                                A study on natural erosion patterns and the rhythmic flow of riverbeds across the high desert plateaus.
+                                                {img.description || 'Elevating your digital presence.'}
                                             </p>
                                             <button className="w-full mt-auto py-3 bg-white text-black text-xs font-bold uppercase tracking-widest rounded transition-colors hover:bg-gray-200">
                                                 View Details

@@ -6,15 +6,18 @@ export const SECTIONS: SectionData[] = [
         products: [
             {
                 src: '/logos/1327.png',
-                alt: '1327', style: { top: '40%', left: '3%', width: '25%', maxWidth: 370, aspectRatio: '1.1/1', clipPath: 'inset(0 2% 0 0)' }, parallaxY: 90
+                alt: '1327', style: { top: '40%', left: '3%', width: '25%', maxWidth: 370, aspectRatio: '1.1/1', clipPath: 'inset(0 2% 0 0)' }, parallaxY: 90,
+                description: 'Scalable, modern web applications built for performance.'
             },
             {
                 src: '/logos/dariza.jpg',
-                alt: 'dariza', style: { top: '38%', left: '40%', width: '17%', maxWidth: 260, aspectRatio: '1/1' }, parallaxY: 115
+                alt: 'dariza', style: { top: '38%', left: '40%', width: '17%', maxWidth: 260, aspectRatio: '1/1' }, parallaxY: 115,
+                description: 'Scalable, modern web applications built for performance.'
             },
             {
                 src: '/logos/autoparts.png',
-                alt: 'autoparts', style: { top: '30%', right: '10%', width: '20%', maxWidth: 430, aspectRatio: '1/1' }, parallaxY: 70
+                alt: 'autoparts', style: { top: '30%', right: '10%', width: '20%', maxWidth: 430, aspectRatio: '1/1' }, parallaxY: 70,
+                description: 'Scalable, modern web applications built for performance.'
             },
         ],
     },
@@ -23,11 +26,13 @@ export const SECTIONS: SectionData[] = [
         products: [
             {
                 src: '/logos/chat1.png',
-                alt: 'chat', style: { top: '1%', left: '30%', width: '24%', maxWidth: 300, aspectRatio: '1/1' }, parallaxY: 85
+                alt: 'chat', style: { top: '1%', left: '30%', width: '24%', maxWidth: 300, aspectRatio: '1/1' }, parallaxY: 85,
+                description: 'Intelligent AI solutions designed to automate and enhance customer interactions.'
             },
             {
                 src: '/logos/call1.png',
-                alt: 'call', style: { top: '28%', left: '70%', width: '24%', maxWidth: 300, aspectRatio: '1/1' }, parallaxY: 115
+                alt: 'call', style: { top: '28%', left: '70%', width: '24%', maxWidth: 300, aspectRatio: '1/1' }, parallaxY: 115,
+                description: 'Intelligent AI solutions designed to automate and enhance customer interactions.'
             },
             //{
             //    src: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=700&q=80',
@@ -40,11 +45,13 @@ export const SECTIONS: SectionData[] = [
         products: [
             {
                 src: '/logos/cards.jpg',
-                alt: 'cards', style: { top: '5%', left: '22%', width: '24%', maxWidth: 370, aspectRatio: '1/1' }, parallaxY: 90
+                alt: 'cards', style: { top: '5%', left: '22%', width: '24%', maxWidth: 370, aspectRatio: '1/1' }, parallaxY: 90,
+                description: 'Streamlining repetitive workflows to save time and boost productivity.'
             },
             {
                 src: '/logos/whatsapp.png',
-                alt: 'whatsapp', style: { top: '12%', right: '8%', width: '20%', maxWidth: 570, aspectRatio: '1/1' }, parallaxY: 55
+                alt: 'whatsapp', style: { top: '12%', right: '8%', width: '20%', maxWidth: 570, aspectRatio: '1/1' }, parallaxY: 55,
+                description: 'Streamlining repetitive workflows to save time and boost productivity.'
             },
             // {
             //     src: 'https://images.unsplash.com/photo-1561015708-98a1db703e84?w=450&q=80',
@@ -61,7 +68,8 @@ export const SECTIONS: SectionData[] = [
         products: [
             {
                 src: '/logos/chatapp.png',
-                alt: 'chat', style: { top: '8%', left: '2%', width: '%', maxWidth: 370, aspectRatio: '1/1' }, parallaxY: 88
+                alt: 'chat', style: { top: '8%', left: '2%', width: '%', maxWidth: 370, aspectRatio: '1/1' }, parallaxY: 88,
+                description: 'Data-driven strategies and technical tools to optimize your daily operations.'
             },
             // {
             //     src: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=450&q=80',
@@ -69,7 +77,8 @@ export const SECTIONS: SectionData[] = [
             // },
             {
                 src: '/logos/attendance.png',
-                alt: 'attendance', style: { top: '12%', right: '12%', width: '22%', maxWidth: 430, aspectRatio: '1/1' }, parallaxY: 70
+                alt: 'attendance', style: { top: '12%', right: '12%', width: '22%', maxWidth: 430, aspectRatio: '1/1' }, parallaxY: 70,
+                description: 'Data-driven strategies and technical tools to optimize your daily operations.'
             },
             // {
             //     src: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&q=80',

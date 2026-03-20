@@ -36,14 +36,20 @@ export default function Footer() {
                     variants={fadeUp} initial="hidden" animate={inView ? 'visible' : 'hidden'} custom={0.15}
                     style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', textAlign: 'right' }}
                 >
-                    {['Articles', 'Shop', 'Submit', 'Contact'].map(link => (
+                    {[
+                        { name: 'Full Stack Websites', href: '#fullstack' },
+                        { name: 'Automation', href: '#office' },
+                        { name: 'AI Agents', href: '#decor' },
+                        { name: 'Business Optimization', href: '#tech' },
+                        { name: 'Contact', href: '#' }
+                    ].map(link => (
                         <a
-                            key={link}
-                            href="#"
+                            key={link.name}
+                            href={link.href}
                             className="nav-link"
-                            style={{ fontSize: '0.8rem', letterSpacing: '0.2em', textTransform: 'uppercase', opacity: 0.65, color: SAND, textDecoration: 'none' }}
+                            style={{ fontSize: '0.8rem', letterSpacing: '0.2rem', textTransform: 'uppercase', opacity: 0.65, color: SAND, textDecoration: 'none' }}
                         >
-                            {link}
+                            {link.name}
                         </a>
                     ))}
                 </motion.div>
@@ -61,7 +67,7 @@ export default function Footer() {
                 letterSpacing: '0.1em',
                 textTransform: 'uppercase',
             }}>
-                <span>© 2021 Nexona. All rights reserved.</span>
+                <span>© 2026 Nexona. All rights reserved.</span>
                 <span>Minimal design curation</span>
             </div>
         </footer>

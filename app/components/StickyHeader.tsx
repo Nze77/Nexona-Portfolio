@@ -133,10 +133,15 @@ export default function StickyHeader({ theme = 'dark' }: { theme?: 'dark' | 'lig
                 padding: '0 2rem',
                 height: '6rem',
             }}>
-                <div style={{ display: 'flex', gap: '1.5rem' }}>
-                    {['Articles', 'Shop', 'Submit'].map(link => (
-                        <a key={link} href="#" style={{
-                            fontSize: '0.9rem',
+                <div style={{ display: 'flex', gap: '1rem' }}>
+                    {[
+                        { name: 'Full Stack Websites', href: '#fullstack' },
+                        { name: 'Automation', href: '#office' },
+                        { name: 'AI Agents', href: '#decor' },
+                        { name: 'Business Optimization', href: '#tech' }
+                    ].map(link => (
+                        <a key={link.name} href={link.href} style={{
+                            fontSize: '0.75rem',
                             letterSpacing: '0.01em',
                             textTransform: 'uppercase',
                             fontWeight: 500,
@@ -144,7 +149,7 @@ export default function StickyHeader({ theme = 'dark' }: { theme?: 'dark' | 'lig
                             textDecoration: 'none',
                             opacity: 1,
                         }}>
-                            {link}
+                            {link.name}
                         </a>
                     ))}
                 </div>
