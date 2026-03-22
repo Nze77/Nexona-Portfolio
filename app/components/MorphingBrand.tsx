@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { SAND, INTER } from '../lib/constants'
@@ -29,6 +29,7 @@ interface Props {
  */
 export default function MorphingBrand({ heroRef }: Props) {
     const brandRef = useRef<HTMLDivElement>(null)
+    const [ready, setReady] = useState(false)
 
     useEffect(() => {
         const hero = heroRef.current
@@ -39,25 +40,31 @@ export default function MorphingBrand({ heroRef }: Props) {
             const brandH = el.offsetHeight
             const vh = window.innerHeight
 
-            // Target size for the docked brand
-            const TARGET_SIZE = 60 // Significantly larger
+            // Target size for the docked brand — bigger and centered in header
+            const isMob = window.innerWidth <= 768
+            const TARGET_SIZE = isMob ? 52 : 80 // Increased mobile size
+            const NAV_CENTER = 48 // 96 / 2
 
-            // Positions
-            const yStart = vh - brandH
-            const yEnd = 15 // Significantly lower
+            // Initial pos: sitting at baseline of hero
+            // We use yPercent: -50 for centering, so start at vh - half height
+            const yStart = vh - (brandH / 2)
 
             gsap.set(el, {
                 xPercent: -50,
+                yPercent: -50,
                 y: yStart,
                 scale: 1,
-                transformOrigin: '50% 0%',
+                transformOrigin: '50% 50%',
                 force3D: true,
             })
 
+            // Mark as ready so visibility flips to visible
+            setReady(true)
+
             gsap.to(el, {
-                y: yEnd,
+                y: NAV_CENTER,
                 scale: TARGET_SIZE / parseFloat(getComputedStyle(el).fontSize),
-                ease: 'none',     // pure 1:1 scroll scrub — no ease, no fade
+                ease: 'none',
                 scrollTrigger: {
                     trigger: hero,
                     start: 'top top',
@@ -96,7 +103,10 @@ export default function MorphingBrand({ heroRef }: Props) {
                 whiteSpace: 'nowrap',
                 lineHeight: 1,
                 willChange: 'transform, color',
-                // Always fully visible — no opacity
+                // Start hidden to prevent flash, GSAP will position then reveal
+                visibility: ready ? 'visible' : 'hidden',
+                // CSS centering so the element is never in the wrong spot
+                transform: 'translateX(-50%)',
             }}
         >
             Nexona

@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import Image from 'next/image'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -28,6 +28,11 @@ interface Props {
  */
 export default function HeroSection({ sectionRef }: Props) {
     const imageRef = useRef<HTMLDivElement>(null)
+    const [isMobile, setIsMobile] = useState(false)
+
+    useEffect(() => {
+        setIsMobile(window.innerWidth <= 768)
+    }, [])
 
     useEffect(() => {
         const ctx = gsap.context(() => {
@@ -76,7 +81,7 @@ export default function HeroSection({ sectionRef }: Props) {
                     priority
                     style={{
                         objectFit: 'cover',
-                        objectPosition: '65% center',
+                        objectPosition: isMobile ? 'center center' : '65% center',
                         opacity: 1.0,
                     }}
                 />

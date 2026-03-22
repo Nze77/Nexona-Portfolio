@@ -16,6 +16,8 @@ export default function ParticleEffect() {
         let particles: Particle[] = []
         const mouse = { x: 0, y: 0, active: false }
 
+        const isMobile = window.innerWidth <= 768
+
         const resize = () => {
             canvas.width = window.innerWidth
             canvas.height = window.innerHeight
@@ -28,15 +30,14 @@ export default function ParticleEffect() {
             vx: number
             vy: number
             size: number
-
             color: string
 
             constructor() {
                 this.x = Math.random() * canvas!.width
                 this.y = Math.random() * canvas!.height
-                this.vx = (Math.random() - 0.5) * 0.5
-                this.vy = (Math.random() - 0.5) * 0.5
-                this.size = Math.random() * 1.5 + 0.5
+                this.vx = (Math.random() - 0.5) * (isMobile ? 0.3 : 0.5)
+                this.vy = (Math.random() - 0.5) * (isMobile ? 0.3 : 0.5)
+                this.size = Math.random() * (isMobile ? 1 : 1.5) + 0.5
                 this.color = Math.random() > 0.5 ? '#E8E2DA' : '#2E2A26'
             }
 
@@ -47,7 +48,8 @@ export default function ParticleEffect() {
                 if (this.x < 0 || this.x > canvas!.width) this.vx *= -1
                 if (this.y < 0 || this.y > canvas!.height) this.vy *= -1
 
-                if (mouse.active) {
+                // Only track mouse on desktop
+                if (!isMobile && mouse.active) {
                     const dx = mouse.x - this.x
                     const dy = mouse.y - this.y
                     const dist = Math.sqrt(dx * dx + dy * dy)
@@ -71,11 +73,15 @@ export default function ParticleEffect() {
 
         const init = () => {
             particles = []
-            const count = Math.min(Math.floor((canvas.width * canvas.height) / 10000), 100)
+            // Significantly fewer particles on mobile
+            const maxCount = isMobile ? 35 : 100
+            const count = Math.min(Math.floor((canvas.width * canvas.height) / (isMobile ? 15000 : 10000)), maxCount)
             for (let i = 0; i < count; i++) {
                 particles.push(new Particle())
             }
         }
+
+        const connectionDist = isMobile ? 80 : 120
 
         const connect = () => {
             for (let a = 0; a < particles.length; a++) {
@@ -84,8 +90,8 @@ export default function ParticleEffect() {
                     const dy = particles[a].y - particles[b].y
                     const dist = Math.sqrt(dx * dx + dy * dy)
 
-                    if (dist < 120) {
-                        const opacity = 1 - dist / 120
+                    if (dist < connectionDist) {
+                        const opacity = 1 - dist / connectionDist
                         ctx.strokeStyle = `rgba(232, 226, 218, ${opacity * 0.15})`
                         ctx.lineWidth = 1
                         ctx.beginPath()
@@ -108,6 +114,7 @@ export default function ParticleEffect() {
         }
 
         const handleMouseMove = (e: MouseEvent) => {
+            if (isMobile) return
             mouse.x = e.clientX
             mouse.y = e.clientY
             mouse.active = true

@@ -1,27 +1,26 @@
 'use client'
 
-import { useRef, useEffect } from 'react'
-import Image from 'next/image'
+import { useRef, useEffect, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { SAND, DARK } from '../lib/constants'
 
 gsap.registerPlugin(ScrollTrigger)
 
-/**
- * Sticky section: a perfect circle on a dark background morphs into a
- * full-viewport-width rounded panel as the user scrolls, while the
- * section background fades from dark → SAND.
- *
- * Works with Lenis — ScrollTrigger picks up Lenis's virtual scroll
- * automatically when you call ScrollTrigger.scrollerProxy or use
- * the lenis.on('scroll', ScrollTrigger.update) pattern in your root layout.
- */
 export default function CircleSection() {
     const sectionRef = useRef<HTMLElement>(null)
     const stickyRef = useRef<HTMLDivElement>(null)
     const circleRef = useRef<HTMLDivElement>(null)
     const imgRef = useRef<HTMLDivElement>(null)
+    const textRef = useRef<HTMLDivElement>(null)
+    const [isMobile, setIsMobile] = useState(false)
+
+    useEffect(() => {
+        const check = () => setIsMobile(window.innerWidth <= 768)
+        check()
+        window.addEventListener('resize', check)
+        return () => window.removeEventListener('resize', check)
+    }, [])
 
     useEffect(() => {
         if (!sectionRef.current || !circleRef.current) return
@@ -29,17 +28,17 @@ export default function CircleSection() {
         const ctx = gsap.context(() => {
             const vw = window.innerWidth
             const vh = window.innerHeight
+            const mobile = vw <= 768
 
-            // Starting circle: square whose side fits the viewport
-            const initSize = Math.min(vw * 0.78, 620)
-            const initRadius = initSize / 2   // px value that equals 50% on a square
+            // Starting circle: much smaller on mobile for more drama
+            const initSize = mobile ? 140 : Math.min(vw * 0.78, 620)
+            const initRadius = initSize / 2
 
-            // End state: near-full-viewport panel
+            // End state: fill entire screen on mobile
             const endW = vw
-            const endH = vh * 0.86
-            const endR = 36
+            const endH = mobile ? vh : vh * 0.86
+            const endR = mobile ? 0 : 36
 
-            // Seed the initial geometry so layout is correct before any scroll
             gsap.set(circleRef.current, {
                 width: initSize,
                 height: initSize,
@@ -53,7 +52,7 @@ export default function CircleSection() {
                 scrub: true,
             }
 
-            // ── Morph: circle → full-width panel ──────────────────────────
+            // The main expansion
             gsap.to(circleRef.current, {
                 width: endW,
                 height: endH,
@@ -62,51 +61,56 @@ export default function CircleSection() {
                 scrollTrigger: st,
             })
 
-            // ── Background: dark → SAND ────────────────────────────────────
+            // BG color change
             gsap.to(sectionRef.current, {
                 backgroundColor: SAND,
                 ease: 'none',
                 scrollTrigger: {
                     ...st,
-                    scrub: true,
-                    // colour change leads slightly ahead of geometry
                     end: '65% bottom',
                 },
             })
 
-            // ── Image parallax inside the morphing container ───────────────
+            // Content parallax
             gsap.to(imgRef.current, {
-                yPercent: -18,
+                yPercent: mobile ? -8 : -18,
                 ease: 'none',
-                scrollTrigger: {
-                    trigger: sectionRef.current,
-                    start: 'top top',
-                    end: 'bottom bottom',
-                    scrub: true,
-                },
+                scrollTrigger: st,
             })
+
+            // Fade text in only after circle is large enough
+            if (textRef.current) {
+                gsap.set(textRef.current, { opacity: 0 })
+                gsap.to(textRef.current, {
+                    opacity: 1,
+                    ease: 'none',
+                    scrollTrigger: {
+                        trigger: sectionRef.current,
+                        start: '40% bottom',
+                        end: '60% bottom',
+                        scrub: true,
+                    },
+                })
+            }
+
+            // Ensure everything is calculated for the current layout
+            ScrollTrigger.refresh()
 
         }, sectionRef)
 
         return () => ctx.revert()
-    }, [])
+    }, [isMobile])
 
     return (
-        /*
-         * The section is tall (260 vh) so ScrollTrigger has enough scroll
-         * distance to drive the morph. The inner sticky div keeps the visual
-         * centred in the viewport the whole time.
-         */
         <section
             ref={sectionRef}
             data-theme="circle"
             style={{
                 backgroundColor: DARK,
-                height: '260vh',
+                height: isMobile ? '200vh' : '260vh',
                 position: 'relative',
             }}
         >
-            {/* ── Sticky viewport ── */}
             <div
                 ref={stickyRef}
                 style={{
@@ -119,7 +123,6 @@ export default function CircleSection() {
                     overflow: 'hidden',
                 }}
             >
-                {/* ── Morphing shape ── */}
                 <div
                     ref={circleRef}
                     style={{
@@ -143,17 +146,53 @@ export default function CircleSection() {
                             alignItems: 'center',
                             justifyContent: 'center',
                             color: SAND,
-                            padding: '4rem',
                             textAlign: 'center',
                         }}
                     >
-                        <h2 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 'clamp(3rem, 8vw, 6rem)', fontWeight: 600, letterSpacing: '-0.02em', marginBottom: '2rem' }}>WELCOME TO NEXONA</h2>
-                        <p style={{ fontSize: 'clamp(1.2rem, 3vw, 2rem)', maxWidth: '900px', lineHeight: 1.5, opacity: 0.9 }}>
-                            We craft seamless digital experiences, automate the mundane, and elevate businesses with next-generation AI agents.
-                        </p>
+                        <div ref={textRef} className="circle-content-panel" style={{ opacity: 0 }}>
+                            <h2 className="circle-title" style={{
+                                fontFamily: "'Montserrat', sans-serif",
+                                fontWeight: 600,
+                                letterSpacing: '-0.02em',
+                            }}>WELCOME TO NEXONA</h2>
+                            <p className="circle-para" style={{
+                                maxWidth: '900px',
+                                lineHeight: 1.5,
+                            }}>
+                                We craft seamless digital experiences, automate the mundane, and elevate businesses with next-generation AI agents.
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            <style jsx>{`
+                .circle-content-panel {
+                    padding: 4rem;
+                }
+                .circle-title {
+                    font-size: clamp(3rem, 8vw, 6rem);
+                    margin-bottom: 2rem;
+                }
+                .circle-para {
+                    font-size: clamp(1.2rem, 3vw, 2rem);
+                }
+
+                @media (max-width: 768px) {
+                    .circle-content-panel {
+                        padding: 2.5rem;
+                        max-width: 85vw;
+                    }
+                    .circle-title {
+                        font-size: clamp(1.2rem, 6vw, 1.8rem);
+                        margin-bottom: 0.75rem;
+                    }
+                    .circle-para {
+                        font-size: clamp(0.8rem, 3.5vw, 1rem);
+                        max-width: 80vw;
+                    }
+                }
+            `}</style>
         </section>
     )
-} //damn
+}

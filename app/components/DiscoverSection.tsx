@@ -1,18 +1,26 @@
 'use client'
 
 import { motion, useScroll, useTransform } from 'framer-motion'
-import { useRef } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { DARK, SAND, NAV_H, INTER } from '../lib/constants'
 
 export default function DiscoverSection() {
     const ref = useRef<HTMLDivElement | null>(null)
+    const [isMobile, setIsMobile] = useState(false)
+
+    useEffect(() => {
+        const check = () => setIsMobile(window.innerWidth <= 768)
+        check()
+        window.addEventListener('resize', check)
+        return () => window.removeEventListener('resize', check)
+    }, [])
 
     const { scrollYProgress } = useScroll({
         target: ref,
         offset: ['start start', 'end start']
     })
 
-    const stackY = useTransform(scrollYProgress, [0, 1], [0, -650])
+    const stackY = useTransform(scrollYProgress, [0, 1], [0, isMobile ? -400 : -650])
 
     const discoverMask = useTransform(
         scrollYProgress,
@@ -57,9 +65,9 @@ export default function DiscoverSection() {
             data-theme="dark"
             style={{
                 backgroundColor: DARK,
-                minHeight: '300vh',
+                minHeight: isMobile ? '250vh' : '300vh',
                 position: 'relative',
-                marginBottom: '-75vh',
+                marginBottom: isMobile ? '-60vh' : '-75vh',
                 zIndex: 0
             }}
         >

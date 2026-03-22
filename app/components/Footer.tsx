@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { DARK, SAND, HELVETICA } from '../lib/constants'
 import { fadeUp } from '../lib/variants'
@@ -8,6 +8,14 @@ import { fadeUp } from '../lib/variants'
 export default function Footer() {
     const ref = useRef<HTMLElement>(null)
     const inView = useInView(ref, { once: true, margin: '-5%' })
+    const [isMobile, setIsMobile] = useState(false)
+
+    useEffect(() => {
+        const check = () => setIsMobile(window.innerWidth <= 768)
+        check()
+        window.addEventListener('resize', check)
+        return () => window.removeEventListener('resize', check)
+    }, [])
 
     return (
         <footer
@@ -16,15 +24,29 @@ export default function Footer() {
             style={{
                 backgroundColor: DARK,
                 color: SAND,
-                padding: '6rem 5% 4rem',
+                padding: isMobile ? '3rem 5% 2.5rem' : '6rem 5% 4rem',
                 borderTop: '1px solid rgba(232,223,211,0.12)',
                 fontFamily: HELVETICA,
             }}
         >
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '2rem' }}>
+            <div style={{
+                display: 'flex',
+                flexDirection: isMobile ? 'column' : 'row',
+                justifyContent: 'space-between',
+                alignItems: isMobile ? 'center' : 'flex-end',
+                flexWrap: 'wrap',
+                gap: '2rem',
+                textAlign: isMobile ? 'center' : 'left',
+            }}>
 
                 <motion.div variants={fadeUp} initial="hidden" animate={inView ? 'visible' : 'hidden'} custom={0}>
-                    <h3 style={{ fontSize: 'clamp(3rem, 8vw, 7rem)', fontWeight: 800, letterSpacing: '-0.04em', lineHeight: 0.9, marginBottom: '1.5rem' }}>
+                    <h3 style={{
+                        fontSize: isMobile ? 'clamp(2.5rem, 10vw, 4rem)' : 'clamp(3rem, 8vw, 7rem)',
+                        fontWeight: 800,
+                        letterSpacing: '-0.04em',
+                        lineHeight: 0.9,
+                        marginBottom: '1rem',
+                    }}>
                         Nexona
                     </h3>
                     <p style={{ fontSize: '0.85rem', opacity: 0.45, letterSpacing: '0.1em', textTransform: 'uppercase' }}>
@@ -34,7 +56,12 @@ export default function Footer() {
 
                 <motion.div
                     variants={fadeUp} initial="hidden" animate={inView ? 'visible' : 'hidden'} custom={0.15}
-                    style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', textAlign: 'right' }}
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '0.75rem',
+                        textAlign: isMobile ? 'center' : 'right',
+                    }}
                 >
                     {[
                         { name: 'Full Stack Websites', href: '#fullstack' },
@@ -47,7 +74,14 @@ export default function Footer() {
                             key={link.name}
                             href={link.href}
                             className="nav-link"
-                            style={{ fontSize: '0.8rem', letterSpacing: '0.2rem', textTransform: 'uppercase', opacity: 0.65, color: SAND, textDecoration: 'none' }}
+                            style={{
+                                fontSize: isMobile ? '0.75rem' : '0.8rem',
+                                letterSpacing: '0.2rem',
+                                textTransform: 'uppercase',
+                                opacity: 0.65,
+                                color: SAND,
+                                textDecoration: 'none',
+                            }}
                         >
                             {link.name}
                         </a>
@@ -57,15 +91,19 @@ export default function Footer() {
             </div>
 
             <div style={{
-                marginTop: '5rem',
+                marginTop: isMobile ? '2.5rem' : '5rem',
                 borderTop: '1px solid rgba(232,223,211,0.12)',
                 paddingTop: '1.5rem',
                 display: 'flex',
+                flexDirection: isMobile ? 'column' : 'row',
                 justifyContent: 'space-between',
+                alignItems: isMobile ? 'center' : 'flex-start',
+                gap: isMobile ? '0.5rem' : '0',
                 fontSize: '0.72rem',
                 opacity: 0.35,
                 letterSpacing: '0.1em',
                 textTransform: 'uppercase',
+                textAlign: isMobile ? 'center' : 'left',
             }}>
                 <span>© 2026 Nexona. All rights reserved.</span>
                 <span>Minimal design curation</span>
