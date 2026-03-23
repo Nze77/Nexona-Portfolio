@@ -1,5 +1,18 @@
+import { Syne, Montserrat } from 'next/font/google'
 import type { Metadata } from 'next'
 import './globals.css'
+
+const syne = Syne({
+  subsets: ['latin'],
+  variable: '--font-syne',
+  weight: ['400', '500', '600', '700', '800'],
+})
+
+const montserrat = Montserrat({
+  subsets: ['latin'],
+  variable: '--font-montserrat',
+  weight: ['400', '500', '600', '700'],
+})
 
 export const metadata: Metadata = {
   title: 'Nexona',
@@ -12,18 +25,11 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Montserrat:wght@400;500;600;700&display=swap"
-          rel="stylesheet"
-        />
-      </head>
-      <body className="antialiased font-['Montserrat']" style={{ fontFamily: "'Montserrat', sans-serif" }}>
+    <html lang="en" className={`${syne.variable} ${montserrat.variable}`}>
+       <body className="antialiased" style={{ fontFamily: "var(--font-montserrat), sans-serif" }}>
         {children}
       </body>
     </html>
   )
 }
+

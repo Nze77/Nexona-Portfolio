@@ -1,6 +1,7 @@
 'use client'
 
 import { useRef, useEffect, useState } from 'react'
+import Link from 'next/link'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { DARK, SAND, INTER } from '../lib/constants'
@@ -11,7 +12,7 @@ if (typeof window !== 'undefined') {
 
 const NAV_LINKS = [
     { name: 'Projects', href: '/projects' },
-    { name: 'Contact', href: '#contact' }
+    { name: 'Contact', href: '/#contact' }
 ]
 
 const navItemStyle: React.CSSProperties = {
@@ -181,10 +182,11 @@ export default function StickyHeader({ theme = 'dark' }: { theme?: 'dark' | 'lig
                 }}>
                     {/* Desktop nav links */}
                     <div className="desktop-nav" style={{ display: 'flex', gap: '2rem' }}>
-                        <a href="/projects" style={navItemStyle}>
+                        <Link href="/projects" style={navItemStyle}>
                             Projects
-                        </a>
+                        </Link>
                     </div>
+
 
                     {/* Mobile hamburger button */}
                     <button
@@ -247,10 +249,11 @@ export default function StickyHeader({ theme = 'dark' }: { theme?: 'dark' | 'lig
 
                     {/* Contact Link on the right */}
                     <div className="desktop-only">
-                        <a href="#contact" style={navItemStyle}>
+                        <Link href="/#contact" style={navItemStyle}>
                             Contact
-                        </a>
+                        </Link>
                     </div>
+
                 </div>
 
                 {/* Divider */}
@@ -286,7 +289,7 @@ export default function StickyHeader({ theme = 'dark' }: { theme?: 'dark' | 'lig
                 }}
             >
                 {NAV_LINKS.map((link, i) => (
-                    <a
+                    <Link
                         key={link.name}
                         href={link.href}
                         onClick={() => setMenuOpen(false)}
@@ -304,7 +307,7 @@ export default function StickyHeader({ theme = 'dark' }: { theme?: 'dark' | 'lig
                         }}
                     >
                         {link.name}
-                    </a>
+                    </Link>
                 ))}
             </div>
 
