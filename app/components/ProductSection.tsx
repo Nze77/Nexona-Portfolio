@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { DARK, SAND, HELVETICA } from '../lib/constants'
+import { DARK, SAND } from '../lib/constants'
 import { SectionData } from '../lib/types'
 
 if (typeof window !== 'undefined') {
@@ -203,8 +203,9 @@ export default function ProductSection({ data }: Props) {
                                     </div>
                                     {/* Hover / tap overlay */}
                                     <div
-                                        className={`absolute bottom-0 left-0 right-0 ${isMobile ? 'h-[50%]' : 'h-[75%]'} bg-black/60 backdrop-blur-md p-4 sm:p-6 ${isMobile ? 'translate-y-[calc(100%-52px)]' : 'translate-y-[calc(100%-68px)]'} group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] z-10 flex flex-col`}
+                                        className={`absolute bottom-0 left-0 right-0 ${isMobile ? 'h-[75%]' : 'h-[75%]'} bg-black/60 backdrop-blur-md p-4 sm:p-6 ${isMobile ? 'translate-y-[calc(100%-60px)]' : 'translate-y-[calc(100%-68px)]'} group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] z-10 flex flex-col`}
                                     >
+
                                         <div className="flex justify-between items-center h-5 shrink-0">
                                             <h3 className={`${isMobile ? 'text-base' : 'text-xl'} font-medium text-white`}>{img.alt || 'Project'}</h3>
                                         </div>

@@ -50,7 +50,7 @@ export default function Footer() {
                         Nexona
                     </h3>
                     <p style={{ fontSize: '0.85rem', opacity: 0.45, letterSpacing: '0.1em', textTransform: 'uppercase' }}>
-                        Curating the best in minimal design
+                        We help you grow
                     </p>
                 </motion.div>
 

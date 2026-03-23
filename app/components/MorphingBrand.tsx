@@ -42,15 +42,13 @@ export default function MorphingBrand({ heroRef }: Props) {
 
             // Target size for the docked brand — bigger and centered in header
             const isMob = window.innerWidth <= 768
-            const TARGET_SIZE = isMob ? 52 : 80 // Increased mobile size
+            const TARGET_SIZE = isMob ? 52 : 80 
             const NAV_CENTER = 48 // 96 / 2
 
             // Initial pos: sitting at baseline of hero
-            // We use yPercent: -50 for centering, so start at vh - half height
             const yStart = vh - (brandH / 2)
 
             gsap.set(el, {
-                xPercent: -50,
                 yPercent: -50,
                 y: yStart,
                 scale: 1,
@@ -85,31 +83,33 @@ export default function MorphingBrand({ heroRef }: Props) {
     }, [heroRef])
 
     return (
-        <div
-            ref={brandRef}
-            className="brand-wordmark"
-            style={{
-                position: 'fixed',
-                top: 0,
-                left: '50%',
-                zIndex: 90,
-                pointerEvents: 'none',
-                fontFamily: INTER,
-                fontWeight: 700,
-                // Start size: nearly full-width wordmark like the reference
-                fontSize: 'clamp(5rem, 14vw, 13rem)',
-                letterSpacing: '-0.08em',
-                color: SAND,
-                whiteSpace: 'nowrap',
-                lineHeight: 1,
-                willChange: 'transform, color',
-                // Start hidden to prevent flash, GSAP will position then reveal
-                visibility: ready ? 'visible' : 'hidden',
-                // CSS centering so the element is never in the wrong spot
-                transform: 'translateX(-50%)',
-            }}
-        >
-            Nexona
+        <div style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            zIndex: 90,
+            pointerEvents: 'none',
+        }}>
+            <div
+                ref={brandRef}
+                className="brand-wordmark"
+                style={{
+                    fontFamily: INTER,
+                    fontWeight: 700,
+                    fontSize: 'clamp(5rem, 14vw, 13rem)',
+                    letterSpacing: '-0.08em',
+                    color: SAND,
+                    whiteSpace: 'nowrap',
+                    lineHeight: 1,
+                    willChange: 'transform, color',
+                    visibility: ready ? 'visible' : 'hidden',
+                }}
+            >
+                Nexona
+            </div>
         </div>
     )
-}
+}

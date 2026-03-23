@@ -37,7 +37,7 @@ export default function HeroSection({ sectionRef }: Props) {
     useEffect(() => {
         const ctx = gsap.context(() => {
             gsap.to(imageRef.current, {
-                yPercent: -18,
+                yPercent: isMobile ? 0 : -18,
                 ease: 'none',
                 scrollTrigger: {
                     trigger: sectionRef.current,
@@ -48,7 +48,8 @@ export default function HeroSection({ sectionRef }: Props) {
             })
         })
         return () => ctx.revert()
-    }, [sectionRef])
+    }, [sectionRef, isMobile])
+
 
     return (
         <section
@@ -68,11 +69,12 @@ export default function HeroSection({ sectionRef }: Props) {
                 ref={imageRef}
                 style={{
                     position: 'absolute',
-                    top: '-15%',
-                    left: 0,
-                    width: '100%',
-                    height: '130%',
+                    top: isMobile ? '1.5%' : '-15%',
+                    left: -50,
+                    width: 'calc(100% + 60px)',
+                    height: isMobile ? '80%' : '130%',
                 }}
+
             >
                 <Image
                     src="/hero.png"
@@ -81,11 +83,13 @@ export default function HeroSection({ sectionRef }: Props) {
                     priority
                     style={{
                         objectFit: 'cover',
-                        objectPosition: isMobile ? 'center center' : '65% center',
+                        objectPosition: isMobile ? 'center center' : '75% center',
                         opacity: 1.0,
                     }}
+
                 />
             </div>
+
 
             {/* Nexona — flush to the bottom edge, zero padding bottom,
                 matching StickyHeader's brand exactly */}

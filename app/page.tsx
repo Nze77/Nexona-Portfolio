@@ -11,6 +11,7 @@ import DiscoverSection from './components/DiscoverSection'
 import CircleSection from './components/CircleSection'
 import CategoriesSection from './components/CategoriesSection'
 import ProductSection from './components/ProductSection'
+import ContactSection from './components/ContactSection'
 import Footer from './components/Footer'
 
 export default function HomePage() {
@@ -37,7 +38,8 @@ export default function HomePage() {
       {/* Replaced the map with a single call passing the filtered array */}
       <ProductSection data={filteredSections} />
 
+      <ContactSection />
       <Footer />
     </main>
   )
-}
+}

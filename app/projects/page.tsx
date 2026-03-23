@@ -9,26 +9,27 @@ import StickyHeader from '../components/StickyHeader'
 import Footer from '../components/Footer'
 import { useLenis } from '../lib/useLenis'
 
-const DUMMY_PROJECTS = [
-    { id: 1, title: 'Quantum Automation', category: 'AUTOMATION', image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80' },
-    { id: 2, title: 'Nebula E-commerce', category: 'FULL STACK WEBSITE', image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80' },
-    { id: 3, title: 'Aegis Security Bot', category: 'AI AGENTS', image: 'https://images.unsplash.com/photo-1531746790731-6c087fec07a8?w=800&q=80' },
-    { id: 4, title: 'Zenith Optimization', category: 'BUSINESS OPTIMIZATION', image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80' },
-    { id: 5, title: 'Lumina Dashboard', category: 'FULL STACK WEBSITE', image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80' },
-    { id: 6, title: 'Orion Analytics', category: 'BUSINESS OPTIMIZATION', image: 'https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&q=80' },
-    { id: 7, title: 'Titan Crawler', category: 'AUTOMATION', image: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&q=80' },
-    { id: 8, title: 'Echo Assistant', category: 'AI AGENTS', image: 'https://images.unsplash.com/photo-1589254065878-42c9da997008?w=800&q=80' },
-    { id: 9, title: 'Solaris Web App', category: 'FULL STACK WEBSITE', image: 'https://images.unsplash.com/photo-1547658719-da2b51169166?w=800&q=80' },
-]
+import { SECTIONS } from '../data/sections'
 
 export default function ProjectsPage() {
     const [search, setSearch] = useState('')
     useLenis()
 
-    const filteredProjects = DUMMY_PROJECTS.filter(p =>
+    // Flatten all products from all sections into a single projects array
+    const ALL_PROJECTS = SECTIONS.flatMap(section => 
+        section.products.map((p, idx) => ({
+            id: `${section.id}-${idx}`,
+            title: p.alt.replace(/^\/logos\/|\.png$|\.jpg$|\.jpeg$/g, '').toUpperCase(),
+            category: section.category,
+            image: p.src
+        }))
+    )
+
+    const filteredProjects = ALL_PROJECTS.filter(p =>
         p.title.toLowerCase().includes(search.toLowerCase()) ||
         p.category.toLowerCase().includes(search.toLowerCase())
     )
+
 
     return (
         <main style={{ backgroundColor: SAND, minHeight: '100vh', color: DARK }}>

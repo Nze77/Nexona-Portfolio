@@ -71,12 +71,13 @@ export default function CircleSection() {
                 },
             })
 
-            // Content parallax
+            // Content parallax - disabled for perfect centering
             gsap.to(imgRef.current, {
-                yPercent: mobile ? -8 : -18,
+                yPercent: 0,
                 ease: 'none',
                 scrollTrigger: st,
             })
+
 
             // Fade text in only after circle is large enough
             if (textRef.current) {
@@ -136,10 +137,10 @@ export default function CircleSection() {
                         ref={imgRef}
                         style={{
                             position: 'absolute',
-                            top: '-12%',
+                            top: 0,
                             left: 0,
                             width: '100%',
-                            height: '124%',
+                            height: '100%',
                             backgroundColor: DARK,
                             display: 'flex',
                             flexDirection: 'column',
@@ -158,7 +159,10 @@ export default function CircleSection() {
                             <p className="circle-para" style={{
                                 maxWidth: '900px',
                                 lineHeight: 1.5,
+                                margin: '0 auto',
+                                textAlign: 'center'
                             }}>
+
                                 We craft seamless digital experiences, automate the mundane, and elevate businesses with next-generation AI agents.
                             </p>
                         </div>
@@ -180,16 +184,16 @@ export default function CircleSection() {
 
                 @media (max-width: 768px) {
                     .circle-content-panel {
-                        padding: 2.5rem;
-                        max-width: 85vw;
+                        padding: 2rem;
+                        max-width: 90vw;
                     }
                     .circle-title {
-                        font-size: clamp(1.2rem, 6vw, 1.8rem);
-                        margin-bottom: 0.75rem;
+                        font-size: clamp(1.8rem, 8vw, 2.8rem);
+                        margin-bottom: 1rem;
                     }
                     .circle-para {
-                        font-size: clamp(0.8rem, 3.5vw, 1rem);
-                        max-width: 80vw;
+                        font-size: clamp(1rem, 4.5vw, 1.25rem);
+                        max-width: 85vw;
                     }
                 }
             `}</style>
