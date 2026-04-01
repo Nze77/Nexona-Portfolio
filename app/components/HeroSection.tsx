@@ -69,7 +69,7 @@ export default function HeroSection({ sectionRef }: Props) {
                 ref={imageRef}
                 style={{
                     position: 'absolute',
-                    top: isMobile ? '1.5%' : '-15%',
+                    top: isMobile ? '10.5%' : '-15%',
                     left: -50,
                     width: 'calc(100% + 60px)',
                     height: isMobile ? '80%' : '130%',

@@ -12,3 +12,15 @@ export interface SectionData {
     dark: boolean
     products: Product[]
 }
+
+export interface ProjectDetail {
+    id: string
+    name: string
+    client: string
+    year: string
+    role: string
+    description: string
+    image: string
+    deliverables: string[]
+    landingPage?: string
+}
