@@ -32,7 +32,8 @@ export default function ProjectDetailsPage({ params }: { params: Promise<{ proje
         description: detailedProject?.description || 'This is a dummy description for the project. In a real-world scenario, this would contain detailed information about the project overview, the challenges faced, the solution implemented, and the final results achieved. Nexona delivered a complete digital transformation, emphasizing brand identity and seamless user interactions.',
         image: detailedProject?.image || foundSectionProduct?.src || '/logos/1327.png',
         deliverables: detailedProject?.deliverables || ['Web Design', 'Development', 'Brand Identity', '3D Motion'],
-        landingPage: detailedProject?.landingPage
+        landingPage: detailedProject?.landingPage,
+        caseStudy: detailedProject?.caseStudy
     }
 
     return (
@@ -209,6 +210,57 @@ export default function ProjectDetailsPage({ params }: { params: Promise<{ proje
                                 ))}
                             </div>
                         </div>
+
+                        {/* Case Study Section */}
+                        {dummyData.caseStudy && (
+                            <motion.div
+                                initial={{ opacity: 0, y: 30 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.8, delay: 0.2 }}
+                                style={{ marginTop: '5rem', paddingTop: '5rem', borderTop: `1px solid rgba(0,0,0,0.1)` }}
+                            >
+                                <h4 style={{ fontFamily: INTER, fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.1em', opacity: 0.5, marginBottom: '2rem' }}>
+                                    {dummyData.caseStudy.title}
+                                </h4>
+                                
+                                <div style={{ 
+                                    display: 'grid',
+                                    gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))',
+                                    gap: '2rem',
+                                    marginBottom: '2.5rem'
+                                }}>
+                                    {dummyData.caseStudy.images.map((img, idx) => (
+                                        <div key={idx} style={{ 
+                                            position: 'relative', 
+                                            width: '100%', 
+                                            aspectRatio: '16/9', 
+                                            borderRadius: '24px', 
+                                            overflow: 'hidden',
+                                            backgroundColor: '#eee'
+                                        }}>
+                                            <Image 
+                                                src={img} 
+                                                alt={`Case Study Detail ${idx + 1}`}
+                                                fill
+                                                style={{ objectFit: 'cover' }}
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
+
+                                <p style={{
+                                    fontFamily: INTER,
+                                    fontSize: '1.2rem',
+                                    lineHeight: 1.7,
+                                    opacity: 0.9,
+                                    fontWeight: 400,
+                                    maxWidth: '800px'
+                                }}>
+                                    {dummyData.caseStudy.text}
+                                </p>
+                            </motion.div>
+                        )}
 
                     </motion.div>
                 </div>

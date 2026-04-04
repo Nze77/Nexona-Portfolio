@@ -3,6 +3,7 @@
 import { useRef, useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
+import Link from 'next/link'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { DARK, SAND } from '../lib/constants'
@@ -188,36 +189,38 @@ export default function ProductSection({ data }: Props) {
                                         borderRadius: '12px',
                                     }}
                                 >
-                                    <div className="absolute inset-0 transition-transform duration-500 group-hover:scale-95 origin-top rounded-t-lg overflow-hidden">
-                                        <Image
-                                            src={img.src}
-                                            alt={img.alt}
-                                            fill
-                                            sizes={isMobile ? '100vw' : '(max-width: 768px) 100vw, 33vw'}
-                                            style={{
-                                                objectFit: 'cover',
-                                                display: 'block',
-                                                pointerEvents: 'none',
-                                            }}
-                                        />
-                                    </div>
-                                    {/* Hover / tap overlay */}
-                                    <div
-                                        className={`absolute bottom-0 left-0 right-0 ${isMobile ? 'h-[75%]' : 'h-[75%]'} bg-black/60 backdrop-blur-md p-4 sm:p-6 ${isMobile ? 'translate-y-[calc(100%-60px)]' : 'translate-y-[calc(100%-68px)]'} group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] z-10 flex flex-col`}
-                                    >
+                                    <Link href={img.link || '#'} className="block absolute inset-0 z-20">
+                                        <div className="absolute inset-0 transition-transform duration-500 group-hover:scale-95 origin-top rounded-t-lg overflow-hidden">
+                                            <Image
+                                                src={img.src}
+                                                alt={img.alt}
+                                                fill
+                                                sizes={isMobile ? '100vw' : '(max-width: 768px) 100vw, 33vw'}
+                                                style={{
+                                                    objectFit: 'cover',
+                                                    display: 'block',
+                                                    pointerEvents: 'none',
+                                                }}
+                                            />
+                                        </div>
+                                        {/* Hover / tap overlay */}
+                                        <div
+                                            className={`absolute bottom-0 left-0 right-0 ${isMobile ? 'h-[75%]' : 'h-[75%]'} bg-black/60 backdrop-blur-md p-4 sm:p-6 ${isMobile ? 'translate-y-[calc(100%-60px)]' : 'translate-y-[calc(100%-68px)]'} group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] flex flex-col`}
+                                        >
 
-                                        <div className="flex justify-between items-center h-5 shrink-0">
-                                            <h3 className={`${isMobile ? 'text-base' : 'text-xl'} font-medium text-white`}>{img.alt || 'Project'}</h3>
+                                            <div className="flex justify-between items-center h-5 shrink-0">
+                                                <h3 className={`${isMobile ? 'text-base' : 'text-xl'} font-medium text-white`}>{img.alt || 'Project'}</h3>
+                                            </div>
+                                            <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-200 flex-1 flex flex-col mt-3">
+                                                <p className="text-white/80 text-sm leading-relaxed mb-4">
+                                                    {img.description || 'Elevating your digital presence.'}
+                                                </p>
+                                                <button className="w-full mt-auto py-2.5 bg-white text-black text-xs font-bold uppercase tracking-widest rounded transition-colors hover:bg-gray-200 pointer-events-none">
+                                                    View Details
+                                                </button>
+                                            </div>
                                         </div>
-                                        <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-200 flex-1 flex flex-col mt-3">
-                                            <p className="text-white/80 text-sm leading-relaxed mb-4">
-                                                {img.description || 'Elevating your digital presence.'}
-                                            </p>
-                                            <button className="w-full mt-auto py-2.5 bg-white text-black text-xs font-bold uppercase tracking-widest rounded transition-colors hover:bg-gray-200">
-                                                View Details
-                                            </button>
-                                        </div>
-                                    </div>
+                                    </Link>
                                 </motion.div>
                             ))}
                         </section>

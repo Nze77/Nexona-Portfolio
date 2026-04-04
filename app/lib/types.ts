@@ -4,6 +4,7 @@ export interface Product {
     style: React.CSSProperties
     parallaxY: number   // total px to drift over the section's scroll-through
     description?: string
+    link?: string
 }
 
 export interface SectionData {
@@ -23,4 +24,9 @@ export interface ProjectDetail {
     image: string
     deliverables: string[]
     landingPage?: string
+    caseStudy?: {
+        images: string[]
+        title: string
+        text: string
+    }
 }
