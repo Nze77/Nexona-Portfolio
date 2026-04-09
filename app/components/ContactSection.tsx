@@ -46,7 +46,7 @@ export default function ContactSection() {
         setErrorMessage('')
 
         try {
-            const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
+            const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'https://contact-form-submission.vercel.app'
             const response = await fetch(`${baseUrl}/nexona-portfolio`, {
                 method: 'POST',
                 headers: {
