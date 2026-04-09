@@ -1,4 +1,5 @@
 export interface Product {
+    name?: string    
     src: string
     alt: string
     style: React.CSSProperties

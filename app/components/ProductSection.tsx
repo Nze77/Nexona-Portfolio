@@ -209,7 +209,7 @@ export default function ProductSection({ data }: Props) {
                                         >
 
                                             <div className="flex justify-between items-center h-5 shrink-0">
-                                                <h3 className={`${isMobile ? 'text-base' : 'text-xl'} font-medium text-white`}>{img.alt || 'Project'}</h3>
+                                                <h3 className={`${isMobile ? 'text-base' : 'text-xl'} font-medium text-white`}>{img.name || img.alt || 'Project'}</h3>
                                             </div>
                                             <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-200 flex-1 flex flex-col mt-3">
                                                 <p className="text-white/80 text-sm leading-relaxed mb-4">
