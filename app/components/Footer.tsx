@@ -64,15 +64,26 @@ export default function Footer() {
                     }}
                 >
                     {[
-                        { name: 'Full Stack Websites', href: '#fullstack' },
-                        { name: 'Automation', href: '#office' },
-                        { name: 'AI Agents', href: '#decor' },
-                        { name: 'Business Optimization', href: '#tech' },
-                        { name: 'Contact', href: '#' }
+                        { name: 'Full Stack Websites', href: '/#fullstack' },
+                        { name: 'AI Agents', href: '/#ai-agents' },
+                        { name: 'Automation', href: '/#automation' },
+                        { name: 'Business Optimization', href: '/#business-optimization' },
+                        { name: 'Contact', href: '/#contact' }
+
                     ].map(link => (
                         <a
                             key={link.name}
                             href={link.href}
+                            onClick={(e) => {
+                                // If we are already on the home page, intercept the click for smooth scroll
+                                if (window.location.pathname === '/' && link.href.startsWith('/#')) {
+                                    e.preventDefault()
+                                    const id = link.href.slice(2) // remove '/#'
+                                    const el = document.getElementById(id)
+                                    if (el) el.scrollIntoView({ behavior: 'smooth' })
+                                }
+                                // Else, let the browser naturally navigate to /#id
+                            }}
                             className="nav-link"
                             style={{
                                 fontSize: isMobile ? '0.75rem' : '0.8rem',

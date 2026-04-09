@@ -6,7 +6,10 @@ import { DARK, SAND, HELVETICA } from '../lib/constants'
 import { stagger, pill } from '../lib/variants'
 
 const CATEGORIES = [
-    'FULL STACK DEVELOPMENT', 'AUTOMATION', 'BUSINESS OPTIMIZATION', 'AI AGENTS',
+    { name: 'FULL STACK DEVELOPMENT', id: 'fullstack' },
+    { name: 'AI AGENTS', id: 'ai-agents' },
+    { name: 'AUTOMATION', id: 'automation' },
+    { name: 'BUSINESS OPTIMIZATION', id: 'business-optimization' },
 ]
 
 /**
@@ -37,8 +40,15 @@ export default function CategoriesSection() {
                 >
                     {CATEGORIES.map(cat => (
                         <motion.a
-                            key={cat}
-                            href="#"
+                            key={cat.name}
+                            href={`/#${cat.id}`}
+                            onClick={(e) => {
+                                if (window.location.pathname === '/') {
+                                    e.preventDefault()
+                                    const el = document.getElementById(cat.id)
+                                    if (el) el.scrollIntoView({ behavior: 'smooth' })
+                                }
+                            }}
                             variants={pill}
                             whileHover={{
                                 backgroundColor: DARK,
@@ -61,7 +71,7 @@ export default function CategoriesSection() {
                                 fontFamily: HELVETICA,
                             }}
                         >
-                            {cat}
+                            {cat.name}
                         </motion.a>
                     ))}
                 </motion.div>

@@ -28,7 +28,7 @@ export const SECTIONS: SectionData[] = [
         ],
     },
     {
-        id: 'decor', category: 'AI AGENTS', dark: true,
+        id: 'ai-agents', category: 'AI AGENTS', dark: true,
         products: [
             {
                 src: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&q=80',
@@ -54,7 +54,7 @@ export const SECTIONS: SectionData[] = [
         ],
     },
     {
-        id: 'office', category: 'AUTOMATION', dark: false,
+        id: 'automation', category: 'AUTOMATION', dark: false,
         products: [
             {
                 src: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800&q=80',
@@ -80,7 +80,7 @@ export const SECTIONS: SectionData[] = [
         ],
     },
     {
-        id: 'tech', category: 'BUSINESS OPTIMIZATION', dark: true,
+        id: 'business-optimization', category: 'BUSINESS OPTIMIZATION', dark: true,
         products: [
             {
                 src: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80',

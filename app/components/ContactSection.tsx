@@ -17,6 +17,61 @@ export default function ContactSection() {
         return () => window.removeEventListener('resize', check)
     }, [])
 
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        phone: '',
+        message: ''
+    })
+    const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
+    const [errorMessage, setErrorMessage] = useState('')
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target
+        setFormData(prev => ({ ...prev, [name]: value }))
+    }
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault()
+        
+        // Custom simple validation
+        const phoneRegex = /^\+?[0-9\s\-\(\)]{7,15}$/
+        if (!phoneRegex.test(formData.phone)) {
+            setStatus('error')
+            setErrorMessage('Please enter a valid phone number.')
+            return
+        }
+
+        setStatus('loading')
+        setErrorMessage('')
+
+        try {
+            const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
+            const response = await fetch(`${baseUrl}/nexona-portfolio`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            })
+
+            if (response.ok) {
+                setStatus('success')
+                setFormData({ name: '', email: '', phone: '', message: '' })
+                setTimeout(() => setStatus('idle'), 5000) // Reset after 5 seconds
+            } else if (response.status === 422) {
+                setStatus('error')
+                setErrorMessage('Please check your information and try again.')
+            } else {
+                setStatus('error')
+                setErrorMessage('Something went wrong. Please try again later.')
+            }
+        } catch (error) {
+            setStatus('error')
+            setErrorMessage('Network error. Please try again later.')
+        }
+    }
+
     const variants: Variants = {
         hidden: { opacity: 0, y: 30 },
         visible: (i: number) => ({
@@ -93,6 +148,7 @@ export default function ContactSection() {
 
                 {/* Right Side: Minimal Vertical Form */}
                 <motion.form
+                    onSubmit={handleSubmit}
                     variants={variants}
                     initial="hidden"
                     animate={inView ? 'visible' : 'hidden'}
@@ -108,17 +164,59 @@ export default function ContactSection() {
                     }}
                 >
                     <div style={{ position: 'relative' }}>
-                        <input type="text" placeholder="NAME" style={inputStyle} />
+                        <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="NAME" required style={inputStyle} />
                     </div>
                     <div style={{ position: 'relative' }}>
-                        <input type="email" placeholder="EMAIL" style={inputStyle} />
+                        <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="EMAIL" required style={inputStyle} />
                     </div>
                     <div style={{ position: 'relative' }}>
-                        <textarea placeholder="PROJECT DETAILS / MESSAGE" style={{ ...inputStyle, minHeight: '120px', resize: 'none' }} />
+                        <input type="tel" name="phone" value={formData.phone} onChange={handleChange} placeholder="PHONE NUMBER" required style={inputStyle} />
+                    </div>
+                    <div style={{ position: 'relative' }}>
+                        <textarea name="message" value={formData.message} onChange={handleChange} placeholder="PROJECT DETAILS / MESSAGE" required style={{ ...inputStyle, minHeight: '120px', resize: 'none' }} />
                     </div>
                     
+                    {status === 'error' && (
+                        <motion.p 
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            style={{ color: '#ef4444', fontSize: '0.85rem', fontFamily: INTER, fontWeight: 600, margin: 0, letterSpacing: '0.05em', textTransform: 'uppercase' }}
+                        >
+                            {errorMessage}
+                        </motion.p>
+                    )}
+                    
+                    {status === 'success' && (
+                        <motion.div
+                            initial={{ opacity: 0, y: 15 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -15 }}
+                            style={{
+                                backgroundColor: DARK,
+                                color: SAND,
+                                padding: '1.5rem',
+                                border: `1px solid ${DARK}`,
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '1rem'
+                            }}
+                        >
+                            <div style={{
+                                width: '2rem', height: '2rem', borderRadius: '50%', border: `1.5px solid ${SAND}`, display: 'flex', alignItems: 'center', justifyContent: 'center'
+                            }}>
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                            <p style={{ fontFamily: INTER, fontSize: '0.85rem', fontWeight: 600, letterSpacing: '0.1em', margin: 0, textTransform: 'uppercase' }}>
+                                RECEIVED. WE WILL BE IN TOUCH SHORTLY.
+                            </p>
+                        </motion.div>
+                    )}
+
                     <button 
-                        type="button"
+                        type="submit"
+                        disabled={status === 'loading'}
                         style={{
                             fontFamily: INTER,
                             fontWeight: 700,
@@ -129,19 +227,20 @@ export default function ContactSection() {
                             border: 'none',
                             padding: '1.5rem 2rem',
                             textTransform: 'uppercase',
-                            cursor: 'pointer',
+                            cursor: status === 'loading' ? 'not-allowed' : 'pointer',
+                            opacity: status === 'loading' ? 0.7 : 1,
                             width: '100%',
                             transition: 'all 0.3s ease',
                             marginTop: '1.5rem',
                         }}
                         onMouseEnter={(e) => {
-                            e.currentTarget.style.filter = 'brightness(1.15)'
+                            if (status !== 'loading') e.currentTarget.style.filter = 'brightness(1.15)'
                         }}
                         onMouseLeave={(e) => {
-                            e.currentTarget.style.filter = 'brightness(1)'
+                            if (status !== 'loading') e.currentTarget.style.filter = 'brightness(1)'
                         }}
                     >
-                        Submit Inquiry
+                        {status === 'loading' ? 'Sending...' : 'Submit Inquiry'}
                     </button>
                 </motion.form>
             </div>
