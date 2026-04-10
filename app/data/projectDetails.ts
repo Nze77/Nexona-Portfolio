@@ -55,10 +55,10 @@ We transform traditional business websites into intelligent, interactive experie
     {
         id: 'rag-chatbot',
         name: 'ENTERPRISE RAG CHATBOT',
-        client: 'Global Enterprises',
+        client: 'Personal Portfolio',
         year: '2026',
-        role: 'Advanced AI Systems Engineering',
-        description: 'We revolutionized corporate data retrieval by engineering a hyper-accurate Retrieval-Augmented Generation (RAG) chatbot. This astonishing AI essentially devours thousands of pages of dense company documents, manuals, and policies in seconds. It completely eliminates the need for human search, flawlessly retrieving exact information, resolving complex internal queries instantaneously, and saving businesses tens of thousands of work hours while practically neutralizing human error.',
+        role: 'AI Assistant',
+        description: 'This RAG-based chatbot is designed for high-volume customer interactions across websites, acting as an assistant, receptionist, and support agent while minimizing operational costs. It reduces typical support overhead from ~$150–250/day to ~$5–10/day for handling ~800–1200 user queries, by running retrieval and generation pipelines efficiently on a single GPU/CPU setup. The system achieves ~400–700 ms response latency, compared to ~2000–3500 ms in API-dependent architectures. It supports 100s–1000s of concurrent users depending on infrastructure, scaling with compute rather than vendor-imposed limits. By leveraging structured knowledge bases and real-time retrieval, it improves answer accuracy from ~60–70% to ~90–95%, significantly reducing fallback or escalation rates. It not only answers queries but also performs actions such as capturing leads, booking appointments, updating CRM fields, and routing requests—improving conversion rates from ~3–5% to ~15–25%. With minimal reliance on external APIs, it ensures lower costs, faster responses, improved data privacy, and complete control over business workflows.',
         image: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&q=80',
         deliverables: ['RAG Pipeline Construction', 'Semantic Search', 'Automated Workflows']
     },

@@ -17,10 +17,28 @@ const montserrat = Montserrat({
 export const metadata: Metadata = {
   title: 'Nexona',
   description: 'AI Agents & Automations, Full Stack Development, ERPs, CRMs, and more',
-  icons: {
-    icon: '/logo.ico',
-    shortcut: '/logo.ico',
-    apple: '/logo.ico',
+  metadataBase: new URL('https://nexonalabs.com'),
+  openGraph: {
+    title: 'Nexona | AI Agents & Automations',
+    description: 'Bespoke AI Agents, Full Stack Development, and Business Automations to scale your enterprise.',
+    url: 'https://nexonalabs.com',
+    siteName: 'Nexona',
+    images: [
+      {
+        url: '/logo.png',
+        width: 1200,
+        height: 630,
+        alt: 'Nexona AI Agents & Automations',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Nexona | AI Agents & Automations',
+    description: 'Bespoke AI Agents, Full Stack Development, and Business Automations to scale your enterprise.',
+    images: ['/logo.png'],
   },
 }
 
