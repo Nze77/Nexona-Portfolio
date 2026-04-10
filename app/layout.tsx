@@ -16,7 +16,12 @@ const montserrat = Montserrat({
 
 export const metadata: Metadata = {
   title: 'Nexona',
-  description: 'Curating the best in minimal design.',
+  description: 'AI Agents & Automations, Full Stack Development, ERPs, CRMs, and more',
+  icons: {
+    icon: '/logo.ico',
+    shortcut: '/logo.ico',
+    apple: '/logo.ico',
+  },
 }
 
 export default function RootLayout({
@@ -26,7 +31,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${syne.variable} ${montserrat.variable}`}>
-       <body className="antialiased" style={{ fontFamily: "var(--font-montserrat), sans-serif" }}>
+      <body className="antialiased" style={{ fontFamily: "var(--font-montserrat), sans-serif" }}>
         {children}
       </body>
     </html>
