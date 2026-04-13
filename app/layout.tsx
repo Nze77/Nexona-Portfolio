@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     siteName: 'Nexona',
     images: [
       {
-        url: '/logo.png',
+        url: 'https://nexonalabs.com/logo.png',
         width: 1200,
         height: 630,
         alt: 'Nexona AI Agents & Automations',
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Nexona | AI Agents & Automations',
     description: 'Bespoke AI Agents, Full Stack Development, and Business Automations to scale your enterprise.',
-    images: ['/logo.png'],
+    images: ['https://nexonalabs.com/logo.png'],
   },
 }
 
