@@ -189,7 +189,7 @@ export default function MumbaiAgencyPage() {
                             Architecting the <br /> Future of Business
                         </motion.h2>
                         <motion.p variants={fadeInUp} style={{ fontFamily: INTER, opacity: 0.8, lineHeight: 1.8, fontSize: '1.15rem', marginBottom: '3rem' }}>
-                            We don&apos;t just write code; we build scalable digital ecosystems. As a leading software development agency in Mumbai, we understand the fast-paced, high-stakes nature of local businesses. From Bandra startups to Nariman Point enterprises, we engineer solutions that drive measurable growth.
+                            We don&apos;t just write code; we build scalable digital ecosystems. As a leading software development agency, we understand the fast-paced, high-stakes nature of modern enterprises. From disruptive startups to established corporations, we engineer bespoke solutions that drive measurable growth and operational excellence.
                         </motion.p>
                         <motion.ul variants={staggerContainer} style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                             {['Bespoke Web & Mobile Applications', 'Scalable Cloud Architecture', 'Secure Financial & Tech Portals'].map((item, i) => (
