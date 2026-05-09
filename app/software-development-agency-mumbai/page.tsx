@@ -12,7 +12,7 @@ import { DARK, SAND, INTER } from '../lib/constants'
 // Extracted animation variants
 const fadeInUp = {
     hidden: { opacity: 0, y: 40 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.23, 1, 0.32, 1] } }
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.23, 1, 0.32, 1] as const } }
 }
 
 const staggerContainer = {
@@ -78,7 +78,7 @@ export default function MumbaiAgencyPage() {
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 1, ease: [0.23, 1, 0.32, 1] }}
+                        transition={{ duration: 1, ease: [0.23, 1, 0.32, 1] as const }}
                         style={{
                             padding: '0.6rem 2rem',
                             border: `1px solid rgba(232,223,211,0.15)`,
@@ -95,7 +95,7 @@ export default function MumbaiAgencyPage() {
                     <motion.h1
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, delay: 0.1, ease: [0.23, 1, 0.32, 1] }}
+                        transition={{ duration: 0.8, delay: 0.1, ease: [0.23, 1, 0.32, 1] as const }}
                         style={{
                             fontFamily: "var(--font-montserrat), sans-serif",
                             fontSize: 'clamp(3rem, 8vw, 7rem)',
@@ -112,7 +112,7 @@ export default function MumbaiAgencyPage() {
                     <motion.p
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, delay: 0.3, ease: [0.23, 1, 0.32, 1] }}
+                        transition={{ duration: 0.8, delay: 0.3, ease: [0.23, 1, 0.32, 1] as const }}
                         style={{
                             fontFamily: INTER,
                             fontSize: isMobile ? '1.05rem' : '1.35rem',
@@ -159,7 +159,7 @@ export default function MumbaiAgencyPage() {
                         initial={{ opacity: 0, scale: 0.95 }}
                         whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true, margin: "-10%" }}
-                        transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
+                        transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] as const }}
                         style={{ flex: 1, position: 'relative', width: '100%', aspectRatio: '4/5', borderRadius: '24px', overflow: 'hidden' }}
                     >
                         <Image 
@@ -237,7 +237,7 @@ export default function MumbaiAgencyPage() {
                                 initial="hidden"
                                 whileInView="visible"
                                 viewport={{ once: true, margin: "-10%" }}
-                                variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { delay: i * 0.15, duration: 0.8, ease: [0.23, 1, 0.32, 1] } } }}
+                                variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { delay: i * 0.15, duration: 0.8, ease: [0.23, 1, 0.32, 1] as const } } }}
                                 style={{ borderTop: `2px solid ${SAND}`, paddingTop: '2rem' }}
                             >
                                 <span style={{ fontFamily: "var(--font-montserrat), sans-serif", fontSize: '2.5rem', fontWeight: 800, opacity: 0.3 }}>{item.step}</span>
@@ -289,7 +289,7 @@ export default function MumbaiAgencyPage() {
                         initial={{ opacity: 0, scale: 0.95 }}
                         whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true, margin: "-10%" }}
-                        transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
+                        transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] as const }}
                         style={{ flex: 1, position: 'relative', width: '100%', aspectRatio: '4/5', borderRadius: '24px', overflow: 'hidden' }}
                     >
                         <Image 
@@ -340,9 +340,9 @@ export default function MumbaiAgencyPage() {
                                 initial="hidden"
                                 whileInView="visible"
                                 viewport={{ once: true, margin: "-10%" }}
-                                variants={{ hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0, transition: { delay: i * 0.1, duration: 0.6, ease: [0.23, 1, 0.32, 1] } } }}
+                                variants={{ hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0, transition: { delay: i * 0.1, duration: 0.6, ease: [0.23, 1, 0.32, 1] as const } } }}
                                 whileHover={{ y: -10, boxShadow: '0 30px 60px rgba(0,0,0,0.1)' }}
-                                transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
+                                transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] as const }}
                                 style={{
                                     backgroundColor: '#fff',
                                     borderRadius: '24px',
