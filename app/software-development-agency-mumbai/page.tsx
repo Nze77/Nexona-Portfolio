@@ -63,8 +63,8 @@ export default function MumbaiAgencyPage() {
             >
                 <motion.div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, y, zIndex: 0 }}>
                     <Image 
-                        src="https://images.unsplash.com/photo-1570168007204-dfb528c6958f?q=80&w=2000&auto=format&fit=crop" 
-                        alt="Mumbai Skyline"
+                        src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2000&auto=format&fit=crop" 
+                        alt="Digital Network Background"
                         fill
                         style={{ objectFit: 'cover', opacity: 0.25 }}
                         priority
