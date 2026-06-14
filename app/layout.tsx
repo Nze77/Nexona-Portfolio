@@ -1,5 +1,6 @@
 import { Syne, Montserrat } from 'next/font/google'
 import type { Metadata } from 'next'
+import { GoogleTagManager } from '@next/third-parties/google'
 import './globals.css'
 
 const syne = Syne({
@@ -49,6 +50,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${syne.variable} ${montserrat.variable}`}>
+      {process.env.NEXT_PUBLIC_GA_ID && (
+        <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GA_ID} />
+      )}
       <body className="antialiased" style={{ fontFamily: "var(--font-montserrat), sans-serif" }}>
         {children}
       </body>
