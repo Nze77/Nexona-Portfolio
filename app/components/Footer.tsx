@@ -4,6 +4,7 @@ import { useRef, useEffect, useState } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { DARK, SAND, HELVETICA } from '../lib/constants'
 import { fadeUp } from '../lib/variants'
+import { LANDING_PAGES } from '../data/landingPages'
 
 export default function Footer() {
     const ref = useRef<HTMLElement>(null)
@@ -68,6 +69,9 @@ export default function Footer() {
                         { name: 'AI Agents', href: '/#ai-agents' },
                         { name: 'Automation', href: '/#automation' },
                         { name: 'Business Optimization', href: '/#business-optimization' },
+                        // Internal links to SEO landing pages — auto-generated from the
+                        // registry so every landing page (current and future) is crawlable.
+                        ...LANDING_PAGES.map((p) => ({ name: p.navLabel ?? p.title, href: `/${p.slug}` })),
                         { name: 'Contact', href: '/#contact' }
 
                     ].map(link => (
