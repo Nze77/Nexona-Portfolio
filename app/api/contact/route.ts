@@ -64,6 +64,10 @@ export async function POST(request: Request) {
             user: SMTP_USER,
             pass: SMTP_PASS,
         },
+        // Fail fast instead of hanging until the serverless function times out
+        connectionTimeout: 8000,
+        greetingTimeout: 8000,
+        socketTimeout: 8000,
     })
 
     const recipient = CONTACT_TO || SMTP_USER
@@ -88,6 +92,14 @@ export async function POST(request: Request) {
         return NextResponse.json({ success: true }, { status: 200 })
     } catch (error) {
         console.error('Contact form: failed to send email.', error)
-        return NextResponse.json({ error: 'Failed to send message. Please try again later.' }, { status: 500 })
+        const err = error as { message?: string; code?: string }
+        return NextResponse.json(
+            {
+                error: 'Failed to send message. Please try again later.',
+                // TEMPORARY diagnostic — remove once production SMTP is confirmed working
+                debug: { message: err?.message, code: err?.code },
+            },
+            { status: 500 },
+        )
     }
 }
