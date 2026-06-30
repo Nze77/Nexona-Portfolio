@@ -86,4 +86,38 @@ export const LANDING_PAGES: LandingPage[] = [
             ],
         },
     },
+    {
+        slug: 'ERP-Software-company-In-Mumbai',
+        title: 'ERP Software Company in Mumbai for Manufacturers | Nexona',
+        description:
+            'ERP software company in Mumbai trusted by manufacturers. Nexona covers production, GST, inventory & compliance. Thane, Bhiwandi, Navi Mumbai. Book a demo.',
+        priority: 0.9,
+        navLabel: 'Manufacturing ERP Mumbai',
+        keywords: [
+            'ERP software company in Mumbai',
+            'ERP software company in Mumbai for Manufacturers',
+            'manufacturing ERP software Mumbai',
+            'ERP solutions for manufacturers Mumbai',
+            'factory management software Mumbai',
+            'supply chain ERP software Mumbai',
+        ],
+        og: {
+            title: 'ERP Software Company in Mumbai for Manufacturers | Nexona',
+            description:
+                'ERP software company in Mumbai trusted by manufacturers. Nexona covers production, GST, inventory & compliance. Thane, Bhiwandi, Navi Mumbai. Book a demo.',
+        },
+        business: {
+            areaServedCity: 'Mumbai',
+            addressLocality: 'Mumbai',
+            addressRegion: 'Maharashtra',
+            addressCountry: 'IN',
+            serviceType: [
+                'Manufacturing ERP Software',
+                'ERP Software Company in Mumbai',
+                'ERP Implementation',
+                'Inventory & Production Planning',
+            ],
+        },
+    },
 ]
+
