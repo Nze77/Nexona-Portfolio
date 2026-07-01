@@ -30,7 +30,8 @@ export default function HomePage() {
     <main>
       <MorphingBrand heroRef={heroRef} />
       <HeroSection sectionRef={heroRef} />
-      <StickyHeader />
+      {/* Root page has its own animated MorphingBrand — don't render the static one */}
+      <StickyHeader showBrand={false} />
       <DiscoverSection />
       <CircleSection />
       <CategoriesSection />

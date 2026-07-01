@@ -121,7 +121,6 @@ export default function Footer() {
                 textAlign: isMobile ? 'center' : 'left',
             }}>
                 <span>© 2026 Nexona. All rights reserved.</span>
-                <span>Minimal design curation</span>
             </div>
         </footer>
     )

@@ -3,7 +3,7 @@ import { SECTIONS } from './data/sections'
 import { LANDING_PAGES } from './data/landingPages'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://nexonalabs.com'
+  const baseUrl = 'https://www.nexonalabs.com'
   const lastModified = new Date()
 
   // Project detail pages, derived from the sections data

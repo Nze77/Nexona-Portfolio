@@ -25,7 +25,15 @@ const navItemStyle: React.CSSProperties = {
     opacity: 1,
 }
 
-export default function StickyHeader({ theme = 'dark' }: { theme?: 'dark' | 'light' }) {
+export default function StickyHeader({
+    theme = 'dark',
+    showBrand = true,
+}: {
+    theme?: 'dark' | 'light'
+    /** Render the centered "Nexona" wordmark. Disable on the root page, whose
+     *  MorphingBrand supplies its own animated wordmark. */
+    showBrand?: boolean
+}) {
     const headerRef = useRef<HTMLElement>(null)
     const dividerRef = useRef<HTMLDivElement>(null)
     const [menuOpen, setMenuOpen] = useState(false)
@@ -174,81 +182,104 @@ export default function StickyHeader({ theme = 'dark' }: { theme?: 'dark' | 'lig
 
                 {/* Nav row */}
                 <div style={{
-                    display: 'flex',
+                    display: 'grid',
+                    gridTemplateColumns: '1fr auto 1fr',
                     alignItems: 'center',
-                    justifyContent: 'space-between',
                     padding: '0 2rem',
                     height: '6rem',
                 }}>
-                    {/* Desktop nav links */}
-                    <div className="desktop-nav" style={{ display: 'flex', gap: '2rem' }}>
-                        <Link href="/projects" style={navItemStyle}>
-                            Projects
-                        </Link>
+                    {/* Left: desktop "Projects" link + mobile hamburger */}
+                    <div style={{ justifySelf: 'start', display: 'flex', alignItems: 'center' }}>
+                        <div className="desktop-nav" style={{ display: 'flex', gap: '2rem' }}>
+                            <Link href="/projects" style={navItemStyle}>
+                                Projects
+                            </Link>
+                        </div>
+
+                        {/* Mobile hamburger button */}
+                        <button
+                            className="mobile-menu-btn"
+                            onClick={() => setMenuOpen(!menuOpen)}
+                            aria-label="Toggle menu"
+                            style={{
+                                display: 'none',
+                                background: 'none',
+                                border: 'none',
+                                cursor: 'pointer',
+                                padding: '8px',
+                                color: currentColor,
+                                zIndex: 100,
+                                position: 'relative',
+                                width: '40px',
+                                height: '40px',
+                            }}
+                        >
+                            <div style={{
+                                position: 'relative',
+                                width: '24px',
+                                height: '18px',
+                                margin: '0 auto',
+                            }}>
+                                <div style={{
+                                    width: '24px',
+                                    height: '2px',
+                                    backgroundColor: 'currentColor',
+                                    transition: 'all 0.3s ease',
+                                    position: 'absolute',
+                                    left: 0,
+                                    top: menuOpen ? '50%' : '0',
+                                    transform: menuOpen ? 'translateY(-50%) rotate(45deg)' : 'none',
+                                }} />
+                                <div style={{
+                                    width: '24px',
+                                    height: '2px',
+                                    backgroundColor: 'currentColor',
+                                    transition: 'all 0.3s ease',
+                                    position: 'absolute',
+                                    left: 0,
+                                    top: '50%',
+                                    transform: 'translateY(-50%)',
+                                    opacity: menuOpen ? 0 : 1,
+                                }} />
+                                <div style={{
+                                    width: '24px',
+                                    height: '2px',
+                                    backgroundColor: 'currentColor',
+                                    transition: 'all 0.3s ease',
+                                    position: 'absolute',
+                                    left: 0,
+                                    top: menuOpen ? '50%' : '100%',
+                                    transform: menuOpen ? 'translateY(-50%) rotate(-45deg)' : 'translateY(-100%)',
+                                }} />
+                            </div>
+                        </button>
                     </div>
 
-
-                    {/* Mobile hamburger button */}
-                    <button
-                        className="mobile-menu-btn"
-                        onClick={() => setMenuOpen(!menuOpen)}
-                        aria-label="Toggle menu"
-                        style={{
-                            display: 'none',
-                            background: 'none',
-                            border: 'none',
-                            cursor: 'pointer',
-                            padding: '8px',
-                            color: currentColor,
-                            zIndex: 100,
-                            position: 'relative',
-                            width: '40px',
-                            height: '40px',
-                        }}
-                    >
-                        <div style={{
-                            position: 'relative',
-                            width: '24px',
-                            height: '18px',
-                            margin: '0 auto',
-                        }}>
-                            <div style={{
-                                width: '24px',
-                                height: '2px',
-                                backgroundColor: 'currentColor',
-                                transition: 'all 0.3s ease',
-                                position: 'absolute',
-                                left: 0,
-                                top: menuOpen ? '50%' : '0',
-                                transform: menuOpen ? 'translateY(-50%) rotate(45deg)' : 'none',
-                            }} />
-                            <div style={{
-                                width: '24px',
-                                height: '2px',
-                                backgroundColor: 'currentColor',
-                                transition: 'all 0.3s ease',
-                                position: 'absolute',
-                                left: 0,
-                                top: '50%',
-                                transform: 'translateY(-50%)',
-                                opacity: menuOpen ? 0 : 1,
-                            }} />
-                            <div style={{
-                                width: '24px',
-                                height: '2px',
-                                backgroundColor: 'currentColor',
-                                transition: 'all 0.3s ease',
-                                position: 'absolute',
-                                left: 0,
-                                top: menuOpen ? '50%' : '100%',
-                                transform: menuOpen ? 'translateY(-50%) rotate(-45deg)' : 'translateY(-100%)',
-                            }} />
+                    {/* Center: Nexona wordmark — matches the docked MorphingBrand state */}
+                    {showBrand && (
+                        <div style={{ justifySelf: 'center' }}>
+                            <Link
+                                href="/"
+                                aria-label="Nexona — home"
+                                className="brand-wordmark"
+                                style={{
+                                    fontFamily: INTER,
+                                    fontWeight: 700,
+                                    fontSize: 'clamp(3.25rem, 7vw, 5rem)',
+                                    letterSpacing: '-0.08em',
+                                    lineHeight: 1,
+                                    color: 'inherit',
+                                    textDecoration: 'none',
+                                    whiteSpace: 'nowrap',
+                                }}
+                            >
+                                Nexona
+                            </Link>
                         </div>
-                    </button>
+                    )}
 
-
-                    {/* Contact Link on the right */}
-                    <div className="desktop-only">
+                    {/* Right: Contact link */}
+                    <div className="desktop-only" style={{ justifySelf: 'end' }}>
                         <Link href="/#contact" style={navItemStyle}>
                             Contact
                         </Link>

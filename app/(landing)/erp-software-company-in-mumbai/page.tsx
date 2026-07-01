@@ -116,14 +116,14 @@ export default function ERPPage() {
             <section
                 ref={heroRef}
                 style={{
-                    height: '100vh',
+                    minHeight: '100vh',
                     position: 'relative',
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    textAlign: 'center',
-                    padding: '0 5%',
+                    textAlign: 'left',
+                    padding: '1rem 5% 3rem',
                     overflow: 'hidden'
                 }}
             >
@@ -140,68 +140,95 @@ export default function ERPPage() {
 
                 <ParticleEffect />
 
-                <motion.div style={{ zIndex: 10, opacity, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 1, ease: [0.23, 1, 0.32, 1] as const }}
+                <motion.div
+                    style={{
+                        zIndex: 10,
+                        opacity,
+                        width: '100%',
+                        maxWidth: '1400px',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: isMobile ? '2.5rem' : '3.5rem',
+                    }}
+                >
+                    {/* Top: text (left) + image (right) */}
+                    <div
                         style={{
-                            padding: '0.6rem 2rem',
-                            border: `1px solid rgba(232,223,211,0.15)`,
-                            borderRadius: '99px',
-                            marginBottom: '2rem',
-                            backdropFilter: 'blur(12px)',
-                            backgroundColor: 'rgba(232,223,211,0.05)',
-                            display: 'inline-block'
+                            display: 'grid',
+                            gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
+                            alignItems: isMobile ? 'stretch' : 'start',
+                            gap: isMobile ? '3rem' : '5rem',
                         }}
                     >
-                        <span style={{ fontFamily: INTER, fontSize: '0.75rem', letterSpacing: '0.25em', textTransform: 'uppercase', fontWeight: 600 }}>Mumbai&apos;s Leading Manufacturing Partner</span>
-                    </motion.div>
+                        {/* Left: heading + copy */}
+                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                            <h1
+                                style={{
+                                    fontFamily: "var(--font-montserrat), sans-serif",
+                                    fontSize: 'clamp(1.4rem, 2.7vw, 2.5rem)',
+                                    fontWeight: 800,
+                                    lineHeight: 1.15,
+                                    textTransform: 'uppercase',
+                                    letterSpacing: '-0.03em',
+                                    whiteSpace: isMobile ? 'normal' : 'nowrap',
+                                    margin: 0
+                                }}
+                            >
+                                ERP Software Company <br /> in Mumbai <span style={{ color: 'transparent', WebkitTextStroke: `1px ${SAND}` }}>for Manufacturers</span>
+                            </h1>
 
-                    <h1
-                        style={{
-                            fontFamily: "var(--font-montserrat), sans-serif",
-                            fontSize: 'clamp(2.2rem, 5.5vw, 4.5rem)',
-                            fontWeight: 800,
-                            lineHeight: 1.1,
-                            textTransform: 'uppercase',
-                            letterSpacing: '-0.03em',
-                            maxWidth: '1100px',
-                            margin: 0
-                        }}
-                    >
-                        ERP Software Company <br /> in Mumbai <span style={{ color: 'transparent', WebkitTextStroke: `1px ${SAND}` }}>for Manufacturers</span>
-                    </h1>
+                            <div style={{ marginTop: '2.5rem', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+                                <p
+                                    style={{
+                                        fontFamily: INTER,
+                                        fontSize: isMobile ? '1.05rem' : '1.2rem',
+                                        opacity: 0.85,
+                                        letterSpacing: '0.01em',
+                                        lineHeight: 1.7,
+                                        margin: 0
+                                    }}
+                                >
+                                    Nexona is an ERP software company in Mumbai that builds one connected system across production, inventory, purchase, finance, and compliance - shaped around how your factory actually works, not a fixed template.
+                                </p>
+                                <p
+                                    style={{
+                                        fontFamily: INTER,
+                                        fontSize: isMobile ? '1.05rem' : '1.2rem',
+                                        opacity: 0.85,
+                                        letterSpacing: '0.01em',
+                                        lineHeight: 1.7,
+                                        margin: 0
+                                    }}
+                                >
+                                    Most manufacturers here know the cost of disconnected systems: three people give three answers about what&apos;s on the floor. Nexona closes that gap by putting every department on the same numbers, so decisions rest on what is true - not on who sent the last WhatsApp update.
+                                </p>
+                            </div>
+                        </div>
 
-                    <div style={{ maxWidth: '800px', marginTop: '2.5rem', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-                        <p
+                        {/* Right: hero image */}
+                        <div
                             style={{
-                                fontFamily: INTER,
-                                fontSize: isMobile ? '1rem' : '1.2rem',
-                                opacity: 0.85,
-                                letterSpacing: '0.01em',
-                                lineHeight: 1.7,
-                                margin: 0
+                                position: 'relative',
+                                width: '100%',
+                                aspectRatio: '16 / 10',
+                                borderRadius: '24px',
+                                overflow: 'hidden',
+                                display: isMobile ? 'none' : 'block',
                             }}
                         >
-                            Nexona is an ERP software company in Mumbai that builds one connected system across production, inventory, purchase, finance, and compliance — shaped around how your factory actually works, not a fixed template.
-                        </p>
-                        <p
-                            style={{
-                                fontFamily: INTER,
-                                fontSize: isMobile ? '1rem' : '1.2rem',
-                                opacity: 0.85,
-                                letterSpacing: '0.01em',
-                                lineHeight: 1.7,
-                                margin: 0
-                            }}
-                        >
-                            Most manufacturers here know the cost of disconnected systems: three people give three answers about what&apos;s on the floor. Nexona closes that gap by putting every department on the same numbers, so decisions rest on what is true — not on who sent the last WhatsApp update.
-                        </p>
+                            <Image
+                                src="/erp.png"
+                                alt="ERP software dashboard for Mumbai manufacturers"
+                                fill
+                                priority
+                                sizes="(max-width: 768px) 0px, 52vw"
+                                style={{ objectFit: 'cover', borderRadius: '24px' }}
+                            />
+                        </div>
                     </div>
 
-                    {/* Section 1 bullet points styled as H3 with premium tags */}
-                    <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '1.5rem', marginTop: '3.5rem' }}>
+                    {/* Bottom: bullet points in a single row, full width */}
+                    <div style={{ display: 'flex', flexWrap: isMobile ? 'wrap' : 'nowrap', justifyContent: 'flex-start', gap: '1.5rem' }}>
                         {[
                             'Production visibility improves',
                             'Approvals clear same morning',
@@ -216,10 +243,11 @@ export default function ERPPage() {
                                     backgroundColor: 'rgba(232, 226, 218, 0.04)',
                                     border: '1px solid rgba(232, 226, 218, 0.1)',
                                     borderRadius: '12px',
-                                    padding: '0.75rem 1.5rem'
+                                    padding: '0.75rem 1.5rem',
+                                    whiteSpace: 'nowrap'
                                 }}
                             >
-                                <span style={{ width: '8px', height: '8px', backgroundColor: SAND, borderRadius: '50%' }} />
+                                <span style={{ width: '8px', height: '8px', backgroundColor: SAND, borderRadius: '50%', flexShrink: 0 }} />
                                 <h3 style={{ fontFamily: INTER, fontSize: '0.9rem', fontWeight: 600, letterSpacing: '0.05em', textTransform: 'uppercase', margin: 0 }}>
                                     {bullet}
                                 </h3>
@@ -246,7 +274,7 @@ export default function ERPPage() {
                             Why Mumbai Manufacturers Need ERP to Scale Faster
                         </h2>
                         <p style={{ fontFamily: INTER, opacity: 0.8, lineHeight: 1.8, fontSize: '1.1rem', margin: 0 }}>
-                            The manufacturing belt through Thane, Bhiwandi, Navi Mumbai, and Vasai still runs on Tally and Excel trackers never built for this load. A small unit manages. Add a second warehouse, a third product line, or a compliance deadline you cannot miss, and that approach buckles. What gets you is rarely one big breakdown — it&apos;s the slow stack of small failures bleeding margin every quarter.
+                            The manufacturing belt through Thane, Bhiwandi, Navi Mumbai, and Vasai still runs on Tally and Excel trackers never built for this load. A small unit manages. Add a second warehouse, a third product line, or a compliance deadline you cannot miss, and that approach buckles. What gets you is rarely one big breakdown - it&apos;s the slow stack of small failures bleeding margin every quarter.
                         </p>
                     </div>
 
@@ -306,13 +334,13 @@ export default function ERPPage() {
                             What Nexona Solves for Local Buyers Today
                         </h2>
                         <p style={{ fontFamily: INTER, opacity: 0.8, lineHeight: 1.8, fontSize: '1.1rem', marginBottom: '2.5rem' }}>
-                            ERP solutions for manufacturers are not really about software — they are about the work your team stops doing. Put sales, production, purchase, and finance on one data source and the friction between them mostly disappears. Nexona builds its ERP software for manufacturing industry clients around results you can point to, not features you have to believe in.
+                            ERP solutions for manufacturers are not really about software - they are about the work your team stops doing. Put sales, production, purchase, and finance on one data source and the friction between them mostly disappears. Nexona builds its ERP software for manufacturing industry clients around results you can point to, not features you have to believe in.
                         </p>
 
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', marginBottom: '2.5rem' }}>
                             {[
                                 'Sales, production, purchase, and finance work off the same live data',
-                                'Inventory updates as material moves — kills stock mismatch errors',
+                                'Inventory updates as material moves - kills stock mismatch errors',
                                 'Delivery status stays visible from order confirmation to dispatch',
                                 'GST filing, e-invoicing, and compliance reports pull from your transactions',
                                 'Tally, Excel, and paper registers give way to one process'
@@ -444,7 +472,7 @@ export default function ERPPage() {
                 </div>
             </section>
 
-            {/* 6. How Nexona Implements ERP — Process and Rollout Timeline (H2) */}
+            {/* 6. How Nexona Implements ERP - Process and Rollout Timeline (H2) */}
             <section style={{ backgroundColor: DARK, color: SAND, padding: isMobile ? '6rem 5%' : '10rem 8%', borderBottom: `1px solid rgba(232,223,211,0.1)` }}>
                 <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
                     <div style={{ maxWidth: '800px', marginBottom: '6rem' }}>
@@ -458,19 +486,19 @@ export default function ERPPage() {
                             letterSpacing: '-0.02em',
                             margin: '0 0 2rem 0'
                         }}>
-                            How Nexona Implements ERP — Process & Timeline
+                            How Nexona Implements ERP - Process & Timeline
                         </h2>
                         <p style={{ fontFamily: INTER, opacity: 0.8, lineHeight: 1.8, fontSize: '1.15rem', margin: 0 }}>
-                            Most manufacturers go live in 8 to 16 weeks — faster for a single location, longer for multi-plant rollouts with complex data. Nexona&apos;s structured rollout keeps the timeline from slipping.
+                            Most manufacturers go live in 8 to 16 weeks - faster for a single location, longer for multi-plant rollouts with complex data. Nexona&apos;s structured rollout keeps the timeline from slipping.
                         </p>
                     </div>
 
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '3rem' }}>
                         {[
                             { num: '01', title: 'Business Needs Analysis', desc: 'Nexona learns how your operation runs, department by department, mapping where gaps cost real money.' },
-                            { num: '02', title: 'Workflow Planning Setup', desc: 'we map production flow, approval hierarchy, and reporting structure — a blueprint that prevents scope creep.' },
+                            { num: '02', title: 'Workflow Planning Setup', desc: 'we map production flow, approval hierarchy, and reporting structure - a blueprint that prevents scope creep.' },
                             { num: '03', title: 'ERP Configuration Setup', desc: 'modules, permissions, dashboards, and settings, all bending to your workflow rather than a generic mould.' },
-                            { num: '04', title: 'Legacy Data Migration', desc: 'we pull records from Tally, Excel, or whatever you run, then clean, validate, and bring them across intact — including inventory and opening balances.' },
+                            { num: '04', title: 'Legacy Data Migration', desc: 'we pull records from Tally, Excel, or whatever you run, then clean, validate, and bring them across intact - including inventory and opening balances.' },
                             { num: '05', title: 'Testing and Team Training', desc: 'the system gets run end to end, then Nexona trains every user before go-live, not after.' },
                             { num: '06', title: 'Go Live and Optimisation', desc: 'we launch with support on hand, fix early issues fast, and tune the configuration in the first 30 days.' }
                         ].map((step, i) => (
@@ -516,7 +544,7 @@ export default function ERPPage() {
                             Customisation, Integration, and Data Migration
                         </h2>
                         <p style={{ fontFamily: INTER, opacity: 0.8, lineHeight: 1.8, fontSize: '1.1rem', marginBottom: '2.5rem' }}>
-                            Every buyer asks the same question: will this fit the way we already work? Nexona&apos;s answer starts with configuration, not a code rewrite. Factory management software handles the core mechanics — the work is shaping approval flows, dashboards, and reports to match your process.
+                            Every buyer asks the same question: will this fit the way we already work? Nexona&apos;s answer starts with configuration, not a code rewrite. Factory management software handles the core mechanics - the work is shaping approval flows, dashboards, and reports to match your process.
                         </p>
 
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', marginBottom: '2.5rem' }}>
@@ -525,7 +553,7 @@ export default function ERPPage() {
                                 'Integration with Tally, Excel, or current accounting tools',
                                 'GST-compliant invoices, e-way bills, and IRN numbers generated automatically',
                                 'Legacy data migrated safely with validation before go-live',
-                                'Access controlled by role — users see only what their job needs'
+                                'Access controlled by role - users see only what their job needs'
                             ].map((bullet, i) => (
                                 <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem' }}>
                                     <div style={{ width: '8px', height: '8px', backgroundColor: DARK, borderRadius: '50%', marginTop: '0.55rem', flexShrink: 0 }} />
@@ -537,7 +565,7 @@ export default function ERPPage() {
                         </div>
 
                         <p style={{ fontFamily: INTER, fontStyle: 'italic', fontWeight: 600, fontSize: '1.1rem', opacity: 0.9 }}>
-                            None of this means rebuilding from zero — it means configuring a system that already works to the way your business runs.
+                            None of this means rebuilding from zero - it means configuring a system that already works to the way your business runs.
                         </p>
                     </div>
 
@@ -552,7 +580,7 @@ export default function ERPPage() {
                 </div>
             </section>
 
-            {/* 8. Industry Use Cases — How Nexona Serves Mumbai Manufacturers (H2) */}
+            {/* 8. Industry Use Cases - How Nexona Serves Mumbai Manufacturers (H2) */}
             <section style={{ backgroundColor: DARK, color: SAND, padding: isMobile ? '6rem 5%' : '10rem 8%', borderBottom: `1px solid rgba(232,223,211,0.1)` }}>
                 <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
                     <div style={{ textAlign: 'center', marginBottom: '5rem' }}>
@@ -566,7 +594,7 @@ export default function ERPPage() {
                             letterSpacing: '-0.02em',
                             margin: '0 0 2rem 0'
                         }}>
-                            Industry Use Cases — How Nexona Serves Mumbai Manufacturers
+                            Industry Use Cases - How Nexona Serves Mumbai Manufacturers
                         </h2>
                         <p style={{ fontFamily: INTER, opacity: 0.8, lineHeight: 1.8, fontSize: '1.15rem', maxWidth: '800px', margin: '0 auto' }}>
                             Mumbai&apos;s industrial clusters cover some of India&apos;s most varied manufacturing. Here is how Nexona&apos;s supply chain ERP software applies across the sectors we work with most.
@@ -611,7 +639,7 @@ export default function ERPPage() {
             {/* 9. Security, Compliance, and Audit-Ready Controls in Nexona ERP (H2) & 10. Delivery Trust & 11. Manufacturers Gain (Combined Grid for High Impact Visuals) */}
             <section style={{ backgroundColor: '#25221F', color: SAND, padding: isMobile ? '6rem 5%' : '10rem 8%', borderBottom: `1px solid rgba(232,223,211,0.1)` }}>
                 <div style={{ maxWidth: '1400px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '6rem' }}>
-                    
+
                     {/* 9. Security & Compliance */}
                     <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'center', gap: isMobile ? '3rem' : '6rem' }}>
                         <div style={{ flex: 1.2 }}>
@@ -662,7 +690,7 @@ export default function ERPPage() {
                                 Why Manufacturers Trust Nexona&apos;s Delivery Team
                             </h2>
                             <p style={{ fontFamily: INTER, opacity: 0.8, lineHeight: 1.8, fontSize: '1.1rem', margin: 0 }}>
-                                Most vendors hand you a system and disappear. Nexona stays — same team from the first factory walkthrough through go-live and the 90 days after. Implementation discipline is not a promise here; it is how every project actually runs.
+                                Most vendors hand you a system and disappear. Nexona stays - same team from the first factory walkthrough through go-live and the 90 days after. Implementation discipline is not a promise here; it is how every project actually runs.
                             </p>
                         </div>
                         <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '1rem', width: '100%' }}>
@@ -697,7 +725,7 @@ export default function ERPPage() {
                                 What Manufacturers Gain After Nexona Goes Live
                             </h2>
                             <p style={{ fontFamily: INTER, opacity: 0.8, lineHeight: 1.8, fontSize: '1.1rem', margin: 0 }}>
-                                These are the changes manufacturers report inside the first 90 days — not a forecast, just the pattern Nexona keeps seeing. The value rarely arrives as one big saving. It shows up as the quiet disappearance of small daily losses everyone had stopped counting.
+                                These are the changes manufacturers report inside the first 90 days - not a forecast, just the pattern Nexona keeps seeing. The value rarely arrives as one big saving. It shows up as the quiet disappearance of small daily losses everyone had stopped counting.
                             </p>
                         </div>
                         <div style={{ flex: 1, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', width: '100%' }}>
@@ -717,7 +745,7 @@ export default function ERPPage() {
                 </div>
             </section>
 
-            {/* 12. ERP Pricing Factors — What Nexona Buyers Should Know (H2) */}
+            {/* 12. ERP Pricing Factors - What Nexona Buyers Should Know (H2) */}
             <section style={{ backgroundColor: DARK, color: SAND, padding: isMobile ? '6rem 5%' : '10rem 8%', borderBottom: `1px solid rgba(232,223,211,0.1)` }}>
                 <div style={{ maxWidth: '1400px', margin: '0 auto', display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'center', gap: isMobile ? '4rem' : '8rem' }}>
                     <div style={{ flex: 1.2 }}>
@@ -731,13 +759,13 @@ export default function ERPPage() {
                             letterSpacing: '-0.02em',
                             margin: '0 0 2rem 0'
                         }}>
-                            ERP Pricing Factors — What Buyers Should Know
+                            ERP Pricing Factors - What Buyers Should Know
                         </h2>
                         <p style={{ fontFamily: INTER, opacity: 0.85, lineHeight: 1.8, fontSize: '1.1rem', marginBottom: '2rem' }}>
-                            ERP pricing in India sits between ₹2–5 lakh for a basic SME setup and ₹15–50 lakh for a mid-size manufacturer running multiple modules across locations. Nexona&apos;s cloud SaaS plans are very affordable. The range is wide because cost tracks what you actually need — any vendor quoting a fixed figure before understanding your operation is guessing.
+                            ERP pricing in India sits between ₹2–5 lakh for a basic SME setup and ₹15–50 lakh for a mid-size manufacturer running multiple modules across locations. Nexona&apos;s cloud SaaS plans are very affordable. The range is wide because cost tracks what you actually need - any vendor quoting a fixed figure before understanding your operation is guessing.
                         </p>
                         <p style={{ fontFamily: INTER, fontStyle: 'italic', fontWeight: 600, fontSize: '1.15rem', color: SAND }}>
-                            The sharper question is not what Nexona ERP costs — it is what running without it costs your business every month.
+                            The sharper question is not what Nexona ERP costs - it is what running without it costs your business every month.
                         </p>
                     </div>
 
@@ -746,7 +774,7 @@ export default function ERPPage() {
                             'Module count and licensed users set the base cost',
                             'Cloud vs on-premise changes total cost of ownership',
                             'Customisation depth and legacy data volume affect price',
-                            'Training, support, and annual maintenance — confirm upfront'
+                            'Training, support, and annual maintenance - confirm upfront'
                         ].map((bullet, i) => (
                             <div
                                 key={i}
@@ -854,14 +882,14 @@ export default function ERPPage() {
                             Book a Demo and Request a Tailored ERP Assessment
                         </h2>
                         <p style={{ fontFamily: INTER, opacity: 0.8, lineHeight: 1.8, fontSize: '1.1rem', marginBottom: '3rem' }}>
-                            A proper Nexona ERP assessment takes 45 minutes and gives you a clear picture of what changes, what it costs, and how long it takes — before you commit. If your team spends its days reconciling spreadsheets and chasing approvals, that is exactly the problem production management software exists to remove.
+                            A proper Nexona ERP assessment takes 45 minutes and gives you a clear picture of what changes, what it costs, and how long it takes - before you commit. If your team spends its days reconciling spreadsheets and chasing approvals, that is exactly the problem production management software exists to remove.
                         </p>
 
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', marginBottom: '3rem' }}>
                             {[
-                                'Book a Nexona manufacturing ERP demo — see your workflows in the system before deciding',
-                                'Request a workflow assessment — get a gap analysis of how you operate today',
-                                'Get a tailored implementation plan — timeline, modules, and investment scoped to your business'
+                                'Book a Nexona manufacturing ERP demo - see your workflows in the system before deciding',
+                                'Request a workflow assessment - get a gap analysis of how you operate today',
+                                'Get a tailored implementation plan - timeline, modules, and investment scoped to your business'
                             ].map((bullet, i) => (
                                 <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem' }}>
                                     <div style={{ width: '8px', height: '8px', backgroundColor: DARK, borderRadius: '50%', marginTop: '0.55rem', flexShrink: 0 }} />
@@ -874,7 +902,7 @@ export default function ERPPage() {
 
                         <div style={{ borderTop: `1px solid rgba(46,42,38,0.15)`, paddingTop: '1.5rem' }}>
                             <p style={{ fontFamily: INTER, fontSize: '0.95rem', opacity: 0.6, textTransform: 'uppercase', letterSpacing: '0.05em', margin: 0 }}>
-                                No sales pitch, no canned demo — just a conversation about your operation and whether Nexona ERP solves the right problems.
+                                No sales pitch, no canned demo - just a conversation about your operation and whether Nexona ERP solves the right problems.
                             </p>
                         </div>
                     </div>

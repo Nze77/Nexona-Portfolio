@@ -12,6 +12,6 @@ export default function robots(): MetadataRoute.Robots {
         allow: '/',
       },
     ],
-    sitemap: 'https://nexonalabs.com/sitemap.xml',
+    sitemap: 'https://www.nexonalabs.com/sitemap.xml',
   }
 }

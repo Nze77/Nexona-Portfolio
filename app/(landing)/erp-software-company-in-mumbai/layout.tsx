@@ -2,7 +2,7 @@ import { buildLandingMetadata } from '../../lib/landingSeo'
 import LandingJsonLd from '../../components/LandingJsonLd'
 import { FAQ_ITEMS } from './content'
 
-const SLUG = 'ERP-Software-company-In-Mumbai'
+const SLUG = 'erp-software-company-in-mumbai'
 
 // Self-referencing canonical + metadata, all sourced from the central registry.
 export const metadata = buildLandingMetadata(SLUG)
