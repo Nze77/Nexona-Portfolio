@@ -3,11 +3,15 @@
 import { useRef, useEffect, useState } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import Image from 'next/image'
-import StickyHeader from '../../components/StickyHeader'
+import LandingHeader from '../../components/LandingHeader'
 import Footer from '../../components/Footer'
 import ParticleEffect from '../../components/ParticleEffect'
 import { DARK, SAND, INTER } from '../../lib/constants'
 import { FAQ_ITEMS } from './content'
+
+// Slightly whiter than SAND (#E8E2DA) — used for body/heading text on this
+// page's dark sections. Sand backgrounds, borders, and dots keep SAND.
+const TEXT = '#F2EEE8'
 
 
 
@@ -29,14 +33,18 @@ export default function ERPPage() {
         name: '',
         email: '',
         phone: '',
-        companyName: '',
-        industry: '',
-        employees: '',
-        currentSoftware: '',
-        preferredTime: ''
+        requirement: ''
     })
     const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
     const [errorMessage, setErrorMessage] = useState('')
+
+    // Exit-intent style popup: shows only when the visitor has BOTH scrolled
+    // into the 3rd section AND spent 30s on the page.
+    const thirdSectionRef = useRef<HTMLElement>(null)
+    const [scrolledToThird, setScrolledToThird] = useState(false)
+    const [spent30s, setSpent30s] = useState(false)
+    const [showPopup, setShowPopup] = useState(false)
+    const [popupDismissed, setPopupDismissed] = useState(false)
 
     useEffect(() => {
         const check = () => setIsMobile(window.innerWidth <= 768)
@@ -45,7 +53,44 @@ export default function ERPPage() {
         return () => window.removeEventListener('resize', check)
     }, [])
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    // Condition A: 30 seconds on the page.
+    useEffect(() => {
+        const t = setTimeout(() => setSpent30s(true), 30000)
+        return () => clearTimeout(t)
+    }, [])
+
+    // Condition B: scrolled into the 3rd section (its top has entered the viewport).
+    useEffect(() => {
+        const onScroll = () => {
+            const el = thirdSectionRef.current
+            if (el && el.getBoundingClientRect().top <= window.innerHeight * 0.8) {
+                setScrolledToThird(true)
+                window.removeEventListener('scroll', onScroll)
+            }
+        }
+        onScroll()
+        window.addEventListener('scroll', onScroll, { passive: true })
+        return () => window.removeEventListener('scroll', onScroll)
+    }, [])
+
+    // Both conditions must be true (and it hasn't been dismissed) to show the popup.
+    useEffect(() => {
+        if (spent30s && scrolledToThird && !popupDismissed) {
+            setShowPopup(true)
+        }
+    }, [spent30s, scrolledToThird, popupDismissed])
+
+    // Close the popup automatically once a submission succeeds.
+    useEffect(() => {
+        if (status === 'success') setShowPopup(false)
+    }, [status])
+
+    const closePopup = () => {
+        setShowPopup(false)
+        setPopupDismissed(true)
+    }
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target
         setFormData(prev => ({ ...prev, [name]: value }))
     }
@@ -63,14 +108,8 @@ export default function ERPPage() {
         setStatus('loading')
         setErrorMessage('')
 
-        // Format message payload for SMTP nodemailer compatibility
-        const messageBody = `
-            Company Name: ${formData.companyName}
-            Industry: ${formData.industry}
-            Employees/Users: ${formData.employees}
-            Current Software: ${formData.currentSoftware}
-            Preferred Contact Time: ${formData.preferredTime}
-        `.trim()
+        // The visitor's stated requirement becomes the message body.
+        const messageBody = formData.requirement.trim()
 
         try {
             const response = await fetch('/api/contact', {
@@ -92,11 +131,7 @@ export default function ERPPage() {
                     name: '',
                     email: '',
                     phone: '',
-                    companyName: '',
-                    industry: '',
-                    employees: '',
-                    currentSoftware: '',
-                    preferredTime: ''
+                    requirement: ''
                 })
             } else {
                 setStatus('error')
@@ -109,8 +144,8 @@ export default function ERPPage() {
     }
 
     return (
-        <main style={{ backgroundColor: DARK, color: SAND, minHeight: '100vh', overflow: 'hidden' }}>
-            <StickyHeader theme="dark" />
+        <main style={{ backgroundColor: DARK, color: TEXT, minHeight: '100vh', overflowX: 'clip' }}>
+            <LandingHeader theme="dark" onContactClick={() => { setPopupDismissed(false); setShowPopup(true) }} />
 
             {/* 1. Hero Section (H1) */}
             <section
@@ -130,12 +165,12 @@ export default function ERPPage() {
                 <motion.div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, y, zIndex: 0 }}>
                     <Image
                         src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2000&auto=format&fit=crop"
-                        alt="ERP Software Company in Mumbai for Manufacturers - High tech automation interface"
+                        alt="Manufacturing ERP System"
                         fill
-                        style={{ objectFit: 'cover', opacity: 0.15 }}
+                        style={{ objectFit: 'cover', opacity: 0.09 }}
                         priority
                     />
-                    <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(to bottom, rgba(46,42,38,0.2), ${DARK})` }} />
+                    <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(to bottom, rgba(46,42,38,0.45), ${DARK})` }} />
                 </motion.div>
 
                 <ParticleEffect />
@@ -174,7 +209,7 @@ export default function ERPPage() {
                                     margin: 0
                                 }}
                             >
-                                ERP Software Company <br /> in Mumbai <span style={{ color: 'transparent', WebkitTextStroke: `1px ${SAND}` }}>for Manufacturers</span>
+                                ERP Software Company <br /> in Mumbai for Manufacturers
                             </h1>
 
                             <div style={{ marginTop: '2.5rem', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
@@ -182,7 +217,7 @@ export default function ERPPage() {
                                     style={{
                                         fontFamily: INTER,
                                         fontSize: isMobile ? '1.05rem' : '1.2rem',
-                                        opacity: 0.85,
+                                        color: '#FFFFFF',
                                         letterSpacing: '0.01em',
                                         lineHeight: 1.7,
                                         margin: 0
@@ -194,7 +229,7 @@ export default function ERPPage() {
                                     style={{
                                         fontFamily: INTER,
                                         fontSize: isMobile ? '1.05rem' : '1.2rem',
-                                        opacity: 0.85,
+                                        color: '#FFFFFF',
                                         letterSpacing: '0.01em',
                                         lineHeight: 1.7,
                                         margin: 0
@@ -211,7 +246,7 @@ export default function ERPPage() {
                                 position: 'relative',
                                 width: '100%',
                                 aspectRatio: '16 / 10',
-                                borderRadius: '24px',
+                                borderRadius: '10px',
                                 overflow: 'hidden',
                                 display: isMobile ? 'none' : 'block',
                             }}
@@ -222,7 +257,7 @@ export default function ERPPage() {
                                 fill
                                 priority
                                 sizes="(max-width: 768px) 0px, 52vw"
-                                style={{ objectFit: 'cover', borderRadius: '24px' }}
+                                style={{ objectFit: 'cover', objectPosition: 'top', borderRadius: '10px' }}
                             />
                         </div>
                     </div>
@@ -299,7 +334,7 @@ export default function ERPPage() {
                                 }}
                             >
                                 <span style={{ color: '#D97706', fontSize: '1.25rem', fontWeight: 'bold' }}>!</span>
-                                <h3 style={{ fontFamily: INTER, fontSize: '1.05rem', fontWeight: 600, margin: 0, color: SAND }}>
+                                <h3 style={{ fontFamily: INTER, fontSize: '1.05rem', fontWeight: 600, margin: 0, color: TEXT }}>
                                     {bullet}
                                 </h3>
                             </div>
@@ -309,7 +344,7 @@ export default function ERPPage() {
             </section>
 
             {/* 3. What Nexona Solves for Local Buyers Today (H2) */}
-            <section style={{ backgroundColor: SAND, color: DARK, padding: isMobile ? '6rem 5%' : '10rem 8%' }}>
+            <section ref={thirdSectionRef} style={{ backgroundColor: SAND, color: DARK, padding: isMobile ? '6rem 5%' : '10rem 8%' }}>
                 <div style={{ maxWidth: '1400px', margin: '0 auto', display: 'flex', flexDirection: isMobile ? 'column-reverse' : 'row', alignItems: 'center', gap: isMobile ? '4rem' : '8rem' }}>
                     <div style={{ flex: 1, width: '100%', position: 'relative', aspectRatio: '4/5', borderRadius: '24px', overflow: 'hidden' }}>
                         <Image
@@ -353,18 +388,12 @@ export default function ERPPage() {
                                 </div>
                             ))}
                         </div>
-
-                        <div style={{ borderTop: `1px solid rgba(46,42,38,0.15)`, paddingTop: '1.5rem' }}>
-                            <p style={{ fontFamily: INTER, fontStyle: 'italic', fontWeight: 600, fontSize: '1.1rem', opacity: 0.9 }}>
-                                Most Nexona clients feel the shift inside the first 90 days.
-                            </p>
-                        </div>
                     </div>
                 </div>
             </section>
 
             {/* 4. Core ERP Services Nexona Delivers for Factory Operations (H2) */}
-            <section style={{ backgroundColor: DARK, color: SAND, padding: isMobile ? '6rem 5%' : '10rem 8%', borderBottom: `1px solid rgba(232,223,211,0.1)` }}>
+            <section style={{ backgroundColor: DARK, color: TEXT, padding: isMobile ? '6rem 5%' : '10rem 8%', borderBottom: `1px solid rgba(232,223,211,0.1)` }}>
                 <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
                     <div style={{ textAlign: 'center', marginBottom: '5rem' }}>
                         <span style={{ fontFamily: INTER, fontSize: '0.85rem', letterSpacing: '0.2em', textTransform: 'uppercase', opacity: 0.6, fontWeight: 700, display: 'block', marginBottom: '1rem' }}>Services Matrix</span>
@@ -409,7 +438,7 @@ export default function ERPPage() {
                                     minHeight: '200px'
                                 }}
                             >
-                                <h3 style={{ fontFamily: "var(--font-montserrat), sans-serif", fontSize: '1.25rem', fontWeight: 700, margin: '0 0 1rem 0', letterSpacing: '-0.01em', color: SAND }}>
+                                <h3 style={{ fontFamily: "var(--font-montserrat), sans-serif", fontSize: '1.25rem', fontWeight: 700, margin: '0 0 1rem 0', letterSpacing: '-0.01em', color: TEXT }}>
                                     {service.title}
                                 </h3>
                                 <p style={{ fontFamily: INTER, fontSize: '0.95rem', opacity: 0.75, lineHeight: 1.6, margin: 0 }}>
@@ -422,7 +451,7 @@ export default function ERPPage() {
             </section>
 
             {/* 5. How Each Nexona ERP Module Improves Control and Speed (H2) */}
-            <section style={{ backgroundColor: '#25221F', color: SAND, padding: isMobile ? '6rem 5%' : '10rem 8%', borderBottom: `1px solid rgba(232,223,211,0.1)` }}>
+            <section style={{ backgroundColor: '#25221F', color: TEXT, padding: isMobile ? '6rem 5%' : '10rem 8%', borderBottom: `1px solid rgba(232,223,211,0.1)` }}>
                 <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
                     <div style={{ textAlign: 'center', marginBottom: '5rem' }}>
                         <span style={{ fontFamily: INTER, fontSize: '0.85rem', letterSpacing: '0.2em', textTransform: 'uppercase', opacity: 0.6, fontWeight: 700, display: 'block', marginBottom: '1rem' }}>Modules Influence</span>
@@ -473,7 +502,7 @@ export default function ERPPage() {
             </section>
 
             {/* 6. How Nexona Implements ERP - Process and Rollout Timeline (H2) */}
-            <section style={{ backgroundColor: DARK, color: SAND, padding: isMobile ? '6rem 5%' : '10rem 8%', borderBottom: `1px solid rgba(232,223,211,0.1)` }}>
+            <section style={{ backgroundColor: DARK, color: TEXT, padding: isMobile ? '6rem 5%' : '10rem 8%', borderBottom: `1px solid rgba(232,223,211,0.1)` }}>
                 <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
                     <div style={{ maxWidth: '800px', marginBottom: '6rem' }}>
                         <span style={{ fontFamily: INTER, fontSize: '0.85rem', letterSpacing: '0.2em', textTransform: 'uppercase', opacity: 0.6, fontWeight: 700, display: 'block', marginBottom: '1.5rem' }}>Rollout Process</span>
@@ -493,7 +522,7 @@ export default function ERPPage() {
                         </p>
                     </div>
 
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '3rem' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: '3rem' }}>
                         {[
                             { num: '01', title: 'Business Needs Analysis', desc: 'Nexona learns how your operation runs, department by department, mapping where gaps cost real money.' },
                             { num: '02', title: 'Workflow Planning Setup', desc: 'we map production flow, approval hierarchy, and reporting structure - a blueprint that prevents scope creep.' },
@@ -581,7 +610,7 @@ export default function ERPPage() {
             </section>
 
             {/* 8. Industry Use Cases - How Nexona Serves Mumbai Manufacturers (H2) */}
-            <section style={{ backgroundColor: DARK, color: SAND, padding: isMobile ? '6rem 5%' : '10rem 8%', borderBottom: `1px solid rgba(232,223,211,0.1)` }}>
+            <section style={{ backgroundColor: DARK, color: TEXT, padding: isMobile ? '6rem 5%' : '10rem 8%', borderBottom: `1px solid rgba(232,223,211,0.1)` }}>
                 <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
                     <div style={{ textAlign: 'center', marginBottom: '5rem' }}>
                         <span style={{ fontFamily: INTER, fontSize: '0.85rem', letterSpacing: '0.2em', textTransform: 'uppercase', opacity: 0.6, fontWeight: 700, display: 'block', marginBottom: '1rem' }}>Industrial Verticals</span>
@@ -624,7 +653,7 @@ export default function ERPPage() {
                                     gap: '0.75rem'
                                 }}
                             >
-                                <h3 style={{ fontFamily: "var(--font-montserrat), sans-serif", fontSize: '1.25rem', fontWeight: 700, margin: 0, color: SAND }}>
+                                <h3 style={{ fontFamily: "var(--font-montserrat), sans-serif", fontSize: '1.25rem', fontWeight: 700, margin: 0, color: TEXT }}>
                                     {useCase.title}
                                 </h3>
                                 <p style={{ fontFamily: INTER, fontSize: '0.95rem', opacity: 0.75, lineHeight: 1.6, margin: 0 }}>
@@ -637,7 +666,7 @@ export default function ERPPage() {
             </section>
 
             {/* 9. Security, Compliance, and Audit-Ready Controls in Nexona ERP (H2) & 10. Delivery Trust & 11. Manufacturers Gain (Combined Grid for High Impact Visuals) */}
-            <section style={{ backgroundColor: '#25221F', color: SAND, padding: isMobile ? '6rem 5%' : '10rem 8%', borderBottom: `1px solid rgba(232,223,211,0.1)` }}>
+            <section style={{ backgroundColor: '#25221F', color: TEXT, padding: isMobile ? '6rem 5%' : '10rem 8%', borderBottom: `1px solid rgba(232,223,211,0.1)` }}>
                 <div style={{ maxWidth: '1400px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '6rem' }}>
 
                     {/* 9. Security & Compliance */}
@@ -667,7 +696,7 @@ export default function ERPPage() {
                                 { title: 'Secure exports', desc: 'role-gated & encrypted' }
                             ].map((item, i) => (
                                 <div key={i} style={{ border: '1px solid rgba(232,223,211,0.1)', borderRadius: '16px', padding: '1.5rem', backgroundColor: 'rgba(232,223,211,0.02)' }}>
-                                    <h3 style={{ fontFamily: INTER, fontSize: '1.05rem', fontWeight: 700, color: SAND, margin: '0 0 0.5rem 0' }}>{item.title}</h3>
+                                    <h3 style={{ fontFamily: INTER, fontSize: '1.05rem', fontWeight: 700, color: TEXT, margin: '0 0 0.5rem 0' }}>{item.title}</h3>
                                     <p style={{ fontFamily: INTER, fontSize: '0.85rem', opacity: 0.6, margin: 0 }}>{item.desc}</p>
                                 </div>
                             ))}
@@ -736,7 +765,7 @@ export default function ERPPage() {
                                 'On-time delivery rate improves'
                             ].map((bullet, i) => (
                                 <div key={i} style={{ border: '1px solid rgba(232,223,211,0.12)', borderRadius: '16px', padding: '1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center', backgroundColor: 'rgba(232,223,211,0.01)' }}>
-                                    <h3 style={{ fontFamily: INTER, fontSize: '1rem', fontWeight: 600, color: SAND, margin: 0 }}>{bullet}</h3>
+                                    <h3 style={{ fontFamily: INTER, fontSize: '1rem', fontWeight: 600, color: TEXT, margin: 0 }}>{bullet}</h3>
                                 </div>
                             ))}
                         </div>
@@ -746,7 +775,7 @@ export default function ERPPage() {
             </section>
 
             {/* 12. ERP Pricing Factors - What Nexona Buyers Should Know (H2) */}
-            <section style={{ backgroundColor: DARK, color: SAND, padding: isMobile ? '6rem 5%' : '10rem 8%', borderBottom: `1px solid rgba(232,223,211,0.1)` }}>
+            <section style={{ backgroundColor: DARK, color: TEXT, padding: isMobile ? '6rem 5%' : '10rem 8%', borderBottom: `1px solid rgba(232,223,211,0.1)` }}>
                 <div style={{ maxWidth: '1400px', margin: '0 auto', display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'center', gap: isMobile ? '4rem' : '8rem' }}>
                     <div style={{ flex: 1.2 }}>
                         <span style={{ fontFamily: INTER, fontSize: '0.85rem', letterSpacing: '0.2em', textTransform: 'uppercase', opacity: 0.6, fontWeight: 700, display: 'block', marginBottom: '1.5rem' }}>Pricing Scoping</span>
@@ -764,7 +793,7 @@ export default function ERPPage() {
                         <p style={{ fontFamily: INTER, opacity: 0.85, lineHeight: 1.8, fontSize: '1.1rem', marginBottom: '2rem' }}>
                             ERP pricing in India sits between ₹2–5 lakh for a basic SME setup and ₹15–50 lakh for a mid-size manufacturer running multiple modules across locations. Nexona&apos;s cloud SaaS plans are very affordable. The range is wide because cost tracks what you actually need - any vendor quoting a fixed figure before understanding your operation is guessing.
                         </p>
-                        <p style={{ fontFamily: INTER, fontStyle: 'italic', fontWeight: 600, fontSize: '1.15rem', color: SAND }}>
+                        <p style={{ fontFamily: INTER, fontStyle: 'italic', fontWeight: 600, fontSize: '1.15rem', color: TEXT }}>
                             The sharper question is not what Nexona ERP costs - it is what running without it costs your business every month.
                         </p>
                     </div>
@@ -789,7 +818,7 @@ export default function ERPPage() {
                                 }}
                             >
                                 <span style={{ width: '8px', height: '8px', backgroundColor: SAND, borderRadius: '50%' }} />
-                                <h3 style={{ fontFamily: INTER, fontSize: '1.05rem', fontWeight: 600, margin: 0, color: SAND }}>
+                                <h3 style={{ fontFamily: INTER, fontSize: '1.05rem', fontWeight: 600, margin: 0, color: TEXT }}>
                                     {bullet}
                                 </h3>
                             </div>
@@ -799,7 +828,7 @@ export default function ERPPage() {
             </section>
 
             {/* 13. FAQs for ERP Software Buyers in Mumbai and Nearby (H2) */}
-            <section style={{ backgroundColor: '#25221F', color: SAND, padding: isMobile ? '6rem 5%' : '10rem 8%' }}>
+            <section style={{ backgroundColor: '#25221F', color: TEXT, padding: isMobile ? '6rem 5%' : '10rem 8%' }}>
                 <div style={{ maxWidth: '900px', margin: '0 auto' }}>
                     <div style={{ textAlign: 'center', marginBottom: '5rem' }}>
                         <span style={{ fontFamily: INTER, fontSize: '0.85rem', letterSpacing: '0.2em', textTransform: 'uppercase', opacity: 0.6, fontWeight: 700, display: 'block', marginBottom: '1rem' }}>FAQ</span>
@@ -831,7 +860,7 @@ export default function ERPPage() {
                                             width: '100%',
                                             background: 'none',
                                             border: 'none',
-                                            color: SAND,
+                                            color: TEXT,
                                             cursor: 'pointer',
                                             padding: '2rem 0',
                                             display: 'flex',
@@ -929,53 +958,19 @@ export default function ERPPage() {
                                     <input required type="text" id="name" name="name" value={formData.name} onChange={handleInputChange} style={{ padding: '0.8rem 1rem', border: '1px solid rgba(46,42,38,0.15)', borderRadius: '8px', fontSize: '1rem', fontFamily: INTER, outline: 'none', backgroundColor: '#F8F6F2' }} />
                                 </div>
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                                    <label htmlFor="email" style={{ fontFamily: INTER, fontSize: '0.8rem', fontWeight: 700, textTransform: 'uppercase', opacity: 0.6 }}>Email Address *</label>
-                                    <input required type="email" id="email" name="email" value={formData.email} onChange={handleInputChange} style={{ padding: '0.8rem 1rem', border: '1px solid rgba(46,42,38,0.15)', borderRadius: '8px', fontSize: '1rem', fontFamily: INTER, outline: 'none', backgroundColor: '#F8F6F2' }} />
-                                </div>
-                            </div>
-
-                            <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '1.5rem' }}>
-                                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                                     <label htmlFor="phone" style={{ fontFamily: INTER, fontSize: '0.8rem', fontWeight: 700, textTransform: 'uppercase', opacity: 0.6 }}>Phone Number *</label>
                                     <input required type="tel" id="phone" name="phone" value={formData.phone} onChange={handleInputChange} style={{ padding: '0.8rem 1rem', border: '1px solid rgba(46,42,38,0.15)', borderRadius: '8px', fontSize: '1rem', fontFamily: INTER, outline: 'none', backgroundColor: '#F8F6F2' }} />
                                 </div>
-                                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                                    <label htmlFor="companyName" style={{ fontFamily: INTER, fontSize: '0.8rem', fontWeight: 700, textTransform: 'uppercase', opacity: 0.6 }}>Company Name *</label>
-                                    <input required type="text" id="companyName" name="companyName" value={formData.companyName} onChange={handleInputChange} style={{ padding: '0.8rem 1rem', border: '1px solid rgba(46,42,38,0.15)', borderRadius: '8px', fontSize: '1rem', fontFamily: INTER, outline: 'none', backgroundColor: '#F8F6F2' }} />
-                                </div>
                             </div>
 
-                            <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '1.5rem' }}>
-                                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                                    <label htmlFor="industry" style={{ fontFamily: INTER, fontSize: '0.8rem', fontWeight: 700, textTransform: 'uppercase', opacity: 0.6 }}>Industry *</label>
-                                    <select required id="industry" name="industry" value={formData.industry} onChange={handleInputChange} style={{ padding: '0.8rem 1rem', border: '1px solid rgba(46,42,38,0.15)', borderRadius: '8px', fontSize: '1rem', fontFamily: INTER, outline: 'none', backgroundColor: '#F8F6F2', appearance: 'none', cursor: 'pointer' }}>
-                                        <option value="">Select Industry</option>
-                                        <option value="Engineering">Engineering</option>
-                                        <option value="Pharma">Pharma</option>
-                                        <option value="Food Processing">Food Processing</option>
-                                        <option value="Chemicals">Chemicals</option>
-                                        <option value="Packaging">Packaging</option>
-                                        <option value="Textiles">Textiles</option>
-                                        <option value="Automotive Suppliers">Automotive Suppliers</option>
-                                        <option value="Trading & Distribution">Trading & Distribution</option>
-                                        <option value="Other">Other Manufacturing</option>
-                                    </select>
-                                </div>
-                                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                                    <label htmlFor="employees" style={{ fontFamily: INTER, fontSize: '0.8rem', fontWeight: 700, textTransform: 'uppercase', opacity: 0.6 }}>Employees / Users *</label>
-                                    <input required type="text" id="employees" name="employees" placeholder="e.g. 50-100" value={formData.employees} onChange={handleInputChange} style={{ padding: '0.8rem 1rem', border: '1px solid rgba(46,42,38,0.15)', borderRadius: '8px', fontSize: '1rem', fontFamily: INTER, outline: 'none', backgroundColor: '#F8F6F2' }} />
-                                </div>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                                <label htmlFor="email" style={{ fontFamily: INTER, fontSize: '0.8rem', fontWeight: 700, textTransform: 'uppercase', opacity: 0.6 }}>Email Address *</label>
+                                <input required type="email" id="email" name="email" value={formData.email} onChange={handleInputChange} style={{ padding: '0.8rem 1rem', border: '1px solid rgba(46,42,38,0.15)', borderRadius: '8px', fontSize: '1rem', fontFamily: INTER, outline: 'none', backgroundColor: '#F8F6F2' }} />
                             </div>
 
-                            <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '1.5rem' }}>
-                                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                                    <label htmlFor="currentSoftware" style={{ fontFamily: INTER, fontSize: '0.8rem', fontWeight: 700, textTransform: 'uppercase', opacity: 0.6 }}>Current Software / System *</label>
-                                    <input required type="text" id="currentSoftware" name="currentSoftware" placeholder="e.g. Tally, Excel, None" value={formData.currentSoftware} onChange={handleInputChange} style={{ padding: '0.8rem 1rem', border: '1px solid rgba(46,42,38,0.15)', borderRadius: '8px', fontSize: '1rem', fontFamily: INTER, outline: 'none', backgroundColor: '#F8F6F2' }} />
-                                </div>
-                                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                                    <label htmlFor="preferredTime" style={{ fontFamily: INTER, fontSize: '0.8rem', fontWeight: 700, textTransform: 'uppercase', opacity: 0.6 }}>Preferred Contact Time *</label>
-                                    <input required type="text" id="preferredTime" name="preferredTime" placeholder="e.g. Morning 10am-12pm" value={formData.preferredTime} onChange={handleInputChange} style={{ padding: '0.8rem 1rem', border: '1px solid rgba(46,42,38,0.15)', borderRadius: '8px', fontSize: '1rem', fontFamily: INTER, outline: 'none', backgroundColor: '#F8F6F2' }} />
-                                </div>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                                <label htmlFor="requirement" style={{ fontFamily: INTER, fontSize: '0.8rem', fontWeight: 700, textTransform: 'uppercase', opacity: 0.6 }}>Requirement *</label>
+                                <textarea required id="requirement" name="requirement" rows={4} placeholder="Tell us what you're looking for" value={formData.requirement} onChange={handleInputChange} style={{ padding: '0.8rem 1rem', border: '1px solid rgba(46,42,38,0.15)', borderRadius: '8px', fontSize: '1rem', fontFamily: INTER, outline: 'none', backgroundColor: '#F8F6F2', resize: 'vertical' }} />
                             </div>
 
                             <button
@@ -983,7 +978,7 @@ export default function ERPPage() {
                                 disabled={status === 'loading'}
                                 style={{
                                     backgroundColor: DARK,
-                                    color: SAND,
+                                    color: TEXT,
                                     padding: '1rem 2rem',
                                     border: 'none',
                                     borderRadius: '8px',
@@ -1016,6 +1011,97 @@ export default function ERPPage() {
                     </div>
                 </div>
             </section>
+
+            {/* Timed + scroll-triggered lead popup (both conditions must be met) */}
+            {showPopup && (
+                <div
+                    onClick={closePopup}
+                    style={{
+                        position: 'fixed',
+                        inset: 0,
+                        zIndex: 1000,
+                        backgroundColor: 'rgba(46,42,38,0.55)',
+                        backdropFilter: 'blur(4px)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        padding: '1.5rem'
+                    }}
+                >
+                    <div
+                        onClick={(e) => e.stopPropagation()}
+                        style={{
+                            position: 'relative',
+                            width: '100%',
+                            maxWidth: '460px',
+                            backgroundColor: '#FFFFFF',
+                            color: DARK,
+                            borderRadius: '20px',
+                            padding: isMobile ? '2rem 1.5rem' : '2.5rem',
+                            boxShadow: '0 30px 70px rgba(0,0,0,0.35)'
+                        }}
+                    >
+                        <button
+                            onClick={closePopup}
+                            aria-label="Close"
+                            style={{
+                                position: 'absolute',
+                                top: '1rem',
+                                right: '1rem',
+                                background: 'none',
+                                border: 'none',
+                                fontSize: '1.6rem',
+                                lineHeight: 1,
+                                cursor: 'pointer',
+                                color: DARK,
+                                opacity: 0.5
+                            }}
+                        >
+                            ×
+                        </button>
+
+                        <h3 style={{ fontFamily: "var(--font-montserrat), sans-serif", fontSize: '1.35rem', fontWeight: 800, textTransform: 'uppercase', margin: '0 0 0.5rem 0', letterSpacing: '-0.02em' }}>
+                            Get a Free ERP Assessment
+                        </h3>
+                        <p style={{ fontFamily: INTER, fontSize: '0.95rem', opacity: 0.7, margin: '0 0 1.5rem 0', lineHeight: 1.5 }}>
+                            Tell us what you need and we&apos;ll get back to you.
+                        </p>
+
+                        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                            <input required type="text" name="name" placeholder="Full Name" value={formData.name} onChange={handleInputChange} style={{ padding: '0.8rem 1rem', border: '1px solid rgba(46,42,38,0.15)', borderRadius: '8px', fontSize: '1rem', fontFamily: INTER, outline: 'none', backgroundColor: '#F8F6F2' }} />
+                            <input required type="tel" name="phone" placeholder="Phone Number" value={formData.phone} onChange={handleInputChange} style={{ padding: '0.8rem 1rem', border: '1px solid rgba(46,42,38,0.15)', borderRadius: '8px', fontSize: '1rem', fontFamily: INTER, outline: 'none', backgroundColor: '#F8F6F2' }} />
+                            <input required type="email" name="email" placeholder="Email Address" value={formData.email} onChange={handleInputChange} style={{ padding: '0.8rem 1rem', border: '1px solid rgba(46,42,38,0.15)', borderRadius: '8px', fontSize: '1rem', fontFamily: INTER, outline: 'none', backgroundColor: '#F8F6F2' }} />
+                            <textarea required name="requirement" rows={3} placeholder="Your requirement" value={formData.requirement} onChange={handleInputChange} style={{ padding: '0.8rem 1rem', border: '1px solid rgba(46,42,38,0.15)', borderRadius: '8px', fontSize: '1rem', fontFamily: INTER, outline: 'none', backgroundColor: '#F8F6F2', resize: 'vertical' }} />
+
+                            <button
+                                type="submit"
+                                disabled={status === 'loading'}
+                                style={{
+                                    backgroundColor: DARK,
+                                    color: TEXT,
+                                    padding: '0.9rem 2rem',
+                                    border: 'none',
+                                    borderRadius: '8px',
+                                    fontFamily: INTER,
+                                    fontSize: '0.9rem',
+                                    fontWeight: 700,
+                                    textTransform: 'uppercase',
+                                    letterSpacing: '0.1em',
+                                    cursor: status === 'loading' ? 'not-allowed' : 'pointer'
+                                }}
+                            >
+                                {status === 'loading' ? 'Submitting...' : 'Request Assessment'}
+                            </button>
+
+                            {status === 'error' && (
+                                <p style={{ fontFamily: INTER, fontSize: '0.9rem', color: '#DC2626', fontWeight: 600, margin: 0, textAlign: 'center' }}>
+                                    ✗ {errorMessage}
+                                </p>
+                            )}
+                        </form>
+                    </div>
+                </div>
+            )}
 
             <Footer />
         </main>

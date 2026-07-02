@@ -87,7 +87,7 @@ export const LANDING_PAGES: LandingPage[] = [
         },
     },
     {
-        slug: 'erp-software-company-in-mumbai',
+        slug: 'erp-systems-for-manufacturing',
         title: 'ERP Software Company in Mumbai for Manufacturers | Nexona',
         description:
             'ERP software company in Mumbai trusted by manufacturers. Nexona covers production, GST, inventory & compliance. Thane, Bhiwandi, Navi Mumbai. Book a demo.',

@@ -28,11 +28,15 @@ const navItemStyle: React.CSSProperties = {
 export default function StickyHeader({
     theme = 'dark',
     showBrand = true,
+    onContactClick,
 }: {
     theme?: 'dark' | 'light'
     /** Render the centered "Nexona" wordmark. Disable on the root page, whose
      *  MorphingBrand supplies its own animated wordmark. */
     showBrand?: boolean
+    /** When provided, the Contact nav item calls this instead of navigating to
+     *  /#contact (used by landing pages to open their lead popup in place). */
+    onContactClick?: () => void
 }) {
     const headerRef = useRef<HTMLElement>(null)
     const dividerRef = useRef<HTMLDivElement>(null)
@@ -189,7 +193,7 @@ export default function StickyHeader({
                     height: '6rem',
                 }}>
                     {/* Left: desktop "Projects" link + mobile hamburger */}
-                    <div style={{ justifySelf: 'start', display: 'flex', alignItems: 'center' }}>
+                    <div style={{ gridColumn: 1, justifySelf: 'start', display: 'flex', alignItems: 'center' }}>
                         <div className="desktop-nav" style={{ display: 'flex', gap: '2rem' }}>
                             <Link href="/projects" style={navItemStyle}>
                                 Projects
@@ -257,7 +261,7 @@ export default function StickyHeader({
 
                     {/* Center: Nexona wordmark — matches the docked MorphingBrand state */}
                     {showBrand && (
-                        <div style={{ justifySelf: 'center' }}>
+                        <div style={{ gridColumn: 2, justifySelf: 'center' }}>
                             <Link
                                 href="/"
                                 aria-label="Nexona — home"
@@ -279,10 +283,20 @@ export default function StickyHeader({
                     )}
 
                     {/* Right: Contact link */}
-                    <div className="desktop-only" style={{ justifySelf: 'end' }}>
-                        <Link href="/#contact" style={navItemStyle}>
-                            Contact
-                        </Link>
+                    <div className="desktop-only" style={{ gridColumn: 3, justifySelf: 'end' }}>
+                        {onContactClick ? (
+                            <button
+                                type="button"
+                                onClick={onContactClick}
+                                style={{ ...navItemStyle, background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontFamily: 'inherit' }}
+                            >
+                                Contact
+                            </button>
+                        ) : (
+                            <Link href="/#contact" style={navItemStyle}>
+                                Contact
+                            </Link>
+                        )}
                     </div>
 
                 </div>
@@ -319,27 +333,44 @@ export default function StickyHeader({
                     transition: 'opacity 0.3s ease',
                 }}
             >
-                {NAV_LINKS.map((link, i) => (
-                    <Link
-                        key={link.name}
-                        href={link.href}
-                        onClick={() => setMenuOpen(false)}
-                        style={{
-                            fontSize: '1.5rem',
-                            fontWeight: 600,
-                            color: currentColor,
-                            textDecoration: 'none',
-                            textTransform: 'uppercase',
-                            letterSpacing: '0.05em',
-                            fontFamily: INTER,
-                            opacity: menuOpen ? 1 : 0,
-                            transform: menuOpen ? 'translateY(0)' : 'translateY(20px)',
-                            transition: `all 0.4s ease ${i * 0.08}s`,
-                        }}
-                    >
-                        {link.name}
-                    </Link>
-                ))}
+                {NAV_LINKS.map((link, i) => {
+                    const linkStyle: React.CSSProperties = {
+                        fontSize: '1.5rem',
+                        fontWeight: 600,
+                        color: currentColor,
+                        textDecoration: 'none',
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.05em',
+                        fontFamily: INTER,
+                        opacity: menuOpen ? 1 : 0,
+                        transform: menuOpen ? 'translateY(0)' : 'translateY(20px)',
+                        transition: `all 0.4s ease ${i * 0.08}s`,
+                    }
+
+                    if (link.name === 'Contact' && onContactClick) {
+                        return (
+                            <button
+                                key={link.name}
+                                type="button"
+                                onClick={() => { setMenuOpen(false); onContactClick() }}
+                                style={{ ...linkStyle, background: 'none', border: 'none', cursor: 'pointer' }}
+                            >
+                                {link.name}
+                            </button>
+                        )
+                    }
+
+                    return (
+                        <Link
+                            key={link.name}
+                            href={link.href}
+                            onClick={() => setMenuOpen(false)}
+                            style={linkStyle}
+                        >
+                            {link.name}
+                        </Link>
+                    )
+                })}
             </div>
 
             {/* CSS for responsive show/hide */}
