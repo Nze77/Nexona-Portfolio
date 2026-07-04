@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState, useEffect } from 'react'
+import { useRef, useState, useEffect, Children } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -17,6 +17,7 @@ import {
     TrendingDown,
 } from 'lucide-react'
 import Footer from '../components/Footer'
+import LandingHeader from '../components/LandingHeader'
 import { useLenis } from '../lib/useLenis'
 import { fadeUp, stagger } from '../lib/variants'
 import { DARK, SAND, MID_DARK, INTER } from '../lib/constants'
@@ -135,7 +136,7 @@ const KPIS = [
     { label: 'Less manual work', value: '76%', trend: 'down' as const },
     { label: 'Faster operations', value: '3.4×', trend: 'up' as const },
     { label: 'Revenue growth', value: '+32%', trend: 'up' as const },
-    { label: 'Data accuracy', value: '100%', trend: 'up' as const },
+    { label: 'Customer retention', value: '89%', trend: 'up' as const },
 ]
 
 /**
@@ -143,6 +144,22 @@ const KPIS = [
  * (0–100) and are decoupled from the display labels so each row scales nicely.
  */
 const METRICS = [
+    {
+        label: 'Customer retention',
+        withoutLabel: '61%',
+        withLabel: '89%',
+        withoutPct: 61,
+        withPct: 89,
+        delta: '+28 pts',
+    },
+    {
+        label: 'Monthly revenue growth',
+        withoutLabel: '+3%',
+        withLabel: '+27%',
+        withoutPct: 14,
+        withPct: 88,
+        delta: '9× faster',
+    },
     {
         label: 'Manual admin work',
         withoutLabel: '38 hrs / week',
@@ -159,30 +176,6 @@ const METRICS = [
         withPct: 6,
         delta: '−98%',
     },
-    {
-        label: 'Data entry errors',
-        withoutLabel: '12%',
-        withLabel: '0.8%',
-        withoutPct: 70,
-        withPct: 5,
-        delta: '−93%',
-    },
-    {
-        label: 'Monthly revenue growth',
-        withoutLabel: '+3%',
-        withLabel: '+27%',
-        withoutPct: 14,
-        withPct: 88,
-        delta: '9× faster',
-    },
-    {
-        label: 'Customer retention',
-        withoutLabel: '61%',
-        withLabel: '89%',
-        withoutPct: 61,
-        withPct: 89,
-        delta: '+28 pts',
-    },
 ] as const
 
 /**
@@ -196,6 +189,14 @@ const METRICS = [
  */
 export default function HomePage() {
     useLenis()
+
+    // Swap the card grids for an auto-advancing carousel on mobile.
+    const isMobile = useIsMobile()
+
+    // "The difference we make" — toggle between the without/with-us states and
+    // reveal the bars once the panel scrolls into view.
+    const [impactMode, setImpactMode] = useState<'without' | 'with'>('without')
+    const [impactRevealed, setImpactRevealed] = useState(false)
 
     // Mouse-reactive parallax for the hero artwork.
     const [tilt, setTilt] = useState({ x: 0, y: 0 })
@@ -251,57 +252,7 @@ export default function HomePage() {
             }}
         >
             {/* ───────────────────────── Header ───────────────────────── */}
-            <motion.header
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                style={{
-                    position: 'sticky',
-                    top: 0,
-                    zIndex: 50,
-                    display: 'grid',
-                    gridTemplateColumns: '1fr auto 1fr',
-                    alignItems: 'center',
-                    height: '6rem',
-                    padding: '0 2rem',
-                    backgroundColor: DARK,
-                    backdropFilter: 'blur(6px)',
-                    borderBottom: '1px solid rgba(232,223,211,0.12)',
-                }}
-            >
-                <div style={{ justifySelf: 'start' }}>
-                    <Link href="/projects" style={navStyle} className="nav-link">
-                        Projects
-                    </Link>
-                </div>
-
-                <div style={{ justifySelf: 'center' }}>
-                    <Link
-                        href="/home"
-                        style={{
-                            fontFamily: INTER,
-                            fontWeight: 700,
-                            fontSize: 'clamp(1.4rem, 2.4vw, 1.9rem)',
-                            letterSpacing: '0.04em',
-                            color: SAND,
-                            textDecoration: 'none',
-                        }}
-                    >
-                        Nexona
-                    </Link>
-                </div>
-
-                <div style={{ justifySelf: 'end' }}>
-                    <button
-                        type="button"
-                        onClick={() => setContactOpen(true)}
-                        style={{ ...navStyle, background: 'transparent', border: 'none', cursor: 'pointer' }}
-                        className="nav-link"
-                    >
-                        Contact us
-                    </button>
-                </div>
-            </motion.header>
+            <LandingHeader theme="dark" onContactClick={() => setContactOpen(true)} />
 
             {/* ───────────────────────── Hero ───────────────────────── */}
             <section
@@ -344,7 +295,7 @@ export default function HomePage() {
                         position: 'relative',
                         justifySelf: 'center',
                         width: '100%',
-                        maxWidth: 520,
+                        maxWidth: 620,
                         aspectRatio: '1 / 1',
                     }}
                 >
@@ -393,7 +344,7 @@ export default function HomePage() {
                             fontWeight: 800,
                             fontSize: 'clamp(2.2rem, 5vw, 4rem)',
                             lineHeight: 1.05,
-                            letterSpacing: '-0.01em',
+                            letterSpacing: '0.01em',
                             margin: 0,
                         }}
                     >
@@ -407,6 +358,7 @@ export default function HomePage() {
                             marginTop: '1.5rem',
                             fontSize: 'clamp(1rem, 1.4vw, 1.15rem)',
                             lineHeight: 1.65,
+                            letterSpacing: '0.03em',
                             color: 'rgba(232,223,211,0.78)',
                             maxWidth: 480,
                         }}
@@ -452,22 +404,30 @@ export default function HomePage() {
                     Problems that we solve
                 </motion.h2>
 
-                <motion.div
-                    variants={stagger}
-                    initial="hidden"
-                    animate="visible"
-                    className="challenge-grid"
-                    style={{
-                        marginTop: 'clamp(2.5rem, 5vw, 4rem)',
-                        display: 'grid',
-                        gridTemplateColumns: 'repeat(3, 1fr)',
-                        gap: '1.5rem',
-                    }}
-                >
-                    {CHALLENGES.map((c) => (
-                        <ChallengeCard key={c.id} c={c} onClick={() => setActive(c)} />
-                    ))}
-                </motion.div>
+                {isMobile ? (
+                    <MobileCarousel>
+                        {CHALLENGES.map((c) => (
+                            <ChallengeCard key={c.id} c={c} compact onClick={() => setActive(c)} />
+                        ))}
+                    </MobileCarousel>
+                ) : (
+                    <motion.div
+                        variants={stagger}
+                        initial="hidden"
+                        animate="visible"
+                        className="challenge-grid"
+                        style={{
+                            marginTop: 'clamp(2.5rem, 5vw, 4rem)',
+                            display: 'grid',
+                            gridTemplateColumns: 'repeat(3, 1fr)',
+                            gap: '1.5rem',
+                        }}
+                    >
+                        {CHALLENGES.map((c) => (
+                            <ChallengeCard key={c.id} c={c} onClick={() => setActive(c)} />
+                        ))}
+                    </motion.div>
+                )}
             </section>
 
             {/* ──────────────── Solutions (light) ──────────────── */}
@@ -495,22 +455,30 @@ export default function HomePage() {
                     Solutions
                 </motion.h2>
 
-                <motion.div
-                    variants={stagger}
-                    initial="hidden"
-                    animate="visible"
-                    className="challenge-grid"
-                    style={{
-                        marginTop: 'clamp(2.5rem, 5vw, 4rem)',
-                        display: 'grid',
-                        gridTemplateColumns: 'repeat(3, 1fr)',
-                        gap: '1.5rem',
-                    }}
-                >
-                    {SOLUTIONS.map((s, i) => (
-                        <SolutionCard key={s.id} s={s} i={i} />
-                    ))}
-                </motion.div>
+                {isMobile ? (
+                    <MobileCarousel>
+                        {SOLUTIONS.map((s, i) => (
+                            <SolutionCard key={s.id} s={s} i={i} compact />
+                        ))}
+                    </MobileCarousel>
+                ) : (
+                    <motion.div
+                        variants={stagger}
+                        initial="hidden"
+                        animate="visible"
+                        className="challenge-grid"
+                        style={{
+                            marginTop: 'clamp(2.5rem, 5vw, 4rem)',
+                            display: 'grid',
+                            gridTemplateColumns: 'repeat(3, 1fr)',
+                            gap: '1.5rem',
+                        }}
+                    >
+                        {SOLUTIONS.map((s, i) => (
+                            <SolutionCard key={s.id} s={s} i={i} />
+                        ))}
+                    </motion.div>
+                )}
             </section>
 
             {/* ──────────────── Industries we serve (dark) ──────────────── */}
@@ -611,6 +579,7 @@ export default function HomePage() {
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.15 }}
+                    onViewportEnter={() => setImpactRevealed(true)}
                     style={{
                         marginTop: 'clamp(2.5rem, 5vw, 3.5rem)',
                         backgroundColor: DARK,
@@ -623,42 +592,23 @@ export default function HomePage() {
                 >
                     {/* Window chrome */}
                     <div style={{
-                        display: 'flex',
+                        display: 'grid',
+                        gridTemplateColumns: '1fr auto 1fr',
                         alignItems: 'center',
                         gap: '0.9rem',
                         paddingBottom: '1.25rem',
                         marginBottom: '1.75rem',
                         borderBottom: '1px solid rgba(232,226,218,0.14)',
                     }}>
-                        <span style={{ display: 'flex', gap: '0.4rem' }}>
+                        <span style={{ display: 'flex', gap: '0.4rem', flexShrink: 0 }}>
                             {[NEG, '#d9a25a', POS].map((c) => (
                                 <span key={c} style={{ width: 11, height: 11, borderRadius: 999, backgroundColor: c, opacity: 0.85 }} />
                             ))}
                         </span>
-                        <span style={{
-                            fontFamily: INTER,
-                            fontSize: '0.8rem',
-                            letterSpacing: '0.04em',
-                            opacity: 0.55,
-                        }}>
-                            performance-overview · live
-                        </span>
-                        <span style={{
-                            marginLeft: 'auto',
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            gap: '0.9rem',
-                            fontFamily: INTER,
-                            fontSize: '0.75rem',
-                            opacity: 0.7,
-                        }}>
-                            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
-                                <span style={{ width: 10, height: 10, borderRadius: 2, backgroundColor: NEG }} /> Without us
-                            </span>
-                            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
-                                <span style={{ width: 10, height: 10, borderRadius: 2, backgroundColor: POS }} /> With us
-                            </span>
-                        </span>
+                        <div style={{ justifySelf: 'center' }}>
+                            <ImpactToggle mode={impactMode} onChange={setImpactMode} />
+                        </div>
+                        <span aria-hidden />
                     </div>
 
                     {/* KPI tiles */}
@@ -702,10 +652,10 @@ export default function HomePage() {
                         ))}
                     </div>
 
-                    {/* Comparison bars */}
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.4rem' }}>
+                    {/* Comparison bars — single bar per metric, driven by the toggle */}
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                         {METRICS.map((m) => (
-                            <MetricRow key={m.label} m={m} />
+                            <MetricRow key={m.label} m={m} mode={impactMode} revealed={impactRevealed} />
                         ))}
                     </div>
                 </motion.div>
@@ -847,22 +797,18 @@ export default function HomePage() {
 
             {/* Responsive + hover styles */}
             <style jsx>{`
-                .nav-link {
-                    position: relative;
-                    transition: opacity 0.25s ease;
-                }
-                .nav-link:hover {
-                    opacity: 0.6;
-                }
                 .cta-btn {
                     display: inline-flex;
                     align-items: center;
                     gap: 0.6rem;
-                    transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+                    box-shadow: 6px 6px 0 ${DARK};
+                    transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease, color 0.25s ease;
                 }
                 .cta-btn:hover {
-                    transform: translateY(-2px);
-                    box-shadow: 0 12px 30px rgba(232, 223, 211, 0.18);
+                    transform: translateY(-4px);
+                    background-color: ${DARK} !important;
+                    color: ${SAND} !important;
+                    box-shadow: none;
                 }
                 .cta-btn:hover :global(.cta-arrow) {
                     transform: translateX(4px);
@@ -912,9 +858,6 @@ export default function HomePage() {
                         margin-left: auto;
                         margin-right: auto;
                     }
-                    .challenge-grid {
-                        grid-template-columns: 1fr !important;
-                    }
                     .industry-grid {
                         grid-template-columns: 1fr 1fr !important;
                     }
@@ -932,16 +875,6 @@ export default function HomePage() {
     )
 }
 
-const navStyle: React.CSSProperties = {
-    fontSize: '0.75rem',
-    letterSpacing: '0.04em',
-    textTransform: 'uppercase',
-    fontWeight: 500,
-    color: SAND,
-    textDecoration: 'none',
-    fontFamily: INTER,
-}
-
 const ctaStyle: React.CSSProperties = {
     backgroundColor: SAND,
     color: DARK,
@@ -954,12 +887,94 @@ const ctaStyle: React.CSSProperties = {
     fontFamily: INTER,
 }
 
+/** True while the viewport is at/below the mobile breakpoint. */
+function useIsMobile(query = '(max-width: 900px)') {
+    const [isMobile, setIsMobile] = useState(false)
+    useEffect(() => {
+        const mq = window.matchMedia(query)
+        const update = () => setIsMobile(mq.matches)
+        update()
+        mq.addEventListener('change', update)
+        return () => mq.removeEventListener('change', update)
+    }, [query])
+    return isMobile
+}
+
+/**
+ * Mobile carousel: shows one child at a time full-width and auto-advances every
+ * 5s — the current slide moves left while the next slides in from the right.
+ * A cloned first slide appended to the track makes the wrap seamless.
+ */
+function MobileCarousel({ children }: { children: React.ReactNode }) {
+    const slides = Children.toArray(children)
+    const count = slides.length
+    const [index, setIndex] = useState(0)
+    const [animate, setAnimate] = useState(true)
+
+    // Auto-advance.
+    useEffect(() => {
+        if (count <= 1) return
+        const id = setInterval(() => setIndex((i) => i + 1), 5000)
+        return () => clearInterval(id)
+    }, [count])
+
+    // After sliding onto the cloned first slide, snap back to the real first
+    // slide with the transition disabled, then re-enable it next frame.
+    useEffect(() => {
+        if (animate) return
+        const r = requestAnimationFrame(() =>
+            requestAnimationFrame(() => setAnimate(true))
+        )
+        return () => cancelAnimationFrame(r)
+    }, [animate])
+
+    const onTransitionEnd = () => {
+        if (index === count) {
+            setAnimate(false)
+            setIndex(0)
+        }
+    }
+
+    const display = count > 1 ? [...slides, slides[0]] : slides
+
+    return (
+        <div style={{ overflow: 'hidden', marginTop: 'clamp(2.5rem, 5vw, 4rem)' }}>
+            <div
+                onTransitionEnd={onTransitionEnd}
+                style={{
+                    display: 'flex',
+                    transform: `translateX(-${index * 100}%)`,
+                    transition: animate
+                        ? 'transform 0.6s cubic-bezier(0.22, 1, 0.36, 1)'
+                        : 'none',
+                }}
+            >
+                {display.map((slide, i) => (
+                    <div
+                        key={i}
+                        style={{
+                            flex: '0 0 100%',
+                            minWidth: '100%',
+                            boxSizing: 'border-box',
+                            padding: '4px 10px 18px',
+                        }}
+                    >
+                        {slide}
+                    </div>
+                ))}
+            </div>
+        </div>
+    )
+}
+
 function ChallengeCard({
     c,
     onClick,
+    compact = false,
 }: {
     c: (typeof CHALLENGES)[number]
     onClick: () => void
+    compact?: boolean
 }) {
     const [hovered, setHovered] = useState(false)
     return (
@@ -972,14 +987,14 @@ function ChallengeCard({
                 position: 'relative',
                 display: 'flex',
                 flexDirection: 'column',
-                minHeight: 280,
+                minHeight: compact ? 'auto' : 280,
                 textAlign: 'left',
                 cursor: 'pointer',
                 backgroundColor: hovered ? DARK : SAND,
                 color: hovered ? SAND : DARK,
                 border: `2px solid ${DARK}`,
                 borderRadius: '1.5rem',
-                padding: '2rem 1.75rem',
+                padding: compact ? '1.6rem 1.5rem' : '2rem 1.75rem',
                 fontFamily: 'var(--font-montserrat), sans-serif',
                 boxShadow: hovered ? 'none' : `6px 6px 0 ${DARK}`,
                 transform: hovered ? 'translateY(-4px)' : 'none',
@@ -998,7 +1013,7 @@ function ChallengeCard({
             <span style={{
                 marginTop: 'auto',
                 paddingTop: '1.5rem',
-                display: 'inline-flex',
+                display: compact ? 'none' : 'inline-flex',
                 alignItems: 'center',
                 gap: '0.4rem',
                 fontFamily: INTER,
@@ -1218,27 +1233,104 @@ const overlayInputStyle: React.CSSProperties = {
     outline: 'none',
 }
 
-function MetricRow({ m }: { m: (typeof METRICS)[number] }) {
-    // Shared reveal for the bars; widths animate from 0 → target on scroll-in.
-    const grow = {
-        hidden: { width: 0 },
-        visible: (pct: number) => ({
-            width: `${pct}%`,
-            transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] as const },
-        }),
-    }
+/**
+ * Segmented Without-us / With-us toggle. A single sliding pill (red → green)
+ * makes the active state unmistakable.
+ */
+function ImpactToggle({
+    mode,
+    onChange,
+}: {
+    mode: 'without' | 'with'
+    onChange: (m: 'without' | 'with') => void
+}) {
+    const options = [
+        { key: 'without' as const, label: 'Without us', color: POS },
+        { key: 'with' as const, label: 'With us', color: NEG },
+    ]
+    const activeIndex = mode === 'without' ? 0 : 1
+    return (
+        <div style={{
+            position: 'relative',
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr',
+            backgroundColor: MID_DARK,
+            border: '1px solid rgba(232,226,218,0.14)',
+            borderRadius: 999,
+            padding: 4,
+        }}>
+            <motion.div
+                aria-hidden
+                animate={{
+                    x: activeIndex === 0 ? '0%' : '100%',
+                    backgroundColor: options[activeIndex].color,
+                }}
+                transition={{ type: 'spring', stiffness: 420, damping: 34 }}
+                style={{
+                    position: 'absolute',
+                    top: 4,
+                    bottom: 4,
+                    left: 4,
+                    width: 'calc(50% - 4px)',
+                    borderRadius: 999,
+                }}
+            />
+            {options.map((o) => {
+                const active = o.key === mode
+                return (
+                    <button
+                        key={o.key}
+                        type="button"
+                        onClick={() => onChange(o.key)}
+                        aria-pressed={active}
+                        style={{
+                            position: 'relative',
+                            zIndex: 1,
+                            background: 'none',
+                            border: 'none',
+                            cursor: 'pointer',
+                            padding: '0.55rem 1.15rem',
+                            fontFamily: INTER,
+                            fontWeight: 700,
+                            fontSize: '0.78rem',
+                            letterSpacing: '0.03em',
+                            whiteSpace: 'nowrap',
+                            color: active ? SAND : 'rgba(232,226,218,0.55)',
+                            transition: 'color 0.25s ease',
+                        }}
+                    >
+                        {o.label}
+                    </button>
+                )
+            })}
+        </div>
+    )
+}
+
+function MetricRow({
+    m,
+    mode,
+    revealed,
+}: {
+    m: (typeof METRICS)[number]
+    mode: 'without' | 'with'
+    revealed: boolean
+}) {
+    const isWith = mode === 'with'
+    const pct = isWith ? m.withPct : m.withoutPct
+    const label = isWith ? m.withLabel : m.withoutLabel
+    const color = isWith ? NEG : POS
     const track: React.CSSProperties = {
         position: 'relative',
-        height: 10,
+        gridColumn: '1 / -1',
+        height: 12,
         borderRadius: 999,
         backgroundColor: 'rgba(232,226,218,0.10)',
         overflow: 'hidden',
+        marginTop: '0.35rem',
     }
     return (
-        <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.6 }}
+        <div
             style={{
                 display: 'grid',
                 gridTemplateColumns: '1fr auto',
@@ -1249,35 +1341,33 @@ function MetricRow({ m }: { m: (typeof METRICS)[number] }) {
             <span style={{ fontFamily: INTER, fontWeight: 600, fontSize: '0.9rem' }}>
                 {m.label}
             </span>
-            <span style={{
-                fontFamily: INTER,
-                fontWeight: 700,
-                fontSize: '0.8rem',
-                color: POS,
-                justifySelf: 'end',
-            }}>
-                {m.delta}
-            </span>
+            <AnimatePresence mode="wait" initial={false}>
+                <motion.span
+                    key={label}
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -6 }}
+                    transition={{ duration: 0.22 }}
+                    style={{
+                        fontFamily: INTER,
+                        fontWeight: 700,
+                        fontSize: '0.95rem',
+                        color,
+                        justifySelf: 'end',
+                    }}
+                >
+                    {label}
+                </motion.span>
+            </AnimatePresence>
 
-            <div style={{ gridColumn: '1 / -1', display: 'flex', flexDirection: 'column', gap: '0.5rem', marginTop: '0.25rem' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                    <div style={{ ...track, flex: 1 }}>
-                        <motion.div variants={grow} custom={m.withoutPct} style={{ height: '100%', borderRadius: 999, backgroundColor: NEG }} />
-                    </div>
-                    <span style={{ fontFamily: INTER, fontSize: '0.78rem', opacity: 0.6, minWidth: 92, textAlign: 'right' }}>
-                        {m.withoutLabel}
-                    </span>
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                    <div style={{ ...track, flex: 1 }}>
-                        <motion.div variants={grow} custom={m.withPct} style={{ height: '100%', borderRadius: 999, backgroundColor: POS }} />
-                    </div>
-                    <span style={{ fontFamily: INTER, fontSize: '0.78rem', fontWeight: 700, minWidth: 92, textAlign: 'right' }}>
-                        {m.withLabel}
-                    </span>
-                </div>
+            <div style={track}>
+                <motion.div
+                    animate={{ width: revealed ? `${pct}%` : '0%', backgroundColor: color }}
+                    transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                    style={{ height: '100%', borderRadius: 999 }}
+                />
             </div>
-        </motion.div>
+        </div>
     )
 }
 
@@ -1324,7 +1414,7 @@ function IndustryCard({ ind }: { ind: (typeof INDUSTRIES)[number] }) {
     )
 }
 
-function SolutionCard({ s, i }: { s: (typeof SOLUTIONS)[number]; i: number }) {
+function SolutionCard({ s, i, compact = false }: { s: (typeof SOLUTIONS)[number]; i: number; compact?: boolean }) {
     const [hovered, setHovered] = useState(false)
     return (
         <motion.div
@@ -1335,9 +1425,9 @@ function SolutionCard({ s, i }: { s: (typeof SOLUTIONS)[number]; i: number }) {
                 position: 'relative',
                 display: 'flex',
                 flexDirection: 'column',
-                minHeight: 220,
+                minHeight: compact ? 'auto' : 220,
                 borderRadius: '1.5rem',
-                padding: '2rem 1.75rem',
+                padding: compact ? '1.6rem 1.5rem' : '2rem 1.75rem',
                 backgroundColor: DARK,
                 color: SAND,
                 border: `2px solid ${DARK}`,

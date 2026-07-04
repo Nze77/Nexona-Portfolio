@@ -192,71 +192,13 @@ export default function StickyHeader({
                     padding: '0 2rem',
                     height: '6rem',
                 }}>
-                    {/* Left: desktop "Projects" link + mobile hamburger */}
+                    {/* Left: desktop "Projects" link */}
                     <div style={{ gridColumn: 1, justifySelf: 'start', display: 'flex', alignItems: 'center' }}>
                         <div className="desktop-nav" style={{ display: 'flex', gap: '2rem' }}>
                             <Link href="/projects" style={navItemStyle}>
                                 Projects
                             </Link>
                         </div>
-
-                        {/* Mobile hamburger button */}
-                        <button
-                            className="mobile-menu-btn"
-                            onClick={() => setMenuOpen(!menuOpen)}
-                            aria-label="Toggle menu"
-                            style={{
-                                display: 'none',
-                                background: 'none',
-                                border: 'none',
-                                cursor: 'pointer',
-                                padding: '8px',
-                                color: currentColor,
-                                zIndex: 100,
-                                position: 'relative',
-                                width: '40px',
-                                height: '40px',
-                            }}
-                        >
-                            <div style={{
-                                position: 'relative',
-                                width: '24px',
-                                height: '18px',
-                                margin: '0 auto',
-                            }}>
-                                <div style={{
-                                    width: '24px',
-                                    height: '2px',
-                                    backgroundColor: 'currentColor',
-                                    transition: 'all 0.3s ease',
-                                    position: 'absolute',
-                                    left: 0,
-                                    top: menuOpen ? '50%' : '0',
-                                    transform: menuOpen ? 'translateY(-50%) rotate(45deg)' : 'none',
-                                }} />
-                                <div style={{
-                                    width: '24px',
-                                    height: '2px',
-                                    backgroundColor: 'currentColor',
-                                    transition: 'all 0.3s ease',
-                                    position: 'absolute',
-                                    left: 0,
-                                    top: '50%',
-                                    transform: 'translateY(-50%)',
-                                    opacity: menuOpen ? 0 : 1,
-                                }} />
-                                <div style={{
-                                    width: '24px',
-                                    height: '2px',
-                                    backgroundColor: 'currentColor',
-                                    transition: 'all 0.3s ease',
-                                    position: 'absolute',
-                                    left: 0,
-                                    top: menuOpen ? '50%' : '100%',
-                                    transform: menuOpen ? 'translateY(-50%) rotate(-45deg)' : 'translateY(-100%)',
-                                }} />
-                            </div>
-                        </button>
                     </div>
 
                     {/* Center: Nexona wordmark — matches the docked MorphingBrand state */}
@@ -282,21 +224,69 @@ export default function StickyHeader({
                         </div>
                     )}
 
-                    {/* Right: Contact link */}
-                    <div className="desktop-only" style={{ gridColumn: 3, justifySelf: 'end' }}>
-                        {onContactClick ? (
-                            <button
-                                type="button"
-                                onClick={onContactClick}
-                                style={{ ...navItemStyle, background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontFamily: 'inherit' }}
-                            >
-                                Contact
-                            </button>
-                        ) : (
-                            <Link href="/#contact" style={navItemStyle}>
-                                Contact
-                            </Link>
-                        )}
+                    {/* Right: desktop Contact link + mobile hamburger */}
+                    <div style={{ gridColumn: 3, justifySelf: 'end', display: 'flex', alignItems: 'center' }}>
+                        <div className="desktop-only">
+                            {onContactClick ? (
+                                <button
+                                    type="button"
+                                    onClick={onContactClick}
+                                    style={{ ...navItemStyle, background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontFamily: 'inherit' }}
+                                >
+                                    Contact
+                                </button>
+                            ) : (
+                                <Link href="/#contact" style={navItemStyle}>
+                                    Contact
+                                </Link>
+                            )}
+                        </div>
+
+                        {/* Mobile hamburger button — 3 equal, evenly spaced lines */}
+                        <button
+                            className="mobile-menu-btn"
+                            onClick={() => setMenuOpen(!menuOpen)}
+                            aria-label="Toggle menu"
+                            style={{
+                                display: 'none',
+                                background: 'none',
+                                border: 'none',
+                                cursor: 'pointer',
+                                padding: '8px',
+                                color: currentColor,
+                                zIndex: 100,
+                                position: 'relative',
+                                width: '40px',
+                                height: '40px',
+                            }}
+                        >
+                            <div style={{
+                                position: 'relative',
+                                width: '24px',
+                                height: '18px',
+                                margin: '0 auto',
+                            }}>
+                                {[0, 8, 16].map((topPos, i) => (
+                                    <span
+                                        key={i}
+                                        style={{
+                                            position: 'absolute',
+                                            left: 0,
+                                            width: '24px',
+                                            height: '2px',
+                                            backgroundColor: 'currentColor',
+                                            borderRadius: '2px',
+                                            transition: 'all 0.3s ease',
+                                            top: menuOpen ? '8px' : `${topPos}px`,
+                                            opacity: menuOpen && i === 1 ? 0 : 1,
+                                            transform: menuOpen
+                                                ? (i === 0 ? 'rotate(45deg)' : i === 2 ? 'rotate(-45deg)' : 'none')
+                                                : 'none',
+                                        }}
+                                    />
+                                ))}
+                            </div>
+                        </button>
                     </div>
 
                 </div>
