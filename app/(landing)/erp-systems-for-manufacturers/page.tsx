@@ -322,7 +322,7 @@ export default function ERPPage() {
                             letterSpacing: '-0.02em',
                             margin: 0
                         }}>
-                            Our Clients
+                            Businesses That Trust Nexona
                         </h2>
                     </div>
 
@@ -346,7 +346,7 @@ export default function ERPPage() {
                                         const image = (
                                             <Image
                                                 src={client.src}
-                                                alt={copy === 0 ? client.alt : ''}
+                                                alt={copy === 0 ? `${client.alt} – Nexona client` : ''}
                                                 draggable={false}
                                                 fill
                                                 sizes="220px"
@@ -467,7 +467,7 @@ export default function ERPPage() {
                             Why Mumbai Manufacturers Need ERP to Scale Faster
                         </h2>
                         <p style={{ fontFamily: INTER, opacity: 0.8, lineHeight: 1.8, fontSize: '1.1rem', margin: 0 }}>
-                            The manufacturing belt through Thane, Bhiwandi, Navi Mumbai, and Vasai still runs on Tally and Excel trackers never built for this load. A small unit manages. Add a second warehouse, a third product line, or a compliance deadline you cannot miss, and that approach buckles. What gets you is rarely one big breakdown - it&apos;s the slow stack of small failures bleeding margin every quarter.
+                            The manufacturing belt through Thane, Bhiwandi, Navi Mumbai, and Vasai still runs on Tally and Excel trackers never built for this load. A small unit manages. Add a second warehouse, a third product line, or a compliance deadline you cannot miss, and that approach buckles. What gets you is rarely one big breakdown - it&apos;s the slow stack of small failures bleeding margin every quarter. Working as an ERP software company in Mumbai, Nexona sees the same sequence in plant after plant: the systems that carried you to ₹10 crore are the ones holding you back at ₹30.
                         </p>
                     </div>
 
@@ -524,7 +524,7 @@ export default function ERPPage() {
                             letterSpacing: '-0.02em',
                             margin: '0 0 2rem 0'
                         }}>
-                            What Nexona Solves for Local Buyers Today
+                            What Nexona, an ERP Software Company in Mumbai, Solves for Local Buyers
                         </h2>
                         <p style={{ fontFamily: INTER, opacity: 0.8, lineHeight: 1.8, fontSize: '1.1rem', marginBottom: '2.5rem' }}>
                             ERP solutions for manufacturers are not really about software - they are about the work your team stops doing. Put sales, production, purchase, and finance on one data source and the friction between them mostly disappears. Nexona builds its ERP software for manufacturing industry clients around results you can point to, not features you have to believe in.
@@ -546,6 +546,92 @@ export default function ERPPage() {
                                 </div>
                             ))}
                         </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* 3b. What Is Manufacturing ERP Software? (H2 — definition block)
+                The opening sentence is deliberately kept to ~40 words and answers the
+                question head-on, which is the shape Google lifts into featured snippets
+                and AI Overviews. Do not pad it. */}
+            <section style={{ backgroundColor: DARK, color: TEXT, padding: isMobile ? '6rem 5%' : '9rem 8%' }}>
+                <div style={{ maxWidth: '900px', margin: '0 auto' }}>
+                    <span style={{ fontFamily: INTER, fontSize: '0.85rem', letterSpacing: '0.2em', textTransform: 'uppercase', opacity: 0.6, fontWeight: 700, display: 'block', marginBottom: '1.5rem' }}>Definition</span>
+                    <h2 style={{
+                        fontFamily: "var(--font-montserrat), sans-serif",
+                        fontSize: 'clamp(2rem, 4vw, 3.2rem)',
+                        fontWeight: 800,
+                        lineHeight: 1.1,
+                        textTransform: 'uppercase',
+                        letterSpacing: '-0.02em',
+                        margin: '0 0 2.5rem 0'
+                    }}>
+                        What Is Manufacturing ERP Software?
+                    </h2>
+
+                    <div style={{ borderLeft: `3px solid ${SAND}`, paddingLeft: isMobile ? '1.5rem' : '2.5rem', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                        <p style={{ fontFamily: INTER, fontSize: isMobile ? '1.15rem' : '1.35rem', fontWeight: 500, lineHeight: 1.6, margin: 0, color: TEXT }}>
+                            Manufacturing ERP software is a single system that connects production, inventory, purchase, sales, finance, and compliance so every department works from the same live data.
+                        </p>
+                        <p style={{ fontFamily: INTER, fontSize: '1.1rem', opacity: 0.8, lineHeight: 1.8, margin: 0 }}>
+                            Instead of running Tally, Excel, and paper registers separately, a manufacturer plans production, tracks stock, controls costs, and files GST from one platform - cutting errors, delays, and manual reconciliation.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            {/* 3c. How to Choose an ERP Software Company in Mumbai (H2) */}
+            <section style={{ backgroundColor: '#25221F', color: TEXT, padding: isMobile ? '6rem 5%' : '10rem 8%', borderTop: `1px solid rgba(232,223,211,0.1)` }}>
+                <div style={{ maxWidth: '1400px', margin: '0 auto', display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'flex-start', gap: isMobile ? '3rem' : '6rem' }}>
+                    <div style={{ flex: 1.2 }}>
+                        <span style={{ fontFamily: INTER, fontSize: '0.85rem', letterSpacing: '0.2em', textTransform: 'uppercase', opacity: 0.6, fontWeight: 700, display: 'block', marginBottom: '1.5rem' }}>Buyer&apos;s Checklist</span>
+                        <h2 style={{
+                            fontFamily: "var(--font-montserrat), sans-serif",
+                            fontSize: 'clamp(2rem, 4vw, 3.5rem)',
+                            fontWeight: 800,
+                            lineHeight: 1.1,
+                            textTransform: 'uppercase',
+                            letterSpacing: '-0.02em',
+                            margin: '0 0 2rem 0'
+                        }}>
+                            How to Choose an ERP Software Company in Mumbai
+                        </h2>
+                        <p style={{ fontFamily: INTER, opacity: 0.8, lineHeight: 1.8, fontSize: '1.1rem', margin: 0 }}>
+                            Not every ERP fits every factory. Before committing to a manufacturing ERP - or the team implementing it - weigh these five things.
+                        </p>
+                    </div>
+
+                    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '1.25rem', width: '100%' }}>
+                        {[
+                            { title: 'Industry fit', desc: 'does it handle your specific process - batch control for pharma, BOM versioning for engineering, shelf-life for food?' },
+                            { title: 'Local implementation support', desc: 'can the team reach your floor, not just a helpline?' },
+                            { title: 'GST and compliance built in', desc: 'e-invoicing, e-way bills, and IRN handled natively, not bolted on.' },
+                            { title: 'Cloud or on-premise', desc: 'matched to your data needs and plant connectivity.' },
+                            { title: 'Room to scale', desc: 'will it hold a second warehouse or third product line without re-implementation?' }
+                        ].map((item, i) => (
+                            <div
+                                key={i}
+                                style={{
+                                    border: '1px solid rgba(232,223,211,0.1)',
+                                    borderRadius: '16px',
+                                    padding: '1.5rem',
+                                    backgroundColor: 'rgba(232,223,211,0.02)',
+                                    display: 'flex',
+                                    alignItems: 'flex-start',
+                                    gap: '1.25rem'
+                                }}
+                            >
+                                <span style={{ width: '8px', height: '8px', backgroundColor: SAND, borderRadius: '50%', marginTop: '0.55rem', flexShrink: 0 }} />
+                                <div>
+                                    <h3 style={{ fontFamily: INTER, fontSize: '1.05rem', fontWeight: 700, margin: '0 0 0.35rem 0', color: TEXT }}>
+                                        {item.title}
+                                    </h3>
+                                    <p style={{ fontFamily: INTER, fontSize: '0.95rem', opacity: 0.7, lineHeight: 1.6, margin: 0 }}>
+                                        {item.desc}
+                                    </p>
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </section>
@@ -790,14 +876,14 @@ export default function ERPPage() {
 
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem' }}>
                         {[
-                            { title: 'Engineering', desc: 'machine parts and fabrication across Thane and Navi Mumbai MIDC zones, with job cards, routing, BOM versioning, and vendor scheduling in one place.' },
-                            { title: 'Pharma', desc: 'batch control and formulation across Andheri, Mahape, and Turbhe, holding cGMP workflows, batch records, and expiry tracking.' },
-                            { title: 'Food Processing', desc: 'batch tracking near the Vashi and Navi Mumbai APMC markets, with shelf-life controls, allergen tracking, and FSSAI documentation.' },
-                            { title: 'Chemicals', desc: 'compliance records and formula control, tracking hazardous storage, batch genealogy, and MSDS-aligned reports.' },
-                            { title: 'Packaging', desc: 'production planning, material consumption, and dispatch control, cutting wastage when volume swings.' },
-                            { title: 'Textiles', desc: 'managing the colour-size-style matrix that breaks generic systems.' },
-                            { title: 'Automotive Suppliers', desc: 'vendor management, BOM control, and quality built to OEM standards, carrying PPAP and first-article inspection records.' },
-                            { title: 'Trading & Distribution', desc: 'warehouse control and order management across Bhiwandi and Navi Mumbai hubs, with GST-compliant dispatch documents.' }
+                            { title: 'Engineering', desc: 'machine parts and fabrication across Thane and Navi Mumbai MIDC zones, with job cards, routing, BOM versioning, and vendor scheduling in one place. Job-work sent out to sub-contractors stays on the books instead of vanishing into a register. Costing runs per job card, so you know which orders actually earned money and which quietly did not.' },
+                            { title: 'Pharma', desc: 'batch control and formulation across Andheri, Mahape, and Turbhe, holding cGMP workflows, batch records, and expiry tracking. Every batch carries its genealogy - which raw material lot went in, who released it, and where it shipped - so a recall is a query, not a week of searching. Audit trails and deviation records are generated as work happens, ready before the inspector asks.' },
+                            { title: 'Food Processing', desc: 'batch tracking near the Vashi and Navi Mumbai APMC markets, with shelf-life controls, allergen tracking, and FSSAI documentation. FEFO dispatch rules push the oldest stock out first, cutting the write-offs that come from forgotten pallets. Yield per batch is measured against standard, so wastage shows up as a number rather than a hunch.' },
+                            { title: 'Chemicals', desc: 'compliance records and formula control, tracking hazardous storage, batch genealogy, and MSDS-aligned reports. Formulas are version-locked, so a revised recipe cannot reach the floor without approval. Reactor and tank capacity feed into planning, which keeps schedules honest when a batch cycle runs longer than the sales team assumed.' },
+                            { title: 'Packaging', desc: 'production planning, material consumption, and dispatch control, cutting wastage when volume swings. Actual substrate and ink consumption is booked against standard usage, so overruns are visible the same day rather than at month end. Tooling and die records sit against each SKU, which shortens changeover on repeat orders.' },
+                            { title: 'Textiles', desc: 'managing the colour-size-style matrix that breaks generic systems. Stock is held at the exact variant level, so a size-38 navy shirt is never confused with a size-38 black one, and dyeing, printing, and stitching handed to job-workers stay tracked through every stage. Order-to-dispatch status is visible without a single phone call to the unit.' },
+                            { title: 'Automotive Suppliers', desc: 'vendor management, BOM control, and quality built to OEM standards, carrying PPAP and first-article inspection records. Schedule releases from the OEM flow straight into production planning, so you build to the call-off rather than to a guess. Full traceability from component lot to delivered part keeps you covered when a supplier audit lands.' },
+                            { title: 'Trading & Distribution', desc: 'warehouse control and order management across Bhiwandi and Navi Mumbai hubs, with GST-compliant dispatch documents. Stock across every godown reads from one ledger, so a customer order is never promised against inventory sitting in the wrong location. E-way bills and invoices generate off the same transaction, which keeps dispatch moving and paperwork clean.' }
                         ].map((useCase, i) => (
                             <div
                                 key={i}
@@ -912,7 +998,7 @@ export default function ERPPage() {
                                 What Manufacturers Gain After Nexona Goes Live
                             </h2>
                             <p style={{ fontFamily: INTER, opacity: 0.8, lineHeight: 1.8, fontSize: '1.1rem', margin: 0 }}>
-                                These are the changes manufacturers report inside the first 90 days - not a forecast, just the pattern Nexona keeps seeing. The value rarely arrives as one big saving. It shows up as the quiet disappearance of small daily losses everyone had stopped counting.
+                                These are the changes manufacturers typically see inside the first 90 days - not a forecast, just the pattern these systems consistently deliver. The value rarely arrives as one big saving. It shows up as the quiet disappearance of small daily losses everyone had stopped counting.
                             </p>
                         </div>
                         <div style={{ flex: 1, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', width: '100%' }}>
@@ -981,6 +1067,81 @@ export default function ERPPage() {
                                 </h3>
                             </div>
                         ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* 12b. Cloud vs On-Premise ERP (H2 — comparison table) */}
+            <section style={{ backgroundColor: SAND, color: DARK, padding: isMobile ? '6rem 5%' : '10rem 8%' }}>
+                <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
+                    <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+                        <span style={{ fontFamily: INTER, fontSize: '0.85rem', letterSpacing: '0.2em', textTransform: 'uppercase', opacity: 0.6, fontWeight: 700, display: 'block', marginBottom: '1rem' }}>Deployment Choice</span>
+                        <h2 style={{
+                            fontFamily: "var(--font-montserrat), sans-serif",
+                            fontSize: 'clamp(2rem, 4vw, 3.5rem)',
+                            fontWeight: 800,
+                            lineHeight: 1.1,
+                            textTransform: 'uppercase',
+                            letterSpacing: '-0.02em',
+                            margin: 0
+                        }}>
+                            Cloud vs On-Premise ERP - Which Fits Your Factory?
+                        </h2>
+                    </div>
+
+                    {/* The table scrolls horizontally on narrow screens rather than
+                        squeezing three columns into a phone width. */}
+                    <div style={{ overflowX: 'auto', borderRadius: '20px', border: '1px solid rgba(46,42,38,0.15)', backgroundColor: 'rgba(255,255,255,0.35)' }}>
+                        <table style={{ width: '100%', minWidth: '640px', borderCollapse: 'collapse', fontFamily: INTER }}>
+                            <thead>
+                                <tr>
+                                    {['', 'Cloud ERP', 'On-Premise ERP'].map((heading, i) => (
+                                        <th
+                                            key={i}
+                                            scope="col"
+                                            style={{
+                                                textAlign: 'left',
+                                                padding: isMobile ? '1.25rem' : '1.5rem 2rem',
+                                                fontFamily: "var(--font-montserrat), sans-serif",
+                                                fontSize: '1rem',
+                                                fontWeight: 800,
+                                                textTransform: 'uppercase',
+                                                letterSpacing: '0.02em',
+                                                borderBottom: '2px solid rgba(46,42,38,0.2)',
+                                                width: i === 0 ? '26%' : '37%'
+                                            }}
+                                        >
+                                            {heading}
+                                        </th>
+                                    ))}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {[
+                                    { label: 'Upfront cost', cloud: 'Lower - subscription based', onPrem: 'Higher - servers + licenses' },
+                                    { label: 'Access', cloud: 'Anywhere, any device', onPrem: 'On-site network' },
+                                    { label: 'Updates', cloud: 'Automatic', onPrem: 'Manual' },
+                                    { label: 'Best for', cloud: 'Most Mumbai SMEs', onPrem: 'Strict data residency or poor plant internet' },
+                                    { label: 'Maintenance', cloud: 'Handled by Nexona', onPrem: 'Your IT team' }
+                                ].map((row, i, rows) => {
+                                    const cell = {
+                                        padding: isMobile ? '1.25rem' : '1.5rem 2rem',
+                                        fontSize: '1rem',
+                                        lineHeight: 1.6,
+                                        borderBottom: i === rows.length - 1 ? 'none' : '1px solid rgba(46,42,38,0.12)'
+                                    } as const
+                                    return (
+                                        <tr key={row.label}>
+                                            <th scope="row" style={{ ...cell, textAlign: 'left', fontWeight: 700 }}>
+                                                {row.label}
+                                            </th>
+                                            <td style={{ ...cell, opacity: 0.8 }}>{row.cloud}</td>
+                                            <td style={{ ...cell, opacity: 0.8 }}>{row.onPrem}</td>
+                                        </tr>
+                                    )
+                                })}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </section>
