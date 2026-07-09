@@ -35,23 +35,6 @@ export default function ProjectsPage() {
         <main style={{ backgroundColor: SAND, minHeight: '100vh', color: DARK }}>
             <StickyHeader theme="light" />
 
-            {/* Brand Link matching MorphingBrand's docked state */}
-            <div style={{ position: 'fixed', top: '15px', left: '50%', transform: 'translateX(-50%)', zIndex: 100, pointerEvents: 'none' }}>
-                <Link href="/" className="brand-wordmark" style={{
-                    fontFamily: INTER,
-                    fontWeight: 700,
-                    fontSize: '60px',
-                    letterSpacing: '-0.08em',
-                    color: DARK,
-                    textDecoration: 'none',
-                    pointerEvents: 'auto',
-                    opacity: 1,
-                    whiteSpace: 'nowrap',
-                    lineHeight: 1
-                }}>
-                    Nexona
-                </Link>
-            </div>
             <section style={{ padding: '8rem 5% 4rem' }}>
                 <div style={{ maxWidth: 1200, margin: '0 auto' }}>
 
