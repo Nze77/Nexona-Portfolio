@@ -314,8 +314,8 @@ export default function ManufacturingErpPage() {
                     <h2 style={H2}>ERP for the way your industry works</h2>
                     <p style={{ ...LEAD, marginTop: '1.25rem', maxWidth: '660px', opacity: 0.75 }}>
                         The bones are the same everywhere. The details are not. A pharma batch record and a
-                        fabrication job card have nothing in common except the word "record", and that is the
-                        whole argument for building it to fit.
+                        fabrication job card have nothing in common except the word &ldquo;record&rdquo;, and that
+                        is the whole argument for building it to fit.
                     </p>
 
                     <div
