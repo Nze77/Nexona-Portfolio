@@ -3,8 +3,8 @@
 import { useRef, useEffect, useState } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import Image from 'next/image'
-import Link from 'next/link'
 import LandingHeader from '../../components/LandingHeader'
+import ClientStrip from '../../components/ClientStrip'
 import Footer from '../../components/Footer'
 import ParticleEffect from '../../components/ParticleEffect'
 import { DARK, SAND, INTER } from '../../lib/constants'
@@ -13,23 +13,6 @@ import { FAQ_ITEMS } from './content'
 // Slightly whiter than SAND (#E8E2DA) — used for body/heading text on this
 // page's dark sections. Sand backgrounds, borders, and dots keep SAND.
 const TEXT = '#F2EEE8'
-
-// Widths keep each logo optically similar in size despite differing aspect ratios.
-// `scale` grows the box for logos that carry a lot of internal whitespace, since
-// object-fit: contain otherwise renders them smaller than their neighbours.
-// `href` is omitted where the client has no entry in projectDetails.ts yet.
-const CLIENT_LOGOS: { src: string; alt: string; width: string; scale?: number; href?: string }[] = [
-    { src: '/logos/dariza.jpg', alt: 'Dariza Fabrics', width: '210px', href: '/projects/dariza' },
-    { src: '/logos/1327.png', alt: '1327', width: '190px', href: '/projects/1327' },
-    { src: '/froven image/Gemini_Generated_Image_gqcanogqcanogqca-Photoroom.png', alt: 'Froven Innovations', width: '110px', href: '/projects/froven' },
-    { src: '/logos/aimfitness.png', alt: 'Aim Fitness Gym Thane', width: '190px', scale: 1.5 }
-]
-
-const LOGO_BASE_HEIGHT = { mobile: 70, desktop: 90 }
-
-// Every logo sits in a frame of this height so the captions below them share one
-// baseline, regardless of each logo's individual scale.
-const LOGO_FRAME_SCALE = Math.max(...CLIENT_LOGOS.map((c) => c.scale ?? 1))
 
 export default function ERPPage() {
     const heroRef = useRef<HTMLElement>(null)
@@ -309,146 +292,7 @@ export default function ERPPage() {
             </section>
 
             {/* 1b. Our Clients */}
-            <section style={{ backgroundColor: SAND, color: DARK, padding: isMobile ? '4rem 0' : '6rem 0' }}>
-                <div style={{ maxWidth: '1600px', margin: '0 auto' }}>
-                    <div style={{ textAlign: 'center', marginBottom: isMobile ? '3rem' : '4rem', padding: '0 5%' }}>
-                        <span style={{ fontFamily: INTER, fontSize: '0.85rem', letterSpacing: '0.2em', textTransform: 'uppercase', opacity: 0.6, fontWeight: 700, display: 'block', marginBottom: '1rem' }}>Trusted By</span>
-                        <h2 style={{
-                            fontFamily: "var(--font-montserrat), sans-serif",
-                            fontSize: 'clamp(1.75rem, 3.5vw, 2.75rem)',
-                            fontWeight: 800,
-                            lineHeight: 1.1,
-                            textTransform: 'uppercase',
-                            letterSpacing: '-0.02em',
-                            margin: 0
-                        }}>
-                            Businesses That Trust Nexona
-                        </h2>
-                    </div>
-
-                    {/* Right-to-left marquee. The list is rendered twice back to back and
-                        the track is shifted by exactly half its width, so the loop is seamless. */}
-                    <div
-                        style={{
-                            overflow: 'hidden',
-                            paddingBottom: '3rem',
-                            maskImage: 'linear-gradient(to right, transparent, black 2%, black 98%, transparent)',
-                            WebkitMaskImage: 'linear-gradient(to right, transparent, black 2%, black 98%, transparent)'
-                        }}
-                    >
-                        {/* Four groups, i.e. two per half. Each half must be wider than the
-                            viewport or the -50% shift would expose empty track on the right. */}
-                        <div className="clientMarqueeTrack">
-                            {[0, 1, 2, 3].map((copy) => (
-                                <div key={copy} className="clientMarqueeGroup" aria-hidden={copy !== 0}>
-                                    {CLIENT_LOGOS.map((client) => {
-                                        const base = isMobile ? LOGO_BASE_HEIGHT.mobile : LOGO_BASE_HEIGHT.desktop
-                                        const image = (
-                                            <Image
-                                                src={client.src}
-                                                alt={copy === 0 ? `${client.alt} – Nexona client` : ''}
-                                                draggable={false}
-                                                fill
-                                                sizes="220px"
-                                                style={{ objectFit: 'contain' }}
-                                            />
-                                        )
-                                        return (
-                                            <div
-                                                key={client.alt}
-                                                className="clientLogo"
-                                                style={{ height: `${base * LOGO_FRAME_SCALE}px`, width: client.width }}
-                                            >
-                                                <div
-                                                    className="clientLogoImage"
-                                                    style={{ height: `${base * (client.scale ?? 1)}px` }}
-                                                >
-                                                    {client.href ? (
-                                                        <Link
-                                                            href={client.href}
-                                                            tabIndex={copy !== 0 ? -1 : undefined}
-                                                            style={{ position: 'absolute', inset: 0, display: 'block' }}
-                                                        >
-                                                            {image}
-                                                        </Link>
-                                                    ) : (
-                                                        image
-                                                    )}
-                                                </div>
-                                                <span className="clientLogoName" aria-hidden="true">
-                                                    {client.alt}
-                                                </span>
-                                            </div>
-                                        )
-                                    })}
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-
-                <style jsx>{`
-                    .clientMarqueeTrack {
-                        display: flex;
-                        width: max-content;
-                        animation: clientMarquee 28s linear infinite;
-                    }
-                    .clientMarqueeTrack:hover {
-                        animation-play-state: paused;
-                    }
-                    .clientMarqueeGroup {
-                        display: flex;
-                        align-items: center;
-                        gap: 5rem;
-                        padding-right: 5rem;
-                    }
-                    .clientLogo {
-                        position: relative;
-                        flex-shrink: 0;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                    }
-                    .clientLogoImage {
-                        position: relative;
-                        width: 100%;
-                        opacity: 0.85;
-                        transition: opacity 0.3s ease, transform 0.3s ease;
-                    }
-                    .clientLogo:hover .clientLogoImage,
-                    .clientLogo:focus-within .clientLogoImage {
-                        opacity: 1;
-                        transform: scale(1.04);
-                    }
-                    .clientLogoName {
-                        position: absolute;
-                        top: calc(100% + 0.9rem);
-                        left: 50%;
-                        transform: translateX(-50%);
-                        white-space: nowrap;
-                        font-family: ${INTER};
-                        font-size: 0.8rem;
-                        font-weight: 700;
-                        letter-spacing: 0.12em;
-                        text-transform: uppercase;
-                        color: ${DARK};
-                        opacity: 0.65;
-                        transition: opacity 0.3s ease;
-                        pointer-events: none;
-                    }
-                    .clientLogo:hover .clientLogoName,
-                    .clientLogo:focus-within .clientLogoName {
-                        opacity: 1;
-                    }
-                    @keyframes clientMarquee {
-                        from { transform: translateX(0); }
-                        to { transform: translateX(-50%); }
-                    }
-                    @media (prefers-reduced-motion: reduce) {
-                        .clientMarqueeTrack { animation: none; }
-                    }
-                `}</style>
-            </section>
+            <ClientStrip />
 
             {/* 2. Why Mumbai Manufacturers Need ERP to Scale Faster (H2) */}
             <section style={{ backgroundColor: '#25221F', padding: isMobile ? '6rem 5%' : '10rem 8%', borderTop: `1px solid rgba(232,223,211,0.1)` }}>

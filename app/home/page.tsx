@@ -16,6 +16,7 @@ import {
     TrendingUp,
     TrendingDown,
 } from 'lucide-react'
+import ClientStrip from '../components/ClientStrip'
 import Footer from '../components/Footer'
 import LandingHeader from '../components/LandingHeader'
 import { useLenis } from '../lib/useLenis'
@@ -388,15 +389,23 @@ export default function HomePage() {
                     </motion.p>
 
                     <motion.div variants={fadeUp} custom={0.24} style={{ marginTop: '2.5rem' }}>
-                        <Link href="/#contact" className="cta-btn" style={ctaStyle}>
+                        <button
+                            type="button"
+                            onClick={() => setContactOpen(true)}
+                            className="cta-btn"
+                            style={{ ...ctaStyle, border: 'none', cursor: 'pointer' }}
+                        >
                             Get a Free Quote
                             <span className="cta-arrow" style={{ display: 'inline-block' }}>
                                 →
                             </span>
-                        </Link>
+                        </button>
                     </motion.div>
                 </motion.div>
             </section>
+
+            {/* ──────────────── Trusted by (client logos) ──────────────── */}
+            <ClientStrip />
 
             {/* ──────────────── Problems that we solve (light) ──────────────── */}
             <section
@@ -839,17 +848,17 @@ export default function HomePage() {
                             </div>
 
                             <div style={{ marginTop: '2.25rem' }}>
-                                <Link
-                                    href="/#contact"
-                                    onClick={() => setActive(null)}
+                                <button
+                                    type="button"
+                                    onClick={() => { setActive(null); setContactOpen(true) }}
                                     className="cta-btn"
-                                    style={{ ...ctaStyle, backgroundColor: DARK, color: SAND }}
+                                    style={{ ...ctaStyle, backgroundColor: DARK, color: SAND, border: 'none', cursor: 'pointer' }}
                                 >
                                     Get a Free Quote
                                     <span className="cta-arrow" style={{ display: 'inline-block' }}>
                                         →
                                     </span>
-                                </Link>
+                                </button>
                             </div>
                         </motion.div>
                     </motion.div>

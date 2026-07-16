@@ -2,9 +2,9 @@
 
 import { useRef, useEffect, useState } from 'react'
 import { motion, useInView } from 'framer-motion'
+import { Phone, Mail, MapPin } from 'lucide-react'
 import { DARK, SAND, HELVETICA } from '../lib/constants'
 import { fadeUp } from '../lib/variants'
-import { LANDING_PAGES } from '../data/landingPages'
 
 export default function Footer() {
     const ref = useRef<HTMLElement>(null)
@@ -61,33 +61,72 @@ export default function Footer() {
                         display: 'flex',
                         flexDirection: 'column',
                         gap: '0.75rem',
+                        textAlign: isMobile ? 'center' : 'left',
+                    }}
+                >
+                    <span style={{
+                        fontSize: '0.72rem',
+                        letterSpacing: '0.2rem',
+                        textTransform: 'uppercase',
+                        opacity: 0.35,
+                        marginBottom: '0.25rem',
+                    }}>
+                        Contact Us
+                    </span>
+                    {[
+                        { Icon: Phone, label: '+91 90822 07416', href: 'tel:+919082207416' },
+                        { Icon: Mail, label: 'info@nexonalabs.com', href: 'mailto:info@nexonalabs.com' },
+                    ].map(({ Icon, label, href }) => (
+                        <a
+                            key={href}
+                            href={href}
+                            className="nav-link"
+                            style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: isMobile ? 'center' : 'flex-start',
+                                gap: '0.6rem',
+                                fontSize: isMobile ? '0.8rem' : '0.85rem',
+                                letterSpacing: '0.05em',
+                                opacity: 0.65,
+                                color: SAND,
+                                textDecoration: 'none',
+                            }}
+                        >
+                            <Icon size={15} strokeWidth={1.5} aria-hidden />
+                            {label}
+                        </a>
+                    ))}
+                    <span style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: isMobile ? 'center' : 'flex-start',
+                        gap: '0.6rem',
+                        fontSize: isMobile ? '0.8rem' : '0.85rem',
+                        letterSpacing: '0.05em',
+                        opacity: 0.65,
+                    }}>
+                        <MapPin size={15} strokeWidth={1.5} aria-hidden />
+                        Mumbai, India
+                    </span>
+                </motion.div>
+
+                <motion.div
+                    variants={fadeUp} initial="hidden" animate={inView ? 'visible' : 'hidden'} custom={0.3}
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '0.75rem',
                         textAlign: isMobile ? 'center' : 'right',
                     }}
                 >
                     {[
-                        { name: 'Full Stack Websites', href: '/#fullstack' },
-                        { name: 'AI Agents', href: '/#ai-agents' },
-                        { name: 'Automation', href: '/#automation' },
-                        { name: 'Business Optimization', href: '/#business-optimization' },
-                        // Internal links to SEO landing pages — auto-generated from the
-                        // registry so every landing page (current and future) is crawlable.
-                        ...LANDING_PAGES.map((p) => ({ name: p.navLabel ?? p.title, href: `/${p.slug}` })),
-                        { name: 'Contact', href: '/#contact' }
-
+                        { name: 'ERP Development', href: '/erp-systems-for-manufacturers' },
+                        { name: 'Software Development', href: '/software-development-agency-mumbai' },
                     ].map(link => (
                         <a
                             key={link.name}
                             href={link.href}
-                            onClick={(e) => {
-                                // If we are already on the home page, intercept the click for smooth scroll
-                                if (window.location.pathname === '/' && link.href.startsWith('/#')) {
-                                    e.preventDefault()
-                                    const id = link.href.slice(2) // remove '/#'
-                                    const el = document.getElementById(id)
-                                    if (el) el.scrollIntoView({ behavior: 'smooth' })
-                                }
-                                // Else, let the browser naturally navigate to /#id
-                            }}
                             className="nav-link"
                             style={{
                                 fontSize: isMobile ? '0.75rem' : '0.8rem',

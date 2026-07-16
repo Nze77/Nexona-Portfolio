@@ -15,6 +15,30 @@ const NAV_LINKS = [
     { name: 'Contact', href: '/#contact' }
 ]
 
+interface ServiceLink {
+    name: string
+    href: string
+    /** Renders this entry as a submenu parent instead of a plain link. */
+    children?: { name: string; href: string }[]
+}
+
+// Only the manufacturing ERP and software development pages exist. Everything
+// else points at the contact form until there's somewhere better to send them.
+const SERVICES: ServiceLink[] = [
+    {
+        name: 'Custom ERP',
+        href: '/erp-systems-for-manufacturers',
+        children: [
+            { name: 'Manufacturing ERP', href: '/manufacturing-erp' },
+            { name: 'College/School ERP', href: '/college-erp' },
+        ],
+    },
+    { name: 'Custom CRM', href: '/#contact' },
+    { name: 'Software Development', href: '/software-development-agency-mumbai' },
+    { name: 'Website Development', href: '/#contact' },
+    { name: 'Automations', href: '/#contact' },
+]
+
 const navItemStyle: React.CSSProperties = {
     fontSize: '0.75rem',
     letterSpacing: '0.01em',
@@ -41,6 +65,16 @@ export default function StickyHeader({
     const headerRef = useRef<HTMLElement>(null)
     const dividerRef = useRef<HTMLDivElement>(null)
     const [menuOpen, setMenuOpen] = useState(false)
+    const [servicesOpen, setServicesOpen] = useState(false)
+    const [mobileServicesOpen, setMobileServicesOpen] = useState(false)
+    /** Name of the services row whose nested accordion is open (mobile). */
+    const [mobileSubOpen, setMobileSubOpen] = useState<string | null>(null)
+    // Item hover is tracked in state rather than CSS: the rows are <Link>s, and
+    // styled-jsx doesn't scope component tags — a :hover class would never apply.
+    // Keyed "i" for a top-level row, "i-j" for a submenu row.
+    const [hoveredService, setHoveredService] = useState<string | null>(null)
+    /** Index of the services row whose submenu is open (desktop). */
+    const [openSub, setOpenSub] = useState<number | null>(null)
 
     const initialBg = theme === 'light' ? SAND : DARK
     const initialColor = theme === 'light' ? DARK : SAND
@@ -162,11 +196,36 @@ export default function StickyHeader({
         return () => window.removeEventListener('scroll', handleScroll)
     }, [menuOpen])
 
+    // The dropdown would otherwise hang around after the header slides away on
+    // scroll, or trap a keyboard user with no way out.
+    useEffect(() => {
+        if (!servicesOpen) return
+        const close = () => { setServicesOpen(false); setHoveredService(null); setOpenSub(null) }
+        const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') close() }
+        window.addEventListener('scroll', close, { passive: true })
+        window.addEventListener('keydown', onKey)
+        return () => {
+            window.removeEventListener('scroll', close)
+            window.removeEventListener('keydown', onKey)
+        }
+    }, [servicesOpen])
+
     // Lock body scroll when menu is open
     useEffect(() => {
         document.body.style.overflow = menuOpen ? 'hidden' : ''
         return () => { document.body.style.overflow = '' }
     }, [menuOpen])
+
+    // Collapse the services accordion once the overlay closes, so reopening the
+    // menu doesn't reveal it mid-expanded.
+    useEffect(() => {
+        if (!menuOpen) { setMobileServicesOpen(false); setMobileSubOpen(null) }
+    }, [menuOpen])
+
+    // Collapsing Services shouldn't leave a nested accordion open underneath it.
+    useEffect(() => {
+        if (!mobileServicesOpen) setMobileSubOpen(null)
+    }, [mobileServicesOpen])
 
     return (
         <>
@@ -184,34 +243,24 @@ export default function StickyHeader({
                 }}
             >
 
-                {/* Nav row */}
-                <div style={{
-                    display: 'grid',
-                    gridTemplateColumns: '1fr auto 1fr',
-                    alignItems: 'center',
-                    padding: '0 2rem',
-                    height: '6rem',
-                }}>
-                    {/* Left: desktop "Projects" link */}
-                    <div style={{ gridColumn: 1, justifySelf: 'start', display: 'flex', alignItems: 'center' }}>
-                        <div className="desktop-nav" style={{ display: 'flex', gap: '2rem' }}>
-                            <Link href="/projects" style={navItemStyle}>
-                                Projects
-                            </Link>
-                        </div>
-                    </div>
-
-                    {/* Center: Nexona wordmark — matches the docked MorphingBrand state */}
+                {/* Nav row. Desktop: brand left, links right. Mobile: brand centered,
+                    hamburger right — see the media query at the bottom of this file. */}
+                <div className="navRow">
+                    {/* Nexona wordmark — matches the docked MorphingBrand state */}
                     {showBrand && (
-                        <div style={{ gridColumn: 2, justifySelf: 'center' }}>
+                        <div className="brandCell">
                             <Link
                                 href="/"
                                 aria-label="Nexona — home"
+                                // Font size is inherited from .brandCell, so the
+                                // breakpoint can override it. It cannot live here:
+                                // an inline style can't be overridden by a media
+                                // query, and a styled-jsx class wouldn't apply —
+                                // styled-jsx only scopes real tags, not <Link>.
                                 className="brand-wordmark"
                                 style={{
                                     fontFamily: INTER,
                                     fontWeight: 700,
-                                    fontSize: 'clamp(3.25rem, 7vw, 5rem)',
                                     letterSpacing: '-0.08em',
                                     lineHeight: 1,
                                     color: 'inherit',
@@ -224,9 +273,178 @@ export default function StickyHeader({
                         </div>
                     )}
 
-                    {/* Right: desktop Contact link + mobile hamburger */}
-                    <div style={{ gridColumn: 3, justifySelf: 'end', display: 'flex', alignItems: 'center' }}>
-                        <div className="desktop-only">
+                    {/* Desktop nav links + mobile hamburger */}
+                    <div className="navCell">
+                        <div className="desktop-nav" style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
+                            {/* Services dropdown. The menu is a child of this wrapper and
+                                sits flush against the trigger, so moving the pointer onto
+                                it never leaves the wrapper and never closes the menu. */}
+                            <div
+                                className="servicesWrap"
+                                onMouseEnter={() => setServicesOpen(true)}
+                                onMouseLeave={() => { setServicesOpen(false); setHoveredService(null); setOpenSub(null) }}
+                            >
+                                <button
+                                    type="button"
+                                    aria-haspopup="true"
+                                    aria-expanded={servicesOpen}
+                                    onClick={() => setServicesOpen(o => !o)}
+                                    style={{
+                                        ...navItemStyle,
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: '0.4rem',
+                                        background: 'none',
+                                        border: 'none',
+                                        padding: 0,
+                                        cursor: 'pointer',
+                                        fontFamily: 'inherit',
+                                    }}
+                                >
+                                    Services
+                                    <span
+                                        aria-hidden="true"
+                                        style={{
+                                            display: 'inline-block',
+                                            fontSize: '0.6em',
+                                            lineHeight: 1,
+                                            transform: servicesOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+                                            transition: 'transform 0.2s ease',
+                                        }}
+                                    >
+                                        ▼
+                                    </span>
+                                </button>
+
+                                {/* padding-top bridges the visual gap to the panel while
+                                    keeping the hover target continuous */}
+                                <div
+                                    className="servicesMenu"
+                                    style={{
+                                        opacity: servicesOpen ? 1 : 0,
+                                        visibility: servicesOpen ? 'visible' : 'hidden',
+                                        transform: servicesOpen ? 'translateY(0)' : 'translateY(-6px)',
+                                    }}
+                                >
+                                    <div
+                                        style={{
+                                            backgroundColor: currentBg,
+                                            border: `1px solid ${currentColor === DARK ? 'rgba(46,42,38,0.15)' : 'rgba(232,223,211,0.15)'}`,
+                                            borderRadius: '0.5rem',
+                                            padding: '0.5rem 0',
+                                            minWidth: '15rem',
+                                            boxShadow: '0 12px 32px rgba(0,0,0,0.25)',
+                                        }}
+                                    >
+                                        {SERVICES.map((service, i) => {
+                                            const rowStyle: React.CSSProperties = {
+                                                display: 'block',
+                                                padding: '0.7rem 1.25rem',
+                                                fontSize: '0.75rem',
+                                                letterSpacing: '0.08em',
+                                                textTransform: 'uppercase',
+                                                fontWeight: 500,
+                                                whiteSpace: 'nowrap',
+                                                color: currentColor,
+                                                textDecoration: 'none',
+                                                transition: 'background-color 0.18s ease',
+                                            }
+                                            const tint = currentColor === DARK ? 'rgba(46,42,38,0.07)' : 'rgba(232,223,211,0.1)'
+
+                                            if (!service.children) {
+                                                return (
+                                                    <Link
+                                                        key={service.name}
+                                                        href={service.href}
+                                                        onClick={() => setServicesOpen(false)}
+                                                        onMouseEnter={() => setHoveredService(`${i}`)}
+                                                        onMouseLeave={() => setHoveredService(null)}
+                                                        tabIndex={servicesOpen ? undefined : -1}
+                                                        style={{
+                                                            ...rowStyle,
+                                                            backgroundColor: hoveredService === `${i}` ? tint : 'transparent',
+                                                        }}
+                                                    >
+                                                        {service.name}
+                                                    </Link>
+                                                )
+                                            }
+
+                                            // Submenu parent. It opens to the LEFT: the panel
+                                            // already sits at the right edge of the viewport.
+                                            const subOpen = openSub === i
+                                            return (
+                                                <div
+                                                    key={service.name}
+                                                    className="subWrap"
+                                                    onMouseEnter={() => { setOpenSub(i); setHoveredService(`${i}`) }}
+                                                    onMouseLeave={() => { setOpenSub(null); setHoveredService(null) }}
+                                                >
+                                                    <div
+                                                        style={{
+                                                            ...rowStyle,
+                                                            display: 'flex',
+                                                            alignItems: 'center',
+                                                            justifyContent: 'space-between',
+                                                            gap: '1.5rem',
+                                                            cursor: 'default',
+                                                            backgroundColor: hoveredService === `${i}` ? tint : 'transparent',
+                                                        }}
+                                                    >
+                                                        {service.name}
+                                                        <span
+                                                            aria-hidden="true"
+                                                            style={{ fontSize: '0.6em', opacity: 0.7 }}
+                                                        >
+                                                            ◀
+                                                        </span>
+                                                    </div>
+
+                                                    <div
+                                                        className="subMenu"
+                                                        style={{
+                                                            opacity: subOpen ? 1 : 0,
+                                                            visibility: subOpen ? 'visible' : 'hidden',
+                                                        }}
+                                                    >
+                                                        <div
+                                                            style={{
+                                                                backgroundColor: currentBg,
+                                                                border: `1px solid ${currentColor === DARK ? 'rgba(46,42,38,0.15)' : 'rgba(232,223,211,0.15)'}`,
+                                                                borderRadius: '0.5rem',
+                                                                padding: '0.5rem 0',
+                                                                minWidth: '13rem',
+                                                                boxShadow: '0 12px 32px rgba(0,0,0,0.25)',
+                                                            }}
+                                                        >
+                                                            {service.children.map((child, j) => (
+                                                                <Link
+                                                                    key={child.name}
+                                                                    href={child.href}
+                                                                    onClick={() => { setServicesOpen(false); setOpenSub(null) }}
+                                                                    onMouseEnter={() => setHoveredService(`${i}-${j}`)}
+                                                                    onMouseLeave={() => setHoveredService(`${i}`)}
+                                                                    tabIndex={subOpen ? undefined : -1}
+                                                                    style={{
+                                                                        ...rowStyle,
+                                                                        backgroundColor: hoveredService === `${i}-${j}` ? tint : 'transparent',
+                                                                    }}
+                                                                >
+                                                                    {child.name}
+                                                                </Link>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            )
+                                        })}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <Link href="/projects" style={navItemStyle}>
+                                Projects
+                            </Link>
                             {onContactClick ? (
                                 <button
                                     type="button"
@@ -318,12 +536,185 @@ export default function StickyHeader({
                     alignItems: 'center',
                     justifyContent: 'center',
                     gap: '2rem',
+                    // The list is long enough now to overflow a short phone screen.
+                    padding: '5rem 1.5rem',
+                    overflowY: 'auto',
                     opacity: menuOpen ? 1 : 0,
                     pointerEvents: menuOpen ? 'auto' : 'none',
                     transition: 'opacity 0.3s ease',
                 }}
             >
+                {/* Services — tap to expand. No hover on a phone, so the trigger
+                    toggles instead, and the panel animates via max-height. */}
+                {/* gap:0 — the collapsed panel below is zero-height, but a flex gap
+                    would still push PROJECTS down and break the even rhythm. The
+                    panel supplies its own spacing via padding when it opens. */}
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 0 }}>
+                    <button
+                        type="button"
+                        aria-expanded={mobileServicesOpen}
+                        onClick={() => setMobileServicesOpen(o => !o)}
+                        style={{
+                            // relative: the caret is taken out of flow below, so the
+                            // word itself centers with PROJECTS/CONTACT instead of
+                            // "Services ▾" centering as one wider unit.
+                            position: 'relative',
+                            background: 'none',
+                            border: 'none',
+                            cursor: 'pointer',
+                            padding: 0,
+                            fontSize: '1.5rem',
+                            fontWeight: 600,
+                            color: currentColor,
+                            textTransform: 'uppercase',
+                            letterSpacing: '0.05em',
+                            fontFamily: INTER,
+                            lineHeight: 1.2,
+                            opacity: menuOpen ? 1 : 0,
+                            transform: menuOpen ? 'translateY(0)' : 'translateY(20px)',
+                            transition: 'all 0.4s ease',
+                        }}
+                    >
+                        Services
+                        <span
+                            aria-hidden="true"
+                            style={{
+                                position: 'absolute',
+                                left: '100%',
+                                top: '50%',
+                                marginLeft: '0.5rem',
+                                fontSize: '0.5em',
+                                lineHeight: 1,
+                                transform: mobileServicesOpen
+                                    ? 'translateY(-50%) rotate(180deg)'
+                                    : 'translateY(-50%) rotate(0deg)',
+                                transition: 'transform 0.25s ease',
+                            }}
+                        >
+                            ▼
+                        </span>
+                    </button>
+
+                    <div
+                        style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            gap: '1rem',
+                            // max-height animates; height:auto would not. Padding is
+                            // part of the same collapse, so a shut panel adds nothing
+                            // to the spacing between SERVICES and PROJECTS. The cap
+                            // has to grow for the nested accordion or it clips.
+                            maxHeight: mobileServicesOpen ? (mobileSubOpen ? '34rem' : '22rem') : 0,
+                            paddingTop: mobileServicesOpen ? '1.25rem' : 0,
+                            opacity: mobileServicesOpen ? 1 : 0,
+                            overflow: 'hidden',
+                            transition: 'max-height 0.35s ease, padding-top 0.35s ease, opacity 0.25s ease',
+                        }}
+                    >
+                        {SERVICES.map((service) => {
+                            const itemStyle: React.CSSProperties = {
+                                fontSize: '1.05rem',
+                                fontWeight: 500,
+                                color: currentColor,
+                                textDecoration: 'none',
+                                textTransform: 'uppercase',
+                                letterSpacing: '0.05em',
+                                fontFamily: INTER,
+                                opacity: 0.8,
+                                whiteSpace: 'nowrap',
+                            }
+
+                            if (!service.children) {
+                                return (
+                                    <Link
+                                        key={service.name}
+                                        href={service.href}
+                                        onClick={() => setMenuOpen(false)}
+                                        tabIndex={menuOpen && mobileServicesOpen ? undefined : -1}
+                                        style={itemStyle}
+                                    >
+                                        {service.name}
+                                    </Link>
+                                )
+                            }
+
+                            // Nested accordion — no hover on touch, so it taps open.
+                            const subOpen = mobileSubOpen === service.name
+                            return (
+                                <div
+                                    key={service.name}
+                                    style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 0 }}
+                                >
+                                    <button
+                                        type="button"
+                                        aria-expanded={subOpen}
+                                        onClick={() => setMobileSubOpen(subOpen ? null : service.name)}
+                                        tabIndex={menuOpen && mobileServicesOpen ? undefined : -1}
+                                        style={{
+                                            ...itemStyle,
+                                            position: 'relative',
+                                            background: 'none',
+                                            border: 'none',
+                                            padding: 0,
+                                            cursor: 'pointer',
+                                            lineHeight: 1.2,
+                                        }}
+                                    >
+                                        {service.name}
+                                        <span
+                                            aria-hidden="true"
+                                            style={{
+                                                position: 'absolute',
+                                                left: '100%',
+                                                top: '50%',
+                                                marginLeft: '0.45rem',
+                                                fontSize: '0.5em',
+                                                lineHeight: 1,
+                                                transform: subOpen
+                                                    ? 'translateY(-50%) rotate(180deg)'
+                                                    : 'translateY(-50%) rotate(0deg)',
+                                                transition: 'transform 0.25s ease',
+                                            }}
+                                        >
+                                            ▼
+                                        </span>
+                                    </button>
+
+                                    <div
+                                        style={{
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            alignItems: 'center',
+                                            gap: '0.75rem',
+                                            maxHeight: subOpen ? '10rem' : 0,
+                                            paddingTop: subOpen ? '0.85rem' : 0,
+                                            opacity: subOpen ? 1 : 0,
+                                            overflow: 'hidden',
+                                            transition: 'max-height 0.3s ease, padding-top 0.3s ease, opacity 0.22s ease',
+                                        }}
+                                    >
+                                        {service.children.map((child) => (
+                                            <Link
+                                                key={child.name}
+                                                href={child.href}
+                                                onClick={() => setMenuOpen(false)}
+                                                tabIndex={menuOpen && mobileServicesOpen && subOpen ? undefined : -1}
+                                                style={{ ...itemStyle, fontSize: '0.9rem', opacity: 0.6 }}
+                                            >
+                                                {child.name}
+                                            </Link>
+                                        ))}
+                                    </div>
+                                </div>
+                            )
+                        })}
+                    </div>
+                </div>
+
                 {NAV_LINKS.map((link, i) => {
+                    // Continue the stagger after the services block above.
+                    const delay = (SERVICES.length + 1 + i) * 0.06
                     const linkStyle: React.CSSProperties = {
                         fontSize: '1.5rem',
                         fontWeight: 600,
@@ -334,7 +725,7 @@ export default function StickyHeader({
                         fontFamily: INTER,
                         opacity: menuOpen ? 1 : 0,
                         transform: menuOpen ? 'translateY(0)' : 'translateY(20px)',
-                        transition: `all 0.4s ease ${i * 0.08}s`,
+                        transition: `all 0.4s ease ${delay}s`,
                     }
 
                     if (link.name === 'Contact' && onContactClick) {
@@ -365,14 +756,69 @@ export default function StickyHeader({
 
             {/* CSS for responsive show/hide */}
             <style jsx>{`
+                /* Desktop: two columns — brand hard left, links hard right. The nav
+                   cell is pinned to column 2 so it stays right-aligned even on the
+                   root page, where showBrand is false and column 1 collapses. */
+                .navRow {
+                    display: grid;
+                    grid-template-columns: auto 1fr;
+                    align-items: center;
+                    padding: 0 2rem;
+                    height: 6rem;
+                }
+                /* Desktop wordmark: caps at 3.5rem (56px). The size sits here rather
+                   than on the <Link> inside, which inherits it — see the note there. */
+                .brandCell {
+                    grid-column: 1;
+                    justify-self: start;
+                    display: flex;
+                    align-items: center;
+                    font-size: clamp(3rem, 4.5vw, 3.5rem);
+                }
+                .navCell { grid-column: 2; justify-self: end; display: flex; align-items: center; }
+
+                .servicesWrap { position: relative; display: flex; align-items: center; }
+                /* Anchored at top:100% with no gap — the padding inside provides the
+                   visual offset, so the pointer never crosses dead space on its way
+                   to the panel and the menu stays open. */
+                .servicesMenu {
+                    position: absolute;
+                    top: 100%;
+                    right: 0;
+                    padding-top: 1.1rem;
+                    z-index: 120;
+                    transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+                }
+
+                .subWrap { position: relative; }
+                /* Opens leftward — the parent panel already sits against the right
+                   edge of the viewport. right:100% keeps it flush against the panel,
+                   so the pointer crosses no gap and the flyout stays open. */
+                .subMenu {
+                    position: absolute;
+                    right: 100%;
+                    top: -0.5rem;
+                    padding-right: 0.4rem;
+                    z-index: 130;
+                    transition: opacity 0.18s ease, visibility 0.18s;
+                }
+
                 .desktop-nav { display: flex !important; }
                 .mobile-menu-btn { display: none !important; }
-                .desktop-only { display: block !important; }
 
                 @media (max-width: 768px) {
+                    /* Mobile is unchanged: empty gutter, centered brand, hamburger right. */
+                    .navRow { grid-template-columns: 1fr auto 1fr; }
+                    /* Mobile keeps the original size, matching MorphingBrand's 52px dock. */
+                    .brandCell {
+                        grid-column: 2;
+                        justify-self: center;
+                        font-size: clamp(3.25rem, 7vw, 5rem);
+                    }
+                    .navCell { grid-column: 3; }
+
                     .desktop-nav { display: none !important; }
                     .mobile-menu-btn { display: block !important; }
-                    .desktop-only { display: none !important; }
                 }
             `}</style>
         </>
