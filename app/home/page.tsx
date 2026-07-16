@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState, useEffect, Children } from 'react'
+import { useRef, useState, useEffect, useCallback, Children } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -197,6 +197,26 @@ export default function HomePage() {
     // reveal the bars once the panel scrolls into view.
     const [impactMode, setImpactMode] = useState<'without' | 'with'>('without')
     const [impactRevealed, setImpactRevealed] = useState(false)
+
+    // "Industries we serve" — thumb size / position of the mobile scroll bar,
+    // both expressed as 0–1 fractions of the track.
+    const industryRef = useRef<HTMLDivElement | null>(null)
+    const [industryScroll, setIndustryScroll] = useState({ thumb: 1, pos: 0 })
+
+    const measureIndustryScroll = useCallback(() => {
+        const el = industryRef.current
+        if (!el) return
+        const max = el.scrollWidth - el.clientWidth
+        setIndustryScroll({
+            thumb: el.scrollWidth > 0 ? el.clientWidth / el.scrollWidth : 1,
+            pos: max > 0 ? el.scrollLeft / max : 0,
+        })
+    }, [])
+
+    // Re-measure whenever the section switches into (or out of) scroller mode.
+    useEffect(() => {
+        if (isMobile) measureIndustryScroll()
+    }, [isMobile, measureIndustryScroll])
 
     // Mouse-reactive parallax for the hero artwork.
     const [tilt, setTilt] = useState({ x: 0, y: 0 })
@@ -512,18 +532,62 @@ export default function HomePage() {
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.15 }}
-                    className="industry-grid"
+                    className="industry-scroll"
+                    ref={industryRef}
+                    onScroll={isMobile ? measureIndustryScroll : undefined}
                     style={{
                         marginTop: 'clamp(2.5rem, 5vw, 4rem)',
-                        display: 'grid',
-                        gridTemplateColumns: 'repeat(4, 1fr)',
-                        gap: '1.25rem',
+                        ...(isMobile
+                            ? {
+                                // Horizontal scroller so each card keeps a box-like
+                                // aspect instead of being squeezed into a sliver.
+                                display: 'flex',
+                                gap: '1rem',
+                                overflowX: 'auto',
+                                scrollSnapType: 'x mandatory',
+                                WebkitOverflowScrolling: 'touch',
+                                scrollbarWidth: 'none',
+                                paddingBottom: '0.5rem',
+                            }
+                            : {
+                                display: 'grid',
+                                gridTemplateColumns: 'repeat(4, 1fr)',
+                                gap: '1.25rem',
+                            }),
                     }}
                 >
                     {INDUSTRIES.map((ind) => (
-                        <IndustryCard key={ind.id} ind={ind} />
+                        <IndustryCard key={ind.id} ind={ind} mobile={isMobile} />
                     ))}
                 </motion.div>
+
+                {/* Scroll indicator — mirrors the scroller's position on mobile. */}
+                {isMobile && (
+                    <div
+                        aria-hidden
+                        style={{
+                            position: 'relative',
+                            height: 4,
+                            marginTop: '1.25rem',
+                            borderRadius: 999,
+                            backgroundColor: 'rgba(232,226,218,0.15)',
+                            overflow: 'hidden',
+                        }}
+                    >
+                        <div
+                            style={{
+                                position: 'absolute',
+                                top: 0,
+                                bottom: 0,
+                                width: `${industryScroll.thumb * 100}%`,
+                                left: `${industryScroll.pos * (1 - industryScroll.thumb) * 100}%`,
+                                borderRadius: 999,
+                                backgroundColor: SAND,
+                                opacity: 0.7,
+                            }}
+                        />
+                    </div>
+                )}
             </section>
 
             {/* ──────────────── Results & impact (dashboard) ──────────────── */}
@@ -840,6 +904,10 @@ export default function HomePage() {
                     transform: rotate(90deg);
                 }
 
+                :global(.industry-scroll)::-webkit-scrollbar {
+                    display: none;
+                }
+
                 @media (max-width: 900px) {
                     .hero-grid {
                         grid-template-columns: 1fr !important;
@@ -857,9 +925,6 @@ export default function HomePage() {
                     .hero-copy :global(p) {
                         margin-left: auto;
                         margin-right: auto;
-                    }
-                    .industry-grid {
-                        grid-template-columns: 1fr 1fr !important;
                     }
                     .kpi-grid {
                         grid-template-columns: 1fr 1fr !important;
@@ -1245,8 +1310,8 @@ function ImpactToggle({
     onChange: (m: 'without' | 'with') => void
 }) {
     const options = [
-        { key: 'without' as const, label: 'Without us', color: POS },
-        { key: 'with' as const, label: 'With us', color: NEG },
+        { key: 'without' as const, label: 'Without us', color: NEG },
+        { key: 'with' as const, label: 'With us', color: POS },
     ]
     const activeIndex = mode === 'without' ? 0 : 1
     return (
@@ -1319,7 +1384,7 @@ function MetricRow({
     const isWith = mode === 'with'
     const pct = isWith ? m.withPct : m.withoutPct
     const label = isWith ? m.withLabel : m.withoutLabel
-    const color = isWith ? NEG : POS
+    const color = isWith ? POS : NEG
     const track: React.CSSProperties = {
         position: 'relative',
         gridColumn: '1 / -1',
@@ -1371,7 +1436,13 @@ function MetricRow({
     )
 }
 
-function IndustryCard({ ind }: { ind: (typeof INDUSTRIES)[number] }) {
+function IndustryCard({
+    ind,
+    mobile = false,
+}: {
+    ind: (typeof INDUSTRIES)[number]
+    mobile?: boolean
+}) {
     const [hovered, setHovered] = useState(false)
     return (
         <motion.div
@@ -1382,7 +1453,10 @@ function IndustryCard({ ind }: { ind: (typeof INDUSTRIES)[number] }) {
                 position: 'relative',
                 display: 'flex',
                 flexDirection: 'column',
-                minHeight: 200,
+                minHeight: mobile ? 240 : 200,
+                ...(mobile
+                    ? { flex: '0 0 15rem', scrollSnapAlign: 'start' }
+                    : null),
                 borderRadius: '1.25rem',
                 padding: '1.75rem 1.5rem',
                 backgroundColor: hovered ? SAND : 'transparent',
