@@ -2,28 +2,32 @@
 
 import { useRef, useEffect, useState } from 'react'
 import Link from 'next/link'
+import { AnimatePresence } from 'framer-motion'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import ContactOverlay from './ContactOverlay'
 import { DARK, SAND, INTER } from '../lib/constants'
 
 if (typeof window !== 'undefined') {
     gsap.registerPlugin(ScrollTrigger)
 }
 
-const NAV_LINKS = [
+/** An entry with no `href` opens the contact overlay instead of navigating. */
+const NAV_LINKS: { name: string; href?: string }[] = [
     { name: 'Projects', href: '/projects' },
-    { name: 'Contact', href: '/#contact' }
+    { name: 'Contact' }
 ]
 
 interface ServiceLink {
     name: string
-    href: string
+    /** Omit to open the contact overlay instead of navigating. */
+    href?: string
     /** Renders this entry as a submenu parent instead of a plain link. */
     children?: { name: string; href: string }[]
 }
 
 // Only the manufacturing ERP and software development pages exist. Everything
-// else points at the contact form until there's somewhere better to send them.
+// else opens the contact overlay until there's somewhere better to send them.
 const SERVICES: ServiceLink[] = [
     {
         name: 'Custom ERP',
@@ -33,10 +37,10 @@ const SERVICES: ServiceLink[] = [
             { name: 'College/School ERP', href: '/college-erp' },
         ],
     },
-    { name: 'Custom CRM', href: '/#contact' },
+    { name: 'Custom CRM' },
     { name: 'Software Development', href: '/software-development-agency-mumbai' },
-    { name: 'Website Development', href: '/#contact' },
-    { name: 'Automations', href: '/#contact' },
+    { name: 'Website Development' },
+    { name: 'Automations' },
 ]
 
 const navItemStyle: React.CSSProperties = {
@@ -58,13 +62,15 @@ export default function StickyHeader({
     /** Render the centered "Nexona" wordmark. Disable on the root page, whose
      *  MorphingBrand supplies its own animated wordmark. */
     showBrand?: boolean
-    /** When provided, the Contact nav item calls this instead of navigating to
-     *  /#contact (used by landing pages to open their lead popup in place). */
+    /** When provided, Contact calls this instead of opening the built-in
+     *  overlay (used by landing pages that have their own lead popup). */
     onContactClick?: () => void
 }) {
     const headerRef = useRef<HTMLElement>(null)
     const dividerRef = useRef<HTMLDivElement>(null)
     const [menuOpen, setMenuOpen] = useState(false)
+    /** Built-in contact overlay — only used when no onContactClick is given. */
+    const [contactOpen, setContactOpen] = useState(false)
     const [servicesOpen, setServicesOpen] = useState(false)
     const [mobileServicesOpen, setMobileServicesOpen] = useState(false)
     /** Name of the services row whose nested accordion is open (mobile). */
@@ -75,6 +81,10 @@ export default function StickyHeader({
     const [hoveredService, setHoveredService] = useState<string | null>(null)
     /** Index of the services row whose submenu is open (desktop). */
     const [openSub, setOpenSub] = useState<number | null>(null)
+
+    // Landing pages with their own lead popup pass onContactClick; everyone
+    // else gets the built-in overlay.
+    const openContact = onContactClick ?? (() => setContactOpen(true))
 
     const initialBg = theme === 'light' ? SAND : DARK
     const initialColor = theme === 'light' ? DARK : SAND
@@ -210,11 +220,14 @@ export default function StickyHeader({
         }
     }, [servicesOpen])
 
-    // Lock body scroll when menu is open
+    // Lock body scroll when the menu is open. ContactOverlay locks scroll on its
+    // own too, but contactOpen has to be accounted for here: opening the overlay
+    // from the mobile menu closes the menu, and this effect would otherwise run
+    // afterwards and unlock the body straight back out from under the overlay.
     useEffect(() => {
-        document.body.style.overflow = menuOpen ? 'hidden' : ''
+        document.body.style.overflow = menuOpen || contactOpen ? 'hidden' : ''
         return () => { document.body.style.overflow = '' }
-    }, [menuOpen])
+    }, [menuOpen, contactOpen])
 
     // Collapse the services accordion once the overlay closes, so reopening the
     // menu doesn't reveal it mid-expanded.
@@ -352,18 +365,44 @@ export default function StickyHeader({
                                             const tint = currentColor === DARK ? 'rgba(46,42,38,0.07)' : 'rgba(232,223,211,0.1)'
 
                                             if (!service.children) {
+                                                const rowProps = {
+                                                    onMouseEnter: () => setHoveredService(`${i}`),
+                                                    onMouseLeave: () => setHoveredService(null),
+                                                    tabIndex: servicesOpen ? undefined : -1,
+                                                    style: {
+                                                        ...rowStyle,
+                                                        backgroundColor: hoveredService === `${i}` ? tint : 'transparent',
+                                                    },
+                                                }
+
+                                                if (!service.href) {
+                                                    return (
+                                                        <button
+                                                            key={service.name}
+                                                            type="button"
+                                                            onClick={() => { setServicesOpen(false); openContact() }}
+                                                            {...rowProps}
+                                                            style={{
+                                                                ...rowProps.style,
+                                                                width: '100%',
+                                                                textAlign: 'left',
+                                                                background: hoveredService === `${i}` ? tint : 'none',
+                                                                border: 'none',
+                                                                cursor: 'pointer',
+                                                                fontFamily: 'inherit',
+                                                            }}
+                                                        >
+                                                            {service.name}
+                                                        </button>
+                                                    )
+                                                }
+
                                                 return (
                                                     <Link
                                                         key={service.name}
                                                         href={service.href}
                                                         onClick={() => setServicesOpen(false)}
-                                                        onMouseEnter={() => setHoveredService(`${i}`)}
-                                                        onMouseLeave={() => setHoveredService(null)}
-                                                        tabIndex={servicesOpen ? undefined : -1}
-                                                        style={{
-                                                            ...rowStyle,
-                                                            backgroundColor: hoveredService === `${i}` ? tint : 'transparent',
-                                                        }}
+                                                        {...rowProps}
                                                     >
                                                         {service.name}
                                                     </Link>
@@ -445,19 +484,13 @@ export default function StickyHeader({
                             <Link href="/projects" style={navItemStyle}>
                                 Projects
                             </Link>
-                            {onContactClick ? (
-                                <button
-                                    type="button"
-                                    onClick={onContactClick}
-                                    style={{ ...navItemStyle, background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontFamily: 'inherit' }}
-                                >
-                                    Contact
-                                </button>
-                            ) : (
-                                <Link href="/#contact" style={navItemStyle}>
-                                    Contact
-                                </Link>
-                            )}
+                            <button
+                                type="button"
+                                onClick={openContact}
+                                style={{ ...navItemStyle, background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontFamily: 'inherit' }}
+                            >
+                                Contact
+                            </button>
                         </div>
 
                         {/* Mobile hamburger button — 3 equal, evenly spaced lines */}
@@ -626,6 +659,20 @@ export default function StickyHeader({
                             }
 
                             if (!service.children) {
+                                if (!service.href) {
+                                    return (
+                                        <button
+                                            key={service.name}
+                                            type="button"
+                                            onClick={() => { setMenuOpen(false); openContact() }}
+                                            tabIndex={menuOpen && mobileServicesOpen ? undefined : -1}
+                                            style={{ ...itemStyle, background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}
+                                        >
+                                            {service.name}
+                                        </button>
+                                    )
+                                }
+
                                 return (
                                     <Link
                                         key={service.name}
@@ -728,12 +775,12 @@ export default function StickyHeader({
                         transition: `all 0.4s ease ${delay}s`,
                     }
 
-                    if (link.name === 'Contact' && onContactClick) {
+                    if (!link.href) {
                         return (
                             <button
                                 key={link.name}
                                 type="button"
-                                onClick={() => { setMenuOpen(false); onContactClick() }}
+                                onClick={() => { setMenuOpen(false); openContact() }}
                                 style={{ ...linkStyle, background: 'none', border: 'none', cursor: 'pointer' }}
                             >
                                 {link.name}
@@ -753,6 +800,12 @@ export default function StickyHeader({
                     )
                 })}
             </div>
+
+            {/* Built-in contact overlay. Hosts that pass onContactClick open
+                their own popup instead, so contactOpen never flips for them. */}
+            <AnimatePresence>
+                {contactOpen && <ContactOverlay onClose={() => setContactOpen(false)} />}
+            </AnimatePresence>
 
             {/* CSS for responsive show/hide */}
             <style jsx>{`

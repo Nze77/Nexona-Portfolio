@@ -5,15 +5,18 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { DARK, SAND, INTER } from '../lib/constants'
 
-// Widths keep each logo optically similar in size despite differing aspect ratios.
-// `scale` grows the box for logos that carry a lot of internal whitespace, since
-// object-fit: contain otherwise renders them smaller than their neighbours.
+// `aspect` is the source image's natural width ÷ height. Each frame is sized from
+// it so the box hugs its logo exactly: object-fit: contain scales every logo to
+// the frame height, so any leftover box width is dead space that gets added to the
+// marquee gap — and since it differs per logo, the spacing reads as uneven.
+// `scale` grows logos that carry a lot of internal whitespace, which otherwise
+// render optically smaller than their neighbours.
 // `href` is omitted where the client has no entry in projectDetails.ts yet.
-const CLIENT_LOGOS: { src: string; alt: string; width: string; scale?: number; href?: string }[] = [
-    { src: '/logos/dariza.jpg', alt: 'Dariza Fabrics', width: '210px', href: '/projects/dariza' },
-    { src: '/logos/1327.png', alt: '1327', width: '190px', href: '/projects/1327' },
-    { src: '/froven image/Gemini_Generated_Image_gqcanogqcanogqca-Photoroom.png', alt: 'Froven Innovations', width: '110px', href: '/projects/froven' },
-    { src: '/logos/aimfitness.png', alt: 'Aim Fitness Gym Thane', width: '190px', scale: 1.5 }
+const CLIENT_LOGOS: { src: string; alt: string; aspect: number; scale?: number; href?: string }[] = [
+    { src: '/logos/dariza.jpg', alt: 'Dariza Fabrics', aspect: 1535 / 1024, href: '/projects/dariza' },
+    { src: '/logos/1327.png', alt: '1327', aspect: 3572 / 2128, href: '/projects/1327' },
+    { src: '/froven image/Gemini_Generated_Image_gqcanogqcanogqca-Photoroom.png', alt: 'Froven Innovations', aspect: 1280 / 1184, href: '/projects/froven' },
+    { src: '/logos/aimfitness.png', alt: 'Aim Fitness Gym Thane', aspect: 500 / 500, scale: 1.5 }
 ]
 
 const LOGO_BASE_HEIGHT = { mobile: 70, desktop: 90 }
@@ -75,6 +78,7 @@ export default function ClientStrip({
                             <div key={copy} className="clientMarqueeGroup" aria-hidden={copy !== 0}>
                                 {CLIENT_LOGOS.map((client) => {
                                     const base = isMobile ? LOGO_BASE_HEIGHT.mobile : LOGO_BASE_HEIGHT.desktop
+                                    const imageHeight = base * (client.scale ?? 1)
                                     const image = (
                                         <Image
                                             src={client.src}
@@ -89,11 +93,14 @@ export default function ClientStrip({
                                         <div
                                             key={client.alt}
                                             className="clientLogo"
-                                            style={{ height: `${base * LOGO_FRAME_SCALE}px`, width: client.width }}
+                                            style={{
+                                                height: `${base * LOGO_FRAME_SCALE}px`,
+                                                width: `${imageHeight * client.aspect}px`,
+                                            }}
                                         >
                                             <div
                                                 className="clientLogoImage"
-                                                style={{ height: `${base * (client.scale ?? 1)}px` }}
+                                                style={{ height: `${imageHeight}px` }}
                                             >
                                                 {client.href ? (
                                                     <Link
@@ -128,11 +135,16 @@ export default function ClientStrip({
                 .clientMarqueeTrack:hover {
                     animation-play-state: paused;
                 }
+                /* The gap is the whole visible spacing now that each frame hugs its
+                   logo, so it has to carry what the old boxes' dead space used to
+                   pad out — 8rem ≈ the spacing this strip previously averaged. The
+                   padding-right must match the gap: it is what separates the last
+                   logo of one group from the first of the next. */
                 .clientMarqueeGroup {
                     display: flex;
                     align-items: center;
-                    gap: 5rem;
-                    padding-right: 5rem;
+                    gap: 8rem;
+                    padding-right: 8rem;
                 }
                 .clientLogo {
                     position: relative;

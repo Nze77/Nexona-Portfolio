@@ -2,8 +2,10 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import { AnimatePresence } from 'framer-motion'
 import LandingHeader from '../../components/LandingHeader'
 import ClientStrip from '../../components/ClientStrip'
+import ContactOverlay from '../../components/ContactOverlay'
 import Footer from '../../components/Footer'
 import { DARK, SAND, INTER } from '../../lib/constants'
 import { WHY_BETTER, FEATURES, FAQ_ITEMS, COMPARISON, INSTITUTIONS, SIGNALS } from './content'
@@ -49,11 +51,15 @@ const CTA: React.CSSProperties = {
     borderRadius: '999px',
     textDecoration: 'none',
     display: 'inline-block',
+    border: 'none',
+    cursor: 'pointer',
+    fontFamily: INTER,
 }
 
 export default function CollegeErpPage() {
     const [isMobile, setIsMobile] = useState(false)
     const [openFaq, setOpenFaq] = useState<number | null>(0)
+    const [contactOpen, setContactOpen] = useState(false)
 
     useEffect(() => {
         const check = () => setIsMobile(window.innerWidth <= 768)
@@ -66,7 +72,7 @@ export default function CollegeErpPage() {
 
     return (
         <main style={{ backgroundColor: DARK, color: TEXT, fontFamily: INTER }}>
-            <LandingHeader theme="dark" />
+            <LandingHeader theme="dark" onContactClick={() => setContactOpen(true)} />
 
             {/* Hero */}
             <section data-theme="dark" style={{ padding: isMobile ? '4rem 5% 3rem' : '7rem 8% 5rem' }}>
@@ -93,9 +99,9 @@ export default function CollegeErpPage() {
                         contradiction until you see what per-student licensing does to your budget.
                     </p>
                     <div style={{ marginTop: '2.5rem', display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-                        <Link href="/#contact" style={CTA}>
+                        <button type="button" onClick={() => setContactOpen(true)} style={CTA}>
                             Talk to us about your campus
-                        </Link>
+                        </button>
                     </div>
                 </div>
             </section>
@@ -418,12 +424,16 @@ export default function CollegeErpPage() {
                         build — no deck, no demo of features you did not ask about.
                     </p>
                     <div style={{ marginTop: '2.25rem' }}>
-                        <Link href="/#contact" style={CTA}>
+                        <button type="button" onClick={() => setContactOpen(true)} style={CTA}>
                             Get a free quote
-                        </Link>
+                        </button>
                     </div>
                 </div>
             </section>
+
+            <AnimatePresence>
+                {contactOpen && <ContactOverlay onClose={() => setContactOpen(false)} />}
+            </AnimatePresence>
 
             <Footer />
         </main>
