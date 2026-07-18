@@ -16,7 +16,7 @@ const CLIENT_LOGOS: { src: string; alt: string; aspect: number; scale?: number; 
     { src: '/logos/dariza.jpg', alt: 'Dariza Fabrics', aspect: 1535 / 1024, href: '/projects/dariza' },
     { src: '/logos/1327.png', alt: '1327', aspect: 3572 / 2128, href: '/projects/1327' },
     { src: '/froven image/Gemini_Generated_Image_gqcanogqcanogqca-Photoroom.png', alt: 'Froven Innovations', aspect: 1280 / 1184, href: '/projects/froven' },
-    { src: '/logos/aimfitness.png', alt: 'Aim Fitness Gym Thane', aspect: 500 / 500, scale: 1.5 }
+    { src: '/logos/aimfitness.png', alt: 'Aim Fitness Gym', aspect: 500 / 500, scale: 1.5 }
 ]
 
 const LOGO_BASE_HEIGHT = { mobile: 70, desktop: 90 }
