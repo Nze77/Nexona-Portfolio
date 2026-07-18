@@ -151,6 +151,40 @@ export const LANDING_PAGES: LandingPage[] = [
         },
     },
     {
+        slug: 'customer-retention-management-software',
+        title: 'Customer Retention Management Software - Reduce Churn, Keep Customers',
+        description:
+            'Customer retention management software that spots churn risk before the cancellation email. Health scores, automated alerts, re-engagement workflows and renewal tracking.',
+        priority: 0.9,
+        navLabel: 'Customer Retention Software',
+        keywords: [
+            'customer retention management software',
+            'customer retention management',
+            'churn reduction software',
+            'customer health score software',
+            'customer success software',
+            'reduce customer churn',
+            'retention CRM',
+        ],
+        og: {
+            title: 'Customer Retention Management Software | Nexona',
+            description:
+                'Catch churn risk 6 weeks before the cancellation email. Custom retention software with health scoring, churn alerts and re-engagement workflows.',
+        },
+        business: {
+            areaServedCity: 'Mumbai',
+            addressLocality: 'Mumbai',
+            addressRegion: 'Maharashtra',
+            addressCountry: 'IN',
+            serviceType: [
+                'Customer Retention Management Software',
+                'Customer Success Software',
+                'CRM Development',
+                'Churn Analytics & Automation',
+            ],
+        },
+    },
+    {
         slug: 'erp-systems-for-manufacturers',
         title: 'ERP Software Company in Mumbai for Manufacturers | Nexona',
         description:

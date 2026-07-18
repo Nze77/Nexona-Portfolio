@@ -26,8 +26,8 @@ interface ServiceLink {
     children?: { name: string; href: string }[]
 }
 
-// Only the manufacturing ERP and software development pages exist. Everything
-// else opens the contact overlay until there's somewhere better to send them.
+// Entries without an href have no landing page yet, so they open the contact
+// overlay until there's somewhere better to send them.
 const SERVICES: ServiceLink[] = [
     {
         name: 'Custom ERP',
@@ -37,7 +37,7 @@ const SERVICES: ServiceLink[] = [
             { name: 'College/School ERP', href: '/college-erp' },
         ],
     },
-    { name: 'Custom CRM' },
+    { name: 'Custom CRM', href: '/customer-retention-management-software' },
     { name: 'Software Development', href: '/software-development-agency-mumbai' },
     { name: 'Website Development' },
     { name: 'Automations' },

@@ -126,9 +126,9 @@ export default function MumbaiAgencyPage() {
                             lineHeight: 1.6
                         }}
                     >
-                        Nexona is a Mumbai-based software development agency helping startups and enterprises
-                        build custom web applications, ERPs, CRMs, and AI-powered automation that scale
-                        with your business.
+                        Nexona is a Mumbai-based software development agency helping Indian MSMEs and
+                        startups ditch outdated workflows with custom ERPs, CRMs, web apps, and AI
+                        automation, built around how your business actually operates
                     </motion.p>
                 </motion.div>
             </section>
