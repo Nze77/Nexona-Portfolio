@@ -4,6 +4,7 @@ import { useRef, useEffect, useState } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { Phone, Mail, MapPin } from 'lucide-react'
 import { DARK, SAND, HELVETICA } from '../lib/constants'
+import { LANDING_PAGES } from '../data/landingPages'
 import { fadeUp } from '../lib/variants'
 
 export default function Footer() {
@@ -121,8 +122,16 @@ export default function Footer() {
                     }}
                 >
                     {[
-                        { name: 'ERP Development', href: '/erp-systems-for-manufacturers' },
-                        { name: 'Software Development', href: '/software-development-agency-mumbai' },
+                        // Every landing page gets a real crawlable <a> here. Google reported
+                        // "Referring page: None detected" on pages that were missing from this
+                        // list — a page in sitemap.xml with zero internal links reads as
+                        // low-priority and sits in "Discovered – currently not indexed".
+                        // Sourced from the registry so new landing pages are never orphaned.
+                        ...LANDING_PAGES.map(page => ({
+                            name: page.navLabel ?? page.title,
+                            href: `/${page.slug}`,
+                        })),
+                        { name: 'Projects', href: '/projects' },
                     ].map(link => (
                         <a
                             key={link.name}
