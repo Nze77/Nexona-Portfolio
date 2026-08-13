@@ -25,6 +25,15 @@ const staggerContainer = {
     }
 }
 
+// Inline text links: inherit the surrounding copy's colour so they read as part
+// of the sentence, with a subtle underline to stay obviously clickable.
+const inlineLink: React.CSSProperties = {
+    color: 'inherit',
+    textDecoration: 'underline',
+    textDecorationThickness: '1px',
+    textUnderlineOffset: '3px'
+}
+
 export default function MumbaiAgencyPage() {
     const heroRef = useRef<HTMLElement>(null)
     const { scrollYProgress } = useScroll({
@@ -196,7 +205,7 @@ export default function MumbaiAgencyPage() {
                             lineHeight: 1.6
                         }}
                     >
-                        Nexona is a software agency in Mumbai helping Indian MSMEs and
+                        <Link href="/" style={inlineLink}>Nexona</Link> is a software agency in Mumbai helping Indian MSMEs and
                         startups ditch outdated workflows with custom ERPs, CRMs, web apps, and AI
                         automation, built around how your business actually operates
                     </motion.p>
@@ -263,7 +272,7 @@ export default function MumbaiAgencyPage() {
                             Mumbai&apos;s Software Agency for Growing Businesses
                         </motion.h2>
                         <motion.p variants={fadeInUp} style={{ fontFamily: INTER, opacity: 0.8, lineHeight: 1.8, fontSize: '1.15rem', marginBottom: '1.5rem' }}>
-                            Nexona is a software agency in Mumbai that partners with startups, SMEs, and enterprises across India&apos;s financial capital to design, build, and scale custom digital products. Whether you need a full-stack web application, a tailored ERP or CRM system, or AI-driven automation to streamline operations, our Mumbai software development team handles the entire journey — from architecture to deployment and support.
+                            <Link href="/" style={inlineLink}>Nexona</Link> is a software agency in Mumbai that partners with startups, SMEs, and enterprises across India&apos;s financial capital to design, build, and scale custom digital products. Whether you need a full-stack web application, a tailored <Link href="/erp-systems-for-manufacturers" style={inlineLink}>ERP</Link> or <Link href="/customer-retention-management-software" style={inlineLink}>CRM system</Link>, or AI-driven automation to streamline operations, our Mumbai software development team handles the entire journey — from architecture to deployment and support.
                         </motion.p>
                         <motion.p variants={fadeInUp} style={{ fontFamily: INTER, opacity: 0.8, lineHeight: 1.8, fontSize: '1.15rem', marginBottom: '3rem' }}>
                             We combine deep technical expertise with an understanding of how Mumbai businesses operate, so the software we build isn&apos;t just functional — it&apos;s built to drive measurable growth, reduce manual work, and give your team a real competitive edge.
@@ -405,7 +414,7 @@ export default function MumbaiAgencyPage() {
                     }}>
                         {[
                             { title: 'Full Stack Web Applications', desc: 'We build fast, SEO-friendly web applications using React, Next.js, and Node.js — engineered for performance, scalability, and search visibility from day one.', img: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&q=80' },
-                            { title: 'Custom ERP & CRM Development', desc: 'Off-the-shelf software rarely fits how Mumbai businesses actually operate. We design ERP and CRM systems built around your exact workflows, departments, and reporting needs.', img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80' },
+                            { title: 'Custom ERP & CRM Development', desc: <>Off-the-shelf software rarely fits how Mumbai businesses actually operate. We design <Link href="/manufacturing-erp" style={inlineLink}>ERP</Link> and CRM systems built around your exact workflows, departments, and reporting needs.</>, img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80' },
                             { title: 'AI Voice & Chat Agents', desc: 'Deploy intelligent AI agents that handle customer queries, qualify leads, and update your systems automatically — reducing the workload on your team around the clock.', img: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=600&q=80' },
                             { title: 'API & Systems Integration', desc: 'We connect your existing tools — accounting software, CRMs, payment gateways, and more — into a single automated pipeline, eliminating duplicate data entry and manual errors.', img: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=80' }
                         ].map((s, i) => (
