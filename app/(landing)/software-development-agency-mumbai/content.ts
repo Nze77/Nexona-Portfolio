@@ -9,9 +9,9 @@ export interface FaqItem {
 
 export const FAQ_ITEMS: FaqItem[] = [
     {
-        question: 'What does a software development agency in Mumbai do?',
+        question: 'What does a software agency in Mumbai do?',
         answer:
-            'A software development agency in Mumbai designs, builds, and maintains custom software — including websites, mobile apps, ERPs, CRMs, and automation tools — tailored to a business’s specific operational needs, rather than relying on generic off-the-shelf products.',
+            'A software agency in Mumbai designs, builds, and maintains custom software — including websites, mobile apps, ERPs, CRMs, and automation tools — tailored to a business’s specific operational needs, rather than relying on generic off-the-shelf products.',
     },
     {
         question: 'How much does custom software development cost in Mumbai?',

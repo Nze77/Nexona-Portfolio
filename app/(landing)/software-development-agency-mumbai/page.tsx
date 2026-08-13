@@ -38,12 +38,82 @@ export default function MumbaiAgencyPage() {
     const [isMobile, setIsMobile] = useState(false)
     const [openFaq, setOpenFaq] = useState<number | null>(0)
 
+    // Timed lead popup: shows once the visitor has spent 30s on the page.
+    const [showPopup, setShowPopup] = useState(false)
+
+    // Popup form state.
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        phone: '',
+        requirement: ''
+    })
+    const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
+    const [errorMessage, setErrorMessage] = useState('')
+
     useEffect(() => {
         const check = () => setIsMobile(window.innerWidth <= 768)
         check()
         window.addEventListener('resize', check)
         return () => window.removeEventListener('resize', check)
     }, [])
+
+    useEffect(() => {
+        const t = setTimeout(() => setShowPopup(true), 30000)
+        return () => clearTimeout(t)
+    }, [])
+
+    // Close the popup automatically once a submission succeeds.
+    useEffect(() => {
+        if (status === 'success') setShowPopup(false)
+    }, [status])
+
+    const closePopup = () => setShowPopup(false)
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target
+        setFormData(prev => ({ ...prev, [name]: value }))
+    }
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault()
+
+        const phoneRegex = /^\+?[0-9\s\-\(\)]{7,15}$/
+        if (!phoneRegex.test(formData.phone)) {
+            setStatus('error')
+            setErrorMessage('Please enter a valid phone number.')
+            return
+        }
+
+        setStatus('loading')
+        setErrorMessage('')
+
+        try {
+            const response = await fetch('/api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name: formData.name,
+                    email: formData.email,
+                    phone: formData.phone,
+                    message: formData.requirement.trim()
+                })
+            })
+
+            if (response.ok) {
+                setStatus('success')
+                setFormData({ name: '', email: '', phone: '', requirement: '' })
+            } else {
+                setStatus('error')
+                setErrorMessage('Something went wrong. Please check your inputs and try again.')
+            }
+        } catch {
+            setStatus('error')
+            setErrorMessage('Network error. Please try again later.')
+        }
+    }
 
     return (
         <main style={{ backgroundColor: DARK, color: SAND, minHeight: '100vh', overflow: 'hidden' }}>
@@ -67,7 +137,7 @@ export default function MumbaiAgencyPage() {
                 <motion.div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, y, zIndex: 0 }}>
                     <Image
                         src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2000&auto=format&fit=crop"
-                        alt="Software development agency in Mumbai – Nexona digital network background"
+                        alt="Software agency in Mumbai – Nexona digital network background"
                         fill
                         style={{ objectFit: 'cover', opacity: 0.25 }}
                         priority
@@ -110,7 +180,7 @@ export default function MumbaiAgencyPage() {
                             margin: 0
                         }}
                     >
-                        Software Development <br /> Agency <span style={{ color: 'transparent', WebkitTextStroke: `1px ${SAND}` }}>in Mumbai</span>
+                        Software <br /> Agency <span style={{ color: 'transparent', WebkitTextStroke: `1px ${SAND}` }}>in Mumbai</span>
                     </motion.h1>
                     <motion.p
                         initial={{ opacity: 0, y: 20 }}
@@ -126,7 +196,7 @@ export default function MumbaiAgencyPage() {
                             lineHeight: 1.6
                         }}
                     >
-                        Nexona is a Mumbai-based software development agency helping Indian MSMEs and
+                        Nexona is a software agency in Mumbai helping Indian MSMEs and
                         startups ditch outdated workflows with custom ERPs, CRMs, web apps, and AI
                         automation, built around how your business actually operates
                     </motion.p>
@@ -168,7 +238,7 @@ export default function MumbaiAgencyPage() {
                     >
                         <Image
                             src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1200&auto=format&fit=crop"
-                            alt="Software development agency in Mumbai – Nexona team building custom software"
+                            alt="Software agency in Mumbai – Nexona team building custom software"
                             fill
                             style={{ objectFit: 'cover' }}
                         />
@@ -190,10 +260,10 @@ export default function MumbaiAgencyPage() {
                             marginBottom: '2.5rem',
                             letterSpacing: '-0.02em'
                         }}>
-                            Mumbai&apos;s Software Development Agency for Growing Businesses
+                            Mumbai&apos;s Software Agency for Growing Businesses
                         </motion.h2>
                         <motion.p variants={fadeInUp} style={{ fontFamily: INTER, opacity: 0.8, lineHeight: 1.8, fontSize: '1.15rem', marginBottom: '1.5rem' }}>
-                            Nexona is a software development agency in Mumbai that partners with startups, SMEs, and enterprises across India&apos;s financial capital to design, build, and scale custom digital products. Whether you need a full-stack web application, a tailored ERP or CRM system, or AI-driven automation to streamline operations, our Mumbai software development team handles the entire journey — from architecture to deployment and support.
+                            Nexona is a software agency in Mumbai that partners with startups, SMEs, and enterprises across India&apos;s financial capital to design, build, and scale custom digital products. Whether you need a full-stack web application, a tailored ERP or CRM system, or AI-driven automation to streamline operations, our Mumbai software development team handles the entire journey — from architecture to deployment and support.
                         </motion.p>
                         <motion.p variants={fadeInUp} style={{ fontFamily: INTER, opacity: 0.8, lineHeight: 1.8, fontSize: '1.15rem', marginBottom: '3rem' }}>
                             We combine deep technical expertise with an understanding of how Mumbai businesses operate, so the software we build isn&apos;t just functional — it&apos;s built to drive measurable growth, reduce manual work, and give your team a real competitive edge.
@@ -481,7 +551,7 @@ export default function MumbaiAgencyPage() {
                         Let&apos;s Build Your Next Software Project
                     </motion.h2>
                     <motion.p variants={fadeInUp} style={{ fontFamily: INTER, fontSize: '1.2rem', opacity: 0.8, lineHeight: 1.7, maxWidth: '700px', margin: '0 auto' }}>
-                        Looking for a software development agency in Mumbai that can take your idea from concept
+                        Looking for a software agency in Mumbai that can take your idea from concept
                         to a fully working product? Nexona&apos;s team is ready to discuss your project, timeline,
                         and budget — book a free consultation below.
                     </motion.p>
@@ -489,6 +559,98 @@ export default function MumbaiAgencyPage() {
             </section>
 
             <ContactSection />
+
+            {/* Timed lead popup — appears after 30s on the page */}
+            {showPopup && (
+                <div
+                    onClick={closePopup}
+                    style={{
+                        position: 'fixed',
+                        inset: 0,
+                        zIndex: 1000,
+                        backgroundColor: 'rgba(46,42,38,0.55)',
+                        backdropFilter: 'blur(4px)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        padding: '1.5rem'
+                    }}
+                >
+                    <div
+                        onClick={(e) => e.stopPropagation()}
+                        style={{
+                            position: 'relative',
+                            width: '100%',
+                            maxWidth: '460px',
+                            backgroundColor: '#FFFFFF',
+                            color: DARK,
+                            borderRadius: '20px',
+                            padding: isMobile ? '2rem 1.5rem' : '2.5rem',
+                            boxShadow: '0 30px 70px rgba(0,0,0,0.35)'
+                        }}
+                    >
+                        <button
+                            onClick={closePopup}
+                            aria-label="Close"
+                            style={{
+                                position: 'absolute',
+                                top: '1rem',
+                                right: '1rem',
+                                background: 'none',
+                                border: 'none',
+                                fontSize: '1.6rem',
+                                lineHeight: 1,
+                                cursor: 'pointer',
+                                color: DARK,
+                                opacity: 0.5
+                            }}
+                        >
+                            ×
+                        </button>
+
+                        <h3 style={{ fontFamily: "var(--font-montserrat), sans-serif", fontSize: '1.35rem', fontWeight: 800, textTransform: 'uppercase', margin: '0 0 0.5rem 0', letterSpacing: '-0.02em' }}>
+                            Get a Free Project Consultation
+                        </h3>
+                        <p style={{ fontFamily: INTER, fontSize: '0.95rem', opacity: 0.7, margin: '0 0 1.5rem 0', lineHeight: 1.5 }}>
+                            Tell us what you need and we&apos;ll get back to you.
+                        </p>
+
+                        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                            <input required type="text" name="name" placeholder="Full Name" value={formData.name} onChange={handleInputChange} style={{ padding: '0.8rem 1rem', border: '1px solid rgba(46,42,38,0.15)', borderRadius: '8px', fontSize: '1rem', fontFamily: INTER, outline: 'none', backgroundColor: '#F8F6F2' }} />
+                            <input required type="tel" name="phone" placeholder="Phone Number" value={formData.phone} onChange={handleInputChange} style={{ padding: '0.8rem 1rem', border: '1px solid rgba(46,42,38,0.15)', borderRadius: '8px', fontSize: '1rem', fontFamily: INTER, outline: 'none', backgroundColor: '#F8F6F2' }} />
+                            <input required type="email" name="email" placeholder="Email Address" value={formData.email} onChange={handleInputChange} style={{ padding: '0.8rem 1rem', border: '1px solid rgba(46,42,38,0.15)', borderRadius: '8px', fontSize: '1rem', fontFamily: INTER, outline: 'none', backgroundColor: '#F8F6F2' }} />
+                            <textarea required name="requirement" rows={3} placeholder="Your requirement" value={formData.requirement} onChange={handleInputChange} style={{ padding: '0.8rem 1rem', border: '1px solid rgba(46,42,38,0.15)', borderRadius: '8px', fontSize: '1rem', fontFamily: INTER, outline: 'none', backgroundColor: '#F8F6F2', resize: 'vertical' }} />
+
+                            <button
+                                type="submit"
+                                disabled={status === 'loading'}
+                                style={{
+                                    backgroundColor: DARK,
+                                    color: SAND,
+                                    padding: '0.9rem 2rem',
+                                    border: 'none',
+                                    borderRadius: '8px',
+                                    fontFamily: INTER,
+                                    fontSize: '0.9rem',
+                                    fontWeight: 700,
+                                    textTransform: 'uppercase',
+                                    letterSpacing: '0.1em',
+                                    cursor: status === 'loading' ? 'not-allowed' : 'pointer'
+                                }}
+                            >
+                                {status === 'loading' ? 'Submitting...' : 'Book Free Consultation'}
+                            </button>
+
+                            {status === 'error' && (
+                                <p style={{ fontFamily: INTER, fontSize: '0.9rem', color: '#DC2626', fontWeight: 600, margin: 0, textAlign: 'center' }}>
+                                    ✗ {errorMessage}
+                                </p>
+                            )}
+                        </form>
+                    </div>
+                </div>
+            )}
+
             <Footer />
         </main>
     )

@@ -55,12 +55,14 @@ export interface LandingPage {
 export const LANDING_PAGES: LandingPage[] = [
     {
         slug: 'software-development-agency-mumbai',
-        title: 'Software Development Agency in Mumbai | Nexona',
+        title: 'Software Agency in Mumbai | Custom Software Development – Nexona',
         description:
-            'Nexona is a Mumbai-based software development agency building custom web apps, AI agents, automations, and full-stack solutions for growing businesses.',
+            'Nexona is a software agency in Mumbai building custom web apps, AI agents, automations, and full-stack software for growing businesses.',
         priority: 0.9,
-        navLabel: 'Software Development Mumbai',
+        navLabel: 'Software Agency Mumbai',
         keywords: [
+            'software agency Mumbai',
+            'software agency in Mumbai',
             'software development agency in Mumbai',
             'software development Mumbai',
             'custom software development Mumbai',
@@ -69,7 +71,7 @@ export const LANDING_PAGES: LandingPage[] = [
             'AI automation Mumbai',
         ],
         og: {
-            title: 'Nexona – Software Development Agency in Mumbai',
+            title: 'Nexona – Software Agency in Mumbai',
             description:
                 'Custom software development, AI agents, and business automation from Mumbai’s trusted full-stack development partner.',
         },
