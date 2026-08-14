@@ -39,6 +39,13 @@ export function useContactPopup<T extends HTMLElement = HTMLElement>(
 
     // Once the visitor has seen (or opened) the form, the automatic triggers
     // stop for the rest of the session — no repeat interruptions.
+    //
+    // This flag is the one thing on the site written to the visitor's device,
+    // and deliberately so: "this visitor already dismissed the popup" is
+    // functional UI state needed to deliver the page as the visitor expects it,
+    // which is the strictly-necessary exemption to the consent rule. It carries
+    // no identifier and is not used for analytics — the attribution tracker in
+    // visitorContext.ts is kept in memory precisely so it stays exempt too.
     const spent = useRef(false)
 
     const markSeen = useCallback(() => {

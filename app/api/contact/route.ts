@@ -22,8 +22,6 @@ interface ContactMeta {
         startedAt?: string
         durationSeconds?: number
         pageCount?: number
-        visitNumber?: number
-        firstSeen?: string
     }
     device?: {
         type?: string
@@ -104,16 +102,14 @@ function buildJourneyLines(meta: ContactMeta | undefined, serverInfo: string[]):
         })
     }
 
+    // The journey is tracked in memory only (see app/lib/visitorContext.ts), so
+    // it covers this browsing session since the last full page load — there is
+    // deliberately no returning-visitor counter.
     const session = meta.session ?? {}
     lines.push('')
     lines.push(
         `Time on site: ${formatDuration(session.durationSeconds)} across ${session.pageCount ?? (journey.length || '?')} page(s)`,
     )
-    if (session.visitNumber && session.visitNumber > 1) {
-        lines.push(`Returning visitor — visit #${session.visitNumber}${session.firstSeen ? ` (first seen ${clean(session.firstSeen, 40)})` : ''}`)
-    } else {
-        lines.push('First visit from this browser')
-    }
 
     const device = meta.device ?? {}
     const deviceBits = [

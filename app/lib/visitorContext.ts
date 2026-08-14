@@ -1,24 +1,27 @@
 'use client'
 
 /**
- * Visitor attribution + journey tracking.
+ * Visitor attribution + journey tracking — deliberately storage-free.
  *
- * A tiny, cookie-less, first-party tracker: it keeps one record per browser
- * session in sessionStorage (where the visitor landed, what referred them, the
- * UTM tags on that first URL, and every page they've opened since) plus a
- * visit counter in localStorage so returning visitors are recognisable.
+ * The whole record lives in the module-level `session` variable below, which
+ * lasts exactly as long as the document: it survives client-side route changes
+ * (the module is evaluated once per page load and kept by the browser's module
+ * registry), and is gone on a hard reload, a new tab, or a closed browser.
+ *
+ * Nothing is ever written to the visitor's device. That is the point: the rule
+ * behind cookie banners (ePrivacy Art. 5(3) / UK PECR) covers "storing
+ * information in the terminal equipment of the user" and is technology-neutral
+ * — localStorage and sessionStorage count the same as cookies. Keeping the
+ * journey in memory never triggers it, so this needs no consent banner.
+ *
+ * The accepted trade-offs: no returning-visitor counter (that needs persistent
+ * storage), and the journey restarts if the visitor hard-reloads.
  *
  * `recordPageView` is called once per route change by <VisitorTracker />, and
  * `getVisitorContext()` snapshots everything into the `meta` object that the
  * contact forms POST to /api/contact, which prints it into the SMTP email.
- *
- * Nothing here is personally identifying beyond what the browser sends on any
- * request anyway, and it never leaves the site until a form is submitted.
+ * Nothing leaves the browser until the visitor actually submits a form.
  */
-
-const SESSION_KEY = 'nx_visit_session'
-const VISITS_KEY = 'nx_visit_count'
-const FIRST_SEEN_KEY = 'nx_first_seen'
 
 const UTM_KEYS = [
     'utm_source',
@@ -51,7 +54,7 @@ interface VisitorSession {
 
 export interface VisitorMeta {
     page: { path: string; url: string; title: string }
-    /** Which form was used, e.g. 'contact-overlay' or 'home-contact-section' */
+    /** Which form was used, e.g. 'contact-overlay' or 'contact-section' */
     formLocation?: string
     /** What opened it: 'timer' | 'scroll' | 'manual' | undefined for inline forms */
     trigger?: string
@@ -64,8 +67,6 @@ export interface VisitorMeta {
         startedAt: string
         durationSeconds: number
         pageCount: number
-        visitNumber: number
-        firstSeen?: string
     }
     device: {
         type: 'mobile' | 'tablet' | 'desktop'
@@ -77,24 +78,13 @@ export interface VisitorMeta {
     }
 }
 
+/**
+ * The entire tracking state. Module scope, never persisted — see the file
+ * comment above before moving any of this into web storage.
+ */
+let session: VisitorSession | null = null
+
 const isBrowser = () => typeof window !== 'undefined'
-
-const readSession = (): VisitorSession | null => {
-    try {
-        const raw = sessionStorage.getItem(SESSION_KEY)
-        return raw ? (JSON.parse(raw) as VisitorSession) : null
-    } catch {
-        return null
-    }
-}
-
-const writeSession = (session: VisitorSession) => {
-    try {
-        sessionStorage.setItem(SESSION_KEY, JSON.stringify(session))
-    } catch {
-        /* private mode / storage full — tracking is best-effort */
-    }
-}
 
 const collectUtm = (): Record<string, string> => {
     const params = new URLSearchParams(window.location.search)
@@ -122,54 +112,34 @@ const domainOf = (url: string) => {
     }
 }
 
-/** Bump the cross-session visit counter once per browser session. */
-const trackVisitCount = () => {
-    try {
-        if (!localStorage.getItem(FIRST_SEEN_KEY)) {
-            localStorage.setItem(FIRST_SEEN_KEY, new Date().toISOString())
-        }
-        const next = Number(localStorage.getItem(VISITS_KEY) ?? '0') + 1
-        localStorage.setItem(VISITS_KEY, String(next))
-    } catch {
-        /* best-effort */
-    }
-}
-
 /**
- * Records the current page in the session journey. Safe to call repeatedly —
+ * Records the current page in the journey. Safe to call repeatedly —
  * consecutive views of the same path are collapsed.
  */
 export function recordPageView(path: string, title?: string) {
     if (!isBrowser()) return
 
     const now = Date.now()
-    const existing = readSession()
 
-    if (!existing) {
-        trackVisitCount()
-        writeSession({
+    if (!session) {
+        session = {
             startedAt: now,
             landingPage: path,
             landingTitle: title,
             referrer: document.referrer || '',
             utm: collectUtm(),
             journey: [{ path, title, at: now }],
-        })
+        }
         return
     }
 
-    const last = existing.journey[existing.journey.length - 1]
+    const last = session.journey[session.journey.length - 1]
     if (last && last.path === path) return
 
-    // A UTM-tagged link opened mid-session still tells us where the click came
+    // A UTM-tagged link opened mid-visit still tells us where the click came
     // from, so fill in anything the landing URL did not carry.
-    const utm = { ...collectUtm(), ...existing.utm }
-
-    writeSession({
-        ...existing,
-        utm,
-        journey: [...existing.journey, { path, title, at: now }].slice(-MAX_JOURNEY_STEPS),
-    })
+    session.utm = { ...collectUtm(), ...session.utm }
+    session.journey = [...session.journey, { path, title, at: now }].slice(-MAX_JOURNEY_STEPS)
 }
 
 /**
@@ -184,16 +154,13 @@ export function getVisitorContext(
     const path = window.location.pathname
     const now = Date.now()
 
-    // Direct visits to a form (no tracker run yet) still deserve a record.
-    let session = readSession()
-    if (!session) {
-        recordPageView(path, document.title)
-        session = readSession()
-    }
-    if (!session) return undefined
+    // A form reached before the tracker ran still deserves a record.
+    if (!session) recordPageView(path, document.title)
+    const current = session
+    if (!current) return undefined
 
-    const journey = session.journey.map((step, i) => {
-        const nextAt = session.journey[i + 1]?.at ?? now
+    const journey = current.journey.map((step, i) => {
+        const nextAt = current.journey[i + 1]?.at ?? now
         return {
             path: step.path,
             title: step.title,
@@ -201,30 +168,19 @@ export function getVisitorContext(
         }
     })
 
-    let visitNumber = 1
-    let firstSeen: string | undefined
-    try {
-        visitNumber = Number(localStorage.getItem(VISITS_KEY) ?? '1') || 1
-        firstSeen = localStorage.getItem(FIRST_SEEN_KEY) ?? undefined
-    } catch {
-        /* best-effort */
-    }
-
     return {
         page: { path, url: window.location.href, title: document.title },
         formLocation: extra.formLocation,
         trigger: extra.trigger,
-        landingPage: session.landingPage,
-        referrer: session.referrer,
-        referrerDomain: domainOf(session.referrer),
-        utm: session.utm,
+        landingPage: current.landingPage,
+        referrer: current.referrer,
+        referrerDomain: domainOf(current.referrer),
+        utm: current.utm,
         journey,
         session: {
-            startedAt: new Date(session.startedAt).toISOString(),
-            durationSeconds: Math.round((now - session.startedAt) / 1000),
-            pageCount: session.journey.length,
-            visitNumber,
-            firstSeen,
+            startedAt: new Date(current.startedAt).toISOString(),
+            durationSeconds: Math.round((now - current.startedAt) / 1000),
+            pageCount: current.journey.length,
         },
         device: {
             type: deviceType(),
