@@ -1,13 +1,15 @@
 'use client'
 
 import { useRef, useEffect, useState } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import StickyHeader from '../../components/StickyHeader'
 import Footer from '../../components/Footer'
 import ContactSection from '../../components/ContactSection'
+import ContactOverlay from '../../components/ContactOverlay'
 import ParticleEffect from '../../components/ParticleEffect'
+import { useContactPopup } from '../../lib/useContactPopup'
 import { DARK, SAND, INTER } from '../../lib/constants'
 import { FAQ_ITEMS } from './content'
 
@@ -47,18 +49,10 @@ export default function MumbaiAgencyPage() {
     const [isMobile, setIsMobile] = useState(false)
     const [openFaq, setOpenFaq] = useState<number | null>(0)
 
-    // Timed lead popup: shows once the visitor has spent 30s on the page.
-    const [showPopup, setShowPopup] = useState(false)
-
-    // Popup form state.
-    const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        phone: '',
-        requirement: ''
-    })
-    const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
-    const [errorMessage, setErrorMessage] = useState('')
+    // Shared across every landing page: the form opens after 20s on the page or
+    // once the visitor scrolls to the third section, whichever comes first.
+    const { triggerRef: thirdSectionRef, contactOpen, openContact, closeContact, trigger } =
+        useContactPopup<HTMLElement>()
 
     useEffect(() => {
         const check = () => setIsMobile(window.innerWidth <= 768)
@@ -67,66 +61,9 @@ export default function MumbaiAgencyPage() {
         return () => window.removeEventListener('resize', check)
     }, [])
 
-    useEffect(() => {
-        const t = setTimeout(() => setShowPopup(true), 30000)
-        return () => clearTimeout(t)
-    }, [])
-
-    // Close the popup automatically once a submission succeeds.
-    useEffect(() => {
-        if (status === 'success') setShowPopup(false)
-    }, [status])
-
-    const closePopup = () => setShowPopup(false)
-
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        const { name, value } = e.target
-        setFormData(prev => ({ ...prev, [name]: value }))
-    }
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault()
-
-        const phoneRegex = /^\+?[0-9\s\-\(\)]{7,15}$/
-        if (!phoneRegex.test(formData.phone)) {
-            setStatus('error')
-            setErrorMessage('Please enter a valid phone number.')
-            return
-        }
-
-        setStatus('loading')
-        setErrorMessage('')
-
-        try {
-            const response = await fetch('/api/contact', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    name: formData.name,
-                    email: formData.email,
-                    phone: formData.phone,
-                    message: formData.requirement.trim()
-                })
-            })
-
-            if (response.ok) {
-                setStatus('success')
-                setFormData({ name: '', email: '', phone: '', requirement: '' })
-            } else {
-                setStatus('error')
-                setErrorMessage('Something went wrong. Please check your inputs and try again.')
-            }
-        } catch {
-            setStatus('error')
-            setErrorMessage('Network error. Please try again later.')
-        }
-    }
-
     return (
         <main style={{ backgroundColor: DARK, color: SAND, minHeight: '100vh', overflow: 'hidden' }}>
-            <StickyHeader theme="dark" />
+            <StickyHeader theme="dark" onContactClick={openContact} />
 
             {/* Hero Section with Parallax Image */}
             <section
@@ -235,8 +172,8 @@ export default function MumbaiAgencyPage() {
                 </motion.div>
             </section>
 
-            {/* Intro / Philosophy Section */}
-            <section style={{ backgroundColor: SAND, color: DARK, padding: isMobile ? '6rem 5%' : '12rem 8%' }}>
+            {/* Intro / Philosophy — third section, one of the two contact-popup triggers */}
+            <section ref={thirdSectionRef} style={{ backgroundColor: SAND, color: DARK, padding: isMobile ? '6rem 5%' : '12rem 8%' }}>
                 <div style={{ maxWidth: '1400px', margin: '0 auto', display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'center', gap: isMobile ? '4rem' : '8rem' }}>
                     <motion.div
                         initial={{ opacity: 0, scale: 0.95 }}
@@ -569,96 +506,18 @@ export default function MumbaiAgencyPage() {
 
             <ContactSection />
 
-            {/* Timed lead popup — appears after 30s on the page */}
-            {showPopup && (
-                <div
-                    onClick={closePopup}
-                    style={{
-                        position: 'fixed',
-                        inset: 0,
-                        zIndex: 1000,
-                        backgroundColor: 'rgba(46,42,38,0.55)',
-                        backdropFilter: 'blur(4px)',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        padding: '1.5rem'
-                    }}
-                >
-                    <div
-                        onClick={(e) => e.stopPropagation()}
-                        style={{
-                            position: 'relative',
-                            width: '100%',
-                            maxWidth: '460px',
-                            backgroundColor: '#FFFFFF',
-                            color: DARK,
-                            borderRadius: '20px',
-                            padding: isMobile ? '2rem 1.5rem' : '2.5rem',
-                            boxShadow: '0 30px 70px rgba(0,0,0,0.35)'
-                        }}
-                    >
-                        <button
-                            onClick={closePopup}
-                            aria-label="Close"
-                            style={{
-                                position: 'absolute',
-                                top: '1rem',
-                                right: '1rem',
-                                background: 'none',
-                                border: 'none',
-                                fontSize: '1.6rem',
-                                lineHeight: 1,
-                                cursor: 'pointer',
-                                color: DARK,
-                                opacity: 0.5
-                            }}
-                        >
-                            ×
-                        </button>
-
-                        <h3 style={{ fontFamily: "var(--font-montserrat), sans-serif", fontSize: '1.35rem', fontWeight: 800, textTransform: 'uppercase', margin: '0 0 0.5rem 0', letterSpacing: '-0.02em' }}>
-                            Get a Free Project Consultation
-                        </h3>
-                        <p style={{ fontFamily: INTER, fontSize: '0.95rem', opacity: 0.7, margin: '0 0 1.5rem 0', lineHeight: 1.5 }}>
-                            Tell us what you need and we&apos;ll get back to you.
-                        </p>
-
-                        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                            <input required type="text" name="name" placeholder="Full Name" value={formData.name} onChange={handleInputChange} style={{ padding: '0.8rem 1rem', border: '1px solid rgba(46,42,38,0.15)', borderRadius: '8px', fontSize: '1rem', fontFamily: INTER, outline: 'none', backgroundColor: '#F8F6F2' }} />
-                            <input required type="tel" name="phone" placeholder="Phone Number" value={formData.phone} onChange={handleInputChange} style={{ padding: '0.8rem 1rem', border: '1px solid rgba(46,42,38,0.15)', borderRadius: '8px', fontSize: '1rem', fontFamily: INTER, outline: 'none', backgroundColor: '#F8F6F2' }} />
-                            <input required type="email" name="email" placeholder="Email Address" value={formData.email} onChange={handleInputChange} style={{ padding: '0.8rem 1rem', border: '1px solid rgba(46,42,38,0.15)', borderRadius: '8px', fontSize: '1rem', fontFamily: INTER, outline: 'none', backgroundColor: '#F8F6F2' }} />
-                            <textarea required name="requirement" rows={3} placeholder="Your requirement" value={formData.requirement} onChange={handleInputChange} style={{ padding: '0.8rem 1rem', border: '1px solid rgba(46,42,38,0.15)', borderRadius: '8px', fontSize: '1rem', fontFamily: INTER, outline: 'none', backgroundColor: '#F8F6F2', resize: 'vertical' }} />
-
-                            <button
-                                type="submit"
-                                disabled={status === 'loading'}
-                                style={{
-                                    backgroundColor: DARK,
-                                    color: SAND,
-                                    padding: '0.9rem 2rem',
-                                    border: 'none',
-                                    borderRadius: '8px',
-                                    fontFamily: INTER,
-                                    fontSize: '0.9rem',
-                                    fontWeight: 700,
-                                    textTransform: 'uppercase',
-                                    letterSpacing: '0.1em',
-                                    cursor: status === 'loading' ? 'not-allowed' : 'pointer'
-                                }}
-                            >
-                                {status === 'loading' ? 'Submitting...' : 'Book Free Consultation'}
-                            </button>
-
-                            {status === 'error' && (
-                                <p style={{ fontFamily: INTER, fontSize: '0.9rem', color: '#DC2626', fontWeight: 600, margin: 0, textAlign: 'center' }}>
-                                    ✗ {errorMessage}
-                                </p>
-                            )}
-                        </form>
-                    </div>
-                </div>
-            )}
+            {/* Shared contact popup — same trigger rules as the other landing pages */}
+            <AnimatePresence>
+                {contactOpen && (
+                    <ContactOverlay
+                        trigger={trigger}
+                        eyebrow="Get in touch"
+                        heading="Get a free project consultation"
+                        submitLabel="Book Free Consultation"
+                        onClose={closeContact}
+                    />
+                )}
+            </AnimatePresence>
 
             <Footer />
         </main>

@@ -7,6 +7,7 @@ import LandingHeader from '../../components/LandingHeader'
 import ClientStrip from '../../components/ClientStrip'
 import ContactOverlay from '../../components/ContactOverlay'
 import Footer from '../../components/Footer'
+import { useContactPopup } from '../../lib/useContactPopup'
 import { DARK, SAND, INTER } from '../../lib/constants'
 import { WHY_BETTER, FEATURES, FAQ_ITEMS, COMPARISON, INDUSTRIES, SIGNALS } from './content'
 
@@ -59,7 +60,10 @@ const CTA: React.CSSProperties = {
 export default function ManufacturingErpPage() {
     const [isMobile, setIsMobile] = useState(false)
     const [openFaq, setOpenFaq] = useState<number | null>(0)
-    const [contactOpen, setContactOpen] = useState(false)
+    // Shared across every landing page: the form opens after 20s on the page or
+    // once the visitor scrolls to the third section, whichever comes first.
+    const { triggerRef: thirdSectionRef, contactOpen, openContact, closeContact, trigger } =
+        useContactPopup<HTMLElement>()
 
     useEffect(() => {
         const check = () => setIsMobile(window.innerWidth <= 768)
@@ -72,7 +76,7 @@ export default function ManufacturingErpPage() {
 
     return (
         <main style={{ backgroundColor: DARK, color: TEXT, fontFamily: INTER }}>
-            <LandingHeader theme="dark" onContactClick={() => setContactOpen(true)} />
+            <LandingHeader theme="dark" onContactClick={openContact} />
 
             {/* Hero */}
             <section data-theme="dark" style={{ padding: isMobile ? '4rem 5% 3rem' : '7rem 8% 5rem' }}>
@@ -98,7 +102,7 @@ export default function ManufacturingErpPage() {
                         contradiction until you look at what a boxed licence actually costs you every year.
                     </p>
                     <div style={{ marginTop: '2.5rem', display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-                        <button type="button" onClick={() => setContactOpen(true)} style={CTA}>
+                        <button type="button" onClick={openContact} style={CTA}>
                             Talk to us about your factory
                         </button>
                     </div>
@@ -134,8 +138,8 @@ export default function ManufacturingErpPage() {
                 </div>
             </section>
 
-            {/* Affordable */}
-            <section data-theme="dark" style={{ backgroundColor: '#25221F', padding: pad }}>
+            {/* Affordable — third section, one of the two contact-popup triggers */}
+            <section ref={thirdSectionRef} data-theme="dark" style={{ backgroundColor: '#25221F', padding: pad }}>
                 <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
                     <span style={EYEBROW}>Why it costs less than you expect</span>
                     <h2 style={H2}>Affordable ERP for small and mid-size manufacturers</h2>
@@ -439,7 +443,7 @@ export default function ManufacturingErpPage() {
                         would build — no deck, no demo of features you did not ask about.
                     </p>
                     <div style={{ marginTop: '2.25rem' }}>
-                        <button type="button" onClick={() => setContactOpen(true)} style={CTA}>
+                        <button type="button" onClick={openContact} style={CTA}>
                             Get a free quote
                         </button>
                     </div>
@@ -447,7 +451,14 @@ export default function ManufacturingErpPage() {
             </section>
 
             <AnimatePresence>
-                {contactOpen && <ContactOverlay onClose={() => setContactOpen(false)} />}
+                {contactOpen && (
+                    <ContactOverlay
+                        trigger={trigger}
+                        heading="Talk to us about your plant"
+                        submitLabel="Request a callback"
+                        onClose={closeContact}
+                    />
+                )}
             </AnimatePresence>
 
             <Footer />

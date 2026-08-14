@@ -3,10 +3,13 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { DARK, SAND, INTER } from '../lib/constants'
+import { getVisitorContext } from '../lib/visitorContext'
 
 /**
  * Contact overlay — name / email / phone / requirement, posted to /api/contact
- * (the same SMTP endpoint the #contact section on /home submits to).
+ * (the same SMTP endpoint the #contact section on /home submits to). Along with
+ * the form it sends a `meta` object describing where the visitor came from and
+ * which pages they went through, which the API prints into the email.
  *
  * Self-contained: it locks body scroll and closes on Escape by itself, so a
  * host only has to render it. Wrap it in <AnimatePresence> to keep the exit
@@ -15,8 +18,24 @@ import { DARK, SAND, INTER } from '../lib/constants'
  *   <AnimatePresence>
  *     {open && <ContactOverlay onClose={() => setOpen(false)} />}
  *   </AnimatePresence>
+ *
+ * `eyebrow` / `heading` / `submitLabel` let a landing page keep its own copy
+ * without forking the component.
  */
-export default function ContactOverlay({ onClose }: { onClose: () => void }) {
+export default function ContactOverlay({
+    onClose,
+    trigger,
+    eyebrow = 'Get in touch',
+    heading = "Let's talk business",
+    submitLabel = 'Submit Inquiry',
+}: {
+    onClose: () => void
+    /** What opened the overlay: 'timer' | 'scroll' | 'manual' — reported in the email. */
+    trigger?: string
+    eyebrow?: string
+    heading?: string
+    submitLabel?: string
+}) {
     const [form, setForm] = useState({ name: '', email: '', phone: '', message: '' })
     const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
     const [errorMessage, setErrorMessage] = useState('')
@@ -57,7 +76,10 @@ export default function ContactOverlay({ onClose }: { onClose: () => void }) {
             const res = await fetch('/api/contact', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(form),
+                body: JSON.stringify({
+                    ...form,
+                    meta: getVisitorContext({ formLocation: 'contact-overlay', trigger }),
+                }),
             })
             if (res.ok) {
                 setStatus('success')
@@ -154,7 +176,7 @@ export default function ContactOverlay({ onClose }: { onClose: () => void }) {
                     textTransform: 'uppercase',
                     opacity: 0.5,
                 }}>
-                    Get in touch
+                    {eyebrow}
                 </span>
                 <h3 style={{
                     fontWeight: 800,
@@ -162,7 +184,7 @@ export default function ContactOverlay({ onClose }: { onClose: () => void }) {
                     lineHeight: 1.1,
                     margin: '0.6rem 0 1.75rem',
                 }}>
-                    Let&apos;s talk business
+                    {heading}
                 </h3>
 
                 {status === 'success' ? (
@@ -230,7 +252,7 @@ export default function ContactOverlay({ onClose }: { onClose: () => void }) {
                                 marginTop: '0.5rem',
                             }}
                         >
-                            {status === 'loading' ? 'Sending…' : 'Submit Inquiry'}
+                            {status === 'loading' ? 'Sending…' : submitLabel}
                         </button>
                     </form>
                 )}

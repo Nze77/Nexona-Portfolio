@@ -8,6 +8,7 @@ import LandingHeader from '../../components/LandingHeader'
 import ClientStrip from '../../components/ClientStrip'
 import ContactOverlay from '../../components/ContactOverlay'
 import Footer from '../../components/Footer'
+import { useContactPopup } from '../../lib/useContactPopup'
 import { DARK, SAND, INTER } from '../../lib/constants'
 import { WHY_IT_MATTERS, CAPABILITIES, STEPS, AUDIENCES, FAQ_ITEMS } from './content'
 
@@ -60,7 +61,10 @@ const CTA: React.CSSProperties = {
 export default function CustomerRetentionPage() {
     const [isMobile, setIsMobile] = useState(false)
     const [openFaq, setOpenFaq] = useState<number | null>(0)
-    const [contactOpen, setContactOpen] = useState(false)
+    // Shared across every landing page: the form opens after 20s on the page or
+    // once the visitor scrolls to the third section, whichever comes first.
+    const { triggerRef: thirdSectionRef, contactOpen, openContact, closeContact, trigger } =
+        useContactPopup<HTMLElement>()
 
     useEffect(() => {
         const check = () => setIsMobile(window.innerWidth <= 768)
@@ -73,7 +77,7 @@ export default function CustomerRetentionPage() {
 
     return (
         <main style={{ backgroundColor: DARK, color: TEXT, fontFamily: INTER }}>
-            <LandingHeader theme="dark" onContactClick={() => setContactOpen(true)} />
+            <LandingHeader theme="dark" onContactClick={openContact} />
 
             {/* Hero */}
             <section data-theme="dark" style={{ padding: isMobile ? '4rem 5% 3rem' : '7rem 8% 5rem' }}>
@@ -111,7 +115,7 @@ export default function CustomerRetentionPage() {
                             how much of it runs without someone manually pulling a report every Tuesday.
                         </p>
                         <div style={{ marginTop: '2.5rem', display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-                            <button type="button" onClick={() => setContactOpen(true)} style={CTA}>
+                            <button type="button" onClick={openContact} style={CTA}>
                                 Talk to us about churn
                             </button>
                         </div>
@@ -175,8 +179,8 @@ export default function CustomerRetentionPage() {
                 </div>
             </section>
 
-            {/* What it is */}
-            <section data-theme="dark" style={{ padding: pad }}>
+            {/* What it is — third section, one of the two contact-popup triggers */}
+            <section ref={thirdSectionRef} data-theme="dark" style={{ padding: pad }}>
                 <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
                     <span style={EYEBROW}>Definition</span>
                     <h2 style={H2}>What is customer retention management?</h2>
@@ -534,7 +538,7 @@ export default function CustomerRetentionPage() {
                         you what we would build — no deck, no demo of features you did not ask about.
                     </p>
                     <div style={{ marginTop: '2.25rem' }}>
-                        <button type="button" onClick={() => setContactOpen(true)} style={CTA}>
+                        <button type="button" onClick={openContact} style={CTA}>
                             Get a free quote
                         </button>
                     </div>
@@ -542,7 +546,14 @@ export default function CustomerRetentionPage() {
             </section>
 
             <AnimatePresence>
-                {contactOpen && <ContactOverlay onClose={() => setContactOpen(false)} />}
+                {contactOpen && (
+                    <ContactOverlay
+                        trigger={trigger}
+                        heading="Talk to us about retention"
+                        submitLabel="Request a callback"
+                        onClose={closeContact}
+                    />
+                )}
             </AnimatePresence>
 
             <Footer />

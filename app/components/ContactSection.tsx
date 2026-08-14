@@ -3,6 +3,7 @@
 import { useRef, useState, useEffect } from 'react'
 import { motion, useInView, Variants } from 'framer-motion'
 import { DARK, SAND, INTER } from '../lib/constants'
+import { getVisitorContext } from '../lib/visitorContext'
 
 export default function ContactSection() {
     const sectionRef = useRef<HTMLElement>(null)
@@ -51,7 +52,10 @@ export default function ContactSection() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(formData)
+                body: JSON.stringify({
+                    ...formData,
+                    meta: getVisitorContext({ formLocation: 'contact-section' })
+                })
             })
 
             if (response.ok) {
