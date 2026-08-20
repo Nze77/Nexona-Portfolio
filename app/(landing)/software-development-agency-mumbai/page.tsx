@@ -214,6 +214,11 @@ export default function MumbaiAgencyPage() {
                         <motion.p variants={fadeInUp} style={{ fontFamily: INTER, opacity: 0.8, lineHeight: 1.8, fontSize: '1.15rem', marginBottom: '3rem' }}>
                             We combine deep technical expertise with an understanding of how Mumbai businesses operate, so the software we build isn&apos;t just functional — it&apos;s built to drive measurable growth, reduce manual work, and give your team a real competitive edge.
                         </motion.p>
+                        {/* One-line pointer to the sister local page — separate intent,
+                            separate keywords, so the two support rather than compete. */}
+                        <motion.p variants={fadeInUp} style={{ fontFamily: INTER, opacity: 0.7, lineHeight: 1.8, fontSize: '1.05rem', marginBottom: '3rem' }}>
+                            Based across the harbour? We also work as a <Link href="/software-development-company-in-navi-mumbai" style={inlineLink}>software development company in Navi Mumbai</Link>, from Airoli to Panvel.
+                        </motion.p>
                         <motion.ul variants={staggerContainer} style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                             {[
                                 'Custom web and mobile applications for Mumbai businesses',

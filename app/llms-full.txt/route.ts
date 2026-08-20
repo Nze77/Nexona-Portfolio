@@ -8,6 +8,7 @@ import { FAQ_ITEMS as CRM_FAQ } from '../(landing)/customer-retention-management
 import { FAQ_ITEMS as MFG_ERP_MUMBAI_FAQ } from '../(landing)/erp-systems-for-manufacturers/content'
 import { FAQ_ITEMS as MFG_ERP_FAQ } from '../(landing)/manufacturing-erp/content'
 import { FAQ_ITEMS as SOFTWARE_MUMBAI_FAQ } from '../(landing)/software-development-agency-mumbai/content'
+import { FAQ_ITEMS as SOFTWARE_NAVI_MUMBAI_FAQ } from '../(landing)/software-development-company-in-navi-mumbai/content'
 
 /**
  * /llms-full.txt — the same map as /llms.txt, but with the content INLINED
@@ -31,6 +32,7 @@ const FAQ_BY_SLUG: Record<string, FaqItem[]> = {
     'erp-systems-for-manufacturers': MFG_ERP_MUMBAI_FAQ,
     'manufacturing-erp': MFG_ERP_FAQ,
     'software-development-agency-mumbai': SOFTWARE_MUMBAI_FAQ,
+    'software-development-company-in-navi-mumbai': SOFTWARE_NAVI_MUMBAI_FAQ,
 }
 
 export function GET() {

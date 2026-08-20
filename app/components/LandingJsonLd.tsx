@@ -35,10 +35,16 @@ export default function LandingJsonLd({
             description: page.description,
             url,
             image: `${SITE_URL}/logo.png`,
-            areaServed: {
-                '@type': 'City',
-                name: page.business.areaServedCity,
-            },
+            // A single City unless the page also names the localities it covers,
+            // in which case they are emitted alongside it so node-level local
+            // queries ("software company in Vashi") have something to match.
+            areaServed: [
+                { '@type': 'City', name: page.business.areaServedCity },
+                ...(page.business.alsoServed ?? []).map((name) => ({
+                    '@type': 'Place',
+                    name,
+                })),
+            ],
             address: {
                 '@type': 'PostalAddress',
                 addressLocality: page.business.addressLocality,

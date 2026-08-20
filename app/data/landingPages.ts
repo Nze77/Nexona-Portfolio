@@ -25,6 +25,9 @@
 export interface LandingPageBusiness {
     /** City the service targets, e.g. "Mumbai". */
     areaServedCity: string
+    /** Extra localities surfaced alongside the city in `areaServed`. Use this
+     *  for neighbourhood/node-level local SEO on city-specific landing pages. */
+    alsoServed?: string[]
     addressLocality: string
     addressRegion: string
     addressCountry: string
@@ -85,6 +88,71 @@ export const LANDING_PAGES: LandingPage[] = [
                 'Web Application Development',
                 'ERP & CRM Development',
                 'AI Agents & Automation',
+            ],
+        },
+    },
+    {
+        // Sister page to software-development-agency-mumbai. Kept deliberately
+        // disjoint from it: that page owns "software agency (in) Mumbai", this
+        // one owns the Navi Mumbai / node-level queries. No shared keywords,
+        // no shared H1/H2 phrasing — the two support each other rather than
+        // competing for the same SERP.
+        slug: 'software-development-company-in-navi-mumbai',
+        title: 'Software Development Company in Navi Mumbai | Custom Software – Nexona',
+        description:
+            'Nexona is a software development company in Navi Mumbai building custom software, business management systems and process automation for startups and growing companies — Airoli and Vashi to Belapur, Kharghar and Panvel.',
+        priority: 0.9,
+        navLabel: 'Software Development Navi Mumbai',
+        keywords: [
+            'software development company in Navi Mumbai',
+            'software development in Navi Mumbai',
+            'software company in Navi Mumbai',
+            'custom software development Navi Mumbai',
+            'business management software Navi Mumbai',
+            'process automation Navi Mumbai',
+            'software development for startups Navi Mumbai',
+            'MVP development Navi Mumbai',
+            'software developers Navi Mumbai',
+            'web development company Navi Mumbai',
+            'software company Vashi',
+            'software company CBD Belapur',
+            'software development Kharghar',
+            'software development Airoli',
+        ],
+        og: {
+            title: 'Software Development Company in Navi Mumbai | Nexona',
+            description:
+                'Custom software, business management systems and process automation for Navi Mumbai startups and growing companies. Built around how you actually work.',
+        },
+        business: {
+            areaServedCity: 'Navi Mumbai',
+            alsoServed: [
+                'Airoli',
+                'Rabale',
+                'Ghansoli',
+                'Mahape',
+                'Turbhe',
+                'Vashi',
+                'Sanpada',
+                'Nerul',
+                'Seawoods',
+                'CBD Belapur',
+                'Kharghar',
+                'Kamothe',
+                'Ulwe',
+                'Panvel',
+                'Taloja',
+            ],
+            addressLocality: 'Navi Mumbai',
+            addressRegion: 'Maharashtra',
+            addressCountry: 'IN',
+            serviceType: [
+                'Custom Software Development',
+                'Business Management Systems',
+                'Business Process Automation',
+                'Startup MVP Development',
+                'Web & Mobile Application Development',
+                'AI Agents & Systems Integration',
             ],
         },
     },
