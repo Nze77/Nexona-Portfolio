@@ -69,7 +69,7 @@ export default function ContactSection() {
                 setStatus('error')
                 setErrorMessage('Something went wrong. Please try again later.')
             }
-        } catch (error) {
+        } catch {
             setStatus('error')
             setErrorMessage('Network error. Please try again later.')
         }

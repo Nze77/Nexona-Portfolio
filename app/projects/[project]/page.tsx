@@ -247,6 +247,10 @@ export default function ProjectDetailsPage({ params }: { params: Promise<{ proje
                     </motion.div>
                 </div>
             </section>
+
+            {/* Project detail pages are in sitemap.xml, so they need the footer's
+                internal links out — without it they sit with no referring page. */}
+            <Footer />
         </main>
     )
 }

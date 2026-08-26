@@ -157,6 +157,54 @@ export const LANDING_PAGES: LandingPage[] = [
         },
     },
     {
+        // Service-intent page, deliberately NON-GEOGRAPHIC. The Mumbai and Navi
+        // Mumbai pages own the location queries ("... in Mumbai"); this one owns
+        // "AI and process automation agency" and the un-located service queries
+        // around it. No city terms in its keywords, no shared H1/H2 phrasing —
+        // so it supports the local pages instead of cannibalising them.
+        slug: 'ai-and-process-automation-agency',
+        title: 'AI and Process Automation Agency | Workflow Automation – Nexona',
+        description:
+            'Nexona is an AI and process automation agency that maps how your business actually works, then automates the repeat work — data entry, approvals, reports and follow-ups.',
+        priority: 0.95,
+        navLabel: 'AI & Process Automation',
+        keywords: [
+            'AI and process automation agency',
+            'AI automation agency',
+            'process automation agency',
+            'process automation',
+            'AI automation',
+            'business process automation services',
+            'workflow automation company',
+            'intelligent process automation',
+            'AI agents for business',
+            'automate business processes',
+            'AI workflow automation',
+            'document processing automation',
+            'automation consultants',
+        ],
+        og: {
+            title: 'AI and Process Automation Agency | Nexona',
+            description:
+                'We map how work actually moves through your business, then automate the repeat parts. Custom AI agents, workflow automation and integrations — built to fit, not templated.',
+        },
+        business: {
+            areaServedCity: 'Mumbai',
+            alsoServed: ['India', 'United Arab Emirates', 'United Kingdom', 'United States'],
+            addressLocality: 'Mumbai',
+            addressRegion: 'Maharashtra',
+            addressCountry: 'IN',
+            serviceType: [
+                'AI and Process Automation Agency',
+                'Business Process Automation',
+                'AI Agent Development',
+                'Workflow Automation',
+                'Document Processing Automation',
+                'Systems Integration',
+            ],
+        },
+    },
+    {
         slug: 'college-erp',
         title: 'Custom College & School ERP Software Development | Nexona',
         description:

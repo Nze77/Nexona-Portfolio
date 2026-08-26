@@ -7,6 +7,35 @@ import { DARK, SAND, HELVETICA } from '../lib/constants'
 import { LANDING_PAGES } from '../data/landingPages'
 import { fadeUp } from '../lib/variants'
 
+/** Profiles we link out to. Also the list to mirror into `sameAs` structured
+ *  data if we ever add an Organization schema. */
+const SOCIALS = [
+    {
+        name: 'Instagram',
+        href: 'https://www.instagram.com/nexonalabs',
+        // Brand glyphs aren't in lucide v1, so the paths are inlined rather
+        // than pulling in a second icon package for two icons.
+        path: (
+            <>
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+            </>
+        ),
+    },
+    {
+        name: 'LinkedIn',
+        href: 'https://www.linkedin.com/company/nexonalabs',
+        path: (
+            <>
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                <rect x="2" y="9" width="4" height="12" />
+                <circle cx="4" cy="4" r="2" />
+            </>
+        ),
+    },
+]
+
 export default function Footer() {
     const ref = useRef<HTMLElement>(null)
     const inView = useInView(ref, { once: true, margin: '-5%' })
@@ -110,6 +139,51 @@ export default function Footer() {
                         <MapPin size={15} strokeWidth={1.5} aria-hidden />
                         Mumbai, India
                     </span>
+
+                    <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: isMobile ? 'center' : 'flex-start',
+                        gap: '0.75rem',
+                        marginTop: '0.5rem',
+                    }}>
+                        {SOCIALS.map(social => (
+                            <a
+                                key={social.name}
+                                href={social.href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label={`Nexona on ${social.name}`}
+                                title={social.name}
+                                className="nav-link"
+                                style={{
+                                    display: 'inline-flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    width: '34px',
+                                    height: '34px',
+                                    borderRadius: '50%',
+                                    border: '1px solid rgba(232,223,211,0.22)',
+                                    color: SAND,
+                                    opacity: 0.65,
+                                }}
+                            >
+                                <svg
+                                    width="15"
+                                    height="15"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth={1.5}
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    aria-hidden
+                                >
+                                    {social.path}
+                                </svg>
+                            </a>
+                        ))}
+                    </div>
                 </motion.div>
 
                 <motion.div

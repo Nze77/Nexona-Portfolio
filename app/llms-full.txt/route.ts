@@ -3,6 +3,7 @@ import { LANDING_PAGES } from '../data/landingPages'
 import { PROJECT_DETAILS } from '../data/projectDetails'
 import { SITE_URL } from '../lib/constants'
 
+import { FAQ_ITEMS as AI_PROCESS_AUTOMATION_FAQ } from '../(landing)/ai-and-process-automation-agency/content'
 import { FAQ_ITEMS as COLLEGE_ERP_FAQ } from '../(landing)/college-erp/content'
 import { FAQ_ITEMS as CRM_FAQ } from '../(landing)/customer-retention-management-software/content'
 import { FAQ_ITEMS as MFG_ERP_MUMBAI_FAQ } from '../(landing)/erp-systems-for-manufacturers/content'
@@ -27,6 +28,7 @@ interface FaqItem {
 
 /** FAQ content per landing-page slug. Add a line when adding a landing page. */
 const FAQ_BY_SLUG: Record<string, FaqItem[]> = {
+    'ai-and-process-automation-agency': AI_PROCESS_AUTOMATION_FAQ,
     'college-erp': COLLEGE_ERP_FAQ,
     'customer-retention-management-software': CRM_FAQ,
     'erp-systems-for-manufacturers': MFG_ERP_MUMBAI_FAQ,

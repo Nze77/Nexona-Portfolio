@@ -14,7 +14,6 @@ import { useContactPopup } from '../../lib/useContactPopup'
 import { DARK, SAND, INTER } from '../../lib/constants'
 import { FAQ_ITEMS } from './content'
 
-// Extracted animation variants
 const fadeInUp = {
     hidden: { opacity: 0, y: 40 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.23, 1, 0.32, 1] as const } }
@@ -37,15 +36,7 @@ const inlineLink: React.CSSProperties = {
     textUnderlineOffset: '3px'
 }
 
-// The nodes we actually travel to, north to south. Plain text, not links —
-// they are here for local relevance, not navigation.
-const NODES = [
-    'Airoli', 'Rabale', 'Ghansoli', 'Mahape', 'Turbhe', 'Koparkhairane',
-    'Vashi', 'Sanpada', 'Nerul', 'Seawoods', 'CBD Belapur', 'Kharghar',
-    'Kamothe', 'Ulwe', 'Panvel', 'Taloja'
-]
-
-export default function NaviMumbaiSoftwarePage() {
+export default function AiProcessAutomationAgencyPage() {
     const heroRef = useRef<HTMLElement>(null)
     const { scrollYProgress } = useScroll({
         target: heroRef,
@@ -74,7 +65,7 @@ export default function NaviMumbaiSoftwarePage() {
         <main style={{ backgroundColor: DARK, color: SAND, minHeight: '100vh', overflow: 'hidden' }}>
             <StickyHeader theme="dark" onContactClick={openContact} />
 
-            {/* Hero Section with Parallax Image */}
+            {/* Hero */}
             <section
                 ref={heroRef}
                 style={{
@@ -91,8 +82,8 @@ export default function NaviMumbaiSoftwarePage() {
             >
                 <motion.div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, y, zIndex: 0 }}>
                     <Image
-                        src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2000&auto=format&fit=crop"
-                        alt="Software development company in Navi Mumbai — Nexona builds custom business software"
+                        src="https://images.unsplash.com/photo-1518186285589-2f7649de83e0?q=80&w=2000&auto=format&fit=crop"
+                        alt="AI and process automation agency — Nexona automates repeat business workflows"
                         fill
                         style={{ objectFit: 'cover', opacity: 0.25 }}
                         priority
@@ -117,7 +108,7 @@ export default function NaviMumbaiSoftwarePage() {
                             display: 'inline-block'
                         }}
                     >
-                        <span style={{ fontFamily: INTER, fontSize: '0.75rem', letterSpacing: '0.25em', textTransform: 'uppercase', fontWeight: 600 }}>Custom Software &middot; Automation &middot; Built For Startups</span>
+                        <span style={{ fontFamily: INTER, fontSize: '0.75rem', letterSpacing: '0.25em', textTransform: 'uppercase', fontWeight: 600 }}>AI Agents &middot; Workflow Automation &middot; Integrations</span>
                     </motion.div>
 
                     <motion.h1
@@ -135,8 +126,11 @@ export default function NaviMumbaiSoftwarePage() {
                             margin: 0
                         }}
                     >
-                        Software Development <br /> Company <span style={{ color: 'transparent', WebkitTextStroke: `1px ${SAND}` }}>in Navi Mumbai</span>
+                        AI and Process <br /> Automation <span style={{ color: 'transparent', WebkitTextStroke: `1px ${SAND}` }}>Agency</span>
                     </motion.h1>
+
+                    {/* First line of body copy — carries the exact primary keyword,
+                        answer-first, so AI search can quote it verbatim. */}
                     <motion.p
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -145,20 +139,21 @@ export default function NaviMumbaiSoftwarePage() {
                             fontFamily: INTER,
                             fontSize: isMobile ? '1.05rem' : '1.35rem',
                             marginTop: '2.5rem',
-                            opacity: 0.8,
-                            maxWidth: '780px',
+                            opacity: 0.85,
+                            maxWidth: '820px',
                             letterSpacing: '0.02em',
                             lineHeight: 1.6
                         }}
                     >
-                        <Link href="/" style={inlineLink}>Nexona</Link> builds custom software, business
-                        management systems, and process automation for startups and growing companies
-                        across Navi Mumbai. We come and watch how you work first. Then we build.
+                        <Link href="/" style={inlineLink}>Nexona</Link> is an AI and process automation
+                        agency that maps how your business actually works, then automates the repeat
+                        work — data entry, approvals, reports, follow-ups. We watch the workflow first.
+                        Then we build.
                     </motion.p>
                 </motion.div>
             </section>
 
-            {/* Stats Bar */}
+            {/* Stats bar */}
             <section style={{ backgroundColor: '#25221F', padding: '4rem 5%', borderTop: `1px solid rgba(232,223,211,0.1)` }}>
                 <motion.div
                     variants={staggerContainer}
@@ -168,9 +163,9 @@ export default function NaviMumbaiSoftwarePage() {
                     style={{ maxWidth: '1400px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '3rem', textAlign: 'center' }}
                 >
                     {[
-                        { num: '50+', label: 'Projects Shipped' },
-                        { num: '24/7', label: 'Automations Running' },
-                        { num: '10x', label: 'Operational Scaling' }
+                        { num: '3-5 wks', label: 'To First Live Automation' },
+                        { num: '24/7', label: 'Agents Running' },
+                        { num: '50+', label: 'Systems Shipped' }
                     ].map((stat, i) => (
                         <motion.div key={i} variants={fadeInUp}>
                             <h3 style={{ fontFamily: "var(--font-montserrat), sans-serif", fontSize: '3rem', fontWeight: 800, margin: 0, color: SAND }}>{stat.num}</h3>
@@ -180,7 +175,6 @@ export default function NaviMumbaiSoftwarePage() {
                 </motion.div>
             </section>
 
-            {/* Client logos */}
             <ClientStrip />
 
             {/* Intro — third section, one of the two contact-popup triggers */}
@@ -194,8 +188,8 @@ export default function NaviMumbaiSoftwarePage() {
                         style={{ flex: 1, position: 'relative', width: '100%', aspectRatio: '4/5', borderRadius: '24px', overflow: 'hidden' }}
                     >
                         <Image
-                            src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1200&auto=format&fit=crop"
-                            alt="Nexona working with a Navi Mumbai startup team on a custom business management system"
+                            src="https://images.unsplash.com/photo-1573164713988-8665fc963095?q=80&w=1200&auto=format&fit=crop"
+                            alt="Mapping a business workflow before automating it — Nexona process automation discovery"
                             fill
                             style={{ objectFit: 'cover' }}
                         />
@@ -217,48 +211,47 @@ export default function NaviMumbaiSoftwarePage() {
                             marginBottom: '2.5rem',
                             letterSpacing: '-0.02em'
                         }}>
-                            Custom Software, Business Management &amp; Process Automation
+                            An Automation Agency That Counts First, Builds Second
                         </motion.h2>
 
-                        {/* Answer-first paragraph: written to be quotable verbatim by
+                        {/* Answer-first paragraph, written to be quotable verbatim by
                             AI search and featured snippets. */}
                         <motion.p variants={fadeInUp} style={{ fontFamily: INTER, opacity: 0.85, lineHeight: 1.8, fontSize: '1.15rem', marginBottom: '1.5rem', fontWeight: 500 }}>
-                            Nexona is a software development company in Navi Mumbai that builds three
-                            things: custom software made for how your business actually runs, business
-                            management systems that pull orders, customers, inventory and reporting into
-                            one place, and process automation that deletes the repeat work. We work with
-                            startups and growing companies from Airoli and Rabale through Vashi and CBD
-                            Belapur down to Kharghar and Panvel.
+                            As an AI and process automation agency we do three things: process automation
+                            for the rule-based work, AI automation for the judgement work, and the
+                            integrations that let your existing tools hand information to each other
+                            without a person copying it across. Discovery, build, measure. In that order,
+                            every time.
                         </motion.p>
 
                         <motion.p variants={fadeInUp} style={{ fontFamily: INTER, opacity: 0.8, lineHeight: 1.8, fontSize: '1.15rem', marginBottom: '1.5rem' }}>
-                            Startups here hit the same wall at roughly the same size. Around eleven or
-                            twelve people, the thing that got you here — a shared drive, four spreadsheets,
-                            one WhatsApp group where decisions happen — quietly stops working. Nobody
-                            announces it. You just notice that two people are entering the same order and
-                            neither of them knows the other one did.
+                            Here is the part most agencies skip. Before anything gets built we sit with
+                            the person doing the job and count. How many times a day. How long each time.
+                            How often it comes back wrong. It is unglamorous work and it takes two or
+                            three hours, and it is the only reason we know what is worth automating.
                         </motion.p>
                         <motion.p variants={fadeInUp} style={{ fontFamily: INTER, opacity: 0.8, lineHeight: 1.8, fontSize: '1.15rem', marginBottom: '1.5rem' }}>
-                            We saw a Belapur company run its entire client pipeline out of one Excel file.
-                            2011 format. 14 tabs, one per account, and exactly one person permitted to open
-                            it. She went on leave for nine days and the sales team basically stopped. That
-                            is not a spreadsheet problem — well, it is, but the real problem is that the
-                            business outgrew its tooling and nobody had a free week to notice.
+                            One client — a distributor, nine branches — was convinced their bottleneck was
+                            month-end reporting. Everyone said so. We counted anyway. The actual cost was
+                            a floor supervisor who did not sit at a desktop, so he photographed each
+                            dispatch note and WhatsApped it to a girl in accounts who typed all 60-odd of
+                            them in after 6pm. Every day. Nobody had ever written that step down because
+                            it was not officially anybody’s process.
                         </motion.p>
                         <motion.p variants={fadeInUp} style={{ fontFamily: INTER, opacity: 0.8, lineHeight: 1.8, fontSize: '1.15rem', marginBottom: '3rem' }}>
-                            So we start by watching. Who re-types what. Where approvals sit. Which report
-                            somebody rebuilds by hand every Monday. Then we build the thing that fits —
-                            not the thing the demo showed you.
+                            That one took four weeks. Month-end reporting we got to later, and it turned
+                            out to matter much less than the meeting had insisted. Which happens more
+                            often than you would think, honestly.
                         </motion.p>
 
                         <motion.ul variants={staggerContainer} style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                             {[
-                                'Custom software built around your workflow, not a template',
-                                'Business management systems — orders, customers, stock, reporting',
-                                'Process automation for the work nobody should still do by hand',
-                                'Web and mobile apps your team will actually open',
-                                'AI agents that answer, qualify, and update your systems',
-                                'Integrations with Tally, payment gateways, and what you already run'
+                                'Process automation for orders, approvals, reminders and reporting',
+                                'AI agents that read, classify, answer and route',
+                                'Document processing — invoices, POs, forms, scans',
+                                'Integrations across the tools you already pay for',
+                                'Custom internal tools where no off-the-shelf app fits',
+                                'Measured against hours saved and error rate, not vibes'
                             ].map((item, i) => (
                                 <motion.li key={i} variants={fadeInUp} style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', fontFamily: INTER, fontWeight: 600, fontSize: '1.1rem' }}>
                                     <div style={{ width: '12px', height: '12px', backgroundColor: DARK, borderRadius: '50%', flexShrink: 0 }} />
@@ -270,17 +263,19 @@ export default function NaviMumbaiSoftwarePage() {
                 </div>
             </section>
 
-            {/* Built for startups */}
+            {/* AI automation vs process automation — definitional section, built for
+                AEO/GEO: an LLM answering "what's the difference" can lift this whole
+                block. */}
             <section style={{ backgroundColor: '#25221F', color: SAND, padding: isMobile ? '6rem 5%' : '10rem 8%', borderBottom: `1px solid rgba(232,223,211,0.1)` }}>
-                <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
+                <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
                     <motion.div
                         initial="hidden"
                         whileInView="visible"
                         viewport={{ once: true, margin: "-10%" }}
                         variants={staggerContainer}
-                        style={{ marginBottom: '4.5rem', maxWidth: '780px' }}
+                        style={{ marginBottom: '4rem', maxWidth: '820px' }}
                     >
-                        <motion.span variants={fadeInUp} style={{ fontFamily: INTER, fontSize: '0.85rem', letterSpacing: '0.2em', textTransform: 'uppercase', opacity: 0.6, fontWeight: 700, display: 'block', marginBottom: '1.5rem' }}>Startups, Specifically</motion.span>
+                        <motion.span variants={fadeInUp} style={{ fontFamily: INTER, fontSize: '0.85rem', letterSpacing: '0.2em', textTransform: 'uppercase', opacity: 0.6, fontWeight: 700, display: 'block', marginBottom: '1.5rem' }}>The Distinction Nobody Explains</motion.span>
                         <motion.h2 variants={fadeInUp} style={{
                             fontFamily: "var(--font-montserrat), sans-serif",
                             fontSize: 'clamp(2rem, 4vw, 3.5rem)',
@@ -290,60 +285,66 @@ export default function NaviMumbaiSoftwarePage() {
                             letterSpacing: '-0.02em',
                             margin: 0
                         }}>
-                            Built for Navi Mumbai Startups
+                            AI Automation vs Process Automation
                         </motion.h2>
-                        <motion.p variants={fadeInUp} style={{ fontFamily: INTER, opacity: 0.78, lineHeight: 1.8, fontSize: '1.12rem', marginTop: '2rem' }}>
-                            Most agencies quote a startup like it is an enterprise with less money. Wrong
-                            shape entirely. You do not need a platform. You need the two workflows eating
-                            your week turned into software, shipped in six weeks, working while you raise
-                            or grow into the rest.
+                        <motion.p variants={fadeInUp} style={{ fontFamily: INTER, opacity: 0.8, lineHeight: 1.8, fontSize: '1.12rem', marginTop: '2rem' }}>
+                            Short version: process automation runs the rules, AI automation handles the
+                            mess. You almost always need both, and the projects that fail are the ones
+                            that pick the wrong one for the step.
                         </motion.p>
                     </motion.div>
 
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2.5rem' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '2.5rem' }}>
                         {[
                             {
-                                title: 'Phase one is small on purpose',
-                                desc: 'We cut the first build down to the piece that pays for itself. Everything else waits. You get something live and useful before you have committed to a roadmap you might not want in four months.'
+                                kind: 'Process Automation',
+                                line: 'Fixed rule. Same input, same output, every time.',
+                                points: [
+                                    'Order approved → invoice raised, stock adjusted, dispatch notified',
+                                    'Payment 14 days overdue → reminder sent, owner flagged',
+                                    'Monday 8am → the report is already in your inbox',
+                                    'Form submitted → record created, assigned, acknowledged'
+                                ],
+                                note: 'Cheap, fast, boringly reliable. Roughly 70% of what we build.'
                             },
                             {
-                                title: 'Change your mind, it is fine',
-                                desc: 'Startups pivot. That is the job. We build in two-week sprints with a working link at the end of each one, so a change of direction costs you a fortnight, not the whole project.'
-                            },
-                            {
-                                title: 'MVP that is not disposable',
-                                desc: 'Plenty of MVPs get thrown away at the first real load. Ours don’t — same stack, same database design we would use at scale, just fewer features. You build on it instead of rebuilding it.'
-                            },
-                            {
-                                title: 'You get the person who built it',
-                                desc: 'No account manager, no ticket queue, no being forwarded to a team you have never met. Half our Navi Mumbai clients have nobody technical on staff and that works because there is nothing to escalate through.'
-                            },
-                            {
-                                title: 'Automation before headcount',
-                                desc: 'Before you hire two more people for operations, check what the software can absorb. Order entry, follow-up reminders, the Monday report somebody rebuilds by hand — that is usually four to six hours a week per person, gone.'
-                            },
-                            {
-                                title: 'The stack is boring on purpose',
-                                desc: 'React, Next.js, Node, Postgres. If you ever move this in-house or to another team — and you might — anyone competent picks it up. Software only we can maintain is a liability with a nice UI.'
+                                kind: 'AI Automation',
+                                line: 'No writable rule. The input arrives messy and needs reading first.',
+                                points: [
+                                    'A customer email that half-describes a problem → classified and routed',
+                                    'A scanned PO where quantity lands in a different column each time → fields extracted',
+                                    'Forty repeat questions a day → answered against your real data, at 11pm',
+                                    'A long thread → summarised into a draft reply a human approves'
+                                ],
+                                note: 'Powerful, needs guardrails. Never unsupervised on anything irreversible.'
                             }
-                        ].map((item, i) => (
+                        ].map((col, i) => (
                             <motion.div
                                 key={i}
-                                initial="hidden"
-                                whileInView="visible"
+                                initial={{ opacity: 0, y: 30 }}
+                                whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true, margin: "-10%" }}
-                                variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { delay: (i % 3) * 0.12, duration: 0.8, ease: [0.23, 1, 0.32, 1] as const } } }}
-                                style={{ border: `1px solid rgba(232,223,211,0.15)`, borderRadius: '24px', padding: '2.5rem', backgroundColor: 'rgba(232,223,211,0.03)' }}
+                                transition={{ delay: i * 0.12, duration: 0.8, ease: [0.23, 1, 0.32, 1] as const }}
+                                style={{ border: `1px solid rgba(232,223,211,0.15)`, borderRadius: '24px', padding: isMobile ? '2rem' : '3rem', backgroundColor: 'rgba(232,223,211,0.03)' }}
                             >
-                                <h3 style={{ fontFamily: "var(--font-montserrat), sans-serif", fontSize: '1.35rem', fontWeight: 700, margin: '0 0 1.25rem 0', letterSpacing: '-0.01em' }}>{item.title}</h3>
-                                <p style={{ fontFamily: INTER, opacity: 0.75, lineHeight: 1.7, margin: 0 }}>{item.desc}</p>
+                                <h3 style={{ fontFamily: "var(--font-montserrat), sans-serif", fontSize: '1.5rem', fontWeight: 800, margin: '0 0 1rem 0', textTransform: 'uppercase', letterSpacing: '-0.01em' }}>{col.kind}</h3>
+                                <p style={{ fontFamily: INTER, fontWeight: 600, fontSize: '1.05rem', lineHeight: 1.6, margin: '0 0 2rem 0' }}>{col.line}</p>
+                                <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 2rem 0', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                                    {col.points.map((p, j) => (
+                                        <li key={j} style={{ fontFamily: INTER, fontSize: '1rem', lineHeight: 1.6, opacity: 0.75, paddingLeft: '1.25rem', position: 'relative' }}>
+                                            <span style={{ position: 'absolute', left: 0, top: '0.55em', width: '6px', height: '6px', borderRadius: '50%', backgroundColor: SAND, opacity: 0.5 }} />
+                                            {p}
+                                        </li>
+                                    ))}
+                                </ul>
+                                <p style={{ fontFamily: INTER, fontSize: '0.95rem', lineHeight: 1.6, opacity: 0.55, margin: 0, fontStyle: 'italic' }}>{col.note}</p>
                             </motion.div>
                         ))}
                     </div>
                 </div>
             </section>
 
-            {/* What automation actually removes */}
+            {/* What automation removes — before/after rows */}
             <section style={{ backgroundColor: DARK, color: SAND, padding: isMobile ? '6rem 5%' : '10rem 8%', borderBottom: `1px solid rgba(232,223,211,0.1)` }}>
                 <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
                     <motion.div
@@ -353,7 +354,7 @@ export default function NaviMumbaiSoftwarePage() {
                         variants={staggerContainer}
                         style={{ marginBottom: '3.5rem' }}
                     >
-                        <motion.span variants={fadeInUp} style={{ fontFamily: INTER, fontSize: '0.85rem', letterSpacing: '0.2em', textTransform: 'uppercase', opacity: 0.6, fontWeight: 700, display: 'block', marginBottom: '1.5rem' }}>Process Automation</motion.span>
+                        <motion.span variants={fadeInUp} style={{ fontFamily: INTER, fontSize: '0.85rem', letterSpacing: '0.2em', textTransform: 'uppercase', opacity: 0.6, fontWeight: 700, display: 'block', marginBottom: '1.5rem' }}>Before / After</motion.span>
                         <motion.h2 variants={fadeInUp} style={{
                             fontFamily: "var(--font-montserrat), sans-serif",
                             fontSize: 'clamp(2rem, 4vw, 3.5rem)',
@@ -363,22 +364,25 @@ export default function NaviMumbaiSoftwarePage() {
                             letterSpacing: '-0.02em',
                             margin: 0
                         }}>
-                            What Automation Takes Off Your Week
+                            Which Processes Are Worth Automating
                         </motion.h2>
-                        <motion.p variants={fadeInUp} style={{ fontFamily: INTER, opacity: 0.78, lineHeight: 1.8, fontSize: '1.1rem', marginTop: '2rem', maxWidth: '720px' }}>
-                            Not theory. These are the six that come up in nearly every discovery we run
-                            in Navi Mumbai, roughly in the order they cost you the most.
+                        <motion.p variants={fadeInUp} style={{ fontFamily: INTER, opacity: 0.78, lineHeight: 1.8, fontSize: '1.1rem', marginTop: '2rem', maxWidth: '740px' }}>
+                            These eight come up in nearly every discovery we run, roughly in the order
+                            they cost the most. If three of them sound like your week, you already know
+                            what the first phase is.
                         </motion.p>
                     </motion.div>
 
                     <div style={{ display: 'grid', gap: '0' }}>
                         {[
-                            { from: 'Orders copied from email into a sheet, then into invoicing', to: 'Entered once. Everything downstream updates itself.' },
-                            { from: 'Follow-ups somebody has to remember to send', to: 'Triggered by what the customer did, or didn’t do.' },
-                            { from: 'The Monday report rebuilt by hand every week', to: 'Already sitting in your inbox at 8am.' },
-                            { from: 'Approvals chased across three WhatsApp threads', to: 'One tap, logged, with a record of who said yes.' },
-                            { from: 'Stock counts that disagree with what is on the rack', to: 'One number, updated the moment something moves.' },
-                            { from: 'The same six customer questions, forty times a day', to: 'An AI agent that answers at 11pm and logs the enquiry.' }
+                            { from: 'The same data typed into three systems that don’t talk', to: 'Entered once. Everything downstream updates itself.' },
+                            { from: 'Invoices and POs keyed in by hand from PDFs and photos', to: 'Read, extracted, checked, posted. Exceptions flagged.' },
+                            { from: 'Approvals chased across four WhatsApp threads', to: 'One tap, logged, with a record of who said yes and when.' },
+                            { from: 'The Monday report somebody rebuilds by hand', to: 'Already in your inbox at 8am, same numbers every time.' },
+                            { from: 'Follow-ups that depend on someone remembering', to: 'Triggered by what the customer did, or didn’t do.' },
+                            { from: 'The same six customer questions, forty times a day', to: 'An AI agent that answers at 11pm and logs the enquiry.' },
+                            { from: 'Enquiries triaged by whoever opens the inbox first', to: 'Classified, routed and assigned before anyone reads them.' },
+                            { from: 'A month-end reconciliation nobody wants to own', to: 'Matched automatically. A person only sees the mismatches.' }
                         ].map((row, i) => (
                             <motion.div
                                 key={i}
@@ -417,7 +421,7 @@ export default function NaviMumbaiSoftwarePage() {
                         variants={staggerContainer}
                         style={{ textAlign: 'center', marginBottom: '6rem' }}
                     >
-                        <motion.span variants={fadeInUp} style={{ fontFamily: INTER, fontSize: '0.85rem', letterSpacing: '0.2em', textTransform: 'uppercase', opacity: 0.6, fontWeight: 700 }}>Start To Live</motion.span>
+                        <motion.span variants={fadeInUp} style={{ fontFamily: INTER, fontSize: '0.85rem', letterSpacing: '0.2em', textTransform: 'uppercase', opacity: 0.6, fontWeight: 700 }}>Discovery To Measured</motion.span>
                         <motion.h2 variants={fadeInUp} style={{
                             fontFamily: "var(--font-montserrat), sans-serif",
                             fontSize: 'clamp(2.1rem, 4.2vw, 3.5rem)',
@@ -425,16 +429,16 @@ export default function NaviMumbaiSoftwarePage() {
                             marginTop: '1.5rem',
                             textTransform: 'uppercase'
                         }}>
-                            How a Navi Mumbai Project Runs
+                            How an Automation Project Runs
                         </motion.h2>
                     </motion.div>
 
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '3rem' }}>
                         {[
-                            { step: '01', title: 'We come to you', desc: 'Two or three hours at your office. We follow one order end to end and write down every place it gets re-entered. You keep the notes whatever happens next.' },
-                            { step: '02', title: 'Scope, then argue', desc: 'You get a written phase plan. Then we push back on half of it — the parts you asked for that you will not actually use. Better to lose them now than in month five.' },
-                            { step: '03', title: 'Build in the open', desc: 'Two-week sprints. A working link every fortnight, not a status update. If something is going sideways you find out in 14 days, not at handover.' },
-                            { step: '04', title: 'Go live, then stay', desc: 'We train your team on-site, watch the first week closely, and fix what real usage exposes. The eight weeks after launch are usually when it gets genuinely good.' }
+                            { step: '01', title: 'Count the work', desc: 'Two or three hours watching one job move end to end. Every re-entry, every wait, every chase, timed. You keep those notes whatever you decide to do next.' },
+                            { step: '02', title: 'Pick one, argue about the rest', desc: 'You get a written phase plan and a number for hours saved. Then we push back on half of what you asked for, because some of it will not repay the build cost. Better to hear that now.' },
+                            { step: '03', title: 'Ship the first workflow', desc: 'Three to five weeks to something live and in use. Not a demo environment — the real thing, running on real data, with the old process still available for a fortnight.' },
+                            { step: '04', title: 'Measure, then extend', desc: 'Eight weeks after go-live we re-measure the same two numbers we baselined. If it did not move, we say so. If it did, that is the argument for phase two, and you have the receipts.' }
                         ].map((item, i) => (
                             <motion.div
                                 key={i}
@@ -453,7 +457,7 @@ export default function NaviMumbaiSoftwarePage() {
                 </div>
             </section>
 
-            {/* Services Grid */}
+            {/* Services grid */}
             <section className="product-theme-trigger" data-theme="light" style={{ backgroundColor: SAND, color: DARK, padding: isMobile ? '6rem 5%' : '12rem 8%' }}>
                 <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
                     <motion.div
@@ -471,7 +475,7 @@ export default function NaviMumbaiSoftwarePage() {
                             marginTop: '1.5rem',
                             textTransform: 'uppercase'
                         }}>
-                            Software Development Services in Navi Mumbai
+                            AI and Process Automation Services
                         </motion.h2>
                     </motion.div>
 
@@ -482,34 +486,34 @@ export default function NaviMumbaiSoftwarePage() {
                     }}>
                         {[
                             {
-                                title: 'Custom Software Development',
-                                desc: 'Built for your workflow from a blank page. Web, mobile, internal tools — React, Next.js, Node. Works on a four-year-old Android on patchy 4G somewhere past Kamothe, because that is what your team is holding.',
-                                img: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600&q=80'
-                            },
-                            {
-                                title: 'Business Management Systems',
-                                desc: <>One place for orders, customers, inventory, invoicing and reporting. Call it an <Link href="/manufacturing-erp" style={inlineLink}>ERP</Link> if you like — the label matters less than the fact that your team stops asking three people where the number came from.</>,
-                                img: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&q=80'
-                            },
-                            {
-                                title: 'Process Automation',
-                                desc: <>Order entry, reminders, approvals, weekly reports, stock updates. The work that is technically somebody’s job but shouldn’t be. Our <Link href="/ai-and-process-automation-agency" style={inlineLink}>AI and process automation</Link> team cuts it out, so you buy back hours before you buy headcount.</>,
+                                title: 'Business Process Automation',
+                                desc: 'Order entry, approvals, reminders, stock movements, scheduled reports. The rule-based spine of your operation, running without anyone pressing go. Usually the cheapest hours you will ever buy back.',
                                 img: 'https://images.unsplash.com/photo-1518186285589-2f7649de83e0?w=600&q=80'
                             },
                             {
-                                title: 'Startup MVP Development',
-                                desc: 'The smallest version that is genuinely usable, shipped fast, built on the stack you would keep at scale. Fewer features, same foundations — so month nine is an extension, not a rewrite.',
-                                img: 'https://images.unsplash.com/photo-1553877522-43269d4ea984?w=600&q=80'
-                            },
-                            {
-                                title: 'CRM & Customer Systems',
-                                desc: <>Follow-ups that don&apos;t die in someone&apos;s notebook. Pipeline, quotation history, and <Link href="/customer-retention-management-software" style={inlineLink}>retention tracking</Link> your field team updates from the car because it takes eleven seconds.</>,
-                                img: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&q=80'
-                            },
-                            {
-                                title: 'AI Agents & Integration',
-                                desc: 'Voice and chat agents that pick up at 11pm, qualify the caller, and write the enquiry into your system. Plus the plumbing — Tally, payment gateways, courier APIs, the WhatsApp number everyone actually uses.',
+                                title: 'AI Agents',
+                                desc: 'Voice and chat agents that pick up at 11pm, answer against your real data, qualify the caller and write the enquiry straight into your systems. They hand off to a human the moment the question gets unusual.',
                                 img: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=600&q=80'
+                            },
+                            {
+                                title: 'Document Processing',
+                                desc: 'Invoices, purchase orders, delivery notes, forms, photographs of forms. Read, extracted into structured fields, validated against what you already have. Exceptions get flagged for a person instead of everything going to a person.',
+                                img: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=600&q=80'
+                            },
+                            {
+                                title: 'Systems Integration',
+                                desc: <>The plumbing between tools that were never designed to talk. Tally, payment gateways, courier APIs, your <Link href="/customer-retention-management-software" style={inlineLink}>CRM</Link>, and the WhatsApp number your customers actually use.</>,
+                                img: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&q=80'
+                            },
+                            {
+                                title: 'Custom Internal Tools',
+                                desc: <>When the workflow has nowhere to live, we build it one. Sometimes that grows into a full <Link href="/manufacturing-erp" style={inlineLink}>ERP</Link> — more often it stays a single sharp tool four people open forty times a day.</>,
+                                img: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600&q=80'
+                            },
+                            {
+                                title: 'Automation Audit',
+                                desc: <>Not sure where to start? Two or three hours, one workflow followed end to end, a written list of what is worth automating with hours attached. Independent of whether you then hire <Link href="/software-development-agency-mumbai" style={inlineLink}>our team</Link> to build it.</>,
+                                img: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&q=80'
                             }
                         ].map((s, i) => (
                             <motion.div
@@ -531,7 +535,7 @@ export default function NaviMumbaiSoftwarePage() {
                                 }}
                             >
                                 <div style={{ position: 'relative', width: '100%', height: '260px' }}>
-                                    <Image src={s.img} alt={`${s.title} — software development services in Navi Mumbai by Nexona`} fill style={{ objectFit: 'cover' }} />
+                                    <Image src={s.img} alt={`${s.title} — AI and process automation agency services by Nexona`} fill style={{ objectFit: 'cover' }} />
                                 </div>
                                 <div style={{ padding: '2.5rem', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                                     <h3 style={{ fontFamily: "var(--font-montserrat), sans-serif", fontSize: '1.5rem', fontWeight: 800, marginBottom: '1rem', letterSpacing: '-0.02em' }}>{s.title}</h3>
@@ -565,83 +569,62 @@ export default function NaviMumbaiSoftwarePage() {
                 </div>
             </section>
 
-            {/* Areas served — node-level local relevance */}
-            <section style={{ backgroundColor: DARK, color: SAND, padding: isMobile ? '6rem 5%' : '9rem 8%', borderBottom: `1px solid rgba(232,223,211,0.1)` }}>
-                <div style={{ maxWidth: '1100px', margin: '0 auto', textAlign: 'center' }}>
-                    <motion.span
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 0.6 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.6 }}
-                        style={{ fontFamily: INTER, fontSize: '0.85rem', letterSpacing: '0.2em', textTransform: 'uppercase', fontWeight: 700, display: 'block' }}
-                    >
-                        Where We Work
-                    </motion.span>
-                    <motion.h2
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true, margin: "-10%" }}
-                        transition={{ duration: 0.7 }}
-                        style={{
-                            fontFamily: "var(--font-montserrat), sans-serif",
-                            fontSize: 'clamp(1.9rem, 3.8vw, 3.1rem)',
-                            fontWeight: 800,
-                            marginTop: '1.5rem',
-                            marginBottom: '1.5rem',
-                            textTransform: 'uppercase'
-                        }}
-                    >
-                        Areas We Serve Across Navi Mumbai
-                    </motion.h2>
-                    <motion.p
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 0.75 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.6, delay: 0.1 }}
-                        style={{ fontFamily: INTER, fontSize: '1.1rem', lineHeight: 1.8, maxWidth: '640px', margin: '0 auto 3.5rem' }}
-                    >
-                        On-site anywhere on the Airoli–Panvel stretch. Thane and Bhiwandi too, though
-                        the Navi Mumbai jobs are the ones we can reach before Palm Beach Road decides
-                        otherwise.
-                    </motion.p>
-
-                    <motion.ul
+            {/* Where it lands — sector-level relevance plus internal links out */}
+            <section style={{ backgroundColor: DARK, color: SAND, padding: isMobile ? '6rem 5%' : '10rem 8%', borderBottom: `1px solid rgba(232,223,211,0.1)` }}>
+                <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+                    <motion.div
                         initial="hidden"
                         whileInView="visible"
-                        viewport={{ once: true, margin: "-5%" }}
-                        variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.04 } } }}
-                        style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '0.75rem' }}
+                        viewport={{ once: true, margin: "-10%" }}
+                        variants={staggerContainer}
+                        style={{ marginBottom: '4rem', maxWidth: '800px' }}
                     >
-                        {NODES.map((node) => (
-                            <motion.li
-                                key={node}
-                                variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }}
-                                style={{
-                                    fontFamily: INTER,
-                                    fontSize: '0.95rem',
-                                    fontWeight: 600,
-                                    padding: '0.65rem 1.4rem',
-                                    border: `1px solid rgba(232,223,211,0.18)`,
-                                    borderRadius: '99px',
-                                    backgroundColor: 'rgba(232,223,211,0.03)'
-                                }}
-                            >
-                                {node}
-                            </motion.li>
-                        ))}
-                    </motion.ul>
+                        <motion.span variants={fadeInUp} style={{ fontFamily: INTER, fontSize: '0.85rem', letterSpacing: '0.2em', textTransform: 'uppercase', opacity: 0.6, fontWeight: 700, display: 'block', marginBottom: '1.5rem' }}>Where This Usually Lands</motion.span>
+                        <motion.h2 variants={fadeInUp} style={{
+                            fontFamily: "var(--font-montserrat), sans-serif",
+                            fontSize: 'clamp(2rem, 4vw, 3.5rem)',
+                            fontWeight: 800,
+                            textTransform: 'uppercase',
+                            lineHeight: 1.08,
+                            letterSpacing: '-0.02em',
+                            margin: 0
+                        }}>
+                            Who We Automate For
+                        </motion.h2>
+                    </motion.div>
 
-                    <motion.p
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 0.7 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.6 }}
-                        style={{ fontFamily: INTER, fontSize: '1rem', lineHeight: 1.8, maxWidth: '640px', margin: '3.5rem auto 0' }}
-                    >
-                        Based across the harbour instead? Our{' '}
-                        <Link href="/software-development-agency-mumbai" style={inlineLink}>software agency in Mumbai</Link>{' '}
-                        page covers that side of the city.
-                    </motion.p>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2.5rem' }}>
+                        {[
+                            {
+                                title: 'Manufacturing & distribution',
+                                body: <>Dispatch notes, production reporting, stock that disagrees with the rack, GST paperwork. Often this grows into a full <Link href="/erp-systems-for-manufacturers" style={inlineLink}>ERP for manufacturers</Link>, but it rarely starts there.</>
+                            },
+                            {
+                                title: 'Sales-led teams',
+                                body: <>Lead triage, quotation follow-ups, pipeline hygiene, renewal reminders. Pairs directly with <Link href="/customer-retention-management-software" style={inlineLink}>customer retention software</Link> when churn is the thing keeping you up.</>
+                            },
+                            {
+                                title: 'Education & campuses',
+                                body: <>Admissions chasing, fee reminders, attendance rollups, the accreditation report six people assemble by hand. The <Link href="/college-erp" style={inlineLink}>college ERP</Link> side of our work, mostly.</>
+                            },
+                            {
+                                title: 'Startups scaling past ~12 people',
+                                body: <>The size where spreadsheets quietly stop working. Automate before you hire for operations — the <Link href="/software-development-company-in-navi-mumbai" style={inlineLink}>startups we work with</Link> usually find four to six hours a week per person hiding there.</>
+                            }
+                        ].map((item, i) => (
+                            <motion.div
+                                key={i}
+                                initial={{ opacity: 0, y: 30 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true, margin: "-10%" }}
+                                transition={{ delay: (i % 2) * 0.12, duration: 0.7, ease: [0.23, 1, 0.32, 1] as const }}
+                                style={{ border: `1px solid rgba(232,223,211,0.15)`, borderRadius: '24px', padding: '2.5rem', backgroundColor: 'rgba(232,223,211,0.03)' }}
+                            >
+                                <h3 style={{ fontFamily: "var(--font-montserrat), sans-serif", fontSize: '1.35rem', fontWeight: 700, margin: '0 0 1.25rem 0', letterSpacing: '-0.01em' }}>{item.title}</h3>
+                                <p style={{ fontFamily: INTER, opacity: 0.75, lineHeight: 1.7, margin: 0 }}>{item.body}</p>
+                            </motion.div>
+                        ))}
+                    </div>
                 </div>
             </section>
 
@@ -663,7 +646,7 @@ export default function NaviMumbaiSoftwarePage() {
                             marginTop: '1.5rem',
                             textTransform: 'uppercase'
                         }}>
-                            Questions We Get Asked
+                            Automation Questions We Get Asked
                         </motion.h2>
                     </motion.div>
 
@@ -731,13 +714,13 @@ export default function NaviMumbaiSoftwarePage() {
                         lineHeight: 1.05,
                         marginBottom: '2rem'
                     }}>
-                        Tell Us What Is Not Working
+                        Tell Us What Keeps Getting Retyped
                     </motion.h2>
-                    <motion.p variants={fadeInUp} style={{ fontFamily: INTER, fontSize: '1.2rem', opacity: 0.8, lineHeight: 1.7, maxWidth: '700px', margin: '0 auto' }}>
-                        You don&apos;t need a spec. You need one hour and an honest description of the part
-                        of your week that keeps going wrong. We&apos;ll come to your office anywhere in Navi
-                        Mumbai, look at it properly, and tell you whether custom software is even the
-                        right answer. Sometimes it isn&apos;t.
+                    <motion.p variants={fadeInUp} style={{ fontFamily: INTER, fontSize: '1.2rem', opacity: 0.8, lineHeight: 1.7, maxWidth: '720px', margin: '0 auto' }}>
+                        You don’t need a spec or a process map. One hour, an honest description of the
+                        part of your week that keeps going wrong, and we’ll tell you whether automation
+                        is even the right answer. Sometimes it is a staffing problem wearing a software
+                        costume, and we’ll say that too.
                     </motion.p>
                 </motion.div>
             </section>
@@ -750,8 +733,8 @@ export default function NaviMumbaiSoftwarePage() {
                     <ContactOverlay
                         trigger={trigger}
                         eyebrow="Get in touch"
-                        heading="Get a free project consultation"
-                        submitLabel="Book Free Consultation"
+                        heading="Get a free automation audit"
+                        submitLabel="Book Free Automation Audit"
                         onClose={closeContact}
                     />
                 )}
