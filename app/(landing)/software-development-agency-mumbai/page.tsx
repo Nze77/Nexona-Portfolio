@@ -224,7 +224,7 @@ export default function MumbaiAgencyPage() {
                                 'Custom web and mobile applications for Mumbai businesses',
                                 'Scalable cloud architecture and infrastructure',
                                 'Secure portals for fintech, real estate, and enterprise clients',
-                                'ERP, CRM, and internal management systems',
+                                <>ERP, CRM, and <Link href="/business-management-software-development" style={inlineLink}>internal business management software</Link></>,
                                 'AI agents and workflow automation'
                             ].map((item, i) => (
                                 <motion.li key={i} variants={fadeInUp} style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', fontFamily: INTER, fontWeight: 600, fontSize: '1.1rem' }}>

@@ -205,6 +205,64 @@ export const LANDING_PAGES: LandingPage[] = [
         },
     },
     {
+        // Horizontal service page. Deliberately NOT an ERP page and NOT an
+        // automation page: manufacturing-erp / college-erp own the vertical ERP
+        // queries, ai-and-process-automation-agency owns the automation-agency
+        // queries. This one owns the "business management software" cluster —
+        // custom internal tools, replacing Excel, unified sales/inventory/
+        // operations systems for startups and SMEs. Non-geographic, so it
+        // supports the city pages rather than competing with them.
+        slug: 'business-management-software-development',
+        title: 'Business Management Software Development Company | Nexona',
+        description:
+            'Nexona builds custom business management software for startups and SMEs outgrowing Excel — unifying sales, inventory, and operations into one system.',
+        priority: 0.95,
+        navLabel: 'Business Management Software',
+        keywords: [
+            'business management software',
+            'custom business management software',
+            'business management software development company',
+            'business management software for startups',
+            'replace excel with software',
+            'outgrow excel spreadsheets',
+            'internal tools development company',
+            'custom internal tools for startups',
+            'workflow automation software development',
+            'business process automation software',
+            'operations management software',
+            'custom operations software for startups',
+            'unified business management system',
+            'custom software to manage business operations',
+            'scale business operations software',
+            'custom dashboard development for business',
+            'sales and inventory management software',
+            'business automation software development company',
+            'SME management software development',
+            'startup operations software',
+            'custom software for growing SMEs',
+        ],
+        og: {
+            title: 'Business Management Software Development Company | Nexona',
+            description:
+                'Custom business management software for startups and SMEs that have outgrown Excel. Sales, inventory and operations in one system — built around how you actually work.',
+        },
+        business: {
+            areaServedCity: 'Mumbai',
+            alsoServed: ['India', 'United Arab Emirates', 'United Kingdom', 'United States'],
+            addressLocality: 'Mumbai',
+            addressRegion: 'Maharashtra',
+            addressCountry: 'IN',
+            serviceType: [
+                'Business Management Software Development',
+                'Custom Internal Tools Development',
+                'Operations Management Software',
+                'Sales & Inventory Management Software',
+                'Workflow Automation Software Development',
+                'Custom Dashboard Development',
+            ],
+        },
+    },
+    {
         slug: 'college-erp',
         title: 'Custom College & School ERP Software Development | Nexona',
         description:
