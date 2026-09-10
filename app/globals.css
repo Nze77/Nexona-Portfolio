@@ -115,3 +115,14 @@ body {
     scrollbar-width: none;
   }
 }
+/* Floating WhatsApp button bob */
+@keyframes whatsapp-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .whatsapp-float-wrap {
+    animation: none !important;
+  }
+}

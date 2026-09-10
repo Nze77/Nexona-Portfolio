@@ -2,6 +2,7 @@ import { Syne, Montserrat } from 'next/font/google'
 import type { Metadata } from 'next'
 import { GoogleTagManager } from '@next/third-parties/google'
 import VisitorTracker from './components/VisitorTracker'
+import WhatsAppFloat from './components/WhatsAppFloat'
 import './globals.css'
 
 const syne = Syne({
@@ -57,6 +58,7 @@ export default function RootLayout({
       <body className="antialiased" style={{ fontFamily: "var(--font-montserrat), sans-serif" }}>
         <VisitorTracker />
         {children}
+        <WhatsAppFloat />
       </body>
     </html>
   )
