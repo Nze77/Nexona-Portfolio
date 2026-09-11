@@ -466,7 +466,7 @@ export default function BusinessManagementSoftwarePage() {
                             },
                             {
                                 title: 'Automation layer',
-                                body: <>The repeat steps removed — reminders, status updates, scheduled reports, stock alerts. Built with the same team that handles our <Link href="/ai-and-process-automation-agency" style={inlineLink}>business process automation</Link> work, using the <Link href="/projects/workflow-connector" style={inlineLink}>workflow connector</Link> approach.</>
+                                body: <>The repeat steps removed — reminders, status updates, scheduled reports, stock alerts. Built with the same team that handles our <Link href="/ai-automation-agency" style={inlineLink}>business process automation</Link> and <Link href="/ai-agent-development-company" style={inlineLink}>AI agent development</Link> work, using the <Link href="/projects/workflow-connector" style={inlineLink}>workflow connector</Link> approach.</>
                             }
                         ].map((item, i) => (
                             <motion.div

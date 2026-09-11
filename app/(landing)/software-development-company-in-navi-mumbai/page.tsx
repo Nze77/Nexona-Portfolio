@@ -493,7 +493,7 @@ export default function NaviMumbaiSoftwarePage() {
                             },
                             {
                                 title: 'Process Automation',
-                                desc: <>Order entry, reminders, approvals, weekly reports, stock updates. The work that is technically somebody’s job but shouldn’t be. Our <Link href="/ai-and-process-automation-agency" style={inlineLink}>AI and process automation</Link> team cuts it out, so you buy back hours before you buy headcount.</>,
+                                desc: <>Order entry, reminders, approvals, weekly reports, stock updates. The work that is technically somebody’s job but shouldn’t be. Our <Link href="/ai-automation-agency" style={inlineLink}>AI and process automation</Link> team cuts it out, so you buy back hours before you buy headcount.</>,
                                 img: 'https://images.unsplash.com/photo-1518186285589-2f7649de83e0?w=600&q=80'
                             },
                             {

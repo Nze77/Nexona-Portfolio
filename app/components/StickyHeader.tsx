@@ -40,7 +40,7 @@ const SERVICES: ServiceLink[] = [
     { name: 'Custom CRM', href: '/customer-retention-management-software' },
     { name: 'Software Development', href: '/software-development-agency-mumbai' },
     { name: 'Website Development' },
-    { name: 'Automations', href: '/ai-and-process-automation-agency' },
+    { name: 'Automations', href: '/ai-automation-agency' },
 ]
 
 const navItemStyle: React.CSSProperties = {

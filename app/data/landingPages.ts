@@ -159,34 +159,39 @@ export const LANDING_PAGES: LandingPage[] = [
     {
         // Service-intent page, deliberately NON-GEOGRAPHIC. The Mumbai and Navi
         // Mumbai pages own the location queries ("... in Mumbai"); this one owns
-        // "AI and process automation agency" and the un-located service queries
-        // around it. No city terms in its keywords, no shared H1/H2 phrasing —
-        // so it supports the local pages instead of cannibalising them.
-        slug: 'ai-and-process-automation-agency',
-        title: 'AI and Process Automation Agency | Workflow Automation – Nexona',
+        // "AI automation agency" and the un-located service queries around it.
+        //
+        // Slug moved from /ai-and-process-automation-agency so it carries the
+        // exact primary keyword; next.config.ts 308-redirects the old path.
+        //
+        // CANNIBALISATION BOUNDARY: this page owns the AGENCY/OUTCOME cluster
+        // (automating existing repeat work). ai-agent-development-company owns
+        // the BUILD cluster (someone who already wants an agent engineered).
+        // No shared H1/H2 phrasing, no shared keywords, no shared serviceType.
+        slug: 'ai-automation-agency',
+        title: 'AI Automation Agency | Workflow & Process Automation – Nexona',
         description:
-            'Nexona is an AI and process automation agency that maps how your business actually works, then automates the repeat work — data entry, approvals, reports and follow-ups.',
+            'Nexona is an AI automation agency that maps how your business actually works, then automates the repeat work — data entry, approvals, reports and follow-ups.',
         priority: 0.95,
-        navLabel: 'AI & Process Automation',
+        navLabel: 'AI Automation',
         keywords: [
-            'AI and process automation agency',
             'AI automation agency',
-            'process automation agency',
-            'process automation',
+            'AI automation services',
             'AI automation',
+            'AI process automation',
+            'process automation agency',
             'business process automation services',
+            'AI workflow automation services',
             'workflow automation company',
-            'intelligent process automation',
-            'AI agents for business',
+            'intelligent process automation services',
             'automate business processes',
-            'AI workflow automation',
             'document processing automation',
-            'automation consultants',
+            'automation consulting services',
         ],
         og: {
-            title: 'AI and Process Automation Agency | Nexona',
+            title: 'AI Automation Agency | Nexona',
             description:
-                'We map how work actually moves through your business, then automate the repeat parts. Custom AI agents, workflow automation and integrations — built to fit, not templated.',
+                'We map how work actually moves through your business, then automate the repeat parts. Workflow automation, document processing and integrations — built to fit, not templated.',
         },
         business: {
             areaServedCity: 'Mumbai',
@@ -195,9 +200,8 @@ export const LANDING_PAGES: LandingPage[] = [
             addressRegion: 'Maharashtra',
             addressCountry: 'IN',
             serviceType: [
-                'AI and Process Automation Agency',
+                'AI Automation Agency',
                 'Business Process Automation',
-                'AI Agent Development',
                 'Workflow Automation',
                 'Document Processing Automation',
                 'Systems Integration',
@@ -205,9 +209,59 @@ export const LANDING_PAGES: LandingPage[] = [
         },
     },
     {
+        // BUILD-intent page. Someone landing here has already decided they want
+        // an AI agent engineered; they are comparing vendors, not deciding
+        // whether to automate. That is why it is separate from
+        // ai-automation-agency, which owns the "we have repeat work" outcome
+        // queries. Boundary held deliberately:
+        //   ai-automation-agency        → process/workflow/agency language
+        //   ai-agent-development-company → agent/RAG/LLM engineering language
+        // Non-geographic, so it supports the city pages rather than competing.
+        slug: 'ai-agent-development-company',
+        title: 'AI Agent Development Company | Custom AI Agents – Nexona',
+        description:
+            'Nexona is an AI agent development company that builds custom AI agents in code — your data, your infrastructure, your codebase at the end of it. Not rented drag-and-drop workflows.',
+        priority: 0.95,
+        navLabel: 'AI Agent Development',
+        keywords: [
+            'AI agent development company',
+            'AI agent development services',
+            'custom AI agent development',
+            'hire AI agent developer',
+            'AI agent development cost',
+            'AI agent developers',
+            'LangGraph developer',
+            'LangChain development services',
+            'RAG development services',
+            'custom LLM application development',
+            'multi agent system development',
+            'enterprise AI agent development',
+        ],
+        og: {
+            title: 'AI Agent Development Company | Nexona',
+            description:
+                'Custom AI agents built in code — LangGraph, Python, your data, your infrastructure. Evaluated before launch, monitored after, and yours to keep.',
+        },
+        business: {
+            areaServedCity: 'Mumbai',
+            alsoServed: ['India', 'United Arab Emirates', 'United Kingdom', 'United States'],
+            addressLocality: 'Mumbai',
+            addressRegion: 'Maharashtra',
+            addressCountry: 'IN',
+            serviceType: [
+                'AI Agent Development',
+                'Custom AI Agent Development',
+                'RAG Pipeline Development',
+                'LLM Application Development',
+                'Multi-Agent System Development',
+                'AI Systems Integration',
+            ],
+        },
+    },
+    {
         // Horizontal service page. Deliberately NOT an ERP page and NOT an
         // automation page: manufacturing-erp / college-erp own the vertical ERP
-        // queries, ai-and-process-automation-agency owns the automation-agency
+        // queries, ai-automation-agency owns the automation-agency
         // queries. This one owns the "business management software" cluster —
         // custom internal tools, replacing Excel, unified sales/inventory/
         // operations systems for startups and SMEs. Non-geographic, so it

@@ -1,11 +1,14 @@
-// Shared content for the AI and process automation agency landing page.
+// Shared content for the AI automation agency landing page.
 // Imported by both page.tsx (visible UI) and layout.tsx (JSON-LD schema) so the
 // FAQ copy and the FAQPage structured data never drift apart.
 //
 // Deliberately non-geographic. The Mumbai and Navi Mumbai pages own the
-// location queries; this page owns "AI and process automation agency" and the
-// service-intent queries around it ("process automation", "AI automation").
-// No shared H1/H2 phrasing with those pages, no shared keywords.
+// location queries; this page owns "AI automation agency" and the outcome-intent
+// queries around it ("process automation", "AI automation services").
+//
+// Does NOT answer "how do you build an agent" / "what does an agent cost" —
+// ai-agent-development-company owns those. Keeping the two FAQ sets disjoint is
+// what stops the FAQPage schema on both pages competing for the same snippet.
 
 export interface FaqItem {
     question: string
@@ -14,9 +17,9 @@ export interface FaqItem {
 
 export const FAQ_ITEMS: FaqItem[] = [
     {
-        question: 'What does an AI and process automation agency actually do?',
+        question: 'What does an AI automation agency actually do?',
         answer:
-            'An AI and process automation agency maps how work moves through your business, finds the steps a person is doing only because no system does them, and replaces those steps with software. In practice that means three things: process automation for the deterministic work (data entry, approvals, reports, reminders), AI automation for the judgement work (reading a messy email, classifying an enquiry, drafting a reply), and the integrations that let your existing tools pass information to each other without a person copying it across.',
+            'An AI automation agency maps how work moves through your business, finds the steps a person is doing only because no system does them, and replaces those steps with software. In practice that means three things: process automation for the deterministic work (data entry, approvals, reports, reminders), AI automation for the judgement work (reading a messy email, classifying an enquiry, drafting a reply), and the integrations that let your existing tools pass information to each other without a person copying it across.',
     },
     {
         question: 'What is the difference between AI automation and process automation?',

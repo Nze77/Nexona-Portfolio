@@ -126,7 +126,7 @@ export default function AiProcessAutomationAgencyPage() {
                             margin: 0
                         }}
                     >
-                        AI and Process <br /> Automation <span style={{ color: 'transparent', WebkitTextStroke: `1px ${SAND}` }}>Agency</span>
+                        AI Automation <span style={{ color: 'transparent', WebkitTextStroke: `1px ${SAND}` }}>Agency</span>
                     </motion.h1>
 
                     {/* First line of body copy — carries the exact primary keyword,
@@ -145,8 +145,8 @@ export default function AiProcessAutomationAgencyPage() {
                             lineHeight: 1.6
                         }}
                     >
-                        <Link href="/" style={inlineLink}>Nexona</Link> is an AI and process automation
-                        agency that maps how your business actually works, then automates the repeat
+                        <Link href="/" style={inlineLink}>Nexona</Link> is an AI automation agency
+                        that maps how your business actually works, then automates the repeat
                         work — data entry, approvals, reports, follow-ups. We watch the workflow first.
                         Then we build.
                     </motion.p>
@@ -217,7 +217,7 @@ export default function AiProcessAutomationAgencyPage() {
                         {/* Answer-first paragraph, written to be quotable verbatim by
                             AI search and featured snippets. */}
                         <motion.p variants={fadeInUp} style={{ fontFamily: INTER, opacity: 0.85, lineHeight: 1.8, fontSize: '1.15rem', marginBottom: '1.5rem', fontWeight: 500 }}>
-                            As an AI and process automation agency we do three things: process automation
+                            As an AI automation agency we do three things: process automation
                             for the rule-based work, AI automation for the judgement work, and the
                             integrations that let your existing tools hand information to each other
                             without a person copying it across. Discovery, build, measure. In that order,
@@ -492,7 +492,7 @@ export default function AiProcessAutomationAgencyPage() {
                             },
                             {
                                 title: 'AI Agents',
-                                desc: 'Voice and chat agents that pick up at 11pm, answer against your real data, qualify the caller and write the enquiry straight into your systems. They hand off to a human the moment the question gets unusual.',
+                                desc: <>Voice and chat agents that pick up at 11pm, answer against your real data, qualify the caller and write the enquiry straight into your systems. They hand off to a human the moment the question gets unusual. If the agent itself is the project rather than the workflow around it, that is <Link href="/ai-agent-development-company" style={inlineLink}>AI agent development</Link>.</>,
                                 img: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=600&q=80'
                             },
                             {

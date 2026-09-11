@@ -1,0 +1,169 @@
+﻿No,Keyword,Search Intent,Search Volume,CPC,Paid Difficulty,SEO Difficulty
+1,custom automation development,-,10,0,1,13
+2,custom workflow automation,-,10,70.81411426,51,29
+3,business process automation services,-,110,34843.41506,21,12
+4,custom process automation,-,10,0,1,13
+5,workflow automation development,-,0,0,1,12
+6,custom automation software,-,10,0,1,13
+7,bespoke automation software,-,0,0,1,12
+8,automation software development company,-,10,0,11,9
+9,custom business automation,-,10,0,1,13
+10,process automation development services,-,0,0,1,4
+11,automation consulting services,-,30,0,33,23
+12,workflow automation company,-,0,0,1,41
+13,custom automation solutions,-,20,94.25932776,9,16
+14,enterprise automation development,-,0,0,1,12
+15,intelligent process automation services,-,20,0,1,5
+16,ai automation agency,"Navigational, Commercial",2400,98.56559147,33,14
+17,ai automation services,Commercial,480,542.5892268,28,21
+18,ai process automation,Commercial,50,168.901232,16,18
+19,ai workflow automation services,Commercial,0,0,1,4
+20,ai agent development,"Commercial, Informational",880,165.5519158,39,65
+21,custom ai agent development,Commercial,90,221.5333439,9,8
+22,ai agent development company,"Navigational, Commercial",1900,441.1527929,11,22
+23,ai agent development services,Commercial,880,353.1136238,10,34
+24,hire ai agent developer,-,140,270.8161397,3,6
+25,langchain developer,-,70,0,7,21
+26,langgraph developer,-,10,0,7,21
+27,hire langchain developer,-,0,0,1,12
+28,langchain development services,"Commercial, Navigational",0,0,1,12
+29,rag chatbot development,-,0,0,1,12
+30,rag pipeline development,-,0,0,1,12
+31,rag development services,-,110,429.1909493,3,14
+32,rag implementation services,-,0,0,1,12
+33,custom llm application development,-,0,0,1,4
+34,llm application development company,-,0,0,1,4
+35,llm integration services,Commercial,10,0,2,14
+36,ai chatbot development company,Commercial,1000,337.802464,4,20
+37,custom ai chatbot development,Commercial,10,0,12,9
+38,enterprise ai agent development,-,0,0,1,4
+39,multi agent system development,-,0,0,1,4
+40,ai voice agent development,-,50,187.0832343,19,11
+41,voice ai agent development company,-,0,0,1,4
+42,conversational ai development,-,0,0,1,12
+43,openai api integration services,-,0,0,1,4
+44,claude api integration,-,20,98.08711772,10,17
+45,custom gpt development,-,10,0,4,15
+46,ai integration services,Navigational,390,442.1097404,6,37
+47,ai development company,Commercial,5400,213.3992903,11,33
+48,generative ai development services,Commercial,720,432.5402655,3,39
+49,ai software development company,Commercial,720,216.2701327,9,35
+50,custom ai development,-,90,155.5039671,8,74
+51,api integration services,Navigational,260,243.0646625,8,44
+52,custom api development,-,50,347.3719389,3,43
+53,api integration company,-,40,190.4325505,30,23
+54,third party api integration services,-,10,214.8347115,16,10
+55,system integration services,-,170,0,3,38
+56,custom integration development,-,0,0,1,12
+57,software integration services,-,50,0,2,14
+58,data integration services,Commercial,110,457.899374,7,16
+59,integration layer development,-,0,0,1,12
+60,middleware development services,-,0,0,1,12
+61,custom middleware development,-,10,0,1,13
+62,saas integration services,-,30,59.33074438,13,17
+63,webhook integration development,-,0,0,1,12
+64,rest api development services,-,10,0,1,5
+65,backend integration services,-,0,0,1,12
+66,application integration services,Commercial,40,0,3,14
+67,api development company,-,170,171.2936007,4,15
+68,data pipeline development,-,40,0,5,15
+69,etl development services,-,10,0,1,13
+70,erp integration services,-,110,99.04406521,3,33
+71,erp crm integration,-,90,90.91001155,5,15
+72,erp api integration,-,10,66.02937681,16,18
+73,erp system integration company,-,0,0,1,4
+74,custom erp integration,-,0,0,1,12
+75,legacy system integration,-,50,0,1,14
+76,legacy system modernization,-,170,286.1272995,9,16
+77,legacy software modernization services,"Commercial, Navigational",320,881.3486383,15,30
+78,erp data migration services,-,0,0,1,4
+79,crm integration services,Commercial,50,0,4,15
+80,quickbooks integration development,-,0,0,1,12
+81,xero integration development,-,0,0,1,12
+82,tally integration services,Commercial,0,0,1,14
+83,zoho integration services,-,40,292.3474582,15,18
+84,hubspot custom integration,-,10,0,1,18
+85,salesforce custom integration,-,10,0,1,13
+86,shopify custom integration,-,10,0,1,13
+87,whatsapp api integration services,-,0,0,1,4
+88,whatsapp business api development,-,0,0,1,4
+89,payment gateway integration services,-,70,180.3846019,10,9
+90,replace spreadsheets with software,-,0,0,1,4
+91,excel to web application,-,70,9162.772217,13,9
+92,custom software to replace excel,-,0,0,1,4
+93,spreadsheet automation services,-,0,0,1,12
+94,automate manual data entry,-,10,0,1,5
+95,manual process automation,-,20,0,7,16
+96,automate excel reports,-,50,45.93347952,14,18
+97,custom internal tools development,-,0,0,1,4
+98,internal tool development company,-,0,0,1,4
+99,custom dashboard development,-,10,0,1,13
+100,business dashboard development,-,10,0,23,20
+101,custom crm development,"Commercial, Navigational",140,158.8532833,27,38
+102,custom inventory management software,-,20,166.5088633,76,28
+103,custom order management system,-,10,118.183015,81,30
+104,document processing automation,-,20,0,9,16
+105,invoice processing automation,"Commercial, Navigational",140,113.8767513,17,41
+106,automated invoice processing software,-,70,149.2838084,34,16
+107,invoice data extraction software,-,30,152.6331247,62,24
+108,purchase order automation,-,50,156.4609146,36,24
+109,order processing automation,-,10,0,1,13
+110,automate report generation,-,70,79.90511541,25,21
+111,automate data entry software,-,0,0,1,4
+112,ocr document automation services,-,0,0,1,4
+113,custom code vs no code automation,-,0,0,1,4
+114,zapier alternative custom development,-,0,0,1,4
+115,zapier vs custom development,-,0,0,1,4
+116,n8n vs custom code,-,10,0,1,5
+117,when to build custom software vs no code,-,0,0,1,4
+118,no code limitations enterprise,-,0,0,1,4
+119,outgrowing zapier,-,0,0,1,17
+120,migrate from zapier to custom,-,0,0,1,4
+121,custom automation vs zapier cost,-,0,0,1,4
+122,build vs buy software,-,30,0,1,5
+123,custom software vs off the shelf,-,50,0,1,5
+124,manufacturing process automation software,-,10,0,24,13
+125,manufacturing workflow automation,-,10,0,100,44
+126,automation for manufacturers,-,590,62.20158685,21,20
+127,logistics process automation,-,10,0,18,19
+128,healthcare workflow automation,-,50,117.7045413,7,16
+129,finance process automation services,-,0,0,1,4
+130,accounting workflow automation,-,10,0,1,13
+131,hr process automation software,-,10,0,2,6
+132,sales process automation services,-,0,0,1,4
+133,real estate automation software,-,10,0,33,15
+134,ecommerce automation services,-,10,0,49,28
+135,education process automation,-,10,0,1,13
+136,custom software development company india,"Commercial, Navigational",480,144.0205972,4,17
+137,custom software development company mumbai,-,0,0,1,4
+138,ai development company india,-,110,156.4609146,6,7
+139,ai agent development company india,"Commercial, Navigational",0,0,1,4
+140,automation company india,-,590,52.15363821,21,20
+141,automation services mumbai,-,0,0,1,12
+142,ai automation agency india,-,50,51.19669072,28,23
+143,custom software development agency mumbai,-,0,0,1,4
+144,software development company navi mumbai,-,0,0,1,4
+145,how much does custom automation cost,-,0,0,1,4
+146,cost to build ai agent,-,10,0,1,5
+147,ai agent development cost,-,170,239.2368725,1,6
+148,rag chatbot development cost,-,0,0,1,4
+149,api integration cost,-,20,0,9,16
+150,custom software development cost india,-,0,0,1,4
+151,how much does process automation cost,-,0,0,1,4
+152,how long does it take to build an ai agent,-,10,0,1,5
+153,what is an ai agent,Informational,2400,87.08222159,25,75
+154,what is rag in ai,Informational,8100,63.15853434,14,68
+155,rag vs fine tuning,"Informational, Commercial",390,5.74168494,4,47
+156,langchain vs langgraph,Informational,2400,46.89042701,7,44
+157,how to integrate erp with crm,-,0,0,1,4
+158,why do erp integrations fail,-,0,0,1,4
+159,when to replace spreadsheets with software,-,0,0,1,4
+160,should i use zapier or build custom,-,0,0,1,4
+161,when does zapier get too expensive,-,0,0,1,4
+162,can n8n scale for production,-,0,0,1,4
+163,what is business process automation,Informational,260,26479.694,3,49
+164,benefits of custom automation software,-,0,0,1,4
+165,how to automate invoice processing,-,10,0,11,9
+166,how to automate data entry,-,10,0,14,10
+167,best ai agent development company,-,0,0,1,4
+168,top automation companies india,"Commercial, Navigational",390,98.56559147,16,16
