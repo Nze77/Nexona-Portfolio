@@ -34,7 +34,7 @@ export const FAQ_ITEMS: FaqItem[] = [
     {
         question: 'How much does process automation cost?',
         answer:
-            'A single scoped workflow typically starts around Rs 1,20,000. A multi-workflow build with AI agents and integrations across three or four systems usually lands between Rs 4,00,000 and Rs 12,00,000. We price by scope, not seats, and there is no per-user licence afterwards — you own what we build.',
+            'It tracks scope, not seats. A single workflow — one process, start to finish, with the systems it touches wired up — sits at the bottom. A multi-workflow build with AI agents and integrations across three or four systems sits well above it, and the distance between those two is mostly about how many places the information has to travel. We scope first and quote after, because a fixed figure before anyone has watched the work happen is a guess dressed up as a proposal. There is no per-user licence afterwards either — you own what we build, and hiring four more people does not cost you anything extra.',
     },
     {
         question: 'How do you decide which processes to automate first?',
