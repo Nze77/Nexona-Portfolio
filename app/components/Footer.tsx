@@ -3,7 +3,7 @@
 import { useRef, useEffect, useState } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { Phone, Mail, MapPin } from 'lucide-react'
-import { DARK, SAND, HELVETICA } from '../lib/constants'
+import { DARK, SAND, HELVETICA, BUSINESS_PHONE, BUSINESS_PHONE_DISPLAY, BUSINESS_EMAIL, BUSINESS_LOCATION_DISPLAY } from '../lib/constants'
 import { LANDING_PAGES } from '../data/landingPages'
 import { fadeUp } from '../lib/variants'
 
@@ -104,8 +104,8 @@ export default function Footer() {
                         Contact Us
                     </span>
                     {[
-                        { Icon: Phone, label: '+91 90822 07416', href: 'tel:+919082207416' },
-                        { Icon: Mail, label: 'info@nexonalabs.com', href: 'mailto:info@nexonalabs.com' },
+                        { Icon: Phone, label: BUSINESS_PHONE_DISPLAY, href: `tel:${BUSINESS_PHONE}` },
+                        { Icon: Mail, label: BUSINESS_EMAIL, href: `mailto:${BUSINESS_EMAIL}` },
                     ].map(({ Icon, label, href }) => (
                         <a
                             key={href}
@@ -137,7 +137,7 @@ export default function Footer() {
                         opacity: 0.65,
                     }}>
                         <MapPin size={15} strokeWidth={1.5} aria-hidden />
-                        Mumbai, India
+                        {BUSINESS_LOCATION_DISPLAY}
                     </span>
 
                     <div style={{

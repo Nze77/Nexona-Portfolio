@@ -1,5 +1,13 @@
 import { LANDING_PAGES } from '../data/landingPages'
-import { SITE_URL } from '../lib/constants'
+import {
+    SITE_URL,
+    BUSINESS_NAME,
+    BUSINESS_ADDRESS,
+    BUSINESS_PHONE,
+    BUSINESS_EMAIL,
+    BUSINESS_GEO,
+    BUSINESS_SAME_AS,
+} from '../lib/constants'
 
 export interface FaqItem {
     question: string
@@ -31,10 +39,16 @@ export default function LandingJsonLd({
         graph.push({
             '@type': 'ProfessionalService',
             '@id': `${url}#business`,
-            name: 'Nexona',
+            name: BUSINESS_NAME,
             description: page.description,
             url,
             image: `${SITE_URL}/logo.png`,
+            telephone: BUSINESS_PHONE,
+            email: BUSINESS_EMAIL,
+            priceRange: '$$',
+            // Proves this node is the same entity as the Google Business
+            // Profile / social listings Google already has on file.
+            sameAs: BUSINESS_SAME_AS,
             // A single City unless the page also names the localities it covers,
             // in which case they are emitted alongside it so node-level local
             // queries ("software company in Vashi") have something to match.
@@ -45,12 +59,32 @@ export default function LandingJsonLd({
                     name,
                 })),
             ],
+            // The real office, identical on every page. Must match GBP exactly
+            // — a page claiming to be located in the city it merely serves is a
+            // NAP mismatch and costs more than the keyword is worth.
             address: {
                 '@type': 'PostalAddress',
-                addressLocality: page.business.addressLocality,
-                addressRegion: page.business.addressRegion,
-                addressCountry: page.business.addressCountry,
+                ...BUSINESS_ADDRESS,
             },
+            geo: {
+                '@type': 'GeoCoordinates',
+                ...BUSINESS_GEO,
+            },
+            openingHoursSpecification: {
+                '@type': 'OpeningHoursSpecification',
+                dayOfWeek: [
+                    'Monday',
+                    'Tuesday',
+                    'Wednesday',
+                    'Thursday',
+                    'Friday',
+                    'Saturday',
+                    'Sunday',
+                ],
+                opens: '09:00',
+                closes: '17:00',
+            },
+            parentOrganization: { '@id': `${SITE_URL}/#organization` },
             serviceType: page.business.serviceType,
         })
     }

@@ -28,9 +28,6 @@ export interface LandingPageBusiness {
     /** Extra localities surfaced alongside the city in `areaServed`. Use this
      *  for neighbourhood/node-level local SEO on city-specific landing pages. */
     alsoServed?: string[]
-    addressLocality: string
-    addressRegion: string
-    addressCountry: string
     /** Services offered, surfaced in ProfessionalService structured data. */
     serviceType: string[]
 }
@@ -80,9 +77,6 @@ export const LANDING_PAGES: LandingPage[] = [
         },
         business: {
             areaServedCity: 'Mumbai',
-            addressLocality: 'Mumbai',
-            addressRegion: 'Maharashtra',
-            addressCountry: 'IN',
             serviceType: [
                 'Custom Software Development',
                 'Web Application Development',
@@ -143,9 +137,6 @@ export const LANDING_PAGES: LandingPage[] = [
                 'Panvel',
                 'Taloja',
             ],
-            addressLocality: 'Navi Mumbai',
-            addressRegion: 'Maharashtra',
-            addressCountry: 'IN',
             serviceType: [
                 'Custom Software Development',
                 'Business Management Systems',
@@ -196,9 +187,6 @@ export const LANDING_PAGES: LandingPage[] = [
         business: {
             areaServedCity: 'Mumbai',
             alsoServed: ['India', 'United Arab Emirates', 'United Kingdom', 'United States'],
-            addressLocality: 'Mumbai',
-            addressRegion: 'Maharashtra',
-            addressCountry: 'IN',
             serviceType: [
                 'AI Automation Agency',
                 'Business Process Automation',
@@ -245,9 +233,6 @@ export const LANDING_PAGES: LandingPage[] = [
         business: {
             areaServedCity: 'Mumbai',
             alsoServed: ['India', 'United Arab Emirates', 'United Kingdom', 'United States'],
-            addressLocality: 'Mumbai',
-            addressRegion: 'Maharashtra',
-            addressCountry: 'IN',
             serviceType: [
                 'AI Agent Development',
                 'Custom AI Agent Development',
@@ -303,9 +288,6 @@ export const LANDING_PAGES: LandingPage[] = [
         business: {
             areaServedCity: 'Mumbai',
             alsoServed: ['India', 'United Arab Emirates', 'United Kingdom', 'United States'],
-            addressLocality: 'Mumbai',
-            addressRegion: 'Maharashtra',
-            addressCountry: 'IN',
             serviceType: [
                 'Business Management Software Development',
                 'Custom Internal Tools Development',
@@ -337,9 +319,6 @@ export const LANDING_PAGES: LandingPage[] = [
         ],
         business: {
             areaServedCity: 'Mumbai',
-            addressLocality: 'Mumbai',
-            addressRegion: 'Maharashtra',
-            addressCountry: 'IN',
             serviceType: [
                 'College ERP Software',
                 'School Management Software',
@@ -369,9 +348,6 @@ export const LANDING_PAGES: LandingPage[] = [
         ],
         business: {
             areaServedCity: 'Mumbai',
-            addressLocality: 'Mumbai',
-            addressRegion: 'Maharashtra',
-            addressCountry: 'IN',
             serviceType: [
                 'Custom Manufacturing ERP Software',
                 'ERP Development',
@@ -403,9 +379,6 @@ export const LANDING_PAGES: LandingPage[] = [
         },
         business: {
             areaServedCity: 'Mumbai',
-            addressLocality: 'Mumbai',
-            addressRegion: 'Maharashtra',
-            addressCountry: 'IN',
             serviceType: [
                 'Customer Retention Management Software',
                 'Customer Success Software',
@@ -436,9 +409,6 @@ export const LANDING_PAGES: LandingPage[] = [
         },
         business: {
             areaServedCity: 'Mumbai',
-            addressLocality: 'Mumbai',
-            addressRegion: 'Maharashtra',
-            addressCountry: 'IN',
             serviceType: [
                 'Manufacturing ERP Software',
                 'ERP Software Company in Mumbai',

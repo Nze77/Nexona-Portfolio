@@ -1,7 +1,7 @@
 import { SECTIONS } from '../data/sections'
 import { LANDING_PAGES } from '../data/landingPages'
 import { PROJECT_DETAILS } from '../data/projectDetails'
-import { SITE_URL } from '../lib/constants'
+import { SITE_URL, BUSINESS_ADDRESS } from '../lib/constants'
 
 import { FAQ_ITEMS as AI_AUTOMATION_AGENCY_FAQ } from '../(landing)/ai-automation-agency/content'
 import { FAQ_ITEMS as AI_AGENT_DEV_FAQ } from '../(landing)/ai-agent-development-company/content'
@@ -50,7 +50,7 @@ export function GET() {
                   .join('\n\n')}\n`
             : ''
         const served = page.business
-            ? `\nServices: ${page.business.serviceType.join(', ')}\nArea served: ${page.business.areaServedCity}, ${page.business.addressRegion}, ${page.business.addressCountry}\n`
+            ? `\nServices: ${page.business.serviceType.join(', ')}\nArea served: ${page.business.areaServedCity}, ${BUSINESS_ADDRESS.addressRegion}, ${BUSINESS_ADDRESS.addressCountry}\n`
             : ''
 
         return `### ${page.title}
