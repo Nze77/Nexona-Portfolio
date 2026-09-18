@@ -8,6 +8,7 @@ import { FAQ_ITEMS as AI_AGENT_DEV_FAQ } from '../(landing)/ai-agent-development
 import { FAQ_ITEMS as BUSINESS_MGMT_SOFTWARE_FAQ } from '../(landing)/business-management-software-development/content'
 import { FAQ_ITEMS as COLLEGE_ERP_FAQ } from '../(landing)/college-erp/content'
 import { FAQ_ITEMS as CRM_FAQ } from '../(landing)/customer-retention-management-software/content'
+import { FAQ_ITEMS as FRACTIONAL_CTO_FAQ } from '../(landing)/fractional-cto-as-a-service/content'
 import { FAQ_ITEMS as MFG_ERP_MUMBAI_FAQ } from '../(landing)/erp-systems-for-manufacturers/content'
 import { FAQ_ITEMS as MFG_ERP_FAQ } from '../(landing)/manufacturing-erp/content'
 import { FAQ_ITEMS as SOFTWARE_MUMBAI_FAQ } from '../(landing)/software-development-agency-mumbai/content'
@@ -35,6 +36,7 @@ const FAQ_BY_SLUG: Record<string, FaqItem[]> = {
     'business-management-software-development': BUSINESS_MGMT_SOFTWARE_FAQ,
     'college-erp': COLLEGE_ERP_FAQ,
     'customer-retention-management-software': CRM_FAQ,
+    'fractional-cto-as-a-service': FRACTIONAL_CTO_FAQ,
     'erp-systems-for-manufacturers': MFG_ERP_MUMBAI_FAQ,
     'manufacturing-erp': MFG_ERP_FAQ,
     'software-development-agency-mumbai': SOFTWARE_MUMBAI_FAQ,

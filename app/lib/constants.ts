@@ -77,3 +77,37 @@ export const BUSINESS_SAME_AS: string[] = [
     'https://www.linkedin.com/company/nexonalabs',
     'https://www.instagram.com/nexonalabs',
 ]
+
+/* ── Service area ──────────────────────────────────────────────────────────
+ * WHERE THE BUSINESS TAKES WORK, which is a different claim from where it IS.
+ *
+ *   • BUSINESS_ADDRESS / BUSINESS_GEO  = location. A NAP fact. Must match the
+ *     Google Business Profile letter for letter, and must never be widened to
+ *     a city the business does not sit in.
+ *   • BUSINESS_AREA_SERVED             = market. Widening this does NOT dilute
+ *     the local signal — proximity ranking reads the address and the GBP pin,
+ *     never this list — and it is what national and international queries
+ *     ("fractional CTO India", "offshore CTO for a US startup") match against.
+ *
+ * Delivery is remote-first, so the market is genuinely not Mumbai-only. The
+ * named countries are the ones where the timezone overlap is workable enough
+ * to run a real engagement; listing every country on earth instead would be a
+ * weaker signal, not a stronger one, because it stops meaning anything.
+ *
+ * Note this is organic/answer-engine reach only. Google Business Profile has
+ * its own service-area setting, it is capped at 20 areas and it is regional by
+ * design — international leads will not come from the map pack.
+ */
+export const BUSINESS_AREA_SERVED = [
+    { '@type': 'Country', name: 'India' },
+    { '@type': 'Country', name: 'United States' },
+    { '@type': 'Country', name: 'United Kingdom' },
+    { '@type': 'Country', name: 'United Arab Emirates' },
+    { '@type': 'Country', name: 'Singapore' },
+    { '@type': 'Country', name: 'Australia' },
+    { '@type': 'Country', name: 'Canada' },
+] as const
+
+/** ISO codes for the same list, for schema fields that take codes rather than
+ *  Place objects (ContactPoint.areaServed). Keep the two in sync. */
+export const BUSINESS_AREA_SERVED_CODES = ['IN', 'US', 'GB', 'AE', 'SG', 'AU', 'CA'] as const

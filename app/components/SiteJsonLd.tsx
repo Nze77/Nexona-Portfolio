@@ -6,6 +6,8 @@ import {
     BUSINESS_EMAIL,
     BUSINESS_GEO,
     BUSINESS_SAME_AS,
+    BUSINESS_AREA_SERVED,
+    BUSINESS_AREA_SERVED_CODES,
 } from '../lib/constants'
 
 /**
@@ -44,12 +46,16 @@ export default function SiteJsonLd() {
                     ...BUSINESS_GEO,
                 },
                 sameAs: BUSINESS_SAME_AS,
+                // Declared on the Organization itself, not just on individual
+                // landing pages, so the entity Google and the answer engines
+                // hold for Nexona is not scoped to one city.
+                areaServed: BUSINESS_AREA_SERVED,
                 contactPoint: {
                     '@type': 'ContactPoint',
                     contactType: 'sales',
                     telephone: BUSINESS_PHONE,
                     email: BUSINESS_EMAIL,
-                    areaServed: 'IN',
+                    areaServed: BUSINESS_AREA_SERVED_CODES,
                     availableLanguage: ['en', 'hi'],
                 },
             },

@@ -671,7 +671,7 @@ export default function BusinessManagementSoftwarePage() {
                         {[
                             {
                                 title: 'Startups scaling past 12 people',
-                                body: <>Business management software for startups is mostly about not hiring three coordinators. Startup operations software first, headcount second — the <Link href="/software-development-company-in-navi-mumbai" style={inlineLink}>founders we work with</Link> usually find four to six hours a week per person hiding in admin.</>
+                                body: <>Business management software for startups is mostly about not hiring three coordinators. Startup operations software first, headcount second — the <Link href="/software-development-company-in-navi-mumbai" style={inlineLink}>founders we work with</Link> usually find four to six hours a week per person hiding in admin. Without a technical co-founder to sequence it, that decision sits with a <Link href="/fractional-cto-as-a-service" style={inlineLink}>fractional CTO</Link>.</>
                             },
                             {
                                 title: 'Distributors & wholesalers',

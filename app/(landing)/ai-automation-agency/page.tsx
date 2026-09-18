@@ -609,7 +609,7 @@ export default function AiProcessAutomationAgencyPage() {
                             },
                             {
                                 title: 'Startups scaling past ~12 people',
-                                body: <>The size where spreadsheets quietly stop working. Automate before you hire for operations — the <Link href="/software-development-company-in-navi-mumbai" style={inlineLink}>startups we work with</Link> usually find four to six hours a week per person hiding there.</>
+                                body: <>The size where spreadsheets quietly stop working. Automate before you hire for operations — the <Link href="/software-development-company-in-navi-mumbai" style={inlineLink}>startups we work with</Link> usually find four to six hours a week per person hiding there. If nobody senior is deciding what gets built in the first place, a <Link href="/fractional-cto-as-a-service" style={inlineLink}>fractional CTO</Link> comes before any of this.</>
                             }
                         ].map((item, i) => (
                             <motion.div

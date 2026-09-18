@@ -47,7 +47,16 @@ export interface LandingPage {
     og?: {
         title?: string
         description?: string
+        /** Site-relative path to a 1200x630 share image. Defaults to /logo.png. */
+        image?: string
     }
+    /** ISO date (YYYY-MM-DD) the page copy was last materially revised.
+     *  Emitted as `dateModified` on the WebPage node. Freshness is one of the
+     *  heavier re-ranking signals in AI search, and without this the page has
+     *  no machine-readable date at all. Bump it when you rewrite the copy —
+     *  NOT on every deploy, since a date that moves without the content moving
+     *  is the thing Google discounts. */
+    updated?: string
     /** Local-SEO structured data (ProfessionalService schema). */
     business?: LandingPageBusiness
 }
@@ -417,5 +426,53 @@ export const LANDING_PAGES: LandingPage[] = [
             ],
         },
     },
+    {
+        // Owns the "fractional CTO" head term plus the leadership-intent queries
+        // around it (vs full-time CTO, what does a fractional CTO do, cost).
+        // Deliberately disjoint from ai-automation-agency: that page sells the
+        // BUILD, this one sells the DECISION-MAKING that happens before a build.
+        // No pricing figures anywhere — engagements are scoped per client.
+        slug: 'fractional-cto-as-a-service',
+        title: 'Fractional CTO as a Service | Nexona Labs',
+        updated: '2026-09-19',
+        description:
+            'Senior tech leadership without the full-time hire. Architecture, AI strategy, engineering leadership and technical due diligence, on a monthly retainer.',
+        priority: 0.9,
+        navLabel: 'Fractional CTO',
+        keywords: [
+            'fractional CTO as a service',
+            'fractional CTO',
+            'CTO as a service',
+            'CTOaaS',
+            'fractional CTO India',
+            'fractional CTO services',
+            'part time CTO',
+            'virtual CTO',
+            'fractional CTO for startups',
+            'technical due diligence',
+            'AI strategy consulting',
+            'fractional CTO for manufacturing',
+            'fractional CTO for MSME',
+            'technology roadmap consulting',
+            'architecture audit',
+        ],
+        og: {
+            title: 'Fractional CTO as a Service | Nexona Labs',
+            description:
+                'Architecture decisions, engineering leadership, AI strategy and technical due diligence — without the full-time executive cost.',
+        },
+        business: {
+            areaServedCity: 'Mumbai',
+            // Named in the page copy, so the schema is corroborated by the body
+            // rather than claiming reach the page never mentions.
+            alsoServed: ['Navi Mumbai', 'Pune', 'Bengaluru', 'Ahmedabad'],
+            serviceType: [
+                'Fractional CTO as a Service',
+                'Technology Strategy & Roadmap',
+                'Technical Due Diligence',
+                'AI Strategy & Implementation',
+                'Engineering Team Leadership',
+            ],
+        },
+    },
 ]
-

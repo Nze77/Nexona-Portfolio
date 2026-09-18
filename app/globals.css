@@ -18,6 +18,14 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Landing-page sections carry anchor ids so passages are directly linkable
+   (Google's "jump to" links, AI citations, and our own in-page nav). The
+   sticky header is 6rem tall, so without this offset an anchored section
+   lands underneath it. */
+section[id] {
+  scroll-margin-top: 6rem;
+}
+
 body {
   font-family: var(--font-syne), sans-serif;
   overflow-x: hidden;

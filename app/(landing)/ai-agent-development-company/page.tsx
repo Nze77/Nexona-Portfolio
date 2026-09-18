@@ -364,7 +364,7 @@ export default function AiAgentDevelopmentCompanyPage() {
                         Build a custom AI agent when the agent is the product. Use a no-code platform when
                         it is the plumbing — genuinely, if your problem is moving a form submission into a
                         CRM, go and use one, you will be live this afternoon. That is a different job and
-                        it belongs on our <Link href="/ai-automation-agency" style={inlineLink}>AI automation</Link> side.
+                        it belongs on our <Link href="/ai-automation-agency" style={inlineLink}>AI automation</Link> side. Not sure which of the two you need? That call is part of what a <Link href="/fractional-cto-as-a-service" style={inlineLink}>fractional CTO</Link> is for.
                     </motion.p>
                     <motion.p
                         initial={{ opacity: 0 }}
