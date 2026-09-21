@@ -158,10 +158,11 @@ export default function AiAutomationCompanyInThanePage() {
                             lineHeight: 1.6
                         }}
                     >
-                        <Link href="/" style={inlineLink}>Nexona</Link> builds the automation in
-                        code, not in a subscription tool someone resells you. Invoice and PO matching,
-                        dispatch entry, WhatsApp enquiries, approval chains — wired into the Tally,
-                        ERP and CRM your business already runs on.
+                        <Link href="/" style={inlineLink}>Nexona</Link> is an AI automation company
+                        in Thane, from Wagle Estate to Kalyan. We build the automation in code rather
+                        than reselling you a subscription tool: invoice and PO matching, dispatch
+                        entry, WhatsApp enquiries and approval chains, wired into the Tally, ERP and
+                        CRM you already run on.
                     </motion.p>
                 </motion.div>
             </section>
@@ -441,6 +442,23 @@ export default function AiAutomationCompanyInThanePage() {
                                 Lokmanya Nagar, Thane West,<br />
                                 Thane, Maharashtra 400606
                             </address>
+                            {/* Measured outcomes. Real client figures — do not
+                                round up, do not add a fourth. The members number
+                                is deliberately framed as growth the system
+                                absorbed rather than growth it caused; the copy
+                                beside it says so explicitly. */}
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', marginBottom: '2.25rem', paddingBottom: '2.25rem', borderBottom: `1px solid rgba(232,223,211,0.15)` }}>
+                                {[
+                                    { num: '+88%', label: 'Renewals' },
+                                    { num: '8–12 hrs', label: 'Saved Per Week' },
+                                    { num: '<90 → 500+', label: 'Members Handled, Same Desk' }
+                                ].map((s, i) => (
+                                    <div key={i}>
+                                        <p style={{ fontFamily: "var(--font-montserrat), sans-serif", fontSize: '1.85rem', fontWeight: 800, margin: 0, lineHeight: 1.1, letterSpacing: '-0.02em' }}>{s.num}</p>
+                                        <p style={{ fontFamily: INTER, fontSize: '0.74rem', letterSpacing: '0.16em', textTransform: 'uppercase', opacity: 0.55, fontWeight: 700, marginTop: '0.4rem' }}>{s.label}</p>
+                                    </div>
+                                ))}
+                            </div>
                             <dl style={{ margin: 0, display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
                                 {[
                                     ['What we built', 'Custom gym management system + CRM'],
@@ -467,10 +485,10 @@ export default function AiAutomationCompanyInThanePage() {
                             </motion.h3>
 
                             {[
-                                'Aim Fitness runs out of Lokmanya Nagar in Thane West, in front of the TMC school. Memberships were tracked in a register at the desk. Renewal dates lived in a spreadsheet that one person maintained. Follow-ups happened on WhatsApp from a personal phone, which meant they happened when that person remembered.',
-                                'None of that is unusual, and none of it was anyone’s fault. It is what every growing gym does until the number of members passes the point where a human can hold it in their head. The failure mode is specific and expensive: a membership lapses quietly, nobody notices for three weeks, and by the time anyone calls, the member has already joined somewhere else. Churn in this business is not dramatic. It is silent.',
-                                'We built them a custom gym management system with a CRM underneath it. Members, plans, payments and attendance in one place. Renewal dates that surface before they matter rather than after. Follow-ups that fire on a schedule and stop the moment someone responds, from the gym’s number rather than a staff member’s personal one. Enquiries from walk-ins and WhatsApp land in the same pipeline, so a lead that came in on a Sunday evening is still there on Monday morning.',
-                                'The part worth being honest about: the first version tracked attendance more aggressively than anyone actually wanted. It was accurate and nobody used it, because the front desk was not going to stop mid-conversation with a member to confirm a check-in. We cut it back to what the desk would realistically do in three seconds. That is usually where the second iteration of these systems goes — not adding capability, but removing the parts that assume more discipline than a real workday allows.'
+                                'Aim Fitness runs out of Lokmanya Nagar in Thane West, in front of the TMC school. When we started, memberships were tracked in a register at the desk. Renewal dates lived in a spreadsheet one person maintained. Follow-ups happened on WhatsApp from a personal phone, which meant they happened when that person remembered.',
+                                'None of that is unusual, and none of it was anyone’s fault. It is what every growing gym does until the member count passes the point where a person can hold it in their head. The failure mode is specific and expensive: a membership lapses quietly, nobody notices for three weeks, and by the time anyone calls, the member has already joined somewhere else. Churn in this business is not dramatic. It is silent.',
+                                'We built them a custom gym management system with a CRM underneath it. Members, plans, payments and attendance in one place. Renewal dates that surface before they matter rather than after. Follow-ups that fire on a schedule and stop the moment someone responds, sent from the gym’s number rather than a staff member’s personal one.',
+                                'They had fewer than 90 paying members then. They have more than 500 now. We are not going to claim the software did that — they built the gym, ran the marketing and kept people coming back. What the system did was stop the admin growing at the same rate. The same front desk that was straining at 90 handles 500-plus without anyone hired to chase renewals, and it saves eight to twelve hours a week doing it. Renewals are up 88%, and that number we will take credit for, because it is almost entirely a function of a date surfacing before it passes instead of after.'
                             ].map((para, i) => (
                                 <motion.p key={i} variants={fadeInUp} style={{ fontFamily: INTER, fontSize: '1.08rem', lineHeight: 1.8, opacity: 0.8, margin: '0 0 1.5rem 0' }}>
                                     {para}
@@ -939,7 +957,7 @@ export default function AiAutomationCompanyInThanePage() {
                             </motion.h2>
                             {[
                                 'Nexona is registered in Mumbai and works across the MMR. Thane is a market we serve, not an address we hold, and we would rather tell you that on the page than have you find out on a call.',
-                                'We say it because it is checkable, and because several firms ranking for this exact search do the opposite — a Thane address in the heading, a registered office in Nashik, Noida, Vadodara or Powai. One of them still has the words "Advantage 1" sitting live on its page where the local content was meant to go.',
+                                'We say it because it is checkable, and because several firms ranking for this exact search do the opposite: a Thane address in the heading, a registered office in Nashik, Noida, Vadodara or Powai. Those pages are generated from one template with the city name swapped in, which is also why so many of them describe a Thane market they have never visited.',
                                 'What we do have here is clients. Aim Fitness in Lokmanya Nagar is one of them, and we came to site to build it. Discovery happens in your office, in front of the actual work, because a workflow described in a meeting and a workflow watched at the desk are rarely the same workflow. After that the engineering is remote, the way it is for every serious software team in this city.'
                             ].map((p, i) => (
                                 <motion.p key={i} variants={fadeInUp} style={{ fontFamily: INTER, fontSize: '1.06rem', lineHeight: 1.8, opacity: 0.8, margin: '0 0 1.4rem 0' }}>{p}</motion.p>

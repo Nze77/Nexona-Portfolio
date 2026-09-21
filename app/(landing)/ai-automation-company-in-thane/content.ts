@@ -98,7 +98,7 @@ export const FAQ_ITEMS: FaqItem[] = [
     {
         question: 'Is this viable for a small business, or only for large manufacturers?',
         answer:
-            'Small teams often get more out of it, because the same four people absorb every repeat task and there is nobody to hand it to. The gym management system and CRM we built for Aim Fitness in Thane West is not an enterprise deployment — it is one business that was running memberships, renewals and follow-ups across a register, a spreadsheet and somebody\'s phone. You do not need an IT department to start. You need two processes removed.',
+            'Small teams often get more out of it, because the same four people absorb every repeat task and there is nobody to hand it to. The gym management system and CRM we built for Aim Fitness in Thane West is not an enterprise deployment. It is one business that was running memberships, renewals and follow-ups across a register, a spreadsheet and somebody\'s phone, and that now handles more than 500 members on the same front desk that was straining at ninety. You do not need an IT department to start. You need two processes removed.',
     },
     {
         question: 'Are you based in Thane?',
