@@ -597,7 +597,7 @@ export default function AiProcessAutomationAgencyPage() {
                         {[
                             {
                                 title: 'Manufacturing & distribution',
-                                body: <>Dispatch notes, production reporting, stock that disagrees with the rack, GST paperwork. Often this grows into a full <Link href="/erp-systems-for-manufacturers" style={inlineLink}>ERP for manufacturers</Link>, but it rarely starts there.</>
+                                body: <>Dispatch notes, production reporting, stock that disagrees with the rack, GST paperwork. Often this grows into a full <Link href="/erp-systems-for-manufacturers" style={inlineLink}>ERP for manufacturers</Link>, but it rarely starts there. Most of this work sits in the MMR industrial belt — see our <Link href="/ai-automation-company-in-thane" style={inlineLink}>AI automation company in Thane</Link> page for the local version.</>
                             },
                             {
                                 title: 'Sales-led teams',

@@ -206,6 +206,81 @@ export const LANDING_PAGES: LandingPage[] = [
         },
     },
     {
+        // LOCAL SPOKE of the automation cluster. ai-automation-agency is the
+        // pillar and stays non-geographic; this page carries the geo modifier in
+        // slug, title, H1 and schema so the two support each other instead of
+        // competing. Rule: never add "Thane" to the pillar, never drop it here.
+        //
+        // Owns "AI automation company in Thane" (primary) and "AI automation
+        // agency in Thane" (secondary) plus the node-level Thane localities.
+        // Keyword sets are disjoint from the pillar and from
+        // ai-agent-development-company.
+        //
+        // areaServedCity is Thane, but BUSINESS_ADDRESS in constants.ts stays
+        // Mumbai — that is deliberate and must not be "fixed". Nexona is a
+        // service-area business; claiming a Thane address to match the keyword
+        // is a NAP mismatch against the Google Business Profile and costs more
+        // than the term is worth. The page copy says the same thing out loud.
+        slug: 'ai-automation-company-in-thane',
+        title: 'AI Automation Company in Thane | Nexona',
+        updated: '2026-09-21',
+        description:
+            'Nexona is an AI automation company working across Thane — GST invoice matching, dispatch entry, WhatsApp enquiries and approvals, built in code and wired into Tally, your ERP and CRM.',
+        priority: 0.95,
+        navLabel: 'AI Automation Thane',
+        keywords: [
+            'AI automation company in Thane',
+            'AI automation agency in Thane',
+            'AI automation services in Thane',
+            'AI automation Thane',
+            'business process automation Thane',
+            'workflow automation company Thane',
+            'AI automation solutions Thane',
+            'document automation Thane',
+            'WhatsApp automation Thane',
+            'AI chatbot development Thane',
+            'automation company Wagle Estate',
+            'automation company Thane MIDC',
+            'ERP automation Thane',
+            'custom software Thane',
+        ],
+        og: {
+            title: 'AI Automation Company in Thane | Nexona',
+            description:
+                'We build the automation in code, not in a subscription tool. Invoice matching, dispatch entry, WhatsApp enquiries and approvals — wired into the systems Thane businesses already run on.',
+        },
+        business: {
+            areaServedCity: 'Thane',
+            // Node-level localities named in the page copy, so the schema is
+            // corroborated by the body rather than claiming reach the page
+            // never mentions.
+            alsoServed: [
+                'Wagle Estate',
+                'Thane MIDC',
+                'Ghodbunder Road',
+                'Majiwada',
+                'Manpada',
+                'Hiranandani Estate',
+                'Kolshet',
+                'Kalwa',
+                'Mumbra',
+                'Dombivli',
+                'Kalyan',
+                'Bhiwandi',
+                'Mira Road',
+                'Bhayandar',
+            ],
+            serviceType: [
+                'AI Automation Services',
+                'Business Process Automation',
+                'Document Processing Automation',
+                'WhatsApp & CRM Automation',
+                'Workflow Automation',
+                'Systems Integration',
+            ],
+        },
+    },
+    {
         // BUILD-intent page. Someone landing here has already decided they want
         // an AI agent engineered; they are comparing vendors, not deciding
         // whether to automate. That is why it is separate from
