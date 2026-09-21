@@ -19,12 +19,12 @@ const montserrat = Montserrat({
 })
 
 export const metadata: Metadata = {
-  title: 'Nexona',
-  description: 'AI Agents & Automations, Full Stack Development, ERPs, CRMs, and more',
+  title: 'Nexona | Custom Software, AI Agents & Business Automation',
+  description: 'Nexona builds custom ERP, CRM, AI agents and workflow automation for fast-growing businesses. Cut manual work, scale faster and request your free quote today.',
   metadataBase: new URL('https://www.nexonalabs.com'),
   openGraph: {
-    title: 'Nexona | AI Agents & Automations',
-    description: 'Bespoke AI Agents, Full Stack Development, and Business Automations to scale your enterprise.',
+    title: 'Nexona | Custom Software, AI Agents & Business Automation',
+    description: 'Nexona builds custom ERP, CRM, AI agents and workflow automation for fast-growing businesses. Cut manual work, scale faster and request your free quote today.',
     url: 'https://www.nexonalabs.com',
     siteName: 'Nexona',
     images: [
@@ -40,8 +40,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Nexona | AI Agents & Automations',
-    description: 'Bespoke AI Agents, Full Stack Development, and Business Automations to scale your enterprise.',
+    title: 'Nexona | Custom Software, AI Agents & Business Automation',
+    description: 'Nexona builds custom ERP, CRM, AI agents and workflow automation for fast-growing businesses. Cut manual work, scale faster and request your free quote today.',
     images: ['https://www.nexonalabs.com/logo.png'],
   },
 }
