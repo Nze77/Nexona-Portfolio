@@ -222,10 +222,10 @@ export const LANDING_PAGES: LandingPage[] = [
         // is a NAP mismatch against the Google Business Profile and costs more
         // than the term is worth. The page copy says the same thing out loud.
         slug: 'ai-automation-company-in-thane',
-        title: 'AI Automation Company in Thane | Nexona',
+        title: 'AI Automation Company in Thane | Nexona – 50+ Systems',
         updated: '2026-09-21',
         description:
-            'Nexona is an AI automation company working across Thane — GST invoice matching, dispatch entry, WhatsApp enquiries and approvals, built in code and wired into Tally, your ERP and CRM.',
+            'Nexona builds AI automation for Thane businesses — invoice matching, dispatch, WhatsApp enquiries — wired into Tally. 50+ systems shipped, 100% code owned.',
         priority: 0.95,
         navLabel: 'AI Automation Thane',
         keywords: [
