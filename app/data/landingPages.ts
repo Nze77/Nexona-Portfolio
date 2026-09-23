@@ -102,6 +102,7 @@ export const LANDING_PAGES: LandingPage[] = [
         // competing for the same SERP.
         slug: 'software-development-company-in-navi-mumbai',
         title: 'Software Development Company in Navi Mumbai | Custom Software – Nexona',
+        updated: '2026-09-23',
         description:
             'Nexona is a software development company in Navi Mumbai building custom software, business management systems and process automation for startups and growing companies — Airoli and Vashi to Belapur, Kharghar and Panvel.',
         priority: 0.9,

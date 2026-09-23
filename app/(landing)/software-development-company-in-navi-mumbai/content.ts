@@ -52,4 +52,34 @@ export const FAQ_ITEMS: FaqItem[] = [
         answer:
             'We start with a discovery session, not a quote. Two or three hours walking through how work actually moves through your business, where it stalls, who re-enters what. You come out of it with a written scope and a phased plan, and you are free to take that anywhere.',
     },
+    {
+        question: 'What decides the cost of custom software?',
+        answer:
+            'Four things, mostly. How many workflows the first phase covers, how many systems it has to talk to — Tally, a payment gateway, a courier API, an old database nobody has documented — whether AI is part of it, and how hard the deadline is. A tight six-week window costs differently from the same build spread over twelve. We do not quote off a phone call. We scope first, then you get a number for that scope, in writing.',
+    },
+    {
+        question: 'How long until we have something working?',
+        answer:
+            'A working link within the first two weeks, and a first phase your team can use day to day in about six. That first link is rough — a real screen with real data, not a mock-up. Larger systems run longer, but they ship in phases, so you are never waiting four months to see anything.',
+    },
+    {
+        question: 'Who owns the code once it is built?',
+        answer:
+            'You do. Code, database, designs, documentation, the lot. The repository sits in your account, or is transferred to it, and you have access from the first commit. If you move the work in-house or to another team, nothing is held back — and on a React, Node and Postgres stack, any competent developer can pick it up.',
+    },
+    {
+        question: 'Do you sign an NDA?',
+        answer:
+            'Yes, before discovery, as standard. You will be showing us pricing sheets, customer lists and how your operation actually runs. That should be covered before anyone walks through your office, not after.',
+    },
+    {
+        question: 'What happens after launch? Is there a maintenance plan?',
+        answer:
+            'The eight weeks after go-live are included — bug fixes, the adjustments real usage throws up, and a second training round once your team knows what they want to ask. After that there is an optional monthly plan for hosting, backups, security updates and small changes. Some clients move straight to a retainer for new features instead. Either way you are messaging the person who built it.',
+    },
+    {
+        question: 'When is off-the-shelf software the better choice?',
+        answer:
+            'More often than agencies admit. If your process looks like everyone else’s — standard accounting, basic invoicing, a simple CRM — Zoho, Odoo or Tally will do it cheaper and faster, and we will tell you so. Custom earns its keep when the way you work is the advantage, when you are paying for five tools and stitching them with spreadsheets, or when per-user licences start to cost more than owning the thing outright.',
+    },
 ]

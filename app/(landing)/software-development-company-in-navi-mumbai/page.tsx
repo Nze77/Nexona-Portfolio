@@ -11,7 +11,7 @@ import ContactSection from '../../components/ContactSection'
 import ContactOverlay from '../../components/ContactOverlay'
 import ParticleEffect from '../../components/ParticleEffect'
 import { useContactPopup } from '../../lib/useContactPopup'
-import { DARK, SAND, INTER } from '../../lib/constants'
+import { DARK, SAND, INTER, BUSINESS_PHONE, BUSINESS_PHONE_DISPLAY } from '../../lib/constants'
 import { FAQ_ITEMS } from './content'
 
 // Extracted animation variants
@@ -45,6 +45,89 @@ const NODES = [
     'Kamothe', 'Ulwe', 'Panvel', 'Taloja'
 ]
 
+const CLUTCH_URL = 'https://clutch.co/profile/nexona-labs'
+
+// Five filled stars plus the score, linking out to the Clutch profile.
+function ClutchRating({ color }: { color: string }) {
+    return (
+        <a
+            href={CLUTCH_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Nexona is rated 5.0 out of 5 on Clutch"
+            style={{ display: 'inline-flex', alignItems: 'center', gap: '0.6rem', color, textDecoration: 'none', fontFamily: INTER, fontSize: '0.9rem', fontWeight: 600 }}
+        >
+            <span aria-hidden="true" style={{ color: '#E8B04B', letterSpacing: '0.1em', fontSize: '1rem' }}>★★★★★</span>
+            <span>5.0 on Clutch</span>
+        </a>
+    )
+}
+
+// Industry cards: each tied to the part of Navi Mumbai where that trade sits.
+const INDUSTRIES: { title: string; where: string; problem: string; build: React.ReactNode }[] = [
+    {
+        title: 'Manufacturing & Chemicals',
+        where: 'MIDC Mahape · Rabale · Turbhe · Taloja',
+        problem: 'Job cards on paper, a stock ledger that disagrees with the rack, dispatch typed into Tally twice — once at the gate, once at month end.',
+        build: <>Production tracking and inventory that writes straight into Tally. More on that in our <Link href="/manufacturing-erp" style={inlineLink}>manufacturing ERP</Link> work.</>
+    },
+    {
+        title: 'Logistics & Warehousing',
+        where: 'JNPT · Uran · Taloja corridor',
+        problem: 'Customers ring to ask where a consignment is. Someone rings the driver. Proof of delivery arrives as a blurry WhatsApp photo at 9pm.',
+        build: 'Shipment tracking, a POD upload the driver can manage one-handed, and a status page the customer checks instead of calling.'
+    },
+    {
+        title: 'Real Estate & Construction',
+        where: 'Kharghar · Ulwe · the airport belt',
+        problem: 'Site enquiries come in from portals, walk-ins and three WhatsApp numbers, then die in a shared inbox. Material requests get chased by phone.',
+        build: 'Lead capture that routes each enquiry to one named person, plus a site material request flow with approvals on record.'
+    },
+    {
+        title: 'Colleges & Coaching Centres',
+        where: 'Kharghar · Nerul · CBD Belapur',
+        problem: 'Admissions in one sheet, fees in another, attendance on a register nobody reconciles until the parent complains.',
+        build: <>One system for admissions, fees and attendance. See our <Link href="/college-erp" style={inlineLink}>college ERP</Link> for what that looks like built out.</>
+    },
+    {
+        title: 'Shipping & Maritime Offices',
+        where: 'CBD Belapur',
+        problem: 'Crew documents and certificate expiries tracked in Excel — until a certificate lapses and a vessel sits waiting on paperwork.',
+        build: 'A document register with expiry alerts at 90, 30 and 7 days, and a record of who uploaded what.'
+    },
+    {
+        title: 'Clinics & Healthcare',
+        where: 'Vashi · Nerul · Seawoods',
+        problem: 'Appointments booked on WhatsApp, patient history on paper cards, follow-ups that depend on the receptionist remembering.',
+        build: 'Booking, patient records and automatic follow-up reminders — reception stops being the only place the schedule lives.'
+    }
+]
+
+const ENGAGEMENTS: { title: string; desc: string }[] = [
+    {
+        title: 'Fixed-scope phase',
+        desc: 'A defined first build. Written scope, fixed delivery date, a working link every two weeks until it ships. Most Navi Mumbai projects start here.'
+    },
+    {
+        title: 'Monthly retainer',
+        desc: 'Once the core system is live, new features and fixes on a steady monthly cadence. Good for the list that keeps growing after launch — and it always does.'
+    },
+    {
+        title: 'Dedicated developer',
+        desc: 'One engineer working with your team full-time, on your priorities, in your standups. For companies that have outgrown one-off projects but are not ready to hire.'
+    },
+    {
+        title: 'Support after launch',
+        desc: 'The eight weeks after go-live are included: bug fixes, the changes real usage exposes, a second round of team training. After that, an optional maintenance plan covers hosting, backups and updates.'
+    }
+]
+
+const CASE_STUDY_RESULTS: { before: string; after: string; label: string }[] = [
+    { before: '~20 hrs', after: '7 hrs', label: 'Admin work per week' },
+    { before: '30 min', after: '<10 min', label: 'Time to create a quote' },
+    { before: '300', after: '390+', label: 'Service jobs per month' }
+]
+
 export default function NaviMumbaiSoftwarePage() {
     const heroRef = useRef<HTMLElement>(null)
     const { scrollYProgress } = useScroll({
@@ -57,6 +140,8 @@ export default function NaviMumbaiSoftwarePage() {
 
     const [isMobile, setIsMobile] = useState(false)
     const [openFaq, setOpenFaq] = useState<number | null>(0)
+    const [ctaHover, setCtaHover] = useState(false)
+    const [callHover, setCallHover] = useState(false)
 
     // Shared across every landing page: the form opens after 20s on the page or
     // once the visitor scrolls to the third section, whichever comes first.
@@ -155,6 +240,61 @@ export default function NaviMumbaiSoftwarePage() {
                         management systems, and process automation for startups and growing companies
                         across Navi Mumbai. We come and watch how you work first. Then we build.
                     </motion.p>
+
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, delay: 0.45, ease: [0.23, 1, 0.32, 1] as const }}
+                        style={{ marginTop: '2.75rem', display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'center', gap: isMobile ? '1.25rem' : '2rem' }}
+                    >
+                        <button
+                            onClick={openContact}
+                            onMouseEnter={() => setCtaHover(true)}
+                            onMouseLeave={() => setCtaHover(false)}
+                            style={{
+                                fontFamily: INTER,
+                                fontSize: '0.95rem',
+                                fontWeight: 700,
+                                letterSpacing: '0.06em',
+                                textTransform: 'uppercase',
+                                padding: '1.1rem 2.4rem',
+                                borderRadius: '99px',
+                                border: `1px solid ${SAND}`,
+                                backgroundColor: ctaHover ? 'transparent' : SAND,
+                                color: ctaHover ? SAND : DARK,
+                                cursor: 'pointer',
+                                transition: 'background-color 0.3s ease, color 0.3s ease'
+                            }}
+                        >
+                            Book a free discovery visit
+                        </button>
+                        <a
+                            href={`tel:${BUSINESS_PHONE}`}
+                            onMouseEnter={() => setCallHover(true)}
+                            onMouseLeave={() => setCallHover(false)}
+                            style={{
+                                fontFamily: INTER,
+                                fontSize: '0.95rem',
+                                fontWeight: 600,
+                                color: SAND,
+                                textDecoration: 'none',
+                                borderBottom: `1px solid ${callHover ? SAND : 'rgba(232,223,211,0.35)'}`,
+                                paddingBottom: '3px',
+                                transition: 'border-color 0.3s ease'
+                            }}
+                        >
+                            Or call {BUSINESS_PHONE_DISPLAY}
+                        </a>
+                    </motion.div>
+
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 0.85 }}
+                        transition={{ duration: 0.8, delay: 0.6 }}
+                        style={{ marginTop: '1.75rem' }}
+                    >
+                        <ClutchRating color={SAND} />
+                    </motion.div>
                 </motion.div>
             </section>
 
@@ -407,6 +547,56 @@ export default function NaviMumbaiSoftwarePage() {
                 </div>
             </section>
 
+            {/* Industries — each tied to where that trade actually sits in Navi Mumbai */}
+            <section style={{ backgroundColor: '#25221F', color: SAND, padding: isMobile ? '6rem 5%' : '10rem 8%', borderBottom: `1px solid rgba(232,223,211,0.1)` }}>
+                <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
+                    <motion.div
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, margin: "-10%" }}
+                        variants={staggerContainer}
+                        style={{ marginBottom: '4.5rem', maxWidth: '780px' }}
+                    >
+                        <motion.span variants={fadeInUp} style={{ fontFamily: INTER, fontSize: '0.85rem', letterSpacing: '0.2em', textTransform: 'uppercase', opacity: 0.6, fontWeight: 700, display: 'block', marginBottom: '1.5rem' }}>Industries</motion.span>
+                        <motion.h2 variants={fadeInUp} style={{
+                            fontFamily: "var(--font-montserrat), sans-serif",
+                            fontSize: 'clamp(2rem, 4vw, 3.5rem)',
+                            fontWeight: 800,
+                            textTransform: 'uppercase',
+                            lineHeight: 1.08,
+                            letterSpacing: '-0.02em',
+                            margin: 0
+                        }}>
+                            Industries We Build For in Navi Mumbai
+                        </motion.h2>
+                        <motion.p variants={fadeInUp} style={{ fontFamily: INTER, opacity: 0.78, lineHeight: 1.8, fontSize: '1.1rem', marginTop: '2rem' }}>
+                            Navi Mumbai is not one economy. It is the MIDC belt, the port corridor, a
+                            construction boom around the airport, and a lot of offices in Belapur. Each one
+                            breaks in its own way. These are the six we see most — and the thing that is
+                            usually broken first.
+                        </motion.p>
+                    </motion.div>
+
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2.5rem' }}>
+                        {INDUSTRIES.map((ind, i) => (
+                            <motion.div
+                                key={ind.title}
+                                initial="hidden"
+                                whileInView="visible"
+                                viewport={{ once: true, margin: "-10%" }}
+                                variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { delay: (i % 3) * 0.12, duration: 0.8, ease: [0.23, 1, 0.32, 1] as const } } }}
+                                style={{ border: `1px solid rgba(232,223,211,0.15)`, borderRadius: '24px', padding: '2.5rem', backgroundColor: 'rgba(232,223,211,0.03)', display: 'flex', flexDirection: 'column' }}
+                            >
+                                <span style={{ fontFamily: INTER, fontSize: '0.75rem', letterSpacing: '0.15em', textTransform: 'uppercase', opacity: 0.55, fontWeight: 600 }}>{ind.where}</span>
+                                <h3 style={{ fontFamily: "var(--font-montserrat), sans-serif", fontSize: '1.35rem', fontWeight: 700, margin: '0.9rem 0 1.25rem 0', letterSpacing: '-0.01em' }}>{ind.title}</h3>
+                                <p style={{ fontFamily: INTER, opacity: 0.6, lineHeight: 1.7, margin: '0 0 1.25rem 0' }}>{ind.problem}</p>
+                                <p style={{ fontFamily: INTER, opacity: 0.9, lineHeight: 1.7, margin: 0, fontWeight: 500, borderTop: `1px solid rgba(232,223,211,0.12)`, paddingTop: '1.25rem' }}>{ind.build}</p>
+                            </motion.div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
             {/* Process */}
             <section style={{ backgroundColor: DARK, color: SAND, padding: isMobile ? '6rem 5%' : '10rem 8%', borderBottom: `1px solid rgba(232,223,211,0.1)` }}>
                 <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
@@ -565,6 +755,79 @@ export default function NaviMumbaiSoftwarePage() {
                 </div>
             </section>
 
+            {/* Case study */}
+            <section style={{ backgroundColor: '#25221F', color: SAND, padding: isMobile ? '6rem 5%' : '10rem 8%', borderBottom: `1px solid rgba(232,223,211,0.1)` }}>
+                <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+                    <motion.div
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, margin: "-10%" }}
+                        variants={staggerContainer}
+                        style={{ maxWidth: '820px' }}
+                    >
+                        <motion.span variants={fadeInUp} style={{ fontFamily: INTER, fontSize: '0.85rem', letterSpacing: '0.2em', textTransform: 'uppercase', opacity: 0.6, fontWeight: 700, display: 'block', marginBottom: '1.5rem' }}>Case Study · Industrial Equipment Servicing</motion.span>
+                        <motion.h2 variants={fadeInUp} style={{
+                            fontFamily: "var(--font-montserrat), sans-serif",
+                            fontSize: 'clamp(2rem, 4vw, 3.5rem)',
+                            fontWeight: 800,
+                            textTransform: 'uppercase',
+                            lineHeight: 1.08,
+                            letterSpacing: '-0.02em',
+                            margin: 0
+                        }}>
+                            90 More Jobs a Month. Same Office Team.
+                        </motion.h2>
+                        <motion.p variants={fadeInUp} style={{ fontFamily: INTER, opacity: 0.8, lineHeight: 1.8, fontSize: '1.12rem', marginTop: '2rem' }}>
+                            Forty employees. Three hundred-odd service jobs a month. All of it running
+                            through Excel, WhatsApp, email and a stack of paper job sheets — an enquiry would
+                            arrive by email, get retyped into a sheet, turn into a quote somebody built by
+                            hand, and then get assigned to an engineer over a phone call nobody logged.
+                        </motion.p>
+                        <motion.p variants={fadeInUp} style={{ fontFamily: INTER, opacity: 0.8, lineHeight: 1.8, fontSize: '1.12rem', marginTop: '1.5rem' }}>
+                            We built one <Link href="/business-management-software-development" style={inlineLink}>business management system</Link> for
+                            the whole chain. Enquiry, quotation, job assignment, engineer updates from site,
+                            invoicing, payment. AI handles the repetitive middle: it reads incoming service
+                            requests, pulls out the customer and machine details, writes the job summary and
+                            sends the customer their update. Management gets a live dashboard — jobs, revenue,
+                            payments, and how each engineer is actually doing.
+                        </motion.p>
+                    </motion.div>
+
+                    <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: '1.5rem', marginTop: '4rem' }}>
+                        {CASE_STUDY_RESULTS.map((r, i) => (
+                            <motion.div
+                                key={r.label}
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true, margin: "-5%" }}
+                                transition={{ delay: i * 0.1, duration: 0.6, ease: [0.23, 1, 0.32, 1] as const }}
+                                style={{ border: `1px solid rgba(232,223,211,0.15)`, borderRadius: '24px', padding: '2.25rem', backgroundColor: 'rgba(232,223,211,0.03)' }}
+                            >
+                                <p style={{ fontFamily: INTER, fontSize: '0.8rem', letterSpacing: '0.15em', textTransform: 'uppercase', opacity: 0.55, fontWeight: 600, margin: '0 0 1rem 0' }}>{r.label}</p>
+                                <div style={{ display: 'flex', alignItems: 'baseline', gap: '1rem', flexWrap: 'wrap' }}>
+                                    <span style={{ fontFamily: INTER, fontSize: '1.25rem', opacity: 0.45, textDecoration: 'line-through', textDecorationThickness: '1px' }}>{r.before}</span>
+                                    <span style={{ fontFamily: "var(--font-montserrat), sans-serif", fontSize: '2.5rem', fontWeight: 800 }}>{r.after}</span>
+                                </div>
+                            </motion.div>
+                        ))}
+                    </div>
+
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6 }}
+                        style={{ marginTop: '3rem', display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: isMobile ? 'flex-start' : 'center', justifyContent: 'space-between', gap: '1.5rem' }}
+                    >
+                        <p style={{ fontFamily: INTER, opacity: 0.7, lineHeight: 1.7, margin: 0, maxWidth: '640px' }}>
+                            No new admin hires to get there. The capacity came out of the hours that used to
+                            go on retyping.
+                        </p>
+                        <ClutchRating color={SAND} />
+                    </motion.div>
+                </div>
+            </section>
+
             {/* Areas served — node-level local relevance */}
             <section style={{ backgroundColor: DARK, color: SAND, padding: isMobile ? '6rem 5%' : '9rem 8%', borderBottom: `1px solid rgba(232,223,211,0.1)` }}>
                 <div style={{ maxWidth: '1100px', margin: '0 auto', textAlign: 'center' }}>
@@ -600,7 +863,7 @@ export default function NaviMumbaiSoftwarePage() {
                         transition={{ duration: 0.6, delay: 0.1 }}
                         style={{ fontFamily: INTER, fontSize: '1.1rem', lineHeight: 1.8, maxWidth: '640px', margin: '0 auto 3.5rem' }}
                     >
-                        On-site anywhere on the Airoli–Panvel stretch. Thane and Bhiwandi too, though
+                        On-site anywhere on the Airoli–Panvel stretch. <Link href="/ai-automation-company-in-thane" style={inlineLink}>Thane</Link> and Bhiwandi too, though
                         the Navi Mumbai jobs are the ones we can reach before Palm Beach Road decides
                         otherwise.
                     </motion.p>
@@ -641,6 +904,57 @@ export default function NaviMumbaiSoftwarePage() {
                         Based across the harbour instead? Our{' '}
                         <Link href="/software-development-agency-mumbai" style={inlineLink}>software agency in Mumbai</Link>{' '}
                         page covers that side of the city.
+                    </motion.p>
+                </div>
+            </section>
+
+            {/* Engagement models & ownership — no pricing, by house rule */}
+            <section style={{ backgroundColor: SAND, color: DARK, padding: isMobile ? '6rem 5%' : '10rem 8%' }}>
+                <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
+                    <motion.div
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, margin: "-10%" }}
+                        variants={staggerContainer}
+                        style={{ textAlign: 'center', marginBottom: '4.5rem' }}
+                    >
+                        <motion.span variants={fadeInUp} style={{ fontFamily: INTER, fontSize: '0.85rem', letterSpacing: '0.2em', textTransform: 'uppercase', opacity: 0.6, fontWeight: 700 }}>Engagement</motion.span>
+                        <motion.h2 variants={fadeInUp} style={{
+                            fontFamily: "var(--font-montserrat), sans-serif",
+                            fontSize: 'clamp(2.1rem, 4.2vw, 3.5rem)',
+                            fontWeight: 800,
+                            marginTop: '1.5rem',
+                            textTransform: 'uppercase'
+                        }}>
+                            How You Can Work With Us
+                        </motion.h2>
+                    </motion.div>
+
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '2rem' }}>
+                        {ENGAGEMENTS.map((e, i) => (
+                            <motion.div
+                                key={e.title}
+                                initial="hidden"
+                                whileInView="visible"
+                                viewport={{ once: true, margin: "-10%" }}
+                                variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { delay: i * 0.1, duration: 0.7, ease: [0.23, 1, 0.32, 1] as const } } }}
+                                style={{ backgroundColor: '#fff', borderRadius: '24px', padding: '2.5rem', boxShadow: '0 10px 30px rgba(0,0,0,0.05)' }}
+                            >
+                                <h3 style={{ fontFamily: "var(--font-montserrat), sans-serif", fontSize: '1.3rem', fontWeight: 800, margin: '0 0 1rem 0', letterSpacing: '-0.01em' }}>{e.title}</h3>
+                                <p style={{ fontFamily: INTER, fontSize: '1rem', opacity: 0.7, lineHeight: 1.65, margin: 0 }}>{e.desc}</p>
+                            </motion.div>
+                        ))}
+                    </div>
+
+                    <motion.p
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, margin: "-10%" }}
+                        transition={{ duration: 0.6 }}
+                        style={{ fontFamily: INTER, fontSize: '1.1rem', fontWeight: 600, lineHeight: 1.7, textAlign: 'center', maxWidth: '760px', margin: '4rem auto 0' }}
+                    >
+                        Whichever you pick: you own the code and the IP, you get access to the repository
+                        from day one, and we sign an NDA before discovery. Not extras. The default.
                     </motion.p>
                 </div>
             </section>
