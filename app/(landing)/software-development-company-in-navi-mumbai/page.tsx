@@ -122,6 +122,26 @@ const ENGAGEMENTS: { title: string; desc: string }[] = [
     }
 ]
 
+// What being local actually changes — the reason to hire nearby at all.
+const LOCAL_REASONS: { title: string; desc: string }[] = [
+    {
+        title: 'Discovery happens at your desk',
+        desc: 'Not on a video call with a shared screen. We sit next to the person doing the data entry and watch the order move. The register under the counter tells us more than any requirements doc.'
+    },
+    {
+        title: 'Training in the room, not a PDF',
+        desc: 'Go-live week we are on-site. The supervisor who has never used anything but a paper register gets shown in person, twice if needed, until the new screen is faster than the old habit.'
+    },
+    {
+        title: 'Someone can come over',
+        desc: 'When something looks wrong in week three, you do not raise a ticket with a team four states away. Anywhere from Airoli to Panvel, we can be at your office the same week.'
+    },
+    {
+        title: 'Built for how business runs here',
+        desc: 'Tally for accounts. GST e-invoicing. WhatsApp as the real inbox. A shop floor that speaks Marathi or Hindi before English. A software company in Navi Mumbai should build for that without being told.'
+    }
+]
+
 const CASE_STUDY_RESULTS: { before: string; after: string; label: string }[] = [
     { before: '~20 hrs', after: '7 hrs', label: 'Admin work per week' },
     { before: '30 min', after: '<10 min', label: 'Time to create a quote' },
@@ -177,7 +197,7 @@ export default function NaviMumbaiSoftwarePage() {
                 <motion.div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, y, zIndex: 0 }}>
                     <Image
                         src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2000&auto=format&fit=crop"
-                        alt="Software development company in Navi Mumbai — Nexona builds custom business software"
+                        alt="Software company in Navi Mumbai — Nexona builds custom business software"
                         fill
                         style={{ objectFit: 'cover', opacity: 0.25 }}
                         priority
@@ -236,9 +256,9 @@ export default function NaviMumbaiSoftwarePage() {
                             lineHeight: 1.6
                         }}
                     >
-                        <Link href="/" style={inlineLink}>Nexona</Link> builds custom software, business
-                        management systems, and process automation for startups and growing companies
-                        across Navi Mumbai. We come and watch how you work first. Then we build.
+                        <Link href="/" style={inlineLink}>Nexona</Link> is a software company in Navi Mumbai
+                        building custom software, business management systems, and process automation
+                        for startups and growing companies. We come and watch how you work first. Then we build.
                     </motion.p>
 
                     <motion.div
@@ -825,6 +845,53 @@ export default function NaviMumbaiSoftwarePage() {
                         </p>
                         <ClutchRating color={SAND} />
                     </motion.div>
+                </div>
+            </section>
+
+            {/* Why local — carries the "software company in Navi Mumbai" H2 */}
+            <section style={{ backgroundColor: DARK, color: SAND, padding: isMobile ? '6rem 5%' : '10rem 8%', borderBottom: `1px solid rgba(232,223,211,0.1)` }}>
+                <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
+                    <motion.div
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, margin: "-10%" }}
+                        variants={staggerContainer}
+                        style={{ marginBottom: '4.5rem', maxWidth: '780px' }}
+                    >
+                        <motion.span variants={fadeInUp} style={{ fontFamily: INTER, fontSize: '0.85rem', letterSpacing: '0.2em', textTransform: 'uppercase', opacity: 0.6, fontWeight: 700, display: 'block', marginBottom: '1.5rem' }}>Why Local Matters</motion.span>
+                        <motion.h2 variants={fadeInUp} style={{
+                            fontFamily: "var(--font-montserrat), sans-serif",
+                            fontSize: 'clamp(2rem, 4vw, 3.5rem)',
+                            fontWeight: 800,
+                            textTransform: 'uppercase',
+                            lineHeight: 1.08,
+                            letterSpacing: '-0.02em',
+                            margin: 0
+                        }}>
+                            Why Hire a Software Company in Navi Mumbai
+                        </motion.h2>
+                        <motion.p variants={fadeInUp} style={{ fontFamily: INTER, opacity: 0.78, lineHeight: 1.8, fontSize: '1.1rem', marginTop: '2rem' }}>
+                            Plenty of the code could be written from anywhere. Honestly, most of it is. The
+                            parts that decide whether the software gets used — discovery, training, the
+                            first bad week after launch — go better when someone can walk into your office.
+                        </motion.p>
+                    </motion.div>
+
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '2.5rem' }}>
+                        {LOCAL_REASONS.map((r, i) => (
+                            <motion.div
+                                key={r.title}
+                                initial="hidden"
+                                whileInView="visible"
+                                viewport={{ once: true, margin: "-10%" }}
+                                variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { delay: i * 0.1, duration: 0.8, ease: [0.23, 1, 0.32, 1] as const } } }}
+                                style={{ borderTop: `2px solid ${SAND}`, paddingTop: '2rem' }}
+                            >
+                                <h3 style={{ fontFamily: "var(--font-montserrat), sans-serif", fontSize: '1.3rem', fontWeight: 700, margin: '0 0 1rem 0', letterSpacing: '-0.01em' }}>{r.title}</h3>
+                                <p style={{ fontFamily: INTER, opacity: 0.72, lineHeight: 1.7, margin: 0 }}>{r.desc}</p>
+                            </motion.div>
+                        ))}
+                    </div>
                 </div>
             </section>
 

@@ -28,6 +28,11 @@ export const FAQ_ITEMS: FaqItem[] = [
             'All of it, Airoli down to Panvel. Most of our work sits around the Thane–Belapur belt, the CBD Belapur and Vashi offices, and the newer startup setups in Kharghar and Seawoods. If you are on that stretch we can be at your office the same week.',
     },
     {
+        question: 'How do I choose a software company in Navi Mumbai?',
+        answer:
+            'Ask four things before anything else. Who actually writes the code — the people in the meeting, or a team you never meet? Will the repository be in your account from day one? What happens in the three months after launch, and who picks up the phone? And can they show you a live system a client uses today, not a portfolio PDF. A company that goes vague on any of those will go vague on your project too.',
+    },
+    {
         question: 'We have no in-house tech team. Can we still do this?',
         answer:
             'Yes. Roughly half our Navi Mumbai clients have nobody technical on staff. We handle hosting, backups, the domain, updates, and the odd 9pm call when something looks wrong. You get one person to message, not a ticket queue.',
