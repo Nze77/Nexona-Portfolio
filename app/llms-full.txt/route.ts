@@ -1,6 +1,7 @@
 import { SECTIONS } from '../data/sections'
 import { LANDING_PAGES } from '../data/landingPages'
 import { PROJECT_DETAILS } from '../data/projectDetails'
+import { BLOG_POSTS, postToMarkdown } from '../data/blogs'
 import { SITE_URL, BUSINESS_ADDRESS } from '../lib/constants'
 
 import { FAQ_ITEMS as AI_AUTOMATION_AGENCY_FAQ } from '../(landing)/ai-automation-agency/content'
@@ -63,6 +64,24 @@ ${page.description}
 ${served}${faqBlock}`
     }).join('\n---\n\n')
 
+    // Posts are inlined in full — they are written to be quoted, and a model
+    // that ingests this file should not need a second fetch to cite one.
+    const blogSections = BLOG_POSTS.map((post) => {
+        const faq = post.faq?.length
+            ? `\n\n#### Frequently asked questions\n\n${post.faq
+                  .map((item) => `**${item.question}**\n\n${item.answer}`)
+                  .join('\n\n')}`
+            : ''
+        const updated = post.updated ? `\nUpdated: ${post.updated}` : ''
+        return `### ${post.title}
+
+URL: ${SITE_URL}/blogs/${post.slug}
+Published: ${post.published}${updated}
+Author: Nexona
+
+${postToMarkdown(post)}${faq}`
+    }).join('\n\n---\n\n')
+
     const projectSections = PROJECT_DETAILS.map((project) => {
         const live = project.landingPage ? `\nLive site: ${project.landingPage}` : ''
         return `### ${project.name}
@@ -101,6 +120,12 @@ remove the manual reconciliation between systems that were never meant to talk.
 ## Services
 
 ${landingSections}
+
+---
+
+## Articles
+
+${blogSections}
 
 ---
 

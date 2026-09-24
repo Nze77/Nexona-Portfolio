@@ -1,5 +1,6 @@
 import { SECTIONS } from '../data/sections'
 import { LANDING_PAGES } from '../data/landingPages'
+import { BLOG_POSTS } from '../data/blogs'
 import { SITE_URL } from '../lib/constants'
 
 /**
@@ -21,6 +22,10 @@ export function GET() {
             `- [${page.navLabel ?? page.title}](${SITE_URL}/${page.slug}): ${page.description}`,
     ).join('\n')
 
+    const blogLinks = BLOG_POSTS.map(
+        (post) => `- [${post.title}](${SITE_URL}/blogs/${post.slug}): ${post.excerpt}`,
+    ).join('\n')
+
     const projectLinks = SECTIONS.map((section) => {
         const items = section.products
             .map(
@@ -39,10 +44,15 @@ export function GET() {
 
 - [Home](${SITE_URL}/): Overview of Nexona — the operational problems we solve and the systems we build to solve them.
 - [Projects](${SITE_URL}/projects): Portfolio of shipped work across full-stack development, AI agents, and automations.
+- [Blog](${SITE_URL}/blogs): Practical articles on operational problems in growing businesses and the custom software that fixes them.
 
 ## Services
 
 ${landingLinks}
+
+## Articles
+
+${blogLinks}
 
 ## Projects
 

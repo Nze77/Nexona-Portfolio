@@ -206,6 +206,7 @@ export default function Footer() {
                             href: `/${page.slug}`,
                         })),
                         { name: 'Projects', href: '/projects' },
+                        { name: 'Blogs', href: '/blogs' },
                     ].map(link => (
                         <a
                             key={link.name}

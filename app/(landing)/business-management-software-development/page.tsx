@@ -385,7 +385,7 @@ export default function BusinessManagementSoftwarePage() {
                                     'You are about to hire for operations because of admin load',
                                     'Per-user licences now hurt every time you grow the team'
                                 ],
-                                note: 'Roughly ₹5,00,000 of software against a ₹6,00,000-a-year salary that repeats.'
+                                note: 'A one-time build against a salary that repeats every year.'
                             }
                         ].map((col, i) => (
                             <motion.div

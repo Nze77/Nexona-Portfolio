@@ -28,12 +28,12 @@ export const FAQ_ITEMS: FaqItem[] = [
     {
         question: 'When should a startup build custom internal tools?',
         answer:
-            'Usually somewhere between 8 and 25 people, and the signal is not headcount — it is when you are about to hire someone whose job is mostly moving information between systems. If a new operations hire would spend half their week copying, chasing and reconciling, build the tool instead. Roughly Rs 5,00,000 of software against Rs 6,00,000 a year of salary that compounds. Before that point spreadsheets and off-the-shelf SaaS are genuinely fine, and we will tell you so.',
+            'Usually somewhere between 8 and 25 people, and the signal is not headcount — it is when you are about to hire someone whose job is mostly moving information between systems. If a new operations hire would spend half their week copying, chasing and reconciling, build the tool instead. Software you pay for once, against a salary that repeats every year. Before that point spreadsheets and off-the-shelf SaaS are genuinely fine, and we will tell you so.',
     },
     {
         question: 'How much does custom business management software cost?',
         answer:
-            'A focused first system — one workflow, say sales orders through to dispatch, with dashboards — typically starts around Rs 3,50,000. A unified business management system covering sales, inventory and operations with role-based access, approvals and reporting usually lands between Rs 8,00,000 and Rs 25,00,000 depending on module count and how many existing tools it has to talk to. We price by scope, not per user. There is no licence afterwards, no seat cost when you hire four more people, and you own the code.',
+            'We do not publish a number — the range is too wide for one to mean anything before we have seen how you work. What moves it: how many workflows go into the first phase (one, say sales orders through to dispatch, or sales, inventory and operations together), how many roles and approval rules there are, how many existing tools it has to talk to, and whether reporting or AI is in scope. A focused first system and a unified one spanning three departments are very different builds. We price by scope, not per user — we scope first, then quote. There is no licence afterwards, no seat cost when you hire four more people, and you own the code.',
     },
     {
         question: 'What is the best software to manage growing business operations?',

@@ -134,3 +134,30 @@ body {
     animation: none !important;
   }
 }
+
+/* Blog post: contents sidebar + reading column on desktop */
+.blog-toc {
+  margin-bottom: 2.5rem;
+}
+@media (min-width: 1024px) {
+  .blog-layout {
+    display: grid;
+    grid-template-columns: 260px minmax(0, 1fr);
+    column-gap: clamp(3rem, 6vw, 6rem);
+    align-items: start;
+  }
+  .blog-toc {
+    position: sticky;
+    top: calc(6rem + 2rem); /* below the 6rem sticky header */
+    margin-bottom: 0;
+    max-height: calc(100vh - 10rem);
+    overflow-y: auto;
+  }
+  .blog-toc ol {
+    font-size: 0.9rem !important;
+    line-height: 1.5 !important;
+  }
+  .blog-toc li {
+    margin-bottom: 0.7rem;
+  }
+}

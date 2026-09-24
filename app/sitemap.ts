@@ -1,6 +1,7 @@
 import { MetadataRoute } from 'next'
 import { SECTIONS } from './data/sections'
 import { LANDING_PAGES } from './data/landingPages'
+import { BLOG_POSTS } from './data/blogs'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://www.nexonalabs.com'
@@ -24,6 +25,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: page.priority ?? 0.9,
   }))
 
+  // Blog posts — lastModified is the post's own date, not the build time, so
+  // the signal only moves when the copy does.
+  const blogUrls = BLOG_POSTS.map((post) => ({
+    url: `${baseUrl}/blogs/${post.slug}`,
+    lastModified: new Date(post.updated ?? post.published),
+    changeFrequency: 'monthly' as const,
+    priority: 0.8,
+  }))
+
   return [
     {
       url: baseUrl,
@@ -37,7 +47,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'weekly',
       priority: 0.8,
     },
+    {
+      url: `${baseUrl}/blogs`,
+      lastModified,
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
     ...landingUrls,
+    ...blogUrls,
     ...projectUrls,
   ]
 }

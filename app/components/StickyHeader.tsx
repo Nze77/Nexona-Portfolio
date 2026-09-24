@@ -15,6 +15,7 @@ if (typeof window !== 'undefined') {
 /** An entry with no `href` opens the contact overlay instead of navigating. */
 const NAV_LINKS: { name: string; href?: string }[] = [
     { name: 'Projects', href: '/projects' },
+    { name: 'Blogs', href: '/blogs' },
     { name: 'Contact' }
 ]
 
@@ -483,6 +484,9 @@ export default function StickyHeader({
 
                             <Link href="/projects" style={navItemStyle}>
                                 Projects
+                            </Link>
+                            <Link href="/blogs" style={navItemStyle}>
+                                Blogs
                             </Link>
                             <button
                                 type="button"
