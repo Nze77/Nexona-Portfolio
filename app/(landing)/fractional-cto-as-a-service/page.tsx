@@ -509,7 +509,7 @@ export default function FractionalCtoAsAServicePage() {
                         {[
                             {
                                 title: 'Startups with no technical co-founder',
-                                body: <>You are paying an agency and cannot tell whether the invoice is honest or the architecture is sane. We sit on your side of that table. If the build itself needs rescuing, <Link href="/software-development-agency-mumbai" style={inlineLink}>our engineering team</Link> can pick it up — but the diagnosis comes first and stays independent.</>
+                                body: <>You are paying an agency and cannot tell whether the invoice is honest or the architecture is sane. We sit on your side of that table. If the build itself needs rescuing, <Link href="/software-development-agency-mumbai" style={inlineLink}>our engineering team</Link> can pick it up — web, or a <Link href="/mobile-app-development-company-in-mumbai" style={inlineLink}>mobile app MVP</Link> — but the diagnosis comes first and stays independent.</>
                             },
                             {
                                 title: 'Companies scaling an engineering team',

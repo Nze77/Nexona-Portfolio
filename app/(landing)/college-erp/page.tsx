@@ -98,7 +98,14 @@ export default function CollegeErpPage() {
                         You buy campus software. Then you spend a year teaching your college to work the way the
                         software thinks a college works. We do it the other way round — admissions, fees,
                         attendance, timetables, exams, hostel, the reports NAAC will ask for — built the way you
-                        already run. On a phone, in a browser, as an app for parents. Custom, and still
+                        already run. On a phone, in a browser, as{' '}
+                        <Link
+                            href="/mobile-app-development-company-in-mumbai"
+                            style={{ color: 'inherit', textDecoration: 'underline', textUnderlineOffset: '3px' }}
+                        >
+                            a mobile app for parents
+                        </Link>
+                        . Custom, and still
                         affordable for one institution rather than a whole trust, which sounds like a
                         contradiction until you see what per-student licensing does to your budget.
                     </p>

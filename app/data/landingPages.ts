@@ -41,6 +41,9 @@ export interface LandingPage {
     priority?: number
     /** Target keywords for the <meta keywords> tag. */
     keywords?: string[]
+    /** Which Footer column the link sits in. Required so a new page can never
+     *  silently land in the wrong place — pick the one a visitor would look in. */
+    footerGroup: 'services' | 'solutions' | 'local'
     /** Short label used for the internal Footer link. Falls back to title. */
     navLabel?: string
     /** OpenGraph/Twitter overrides. Fall back to title/description when omitted. */
@@ -64,6 +67,7 @@ export interface LandingPage {
 export const LANDING_PAGES: LandingPage[] = [
     {
         slug: 'software-development-agency-mumbai',
+        footerGroup: 'local',
         title: 'Software Agency in Mumbai | Custom Software Development – Nexona',
         description:
             'Nexona is a software agency in Mumbai building custom web apps, AI agents, automations, and full-stack software for growing businesses.',
@@ -101,6 +105,7 @@ export const LANDING_PAGES: LandingPage[] = [
         // no shared H1/H2 phrasing — the two support each other rather than
         // competing for the same SERP.
         slug: 'software-development-company-in-navi-mumbai',
+        footerGroup: 'local',
         title: 'Software Development Company in Navi Mumbai | Custom Software – Nexona',
         updated: '2026-09-23',
         description:
@@ -170,6 +175,7 @@ export const LANDING_PAGES: LandingPage[] = [
         // the BUILD cluster (someone who already wants an agent engineered).
         // No shared H1/H2 phrasing, no shared keywords, no shared serviceType.
         slug: 'ai-automation-agency',
+        footerGroup: 'services',
         title: 'AI Automation Agency | Workflow & Process Automation – Nexona',
         description:
             'Nexona is an AI automation agency that maps how your business actually works, then automates the repeat work — data entry, approvals, reports and follow-ups.',
@@ -223,6 +229,7 @@ export const LANDING_PAGES: LandingPage[] = [
         // is a NAP mismatch against the Google Business Profile and costs more
         // than the term is worth. The page copy says the same thing out loud.
         slug: 'ai-automation-company-in-thane',
+        footerGroup: 'local',
         title: 'AI Automation Company in Thane | Nexona – 50+ Systems',
         updated: '2026-09-21',
         description:
@@ -282,6 +289,72 @@ export const LANDING_PAGES: LandingPage[] = [
         },
     },
     {
+        // LOCAL page of the mobile cluster. Owns "mobile app development company
+        // in mumbai" (primary) + "app development company in mumbai", "custom
+        // mobile app development" and the Thane / Navi Mumbai variants. The
+        // future non-geographic services page owns the "India" and "services"
+        // head terms — keep those out of this title. No pricing figures.
+        slug: 'mobile-app-development-company-in-mumbai',
+        footerGroup: 'local',
+        title: 'Mobile App Development Company in Mumbai | Nexona',
+        updated: '2026-09-26',
+        description:
+            'Mobile app development company in Mumbai building Android and iOS apps in Flutter, React Native and native code. You own the code. Our D2C app lifted AOV 57%.',
+        priority: 0.95,
+        navLabel: 'Mobile App Development Mumbai',
+        keywords: [
+            'mobile app development company in Mumbai',
+            'app development company in Mumbai',
+            'mobile app developers in Mumbai',
+            'custom mobile app development',
+            'custom mobile app development Mumbai',
+            'android app development company Mumbai',
+            'ios app development company Mumbai',
+            'flutter app development company Mumbai',
+            'react native app development Mumbai',
+            'ecommerce app development Mumbai',
+            'enterprise mobile app development',
+            'mobile app development company in Navi Mumbai',
+            'mobile app development company in Thane',
+            'app development company in Thane',
+        ],
+        og: {
+            title: 'Mobile App Development Company in Mumbai | Nexona',
+            description:
+                'Android and iOS apps, plus the backend and admin panel behind them. Code and store accounts in your name from day one.',
+        },
+        business: {
+            areaServedCity: 'Mumbai',
+            // Named in the page copy (MUMBAI_AREAS in page.tsx), so the schema
+            // is corroborated by the body rather than claiming unseen reach.
+            alsoServed: [
+                'Andheri',
+                'Goregaon',
+                'Malad',
+                'Borivali',
+                'Powai',
+                'Bandra Kurla Complex',
+                'Lower Parel',
+                'Worli',
+                'Thane',
+                'Navi Mumbai',
+                'Vashi',
+                'Airoli',
+                'Belapur',
+            ],
+            serviceType: [
+                'Mobile App Development',
+                'Custom Mobile App Development',
+                'Android App Development',
+                'iOS App Development',
+                'Flutter App Development',
+                'React Native App Development',
+                'Enterprise Mobile App Development',
+                'Ecommerce App Development',
+            ],
+        },
+    },
+    {
         // BUILD-intent page. Someone landing here has already decided they want
         // an AI agent engineered; they are comparing vendors, not deciding
         // whether to automate. That is why it is separate from
@@ -291,6 +364,7 @@ export const LANDING_PAGES: LandingPage[] = [
         //   ai-agent-development-company → agent/RAG/LLM engineering language
         // Non-geographic, so it supports the city pages rather than competing.
         slug: 'ai-agent-development-company',
+        footerGroup: 'services',
         title: 'AI Agent Development Company | Custom AI Agents – Nexona',
         description:
             'Nexona is an AI agent development company that builds custom AI agents in code — your data, your infrastructure, your codebase at the end of it. Not rented drag-and-drop workflows.',
@@ -337,6 +411,7 @@ export const LANDING_PAGES: LandingPage[] = [
         // operations systems for startups and SMEs. Non-geographic, so it
         // supports the city pages rather than competing with them.
         slug: 'business-management-software-development',
+        footerGroup: 'services',
         title: 'Business Management Software Development Company | Nexona',
         description:
             'Nexona builds custom business management software for startups and SMEs outgrowing Excel — unifying sales, inventory, and operations into one system.',
@@ -385,6 +460,7 @@ export const LANDING_PAGES: LandingPage[] = [
     },
     {
         slug: 'college-erp',
+        footerGroup: 'solutions',
         title: 'Custom College & School ERP Software Development | Nexona',
         description:
             'Custom ERP software for colleges and schools — admissions, fees, attendance, exams, hostel and NAAC-ready reports. Affordable, mobile and app ready. Get a free quote.',
@@ -414,6 +490,7 @@ export const LANDING_PAGES: LandingPage[] = [
     },
     {
         slug: 'manufacturing-erp',
+        footerGroup: 'solutions',
         title: 'Custom Manufacturing ERP Software Development | Nexona',
         description:
             'Custom ERP software for manufacturers — production, inventory, BOM, quality, dispatch and GST. Affordable, mobile and app ready, built around your factory. Get a free quote.',
@@ -443,6 +520,7 @@ export const LANDING_PAGES: LandingPage[] = [
     },
     {
         slug: 'customer-retention-management-software',
+        footerGroup: 'solutions',
         title: 'Customer Retention Management Software - Reduce Churn, Keep Customers',
         description:
             'Customer retention management software that spots churn risk before the cancellation email. Health scores, automated alerts, re-engagement workflows and renewal tracking.',
@@ -474,6 +552,7 @@ export const LANDING_PAGES: LandingPage[] = [
     },
     {
         slug: 'erp-systems-for-manufacturers',
+        footerGroup: 'local',
         title: 'ERP Software Company in Mumbai for Manufacturers | Nexona',
         description:
             'ERP software company in Mumbai trusted by manufacturers. Nexona covers production, GST, inventory & compliance. Thane, Bhiwandi, Navi Mumbai. Book a demo.',
@@ -509,6 +588,7 @@ export const LANDING_PAGES: LandingPage[] = [
         // BUILD, this one sells the DECISION-MAKING that happens before a build.
         // No pricing figures anywhere — engagements are scoped per client.
         slug: 'fractional-cto-as-a-service',
+        footerGroup: 'services',
         title: 'Fractional CTO as a Service | Nexona Labs',
         updated: '2026-09-19',
         description:

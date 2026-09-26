@@ -63,15 +63,20 @@ export const BUSINESS_EMAIL = 'info@nexonalabs.com'
 /** Exact coordinates of the Google Business Profile pin. */
 export const BUSINESS_GEO = { latitude: 19.180716, longitude: 72.833317 } as const
 
+/** Review profiles, linked from visible "read our reviews" UI as well as
+ *  `sameAs` below — one source so the two never point at different URLs. */
+export const GBP_URL = 'https://maps.app.goo.gl/D7UJVuVm3ckSibtw5'
+export const CLUTCH_URL = 'https://clutch.co/profile/nexona-labs'
+
 /** Profiles that prove this entity is the same one Google already knows about.
  *  The Google Business Profile share link is the important one — add it as
  *  soon as you have it (GBP → Share → copy link). */
 export const BUSINESS_SAME_AS: string[] = [
     // Google Business Profile (canonical share link).
-    'https://maps.app.goo.gl/D7UJVuVm3ckSibtw5',
+    GBP_URL,
     // Third-party directory listings. These carry more weight than own-brand
     // socials: they are independent records of the same entity.
-    'https://clutch.co/profile/nexona-labs',
+    CLUTCH_URL,
     'https://techbehemoths.com/company/nexona-labs',
     'https://themanifest.com/company/nexona-labs',
     'https://www.linkedin.com/company/nexonalabs',

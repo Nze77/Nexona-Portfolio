@@ -40,6 +40,7 @@ const SERVICES: ServiceLink[] = [
     },
     { name: 'Custom CRM', href: '/customer-retention-management-software' },
     { name: 'Software Development', href: '/software-development-agency-mumbai' },
+    { name: 'Mobile App Development', href: '/mobile-app-development-company-in-mumbai' },
     { name: 'Website Development' },
     { name: 'Automations', href: '/ai-automation-agency' },
 ]

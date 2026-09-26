@@ -416,7 +416,7 @@ export default function NaviMumbaiSoftwarePage() {
                                 'Custom software built around your workflow, not a template',
                                 'Business management systems — orders, customers, stock, reporting',
                                 'Process automation for the work nobody should still do by hand',
-                                'Web and mobile apps your team will actually open',
+                                <>Web and <Link href="/mobile-app-development-company-in-mumbai" style={inlineLink}>mobile apps</Link> your team will actually open</>,
                                 'AI agents that answer, qualify, and update your systems',
                                 'Integrations with Tally, payment gateways, and what you already run'
                             ].map((item, i) => (

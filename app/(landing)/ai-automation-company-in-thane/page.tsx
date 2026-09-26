@@ -999,7 +999,8 @@ export default function AiAutomationCompanyInThanePage() {
                                 Nearby:{' '}
                                 <Link href="/software-development-agency-mumbai" style={inlineLink}>Mumbai</Link>{' · '}
                                 <Link href="/software-development-company-in-navi-mumbai" style={inlineLink}>Navi Mumbai</Link>{' · '}
-                                <Link href="/erp-systems-for-manufacturers" style={inlineLink}>ERP for MMR manufacturers</Link>
+                                <Link href="/erp-systems-for-manufacturers" style={inlineLink}>ERP for MMR manufacturers</Link>{' · '}
+                                <Link href="/mobile-app-development-company-in-mumbai" style={inlineLink}>Mobile apps</Link>
                             </p>
                         </motion.div>
                     </div>

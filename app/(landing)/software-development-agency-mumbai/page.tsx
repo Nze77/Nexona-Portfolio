@@ -221,7 +221,7 @@ export default function MumbaiAgencyPage() {
                         </motion.p>
                         <motion.ul variants={staggerContainer} style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                             {[
-                                'Custom web and mobile applications for Mumbai businesses',
+                                <>Custom web applications, and <Link href="/mobile-app-development-company-in-mumbai" style={inlineLink}>mobile app development</Link> for Mumbai businesses</>,
                                 'Scalable cloud architecture and infrastructure',
                                 'Secure portals for fintech, real estate, and enterprise clients',
                                 <>ERP, CRM, and <Link href="/business-management-software-development" style={inlineLink}>internal business management software</Link></>,

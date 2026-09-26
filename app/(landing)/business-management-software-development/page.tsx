@@ -683,7 +683,7 @@ export default function BusinessManagementSoftwarePage() {
                             },
                             {
                                 title: 'Service & field businesses',
-                                body: <>Scheduling, technician assignment, on-site status updates, billing off completed work. Custom operations software that runs on the phone in a van, not just the laptop in the office. Customer side usually goes to an <Link href="/projects/ai-support-hub" style={inlineLink}>AI support hub</Link>.</>
+                                body: <>Scheduling, technician assignment, on-site status updates, billing off completed work. Custom operations software that runs as a <Link href="/mobile-app-development-company-in-mumbai" style={inlineLink}>mobile app</Link> on the phone in a van, not just the laptop in the office. Customer side usually goes to an <Link href="/projects/ai-support-hub" style={inlineLink}>AI support hub</Link>.</>
                             },
                             {
                                 title: 'Retail & D2C brands',

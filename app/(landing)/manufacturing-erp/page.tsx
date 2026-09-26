@@ -98,7 +98,14 @@ export default function ManufacturingErpPage() {
                         You buy an ERP. Then you spend a year teaching your factory to work like the ERP
                         thinks a factory works. We do it the other way round — production, inventory,
                         purchase, quality, dispatch, GST, built the way your plant already runs. On a phone,
-                        in a browser, as an app. Custom, and still affordable, which most people assume is a
+                        in a browser, as{' '}
+                        <Link
+                            href="/mobile-app-development-company-in-mumbai"
+                            style={{ color: 'inherit', textDecoration: 'underline', textUnderlineOffset: '3px' }}
+                        >
+                            a mobile app
+                        </Link>
+                        . Custom, and still affordable, which most people assume is a
                         contradiction until you look at what a boxed licence actually costs you every year.
                     </p>
                     <div style={{ marginTop: '2.5rem', display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
