@@ -3,6 +3,7 @@
 import { useRef, useEffect, useState } from 'react'
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
+import Link from 'next/link'
 import LandingHeader from '../../components/LandingHeader'
 import ContactOverlay from '../../components/ContactOverlay'
 import ClientStrip from '../../components/ClientStrip'
@@ -11,11 +12,67 @@ import ParticleEffect from '../../components/ParticleEffect'
 import { useContactPopup } from '../../lib/useContactPopup'
 import { getVisitorContext } from '../../lib/visitorContext'
 import { DARK, SAND, INTER } from '../../lib/constants'
-import { FAQ_ITEMS } from './content'
+import {
+    TOC,
+    SIGNS,
+    MODULES,
+    GST_ITEMS,
+    INDUSTRIES,
+    INDUSTRY_TABLE,
+    BELTS,
+    COMPARISON,
+    CHOOSE,
+    IMPLEMENTATION,
+    MIGRATION,
+    SEE_IT,
+    COST_DRIVERS,
+    FAQ_ITEMS,
+} from './content'
 
 // Slightly whiter than SAND (#E8E2DA) — used for body/heading text on this
 // page's dark sections. Sand backgrounds, borders, and dots keep SAND.
 const TEXT = '#F2EEE8'
+const PANEL = '#25221F'
+const MONTSERRAT = 'var(--font-montserrat), sans-serif'
+const BORDER = 'rgba(232,223,211,0.1)'
+
+// Inline text links: inherit the surrounding copy's colour so they read as part
+// of the sentence, with a subtle underline to stay obviously clickable.
+const inlineLink: React.CSSProperties = {
+    color: 'inherit',
+    textDecoration: 'underline',
+    textDecorationThickness: '1px',
+    textUnderlineOffset: '3px'
+}
+
+const eyebrow: React.CSSProperties = {
+    fontFamily: INTER,
+    fontSize: '0.85rem',
+    letterSpacing: '0.2em',
+    textTransform: 'uppercase',
+    opacity: 0.6,
+    fontWeight: 700,
+    display: 'block',
+    marginBottom: '1.5rem'
+}
+
+const h2Style: React.CSSProperties = {
+    fontFamily: MONTSERRAT,
+    fontSize: 'clamp(2rem, 4vw, 3.5rem)',
+    fontWeight: 800,
+    lineHeight: 1.1,
+    textTransform: 'uppercase',
+    letterSpacing: '-0.02em',
+    margin: '0 0 2rem 0'
+}
+
+const lead: React.CSSProperties = {
+    fontFamily: INTER,
+    opacity: 0.8,
+    lineHeight: 1.8,
+    fontSize: '1.1rem',
+    margin: 0
+}
 
 export default function ERPPage() {
     const heroRef = useRef<HTMLElement>(null)
@@ -30,7 +87,7 @@ export default function ERPPage() {
     const [isMobile, setIsMobile] = useState(false)
     const [openFaq, setOpenFaq] = useState<number | null>(0)
 
-    // Form states for Section 14
+    // Form state for the closing assessment section
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -106,11 +163,34 @@ export default function ERPPage() {
         }
     }
 
+    const sectionPad = isMobile ? '6rem 5%' : '10rem 8%'
+
+    // Shared table cell styling for the three comparison-style tables. Tables
+    // scroll horizontally on narrow screens rather than squeezing columns.
+    const cell = (last: boolean, dark: boolean): React.CSSProperties => ({
+        padding: isMobile ? '1rem 1.25rem' : '1.25rem 1.75rem',
+        fontSize: '0.98rem',
+        lineHeight: 1.6,
+        textAlign: 'left',
+        verticalAlign: 'top',
+        borderBottom: last ? 'none' : `1px solid ${dark ? 'rgba(232,223,211,0.1)' : 'rgba(46,42,38,0.12)'}`
+    })
+    const headCell = (dark: boolean): React.CSSProperties => ({
+        textAlign: 'left',
+        padding: isMobile ? '1rem 1.25rem' : '1.25rem 1.75rem',
+        fontFamily: MONTSERRAT,
+        fontSize: '0.9rem',
+        fontWeight: 800,
+        textTransform: 'uppercase',
+        letterSpacing: '0.02em',
+        borderBottom: `2px solid ${dark ? 'rgba(232,223,211,0.2)' : 'rgba(46,42,38,0.2)'}`
+    })
+
     return (
         <main style={{ backgroundColor: DARK, color: TEXT, minHeight: '100vh', overflowX: 'clip' }}>
             <LandingHeader theme="dark" onContactClick={openContact} />
 
-            {/* 1. Hero Section (H1) */}
+            {/* ── Hero (H1) ────────────────────────────────────────────────── */}
             <section
                 ref={heroRef}
                 style={{
@@ -128,7 +208,7 @@ export default function ERPPage() {
                 <motion.div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, y, zIndex: 0 }}>
                     <Image
                         src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2000&auto=format&fit=crop"
-                        alt="Manufacturing ERP System"
+                        alt="Manufacturing plant running ERP software"
                         fill
                         style={{ objectFit: 'cover', opacity: 0.09 }}
                         priority
@@ -149,7 +229,6 @@ export default function ERPPage() {
                         gap: isMobile ? '2.5rem' : '3.5rem',
                     }}
                 >
-                    {/* Top: text (left) + image (right) */}
                     <div
                         style={{
                             display: 'grid',
@@ -158,52 +237,31 @@ export default function ERPPage() {
                             gap: isMobile ? '3rem' : '5rem',
                         }}
                     >
-                        {/* Left: heading + copy */}
                         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
                             <h1
                                 style={{
-                                    fontFamily: "var(--font-montserrat), sans-serif",
-                                    fontSize: 'clamp(1.4rem, 2.7vw, 2.5rem)',
+                                    fontFamily: MONTSERRAT,
+                                    fontSize: 'clamp(1.6rem, 3vw, 2.8rem)',
                                     fontWeight: 800,
                                     lineHeight: 1.15,
                                     textTransform: 'uppercase',
                                     letterSpacing: '-0.03em',
-                                    whiteSpace: isMobile ? 'normal' : 'nowrap',
                                     margin: 0
                                 }}
                             >
-                                ERP Software Company <br /> in Mumbai for Manufacturers
+                                Manufacturing ERP Software, <br /> Built in Mumbai
                             </h1>
 
                             <div style={{ marginTop: '2.5rem', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-                                <p
-                                    style={{
-                                        fontFamily: INTER,
-                                        fontSize: isMobile ? '1.05rem' : '1.2rem',
-                                        color: '#FFFFFF',
-                                        letterSpacing: '0.01em',
-                                        lineHeight: 1.7,
-                                        margin: 0
-                                    }}
-                                >
-                                    Nexona is an ERP software company in Mumbai that builds one connected system across production, inventory, purchase, finance, and compliance - shaped around how your factory actually works, not a fixed template.
+                                <p style={{ fontFamily: INTER, fontSize: isMobile ? '1.05rem' : '1.2rem', color: '#FFFFFF', letterSpacing: '0.01em', lineHeight: 1.7, margin: 0 }}>
+                                    ERP software for manufacturing that fits the plant you already run. Production, inventory, purchase, quality, costing, and GST in one system — built around your process, not a template you bend to fit.
                                 </p>
-                                <p
-                                    style={{
-                                        fontFamily: INTER,
-                                        fontSize: isMobile ? '1.05rem' : '1.2rem',
-                                        color: '#FFFFFF',
-                                        letterSpacing: '0.01em',
-                                        lineHeight: 1.7,
-                                        margin: 0
-                                    }}
-                                >
-                                    Most manufacturers here know the cost of disconnected systems: three people give three answers about what&apos;s on the floor. Nexona closes that gap by putting every department on the same numbers, so decisions rest on what is true - not on who sent the last WhatsApp update.
+                                <p style={{ fontFamily: INTER, fontSize: isMobile ? '1.05rem' : '1.2rem', color: '#FFFFFF', letterSpacing: '0.01em', lineHeight: 1.7, margin: 0 }}>
+                                    Nexona is an ERP software company in Mumbai building ERP for manufacturers in pharma, chemicals, textiles, engineering, and auto components. We walk your floor first. Then we build.
                                 </p>
                             </div>
                         </div>
 
-                        {/* Right: hero image */}
                         <div
                             style={{
                                 position: 'relative',
@@ -216,7 +274,7 @@ export default function ERPPage() {
                         >
                             <Image
                                 src="/erp.png"
-                                alt="ERP software dashboard for Mumbai manufacturers"
+                                alt="Manufacturing ERP dashboard showing production, inventory and dispatch"
                                 fill
                                 priority
                                 sizes="(max-width: 768px) 0px, 52vw"
@@ -225,15 +283,14 @@ export default function ERPPage() {
                         </div>
                     </div>
 
-                    {/* Bottom: bullet points in a single row, full width */}
                     <div style={{ display: 'flex', flexWrap: isMobile ? 'wrap' : 'nowrap', justifyContent: 'flex-start', gap: '1.5rem' }}>
                         {[
-                            'Production visibility improves',
-                            'Approvals clear same morning',
-                            'Cost factors explained upfront'
-                        ].map((bullet, i) => (
+                            'One live number for stock',
+                            'Works on the shop-floor phone',
+                            'You own the code'
+                        ].map((bullet) => (
                             <div
-                                key={i}
+                                key={bullet}
                                 style={{
                                     display: 'flex',
                                     alignItems: 'center',
@@ -246,255 +303,108 @@ export default function ERPPage() {
                                 }}
                             >
                                 <span style={{ width: '8px', height: '8px', backgroundColor: SAND, borderRadius: '50%', flexShrink: 0 }} />
-                                <h3 style={{ fontFamily: INTER, fontSize: '0.9rem', fontWeight: 600, letterSpacing: '0.05em', textTransform: 'uppercase', margin: 0 }}>
+                                <span style={{ fontFamily: INTER, fontSize: '0.9rem', fontWeight: 600, letterSpacing: '0.05em', textTransform: 'uppercase' }}>
                                     {bullet}
-                                </h3>
+                                </span>
                             </div>
                         ))}
                     </div>
                 </motion.div>
             </section>
 
-            {/* 1b. Our Clients */}
             <ClientStrip />
 
-            {/* 2. Why Mumbai Manufacturers Need ERP to Scale Faster (H2) */}
-            <section style={{ backgroundColor: '#25221F', padding: isMobile ? '6rem 5%' : '10rem 8%', borderTop: `1px solid rgba(232,223,211,0.1)` }}>
-                <div style={{ maxWidth: '1400px', margin: '0 auto', display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'flex-start', gap: isMobile ? '3rem' : '6rem' }}>
-                    <div style={{ flex: 1.2 }}>
-                        <span style={{ fontFamily: INTER, fontSize: '0.85rem', letterSpacing: '0.2em', textTransform: 'uppercase', opacity: 0.6, fontWeight: 700, display: 'block', marginBottom: '1.5rem' }}>Scale Operations</span>
-                        <h2 style={{
-                            fontFamily: "var(--font-montserrat), sans-serif",
-                            fontSize: 'clamp(2rem, 4vw, 3.5rem)',
-                            fontWeight: 800,
-                            lineHeight: 1.1,
-                            textTransform: 'uppercase',
-                            letterSpacing: '-0.02em',
-                            margin: '0 0 2rem 0'
-                        }}>
-                            Why Mumbai Manufacturers Need ERP to Scale Faster
-                        </h2>
-                        <p style={{ fontFamily: INTER, opacity: 0.8, lineHeight: 1.8, fontSize: '1.1rem', margin: 0 }}>
-                            The manufacturing belt through Thane, Bhiwandi, Navi Mumbai, and Vasai still runs on Tally and Excel trackers never built for this load. A small unit manages. Add a second warehouse, a third product line, or a compliance deadline you cannot miss, and that approach buckles. What gets you is rarely one big breakdown - it&apos;s the slow stack of small failures bleeding margin every quarter. Working as an ERP software company in Mumbai, Nexona sees the same sequence in plant after plant: the systems that carried you to ₹10 crore are the ones holding you back at ₹30.
-                        </p>
-                    </div>
-
-                    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '1rem', width: '100%' }}>
-                        {[
-                            'Warehouse and floor stock gaps',
-                            'Approval delays stall purchase',
-                            'No real-time production view',
-                            'Compliance gaps in GST filings',
-                            'Systems not built to scale up'
-                        ].map((bullet, i) => (
-                            <div
-                                key={i}
-                                style={{
-                                    border: '1px solid rgba(232,223,211,0.1)',
-                                    borderRadius: '16px',
-                                    padding: '1.5rem',
-                                    backgroundColor: 'rgba(232,223,211,0.02)',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: '1.25rem'
-                                }}
-                            >
-                                <span style={{ color: '#D97706', fontSize: '1.25rem', fontWeight: 'bold' }}>!</span>
-                                <h3 style={{ fontFamily: INTER, fontSize: '1.05rem', fontWeight: 600, margin: 0, color: TEXT }}>
-                                    {bullet}
-                                </h3>
-                            </div>
-                        ))}
-                    </div>
+            {/* ── On this page — jump links ────────────────────────────────── */}
+            <nav aria-label="On this page" style={{ backgroundColor: PANEL, borderTop: `1px solid ${BORDER}`, borderBottom: `1px solid ${BORDER}`, padding: isMobile ? '1.5rem 5%' : '1.75rem 8%' }}>
+                <div style={{ maxWidth: '1400px', margin: '0 auto', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '0.6rem 1.5rem' }}>
+                    <span style={{ fontFamily: INTER, fontSize: '0.75rem', letterSpacing: '0.2em', textTransform: 'uppercase', opacity: 0.5, fontWeight: 700 }}>On this page</span>
+                    {TOC.map((item) => (
+                        <a key={item.id} href={`#${item.id}`} style={{ fontFamily: INTER, fontSize: '0.92rem', color: TEXT, opacity: 0.85, textDecoration: 'none', borderBottom: `1px solid rgba(232,223,211,0.25)` }}>
+                            {item.label}
+                        </a>
+                    ))}
                 </div>
-            </section>
+            </nav>
 
-            {/* 3. What Nexona Solves for Local Buyers Today (H2) */}
-            <section ref={thirdSectionRef} style={{ backgroundColor: SAND, color: DARK, padding: isMobile ? '6rem 5%' : '10rem 8%' }}>
-                <div style={{ maxWidth: '1400px', margin: '0 auto', display: 'flex', flexDirection: isMobile ? 'column-reverse' : 'row', alignItems: 'center', gap: isMobile ? '4rem' : '8rem' }}>
-                    <div style={{ flex: 1, width: '100%', position: 'relative', aspectRatio: '4/5', borderRadius: '24px', overflow: 'hidden' }}>
-                        <Image
-                            src="https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=1200&auto=format&fit=crop"
-                            alt="Nexona software engineers collaborating on custom ERP dashboards"
-                            fill
-                            style={{ objectFit: 'cover' }}
-                        />
-                    </div>
-
-                    <div style={{ flex: 1.2 }}>
-                        <span style={{ fontFamily: INTER, fontSize: '0.85rem', letterSpacing: '0.2em', textTransform: 'uppercase', opacity: 0.6, fontWeight: 700, display: 'block', marginBottom: '1.5rem' }}>Eliminate Friction</span>
-                        <h2 style={{
-                            fontFamily: "var(--font-montserrat), sans-serif",
-                            fontSize: 'clamp(2rem, 4vw, 3.5rem)',
-                            fontWeight: 800,
-                            lineHeight: 1.1,
-                            textTransform: 'uppercase',
-                            letterSpacing: '-0.02em',
-                            margin: '0 0 2rem 0'
-                        }}>
-                            What Nexona, an ERP Software Company in Mumbai, Solves for Local Buyers
-                        </h2>
-                        <p style={{ fontFamily: INTER, opacity: 0.8, lineHeight: 1.8, fontSize: '1.1rem', marginBottom: '2.5rem' }}>
-                            ERP solutions for manufacturers are not really about software - they are about the work your team stops doing. Put sales, production, purchase, and finance on one data source and the friction between them mostly disappears. Nexona builds its ERP software for manufacturing industry clients around results you can point to, not features you have to believe in.
-                        </p>
-
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', marginBottom: '2.5rem' }}>
-                            {[
-                                'Sales, production, purchase, and finance work off the same live data',
-                                'Inventory updates as material moves - kills stock mismatch errors',
-                                'Delivery status stays visible from order confirmation to dispatch',
-                                'GST filing, e-invoicing, and compliance reports pull from your transactions',
-                                'Tally, Excel, and paper registers give way to one process'
-                            ].map((bullet, i) => (
-                                <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem' }}>
-                                    <div style={{ width: '8px', height: '8px', backgroundColor: DARK, borderRadius: '50%', marginTop: '0.55rem', flexShrink: 0 }} />
-                                    <h3 style={{ fontFamily: INTER, fontSize: '1.05rem', fontWeight: 600, margin: 0, lineHeight: 1.5 }}>
-                                        {bullet}
-                                    </h3>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* 3b. What Is Manufacturing ERP Software? (H2 — definition block)
-                The opening sentence is deliberately kept to ~40 words and answers the
-                question head-on, which is the shape Google lifts into featured snippets
-                and AI Overviews. Do not pad it. */}
-            <section style={{ backgroundColor: DARK, color: TEXT, padding: isMobile ? '6rem 5%' : '9rem 8%' }}>
+            {/* ── 1. What Is Manufacturing ERP Software? (definition block) ─────
+                The opening sentence is kept to ~40 words and answers the question
+                head-on — the shape Google lifts into featured snippets and AI
+                Overviews. Do not pad it. */}
+            <section id="what-is-manufacturing-erp" style={{ backgroundColor: DARK, color: TEXT, padding: isMobile ? '6rem 5%' : '9rem 8%' }}>
                 <div style={{ maxWidth: '900px', margin: '0 auto' }}>
-                    <span style={{ fontFamily: INTER, fontSize: '0.85rem', letterSpacing: '0.2em', textTransform: 'uppercase', opacity: 0.6, fontWeight: 700, display: 'block', marginBottom: '1.5rem' }}>Definition</span>
-                    <h2 style={{
-                        fontFamily: "var(--font-montserrat), sans-serif",
-                        fontSize: 'clamp(2rem, 4vw, 3.2rem)',
-                        fontWeight: 800,
-                        lineHeight: 1.1,
-                        textTransform: 'uppercase',
-                        letterSpacing: '-0.02em',
-                        margin: '0 0 2.5rem 0'
-                    }}>
+                    <span style={eyebrow}>Definition</span>
+                    <h2 style={{ ...h2Style, fontSize: 'clamp(2rem, 4vw, 3.2rem)', margin: '0 0 2.5rem 0' }}>
                         What Is Manufacturing ERP Software?
                     </h2>
 
                     <div style={{ borderLeft: `3px solid ${SAND}`, paddingLeft: isMobile ? '1.5rem' : '2.5rem', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                         <p style={{ fontFamily: INTER, fontSize: isMobile ? '1.15rem' : '1.35rem', fontWeight: 500, lineHeight: 1.6, margin: 0, color: TEXT }}>
-                            Manufacturing ERP software is a single system that connects production, inventory, purchase, sales, finance, and compliance so every department works from the same live data.
+                            Manufacturing ERP software is a single system that connects production, inventory, purchase, sales, quality, finance, and GST, so every department in a factory works from the same live data.
                         </p>
-                        <p style={{ fontFamily: INTER, fontSize: '1.1rem', opacity: 0.8, lineHeight: 1.8, margin: 0 }}>
-                            Instead of running Tally, Excel, and paper registers separately, a manufacturer plans production, tracks stock, controls costs, and files GST from one platform - cutting errors, delays, and manual reconciliation.
+                        <p style={lead}>
+                            Plan a run, and the system already knows whether the material is in stores. Issue material, and stock drops. Dispatch, and the invoice and e-way bill come off the same entry. No one retypes anything into a second file.
                         </p>
                     </div>
+
+                    <h3 style={{ fontFamily: MONTSERRAT, fontSize: '1.4rem', fontWeight: 700, margin: '4rem 0 1.25rem 0' }}>
+                        Manufacturing ERP vs accounting software like Tally
+                    </h3>
+                    <p style={{ ...lead, marginBottom: '1.25rem' }}>
+                        Tally is accounting and inventory software, and good at it. It does not plan production, run job cards, hold batch genealogy, schedule machines, or record a quality rejection against a vendor. That is why most plants end up with Tally in accounts and a dozen spreadsheets everywhere else.
+                    </p>
+                    <p style={lead}>
+                        An ERP for manufacturing industry covers those gaps. Tally can stay for the books — the ERP syncs with it — while production, stores, and planning move into one place.
+                    </p>
                 </div>
             </section>
 
-            {/* 3c. How to Choose an ERP Software Company in Mumbai (H2) */}
-            <section style={{ backgroundColor: '#25221F', color: TEXT, padding: isMobile ? '6rem 5%' : '10rem 8%', borderTop: `1px solid rgba(232,223,211,0.1)` }}>
+            {/* ── 2. Signs Your Factory Has Outgrown Tally and Excel ───────────── */}
+            <section id="signs-you-need-erp" ref={thirdSectionRef} style={{ backgroundColor: PANEL, padding: sectionPad, borderTop: `1px solid ${BORDER}` }}>
                 <div style={{ maxWidth: '1400px', margin: '0 auto', display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'flex-start', gap: isMobile ? '3rem' : '6rem' }}>
-                    <div style={{ flex: 1.2 }}>
-                        <span style={{ fontFamily: INTER, fontSize: '0.85rem', letterSpacing: '0.2em', textTransform: 'uppercase', opacity: 0.6, fontWeight: 700, display: 'block', marginBottom: '1.5rem' }}>Buyer&apos;s Checklist</span>
-                        <h2 style={{
-                            fontFamily: "var(--font-montserrat), sans-serif",
-                            fontSize: 'clamp(2rem, 4vw, 3.5rem)',
-                            fontWeight: 800,
-                            lineHeight: 1.1,
-                            textTransform: 'uppercase',
-                            letterSpacing: '-0.02em',
-                            margin: '0 0 2rem 0'
-                        }}>
-                            How to Choose an ERP Software Company in Mumbai
+                    <div style={{ flex: 1, position: isMobile ? 'static' : 'sticky', top: '8rem' }}>
+                        <span style={eyebrow}>Diagnosis</span>
+                        <h2 style={h2Style}>
+                            Signs Your Factory Has Outgrown Tally and Excel
                         </h2>
-                        <p style={{ fontFamily: INTER, opacity: 0.8, lineHeight: 1.8, fontSize: '1.1rem', margin: 0 }}>
-                            Not every ERP fits every factory. Before committing to a manufacturing ERP - or the team implementing it - weigh these five things.
+                        <p style={lead}>
+                            Nobody decides to buy an ERP on a quiet Tuesday. It is five small failures, repeating, until someone does the maths on what they cost. If three of these sound familiar, you are there.
                         </p>
                     </div>
 
-                    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '1.25rem', width: '100%' }}>
-                        {[
-                            { title: 'Industry fit', desc: 'does it handle your specific process - batch control for pharma, BOM versioning for engineering, shelf-life for food?' },
-                            { title: 'Local implementation support', desc: 'can the team reach your floor, not just a helpline?' },
-                            { title: 'GST and compliance built in', desc: 'e-invoicing, e-way bills, and IRN handled natively, not bolted on.' },
-                            { title: 'Cloud or on-premise', desc: 'matched to your data needs and plant connectivity.' },
-                            { title: 'Room to scale', desc: 'will it hold a second warehouse or third product line without re-implementation?' }
-                        ].map((item, i) => (
-                            <div
-                                key={i}
-                                style={{
-                                    border: '1px solid rgba(232,223,211,0.1)',
-                                    borderRadius: '16px',
-                                    padding: '1.5rem',
-                                    backgroundColor: 'rgba(232,223,211,0.02)',
-                                    display: 'flex',
-                                    alignItems: 'flex-start',
-                                    gap: '1.25rem'
-                                }}
-                            >
-                                <span style={{ width: '8px', height: '8px', backgroundColor: SAND, borderRadius: '50%', marginTop: '0.55rem', flexShrink: 0 }} />
-                                <div>
-                                    <h3 style={{ fontFamily: INTER, fontSize: '1.05rem', fontWeight: 700, margin: '0 0 0.35rem 0', color: TEXT }}>
-                                        {item.title}
-                                    </h3>
-                                    <p style={{ fontFamily: INTER, fontSize: '0.95rem', opacity: 0.7, lineHeight: 1.6, margin: 0 }}>
-                                        {item.desc}
-                                    </p>
+                    <div style={{ flex: 1.2, display: 'flex', flexDirection: 'column', gap: '1.25rem', width: '100%' }}>
+                        {SIGNS.map((sign, i) => (
+                            <div key={sign.title} style={{ border: `1px solid ${BORDER}`, borderRadius: '16px', padding: '1.75rem', backgroundColor: 'rgba(232,223,211,0.02)' }}>
+                                <div style={{ display: 'flex', alignItems: 'baseline', gap: '1rem', marginBottom: '0.75rem' }}>
+                                    <span style={{ fontFamily: MONTSERRAT, fontWeight: 800, opacity: 0.35 }}>0{i + 1}</span>
+                                    <h3 style={{ fontFamily: INTER, fontSize: '1.1rem', fontWeight: 700, margin: 0, color: TEXT }}>{sign.title}</h3>
                                 </div>
+                                <p style={{ fontFamily: INTER, fontSize: '0.98rem', opacity: 0.72, lineHeight: 1.7, margin: 0 }}>{sign.body}</p>
                             </div>
                         ))}
                     </div>
                 </div>
             </section>
 
-            {/* 4. Core ERP Services Nexona Delivers for Factory Operations (H2) */}
-            <section style={{ backgroundColor: DARK, color: TEXT, padding: isMobile ? '6rem 5%' : '10rem 8%', borderBottom: `1px solid rgba(232,223,211,0.1)` }}>
+            {/* ── 3. ERP Modules for Manufacturing ─────────────────────────────
+                Each H3 is the term people search for that module. One line on
+                what it does, one on what changes on the floor. */}
+            <section id="erp-modules-for-manufacturing" style={{ backgroundColor: DARK, color: TEXT, padding: sectionPad, borderBottom: `1px solid ${BORDER}` }}>
                 <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
-                    <div style={{ textAlign: 'center', marginBottom: '5rem' }}>
-                        <span style={{ fontFamily: INTER, fontSize: '0.85rem', letterSpacing: '0.2em', textTransform: 'uppercase', opacity: 0.6, fontWeight: 700, display: 'block', marginBottom: '1rem' }}>Services Matrix</span>
-                        <h2 style={{
-                            fontFamily: "var(--font-montserrat), sans-serif",
-                            fontSize: 'clamp(2rem, 4.5vw, 3.5rem)',
-                            fontWeight: 800,
-                            lineHeight: 1.1,
-                            textTransform: 'uppercase',
-                            letterSpacing: '-0.02em',
-                            margin: 0
-                        }}>
-                            Core ERP Services Nexona Delivers for Factory Operations
-                        </h2>
+                    <div style={{ maxWidth: '850px', marginBottom: '5rem' }}>
+                        <span style={eyebrow}>What&apos;s inside</span>
+                        <h2 style={h2Style}>ERP Modules for Manufacturing</h2>
+                        <p style={lead}>
+                            Ten modules. You will not need all of them on day one — most plants start with inventory, because that is where the numbers disagree first. The rest go live in whatever order hurts most.
+                        </p>
                     </div>
 
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
-                        {[
-                            { title: 'Production Planning & Scheduling', desc: 'plan runs against confirmed orders, available material, and machine capacity in one view, so you hit delivery dates without coordinating by phone.' },
-                            { title: 'Inventory Management', desc: 'raw material, WIP, and finished goods tracked live across every location, so stock-outs get rare.' },
-                            { title: 'Procurement & Purchase Management', desc: 'requisitions, vendor comparison, and approvals on a defined path, tying every rupee to a budget.' },
-                            { title: 'Bill of Materials (BOM) Management', desc: 'version-controlled BOMs, so production always pulls the right components.' },
-                            { title: 'Quality Management', desc: 'checks at incoming, in-process, and final inspection, with records ready for audit.' },
-                            { title: 'Supply Chain Management', desc: 'vendors, transporters, and warehouse teams coordinated from one place.' },
-                            { title: 'Sales & Order Management', desc: 'an enquiry becomes a confirmed order, fulfilled and tracked on one dashboard.' },
-                            { title: 'Finance & Accounting', desc: 'payables, receivables, GST returns, and reporting automated, so books close faster.' },
-                            { title: 'Production Monitoring', desc: 'actual output against plan as it happens, so bottlenecks surface while you can still act.' },
-                            { title: 'Human Resource Management', desc: 'attendance, payroll, leave, and compliance from one system.' },
-                            { title: 'Asset & Maintenance Management', desc: 'preventive maintenance scheduled and breakdowns logged.' },
-                            { title: 'Reporting & Analytics', desc: 'live dashboards and scheduled reports for production, finance, inventory, and quality.' }
-                        ].map((service, i) => (
-                            <div
-                                key={i}
-                                style={{
-                                    border: '1px solid rgba(232,223,211,0.12)',
-                                    borderRadius: '20px',
-                                    padding: '2rem',
-                                    backgroundColor: 'rgba(232,223,211,0.02)',
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    justifyContent: 'space-between',
-                                    minHeight: '200px'
-                                }}
-                            >
-                                <h3 style={{ fontFamily: "var(--font-montserrat), sans-serif", fontSize: '1.25rem', fontWeight: 700, margin: '0 0 1rem 0', letterSpacing: '-0.01em', color: TEXT }}>
-                                    {service.title}
-                                </h3>
-                                <p style={{ fontFamily: INTER, fontSize: '0.95rem', opacity: 0.75, lineHeight: 1.6, margin: 0 }}>
-                                    {service.desc}
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.75rem' }}>
+                        {MODULES.map((m) => (
+                            <div key={m.title} style={{ border: '1px solid rgba(232,223,211,0.12)', borderRadius: '20px', padding: '2rem', backgroundColor: 'rgba(232,223,211,0.02)', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                                <h3 style={{ fontFamily: MONTSERRAT, fontSize: '1.2rem', fontWeight: 700, margin: 0, letterSpacing: '-0.01em', color: TEXT }}>{m.title}</h3>
+                                <p style={{ fontFamily: INTER, fontSize: '0.95rem', opacity: 0.78, lineHeight: 1.6, margin: 0 }}>{m.does}</p>
+                                <p style={{ fontFamily: INTER, fontSize: '0.95rem', lineHeight: 1.6, margin: 0, paddingTop: '1rem', borderTop: `1px solid ${BORDER}`, color: SAND }}>
+                                    <span style={{ fontWeight: 700 }}>What changes: </span>{m.changes}
                                 </p>
                             </div>
                         ))}
@@ -502,484 +412,364 @@ export default function ERPPage() {
                 </div>
             </section>
 
-            {/* 5. How Each Nexona ERP Module Improves Control and Speed (H2) */}
-            <section style={{ backgroundColor: '#25221F', color: TEXT, padding: isMobile ? '6rem 5%' : '10rem 8%', borderBottom: `1px solid rgba(232,223,211,0.1)` }}>
+            {/* ── 4. GST-Ready ERP ─────────────────────────────────────────── */}
+            <section id="gst-ready-erp" style={{ backgroundColor: SAND, color: DARK, padding: sectionPad }}>
+                <div style={{ maxWidth: '1400px', margin: '0 auto', display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'flex-start', gap: isMobile ? '3rem' : '6rem' }}>
+                    <div style={{ flex: 1 }}>
+                        <span style={eyebrow}>Compliance</span>
+                        <h2 style={h2Style}>GST-Ready ERP: e-Invoicing, e-Way Bills &amp; Reconciliation</h2>
+                        <p style={{ ...lead, marginBottom: '1.25rem' }}>
+                            GST for a manufacturer is not the same job as GST for a shop. You buy from two hundred vendors and half of them file late. The dispatch truck changes at Bhiwandi and the e-way bill has to follow.
+                        </p>
+                        <p style={lead}>
+                            A GST ERP software handles that off the transactions you already record. Nobody logs into a portal to type something twice.
+                        </p>
+                    </div>
+
+                    <div style={{ flex: 1.1, display: 'flex', flexDirection: 'column', gap: '1.25rem', width: '100%' }}>
+                        {GST_ITEMS.map((item) => (
+                            <div key={item.title} style={{ borderLeft: `3px solid ${DARK}`, paddingLeft: '1.5rem' }}>
+                                <h3 style={{ fontFamily: INTER, fontSize: '1.1rem', fontWeight: 700, margin: '0 0 0.4rem 0' }}>{item.title}</h3>
+                                <p style={{ fontFamily: INTER, fontSize: '0.98rem', opacity: 0.78, lineHeight: 1.7, margin: 0 }}>{item.body}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* ── 5. ERP by industry ───────────────────────────────────────────
+                Ordered by search demand. Capability copy only — no claims of past
+                clients in these verticals. */}
+            <section id="erp-by-industry" style={{ backgroundColor: DARK, color: TEXT, padding: sectionPad, borderBottom: `1px solid ${BORDER}` }}>
                 <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
-                    <div style={{ textAlign: 'center', marginBottom: '5rem' }}>
-                        <span style={{ fontFamily: INTER, fontSize: '0.85rem', letterSpacing: '0.2em', textTransform: 'uppercase', opacity: 0.6, fontWeight: 700, display: 'block', marginBottom: '1rem' }}>Modules Influence</span>
-                        <h2 style={{
-                            fontFamily: "var(--font-montserrat), sans-serif",
-                            fontSize: 'clamp(2rem, 4.5vw, 3.5rem)',
-                            fontWeight: 800,
-                            lineHeight: 1.1,
-                            textTransform: 'uppercase',
-                            letterSpacing: '-0.02em',
-                            margin: 0
-                        }}>
-                            How Each Nexona ERP Module Improves Control and Speed
-                        </h2>
+                    <div style={{ maxWidth: '900px', marginBottom: '5rem' }}>
+                        <span style={eyebrow}>Industries</span>
+                        <h2 style={h2Style}>ERP for Pharma, Chemical, Textile, Engineering &amp; Auto Component Manufacturers</h2>
+                        <p style={lead}>
+                            The bones of a factory are the same everywhere. Stock comes in, gets turned into something, goes out. The details are not — a pharma batch record and a fabrication job card have almost nothing in common. These are the five industries we build ERP for, and what each one needs that a generic system gets wrong.
+                        </p>
                     </div>
 
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2.5rem' }}>
-                        {[
-                            { title: 'Faster Production Flow (Planning & Scheduling, Production Monitoring)', desc: 'planning runs on real numbers, and the floor view catches a delay before it becomes a missed dispatch.' },
-                            { title: 'Better Inventory Accuracy (Inventory, BOM, Supply Chain)', desc: 'what the system shows is what\'s on the floor, and visibility means fewer panic purchases.' },
-                            { title: 'Smarter Purchase Control (Procurement & Purchase)', desc: 'a request follows an approval path, vendor performance gets tracked, spending is controlled before the money leaves.' },
-                            { title: 'Clearer Order Tracking (Sales & Order)', desc: 'sales knows status without calling the warehouse, and disputes shrink.' },
-                            { title: 'Earlier Quality Checks (Quality)', desc: 'quality is enforced where production happens, so rejection and rework drop.' },
-                            { title: 'Stronger Cost Visibility (Finance, Reporting)', desc: 'every cost lands against the right cost centre, and GST filing runs off transaction data.' },
-                            { title: 'Timely Maintenance Alerts (Asset & Maintenance)', desc: 'machines get serviced before they quit.' },
-                            { title: 'Faster Team Coordination (HR)', desc: 'approvals run on time and HR stops chasing paper.' }
-                        ].map((module, i) => (
-                            <div
-                                key={i}
-                                style={{
-                                    borderLeft: `3px solid ${SAND}`,
-                                    paddingLeft: '1.5rem',
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    gap: '0.75rem'
-                                }}
-                            >
-                                <h3 style={{ fontFamily: "var(--font-montserrat), sans-serif", fontSize: '1.15rem', fontWeight: 700, margin: 0, lineHeight: 1.4 }}>
-                                    {module.title}
-                                </h3>
-                                <p style={{ fontFamily: INTER, fontSize: '0.95rem', opacity: 0.7, lineHeight: 1.6, margin: 0 }}>
-                                    {module.desc}
-                                </p>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                        {INDUSTRIES.map((ind) => (
+                            <div key={ind.title} style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 2fr', gap: isMobile ? '1rem' : '4rem', borderTop: `1px solid rgba(232,223,211,0.15)`, padding: '2.5rem 0 1rem' }}>
+                                <h3 style={{ fontFamily: MONTSERRAT, fontSize: '1.45rem', fontWeight: 700, margin: 0, lineHeight: 1.3, color: TEXT }}>{ind.title}</h3>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                                    {ind.body.map((para, i) => (
+                                        <p key={i} style={{ fontFamily: INTER, fontSize: '1.02rem', opacity: 0.78, lineHeight: 1.75, margin: 0 }}>{para}</p>
+                                    ))}
+                                </div>
                             </div>
                         ))}
                     </div>
-                </div>
-            </section>
 
-            {/* 6. How Nexona Implements ERP - Process and Rollout Timeline (H2) */}
-            <section style={{ backgroundColor: DARK, color: TEXT, padding: isMobile ? '6rem 5%' : '10rem 8%', borderBottom: `1px solid rgba(232,223,211,0.1)` }}>
-                <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
-                    <div style={{ maxWidth: '800px', marginBottom: '6rem' }}>
-                        <span style={{ fontFamily: INTER, fontSize: '0.85rem', letterSpacing: '0.2em', textTransform: 'uppercase', opacity: 0.6, fontWeight: 700, display: 'block', marginBottom: '1.5rem' }}>Rollout Process</span>
-                        <h2 style={{
-                            fontFamily: "var(--font-montserrat), sans-serif",
-                            fontSize: 'clamp(2rem, 4.5vw, 3.5rem)',
-                            fontWeight: 800,
-                            lineHeight: 1.1,
-                            textTransform: 'uppercase',
-                            letterSpacing: '-0.02em',
-                            margin: '0 0 2rem 0'
-                        }}>
-                            How Nexona Implements ERP - Process & Timeline
-                        </h2>
-                        <p style={{ fontFamily: INTER, opacity: 0.8, lineHeight: 1.8, fontSize: '1.15rem', margin: 0 }}>
-                            Most manufacturers go live in 8 to 16 weeks - faster for a single location, longer for multi-plant rollouts with complex data. Nexona&apos;s structured rollout keeps the timeline from slipping.
-                        </p>
-                    </div>
-
-                    <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: '3rem' }}>
-                        {[
-                            { num: '01', title: 'Business Needs Analysis', desc: 'Nexona learns how your operation runs, department by department, mapping where gaps cost real money.' },
-                            { num: '02', title: 'Workflow Planning Setup', desc: 'we map production flow, approval hierarchy, and reporting structure - a blueprint that prevents scope creep.' },
-                            { num: '03', title: 'ERP Configuration Setup', desc: 'modules, permissions, dashboards, and settings, all bending to your workflow rather than a generic mould.' },
-                            { num: '04', title: 'Legacy Data Migration', desc: 'we pull records from Tally, Excel, or whatever you run, then clean, validate, and bring them across intact - including inventory and opening balances.' },
-                            { num: '05', title: 'Testing and Team Training', desc: 'the system gets run end to end, then Nexona trains every user before go-live, not after.' },
-                            { num: '06', title: 'Go Live and Optimisation', desc: 'we launch with support on hand, fix early issues fast, and tune the configuration in the first 30 days.' }
-                        ].map((step, i) => (
-                            <div
-                                key={i}
-                                style={{
-                                    borderTop: `1px solid rgba(232,223,211,0.2)`,
-                                    paddingTop: '2rem',
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    gap: '1rem'
-                                }}
-                            >
-                                <span style={{ fontFamily: "var(--font-montserrat), sans-serif", fontSize: '2rem', fontWeight: 800, opacity: 0.35 }}>
-                                    {step.num}
-                                </span>
-                                <h3 style={{ fontFamily: "var(--font-montserrat), sans-serif", fontSize: '1.35rem', fontWeight: 700, margin: 0 }}>
-                                    {step.title}
-                                </h3>
-                                <p style={{ fontFamily: INTER, fontSize: '0.95rem', opacity: 0.75, lineHeight: 1.6, margin: 0 }}>
-                                    {step.desc}
-                                </p>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
-            {/* 7. Customisation, Integration, and Data Migration with Nexona (H2) */}
-            <section style={{ backgroundColor: SAND, color: DARK, padding: isMobile ? '6rem 5%' : '10rem 8%' }}>
-                <div style={{ maxWidth: '1400px', margin: '0 auto', display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'center', gap: isMobile ? '4rem' : '8rem' }}>
-                    <div style={{ flex: 1.2 }}>
-                        <span style={{ fontFamily: INTER, fontSize: '0.85rem', letterSpacing: '0.2em', textTransform: 'uppercase', opacity: 0.6, fontWeight: 700, display: 'block', marginBottom: '1.5rem' }}>Tailored Systems</span>
-                        <h2 style={{
-                            fontFamily: "var(--font-montserrat), sans-serif",
-                            fontSize: 'clamp(2rem, 4vw, 3.5rem)',
-                            fontWeight: 800,
-                            lineHeight: 1.1,
-                            textTransform: 'uppercase',
-                            letterSpacing: '-0.02em',
-                            margin: '0 0 2rem 0'
-                        }}>
-                            Customisation, Integration, and Data Migration
-                        </h2>
-                        <p style={{ fontFamily: INTER, opacity: 0.8, lineHeight: 1.8, fontSize: '1.1rem', marginBottom: '2.5rem' }}>
-                            Every buyer asks the same question: will this fit the way we already work? Nexona&apos;s answer starts with configuration, not a code rewrite. Factory management software handles the core mechanics - the work is shaping approval flows, dashboards, and reports to match your process.
-                        </p>
-
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', marginBottom: '2.5rem' }}>
-                            {[
-                                'Approval workflows and reports configured to how you operate',
-                                'Integration with Tally, Excel, or current accounting tools',
-                                'GST-compliant invoices, e-way bills, and IRN numbers generated automatically',
-                                'Legacy data migrated safely with validation before go-live',
-                                'Access controlled by role - users see only what their job needs'
-                            ].map((bullet, i) => (
-                                <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem' }}>
-                                    <div style={{ width: '8px', height: '8px', backgroundColor: DARK, borderRadius: '50%', marginTop: '0.55rem', flexShrink: 0 }} />
-                                    <h3 style={{ fontFamily: INTER, fontSize: '1.05rem', fontWeight: 600, margin: 0, lineHeight: 1.5 }}>
-                                        {bullet}
-                                    </h3>
-                                </div>
-                            ))}
-                        </div>
-
-                        <p style={{ fontFamily: INTER, fontStyle: 'italic', fontWeight: 600, fontSize: '1.1rem', opacity: 0.9 }}>
-                            None of this means rebuilding from zero - it means configuring a system that already works to the way your business runs.
-                        </p>
-                    </div>
-
-                    <div style={{ flex: 1, width: '100%', position: 'relative', aspectRatio: '4/5', borderRadius: '24px', overflow: 'hidden' }}>
-                        <Image
-                            src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200&auto=format&fit=crop"
-                            alt="Sleek custom ERP software application with analytics charts and code integration"
-                            fill
-                            style={{ objectFit: 'cover' }}
-                        />
-                    </div>
-                </div>
-            </section>
-
-            {/* 8. Industry Use Cases - How Nexona Serves Mumbai Manufacturers (H2) */}
-            <section style={{ backgroundColor: DARK, color: TEXT, padding: isMobile ? '6rem 5%' : '10rem 8%', borderBottom: `1px solid rgba(232,223,211,0.1)` }}>
-                <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
-                    <div style={{ textAlign: 'center', marginBottom: '5rem' }}>
-                        <span style={{ fontFamily: INTER, fontSize: '0.85rem', letterSpacing: '0.2em', textTransform: 'uppercase', opacity: 0.6, fontWeight: 700, display: 'block', marginBottom: '1rem' }}>Industrial Verticals</span>
-                        <h2 style={{
-                            fontFamily: "var(--font-montserrat), sans-serif",
-                            fontSize: 'clamp(2rem, 4.5vw, 3.5rem)',
-                            fontWeight: 800,
-                            lineHeight: 1.1,
-                            textTransform: 'uppercase',
-                            letterSpacing: '-0.02em',
-                            margin: '0 0 2rem 0'
-                        }}>
-                            Industry Use Cases - How Nexona Serves Mumbai Manufacturers
-                        </h2>
-                        <p style={{ fontFamily: INTER, opacity: 0.8, lineHeight: 1.8, fontSize: '1.15rem', maxWidth: '800px', margin: '0 auto' }}>
-                            Mumbai&apos;s industrial clusters cover some of India&apos;s most varied manufacturing. Here is how Nexona&apos;s supply chain ERP software applies across the sectors we work with most.
-                        </p>
-                    </div>
-
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem' }}>
-                        {[
-                            { title: 'Engineering', desc: 'machine parts and fabrication across Thane and Navi Mumbai MIDC zones, with job cards, routing, BOM versioning, and vendor scheduling in one place. Job-work sent out to sub-contractors stays on the books instead of vanishing into a register. Costing runs per job card, so you know which orders actually earned money and which quietly did not.' },
-                            { title: 'Pharma', desc: 'batch control and formulation across Andheri, Mahape, and Turbhe, holding cGMP workflows, batch records, and expiry tracking. Every batch carries its genealogy - which raw material lot went in, who released it, and where it shipped - so a recall is a query, not a week of searching. Audit trails and deviation records are generated as work happens, ready before the inspector asks.' },
-                            { title: 'Food Processing', desc: 'batch tracking near the Vashi and Navi Mumbai APMC markets, with shelf-life controls, allergen tracking, and FSSAI documentation. FEFO dispatch rules push the oldest stock out first, cutting the write-offs that come from forgotten pallets. Yield per batch is measured against standard, so wastage shows up as a number rather than a hunch.' },
-                            { title: 'Chemicals', desc: 'compliance records and formula control, tracking hazardous storage, batch genealogy, and MSDS-aligned reports. Formulas are version-locked, so a revised recipe cannot reach the floor without approval. Reactor and tank capacity feed into planning, which keeps schedules honest when a batch cycle runs longer than the sales team assumed.' },
-                            { title: 'Packaging', desc: 'production planning, material consumption, and dispatch control, cutting wastage when volume swings. Actual substrate and ink consumption is booked against standard usage, so overruns are visible the same day rather than at month end. Tooling and die records sit against each SKU, which shortens changeover on repeat orders.' },
-                            { title: 'Textiles', desc: 'managing the colour-size-style matrix that breaks generic systems. Stock is held at the exact variant level, so a size-38 navy shirt is never confused with a size-38 black one, and dyeing, printing, and stitching handed to job-workers stay tracked through every stage. Order-to-dispatch status is visible without a single phone call to the unit.' },
-                            { title: 'Automotive Suppliers', desc: 'vendor management, BOM control, and quality built to OEM standards, carrying PPAP and first-article inspection records. Schedule releases from the OEM flow straight into production planning, so you build to the call-off rather than to a guess. Full traceability from component lot to delivered part keeps you covered when a supplier audit lands.' },
-                            { title: 'Trading & Distribution', desc: 'warehouse control and order management across Bhiwandi and Navi Mumbai hubs, with GST-compliant dispatch documents. Stock across every godown reads from one ledger, so a customer order is never promised against inventory sitting in the wrong location. E-way bills and invoices generate off the same transaction, which keeps dispatch moving and paperwork clean.' }
-                        ].map((useCase, i) => (
-                            <div
-                                key={i}
-                                style={{
-                                    border: '1px solid rgba(232,223,211,0.12)',
-                                    borderRadius: '20px',
-                                    padding: '2rem',
-                                    backgroundColor: 'rgba(232,223,211,0.03)',
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    gap: '0.75rem'
-                                }}
-                            >
-                                <h3 style={{ fontFamily: "var(--font-montserrat), sans-serif", fontSize: '1.25rem', fontWeight: 700, margin: 0, color: TEXT }}>
-                                    {useCase.title}
-                                </h3>
-                                <p style={{ fontFamily: INTER, fontSize: '0.95rem', opacity: 0.75, lineHeight: 1.6, margin: 0 }}>
-                                    {useCase.desc}
-                                </p>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
-            {/* 9. Security, Compliance, and Audit-Ready Controls in Nexona ERP (H2) & 10. Delivery Trust & 11. Manufacturers Gain (Combined Grid for High Impact Visuals) */}
-            <section style={{ backgroundColor: '#25221F', color: TEXT, padding: isMobile ? '6rem 5%' : '10rem 8%', borderBottom: `1px solid rgba(232,223,211,0.1)` }}>
-                <div style={{ maxWidth: '1400px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '6rem' }}>
-
-                    {/* 9. Security & Compliance */}
-                    <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'center', gap: isMobile ? '3rem' : '6rem' }}>
-                        <div style={{ flex: 1.2 }}>
-                            <span style={{ fontFamily: INTER, fontSize: '0.85rem', letterSpacing: '0.2em', textTransform: 'uppercase', opacity: 0.6, fontWeight: 700, display: 'block', marginBottom: '1.5rem' }}>Audit Ready</span>
-                            <h2 style={{
-                                fontFamily: "var(--font-montserrat), sans-serif",
-                                fontSize: 'clamp(2rem, 4vw, 3.2rem)',
-                                fontWeight: 800,
-                                lineHeight: 1.1,
-                                textTransform: 'uppercase',
-                                letterSpacing: '-0.02em',
-                                margin: '0 0 2rem 0'
-                            }}>
-                                Security, Compliance, and Audit-Ready Controls
-                            </h2>
-                            <p style={{ fontFamily: INTER, opacity: 0.8, lineHeight: 1.8, fontSize: '1.1rem', margin: 0 }}>
-                                For a manufacturer, data control is the difference between an audit that passes and a week spent hunting old registers. Nexona keeps access role-controlled, logs every change with a full trace, and generates the compliance reports your auditor needs before they ask.
-                            </p>
-                        </div>
-                        <div style={{ flex: 1, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', width: '100%' }}>
-                            {[
-                                { title: 'Role-based access', desc: 'per function' },
-                                { title: 'Full audit trail', desc: 'every entry logged' },
-                                { title: 'Compliance automated', desc: 'GST, IRN, e-Way Bill' },
-                                { title: 'Secure exports', desc: 'role-gated & encrypted' }
-                            ].map((item, i) => (
-                                <div key={i} style={{ border: '1px solid rgba(232,223,211,0.1)', borderRadius: '16px', padding: '1.5rem', backgroundColor: 'rgba(232,223,211,0.02)' }}>
-                                    <h3 style={{ fontFamily: INTER, fontSize: '1.05rem', fontWeight: 700, color: TEXT, margin: '0 0 0.5rem 0' }}>{item.title}</h3>
-                                    <p style={{ fontFamily: INTER, fontSize: '0.85rem', opacity: 0.6, margin: 0 }}>{item.desc}</p>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-
-                    {/* 10. Why Manufacturers Trust Nexona's Delivery Team */}
-                    <div style={{ borderTop: `1px solid rgba(232,223,211,0.1)`, paddingTop: '5rem', display: 'flex', flexDirection: isMobile ? 'column' : 'row-reverse', alignItems: 'center', gap: isMobile ? '3rem' : '6rem' }}>
-                        <div style={{ flex: 1.2 }}>
-                            <span style={{ fontFamily: INTER, fontSize: '0.85rem', letterSpacing: '0.2em', textTransform: 'uppercase', opacity: 0.6, fontWeight: 700, display: 'block', marginBottom: '1.5rem' }}>Delivery Trust</span>
-                            <h2 style={{
-                                fontFamily: "var(--font-montserrat), sans-serif",
-                                fontSize: 'clamp(2rem, 4vw, 3.2rem)',
-                                fontWeight: 800,
-                                lineHeight: 1.1,
-                                textTransform: 'uppercase',
-                                letterSpacing: '-0.02em',
-                                margin: '0 0 2rem 0'
-                            }}>
-                                Why Manufacturers Trust Nexona&apos;s Delivery Team
-                            </h2>
-                            <p style={{ fontFamily: INTER, opacity: 0.8, lineHeight: 1.8, fontSize: '1.1rem', margin: 0 }}>
-                                Most vendors hand you a system and disappear. Nexona stays - same team from the first factory walkthrough through go-live and the 90 days after. Implementation discipline is not a promise here; it is how every project actually runs.
-                            </p>
-                        </div>
-                        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '1rem', width: '100%' }}>
-                            {[
-                                'Starts with your factory floor',
-                                'Same contact, start to go-live',
-                                'Same senior team after go-live',
-                                'Training on your actual data',
-                                'Support planned before go-live'
-                            ].map((bullet, i) => (
-                                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                                    <span style={{ width: '6px', height: '6px', backgroundColor: SAND, borderRadius: '50%' }} />
-                                    <h3 style={{ fontFamily: INTER, fontSize: '1.05rem', fontWeight: 600, margin: 0 }}>{bullet}</h3>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-
-                    {/* 11. What Manufacturers Gain After Nexona Goes Live */}
-                    <div style={{ borderTop: `1px solid rgba(232,223,211,0.1)`, paddingTop: '5rem', display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'center', gap: isMobile ? '3rem' : '6rem' }}>
-                        <div style={{ flex: 1.2 }}>
-                            <span style={{ fontFamily: INTER, fontSize: '0.85rem', letterSpacing: '0.2em', textTransform: 'uppercase', opacity: 0.6, fontWeight: 700, display: 'block', marginBottom: '1.5rem' }}>Operational Gain</span>
-                            <h2 style={{
-                                fontFamily: "var(--font-montserrat), sans-serif",
-                                fontSize: 'clamp(2rem, 4vw, 3.2rem)',
-                                fontWeight: 800,
-                                lineHeight: 1.1,
-                                textTransform: 'uppercase',
-                                letterSpacing: '-0.02em',
-                                margin: '0 0 2rem 0'
-                            }}>
-                                What Manufacturers Gain After Nexona Goes Live
-                            </h2>
-                            <p style={{ fontFamily: INTER, opacity: 0.8, lineHeight: 1.8, fontSize: '1.1rem', margin: 0 }}>
-                                These are the changes manufacturers typically see inside the first 90 days - not a forecast, just the pattern these systems consistently deliver. The value rarely arrives as one big saving. It shows up as the quiet disappearance of small daily losses everyone had stopped counting.
-                            </p>
-                        </div>
-                        <div style={{ flex: 1, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', width: '100%' }}>
-                            {[
-                                'Reporting replaces daily calls',
-                                'Stock records match the floor',
-                                'Approvals clear hours not days',
-                                'On-time delivery rate improves'
-                            ].map((bullet, i) => (
-                                <div key={i} style={{ border: '1px solid rgba(232,223,211,0.12)', borderRadius: '16px', padding: '1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center', backgroundColor: 'rgba(232,223,211,0.01)' }}>
-                                    <h3 style={{ fontFamily: INTER, fontSize: '1rem', fontWeight: 600, color: TEXT, margin: 0 }}>{bullet}</h3>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-
-                </div>
-            </section>
-
-            {/* 12. ERP Pricing Factors - What Nexona Buyers Should Know (H2) */}
-            <section style={{ backgroundColor: DARK, color: TEXT, padding: isMobile ? '6rem 5%' : '10rem 8%', borderBottom: `1px solid rgba(232,223,211,0.1)` }}>
-                <div style={{ maxWidth: '1400px', margin: '0 auto', display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'center', gap: isMobile ? '4rem' : '8rem' }}>
-                    <div style={{ flex: 1.2 }}>
-                        <span style={{ fontFamily: INTER, fontSize: '0.85rem', letterSpacing: '0.2em', textTransform: 'uppercase', opacity: 0.6, fontWeight: 700, display: 'block', marginBottom: '1.5rem' }}>Pricing Scoping</span>
-                        <h2 style={{
-                            fontFamily: "var(--font-montserrat), sans-serif",
-                            fontSize: 'clamp(2rem, 4vw, 3.5rem)',
-                            fontWeight: 800,
-                            lineHeight: 1.1,
-                            textTransform: 'uppercase',
-                            letterSpacing: '-0.02em',
-                            margin: '0 0 2rem 0'
-                        }}>
-                            ERP Pricing Factors - What Buyers Should Know
-                        </h2>
-                        <p style={{ fontFamily: INTER, opacity: 0.85, lineHeight: 1.8, fontSize: '1.1rem', marginBottom: '2rem' }}>
-                            ERP pricing in India sits between ₹2–5 lakh for a basic SME setup and ₹15–50 lakh for a mid-size manufacturer running multiple modules across locations. Nexona&apos;s cloud SaaS plans are very affordable. The range is wide because cost tracks what you actually need - any vendor quoting a fixed figure before understanding your operation is guessing.
-                        </p>
-                        <p style={{ fontFamily: INTER, fontStyle: 'italic', fontWeight: 600, fontSize: '1.15rem', color: TEXT }}>
-                            The sharper question is not what Nexona ERP costs - it is what running without it costs your business every month.
-                        </p>
-                    </div>
-
-                    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '1.25rem', width: '100%' }}>
-                        {[
-                            'Module count and licensed users set the base cost',
-                            'Cloud vs on-premise changes total cost of ownership',
-                            'Customisation depth and legacy data volume affect price',
-                            'Training, support, and annual maintenance - confirm upfront'
-                        ].map((bullet, i) => (
-                            <div
-                                key={i}
-                                style={{
-                                    border: '1px solid rgba(232,223,211,0.1)',
-                                    borderRadius: '16px',
-                                    padding: '1.5rem',
-                                    backgroundColor: 'rgba(232,223,211,0.02)',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: '1.25rem'
-                                }}
-                            >
-                                <span style={{ width: '8px', height: '8px', backgroundColor: SAND, borderRadius: '50%' }} />
-                                <h3 style={{ fontFamily: INTER, fontSize: '1.05rem', fontWeight: 600, margin: 0, color: TEXT }}>
-                                    {bullet}
-                                </h3>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
-            {/* 12b. Cloud vs On-Premise ERP (H2 — comparison table) */}
-            <section style={{ backgroundColor: SAND, color: DARK, padding: isMobile ? '6rem 5%' : '10rem 8%' }}>
-                <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
-                    <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-                        <span style={{ fontFamily: INTER, fontSize: '0.85rem', letterSpacing: '0.2em', textTransform: 'uppercase', opacity: 0.6, fontWeight: 700, display: 'block', marginBottom: '1rem' }}>Deployment Choice</span>
-                        <h2 style={{
-                            fontFamily: "var(--font-montserrat), sans-serif",
-                            fontSize: 'clamp(2rem, 4vw, 3.5rem)',
-                            fontWeight: 800,
-                            lineHeight: 1.1,
-                            textTransform: 'uppercase',
-                            letterSpacing: '-0.02em',
-                            margin: 0
-                        }}>
-                            Cloud vs On-Premise ERP - Which Fits Your Factory?
-                        </h2>
-                    </div>
-
-                    {/* The table scrolls horizontally on narrow screens rather than
-                        squeezing three columns into a phone width. */}
-                    <div style={{ overflowX: 'auto', borderRadius: '20px', border: '1px solid rgba(46,42,38,0.15)', backgroundColor: 'rgba(255,255,255,0.35)' }}>
-                        <table style={{ width: '100%', minWidth: '640px', borderCollapse: 'collapse', fontFamily: INTER }}>
+                    <h3 style={{ fontFamily: MONTSERRAT, fontSize: '1.3rem', fontWeight: 700, margin: '5rem 0 1.5rem 0' }}>
+                        What each industry needs from its ERP
+                    </h3>
+                    <div style={{ overflowX: 'auto', borderRadius: '20px', border: `1px solid ${BORDER}`, backgroundColor: 'rgba(232,223,211,0.02)' }}>
+                        <table style={{ width: '100%', minWidth: '680px', borderCollapse: 'collapse', fontFamily: INTER }}>
                             <thead>
                                 <tr>
-                                    {['', 'Cloud ERP', 'On-Premise ERP'].map((heading, i) => (
-                                        <th
-                                            key={i}
-                                            scope="col"
-                                            style={{
-                                                textAlign: 'left',
-                                                padding: isMobile ? '1.25rem' : '1.5rem 2rem',
-                                                fontFamily: "var(--font-montserrat), sans-serif",
-                                                fontSize: '1rem',
-                                                fontWeight: 800,
-                                                textTransform: 'uppercase',
-                                                letterSpacing: '0.02em',
-                                                borderBottom: '2px solid rgba(46,42,38,0.2)',
-                                                width: i === 0 ? '26%' : '37%'
-                                            }}
-                                        >
-                                            {heading}
-                                        </th>
-                                    ))}
+                                    {INDUSTRY_TABLE.columns.map((c) => <th key={c} scope="col" style={headCell(true)}>{c}</th>)}
                                 </tr>
                             </thead>
                             <tbody>
-                                {[
-                                    { label: 'Upfront cost', cloud: 'Lower - subscription based', onPrem: 'Higher - servers + licenses' },
-                                    { label: 'Access', cloud: 'Anywhere, any device', onPrem: 'On-site network' },
-                                    { label: 'Updates', cloud: 'Automatic', onPrem: 'Manual' },
-                                    { label: 'Best for', cloud: 'Most Mumbai SMEs', onPrem: 'Strict data residency or poor plant internet' },
-                                    { label: 'Maintenance', cloud: 'Handled by Nexona', onPrem: 'Your IT team' }
-                                ].map((row, i, rows) => {
-                                    const cell = {
-                                        padding: isMobile ? '1.25rem' : '1.5rem 2rem',
-                                        fontSize: '1rem',
-                                        lineHeight: 1.6,
-                                        borderBottom: i === rows.length - 1 ? 'none' : '1px solid rgba(46,42,38,0.12)'
-                                    } as const
-                                    return (
-                                        <tr key={row.label}>
-                                            <th scope="row" style={{ ...cell, textAlign: 'left', fontWeight: 700 }}>
-                                                {row.label}
-                                            </th>
-                                            <td style={{ ...cell, opacity: 0.8 }}>{row.cloud}</td>
-                                            <td style={{ ...cell, opacity: 0.8 }}>{row.onPrem}</td>
-                                        </tr>
-                                    )
-                                })}
+                                {INDUSTRY_TABLE.rows.map((row, i, rows) => (
+                                    <tr key={row[0]}>
+                                        <th scope="row" style={{ ...cell(i === rows.length - 1, true), fontWeight: 700 }}>{row[0]}</th>
+                                        <td style={{ ...cell(i === rows.length - 1, true), opacity: 0.8 }}>{row[1]}</td>
+                                        <td style={{ ...cell(i === rows.length - 1, true), opacity: 0.8 }}>{row[2]}</td>
+                                    </tr>
+                                ))}
                             </tbody>
                         </table>
                     </div>
                 </div>
             </section>
 
-            {/* 13. FAQs for ERP Software Buyers in Mumbai and Nearby (H2) */}
-            <section style={{ backgroundColor: '#25221F', color: TEXT, padding: isMobile ? '6rem 5%' : '10rem 8%' }}>
+            {/* ── 6. Mumbai industrial belts ───────────────────────────────────
+                Where these industries cluster. Geography, not a client list. */}
+            <section id="mumbai-industrial-belts" style={{ backgroundColor: PANEL, color: TEXT, padding: sectionPad, borderBottom: `1px solid ${BORDER}` }}>
+                <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
+                    <div style={{ maxWidth: '900px', marginBottom: '4rem' }}>
+                        <span style={eyebrow}>Local</span>
+                        <h2 style={h2Style}>Where Mumbai&apos;s Manufacturers Are, and What Their ERP Has to Handle</h2>
+                        <p style={{ ...lead, marginBottom: '1.25rem' }}>
+                            Mumbai&apos;s factories are mostly not in Mumbai. They are strung along MIDC estates from Tarapur down to Taloja, and each belt has its own mix of industries — which means its own ERP problems.
+                        </p>
+                        <p style={lead}>
+                            As an ERP software company in Mumbai, we come to the plant. All of these are a drive, not a flight.
+                        </p>
+                    </div>
+
+                    <div style={{ overflowX: 'auto', borderRadius: '20px', border: `1px solid ${BORDER}`, backgroundColor: 'rgba(232,223,211,0.02)' }}>
+                        <table style={{ width: '100%', minWidth: '720px', borderCollapse: 'collapse', fontFamily: INTER }}>
+                            <thead>
+                                <tr>
+                                    {['Industrial belt', 'Industries there', 'What the ERP has to handle'].map((c) => <th key={c} scope="col" style={headCell(true)}>{c}</th>)}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {BELTS.map((row, i, rows) => (
+                                    <tr key={row.belt}>
+                                        <th scope="row" style={{ ...cell(i === rows.length - 1, true), fontWeight: 700 }}>{row.belt}</th>
+                                        <td style={{ ...cell(i === rows.length - 1, true), opacity: 0.8 }}>{row.industries}</td>
+                                        <td style={{ ...cell(i === rows.length - 1, true), opacity: 0.8 }}>{row.handle}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <p style={{ fontFamily: INTER, fontSize: '0.98rem', lineHeight: 1.75, opacity: 0.65, margin: '2.5rem 0 0 0' }}>
+                        Nearby:{' '}
+                        <Link href="/ai-automation-company-in-thane" style={inlineLink}>AI automation in Thane</Link>{' · '}
+                        <Link href="/software-development-company-in-navi-mumbai" style={inlineLink}>Software development in Navi Mumbai</Link>{' · '}
+                        <Link href="/software-development-agency-mumbai" style={inlineLink}>Software development in Mumbai</Link>
+                    </p>
+                </div>
+            </section>
+
+            {/* ── 7. Comparison table ──────────────────────────────────────────
+                Categories, not brands. Packaged ERP genuinely wins a row or two;
+                keep it that way — a one-sided table reads as an ad. */}
+            <section id="erp-comparison" style={{ backgroundColor: SAND, color: DARK, padding: sectionPad }}>
+                <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+                    <div style={{ maxWidth: '850px', marginBottom: '4rem' }}>
+                        <span style={eyebrow}>Compare</span>
+                        <h2 style={h2Style}>Tally + Excel vs Packaged ERP vs Built-to-Fit ERP</h2>
+                        <p style={lead}>
+                            Three ways manufacturers run today. Packaged ERP is a fine answer if your factory already works the way the software assumes — some do. If yours does not, you pay for the product and then again to make it behave.
+                        </p>
+                    </div>
+
+                    <div style={{ overflowX: 'auto', borderRadius: '20px', border: '1px solid rgba(46,42,38,0.15)', backgroundColor: 'rgba(255,255,255,0.35)' }}>
+                        <table style={{ width: '100%', minWidth: '760px', borderCollapse: 'collapse', fontFamily: INTER }}>
+                            <thead>
+                                <tr>
+                                    {COMPARISON.columns.map((c, i) => <th key={i} scope="col" style={{ ...headCell(false), width: i === 0 ? '22%' : '26%' }}>{c}</th>)}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {COMPARISON.rows.map((row, i, rows) => (
+                                    <tr key={row[0]}>
+                                        <th scope="row" style={{ ...cell(i === rows.length - 1, false), fontWeight: 700 }}>{row[0]}</th>
+                                        <td style={{ ...cell(i === rows.length - 1, false), opacity: 0.75 }}>{row[1]}</td>
+                                        <td style={{ ...cell(i === rows.length - 1, false), opacity: 0.75 }}>{row[2]}</td>
+                                        <td style={{ ...cell(i === rows.length - 1, false), fontWeight: 600 }}>{row[3]}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            {/* ── 8. How to Choose an ERP for Manufacturing Industry ─────────── */}
+            <section id="how-to-choose-erp" style={{ backgroundColor: PANEL, color: TEXT, padding: sectionPad, borderTop: `1px solid ${BORDER}` }}>
+                <div style={{ maxWidth: '1400px', margin: '0 auto', display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'flex-start', gap: isMobile ? '3rem' : '6rem' }}>
+                    <div style={{ flex: 1.2 }}>
+                        <span style={eyebrow}>Buyer&apos;s checklist</span>
+                        <h2 style={h2Style}>How to Choose an ERP for Manufacturing Industry</h2>
+                        <p style={{ ...lead, marginBottom: '1.25rem' }}>
+                            Every vendor demo looks good. They are running a demo company with clean data and a process designed to fit the software. Yours is not that.
+                        </p>
+                        <p style={lead}>
+                            Weigh these five before you commit. And if you would rather have someone independent referee three vendor pitches, that is a job for a{' '}
+                            <Link href="/fractional-cto-as-a-service" style={inlineLink}>fractional CTO</Link>, not the vendor.
+                        </p>
+                    </div>
+
+                    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '1.25rem', width: '100%' }}>
+                        {CHOOSE.map((item) => (
+                            <div key={item.title} style={{ border: `1px solid ${BORDER}`, borderRadius: '16px', padding: '1.5rem', backgroundColor: 'rgba(232,223,211,0.02)', display: 'flex', alignItems: 'flex-start', gap: '1.25rem' }}>
+                                <span style={{ width: '8px', height: '8px', backgroundColor: SAND, borderRadius: '50%', marginTop: '0.55rem', flexShrink: 0 }} />
+                                <div>
+                                    <h3 style={{ fontFamily: INTER, fontSize: '1.05rem', fontWeight: 700, margin: '0 0 0.35rem 0', color: TEXT }}>{item.title}</h3>
+                                    <p style={{ fontFamily: INTER, fontSize: '0.95rem', opacity: 0.7, lineHeight: 1.6, margin: 0 }}>{item.desc}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* ── 9. ERP Implementation Services ───────────────────────────────
+                Week ranges are the plan for a single-plant rollout. */}
+            <section id="erp-implementation" style={{ backgroundColor: DARK, color: TEXT, padding: sectionPad, borderBottom: `1px solid ${BORDER}` }}>
+                <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
+                    <div style={{ maxWidth: '850px', marginBottom: '6rem' }}>
+                        <span style={eyebrow}>Rollout</span>
+                        <h2 style={h2Style}>ERP Implementation Services: Process &amp; Timeline</h2>
+                        <p style={{ ...lead, marginBottom: '1.25rem' }}>
+                            A single-plant rollout is planned at 8 to 16 weeks. Multi-plant, or eleven years of Excel to untangle — longer.
+                        </p>
+                        <p style={lead}>
+                            The first module goes live early and the rest follow in stages. Big-bang go-lives are how factories end up running two systems in parallel and trusting neither. The same team runs every step, from the first walkthrough to the weeks after go-live.
+                        </p>
+                    </div>
+
+                    <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: '3rem' }}>
+                        {IMPLEMENTATION.map((step) => (
+                            <div key={step.num} style={{ borderTop: `1px solid rgba(232,223,211,0.2)`, paddingTop: '2rem', display: 'flex', flexDirection: 'column', gap: '0.9rem' }}>
+                                <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: '1rem' }}>
+                                    <span style={{ fontFamily: MONTSERRAT, fontSize: '2rem', fontWeight: 800, opacity: 0.35 }}>{step.num}</span>
+                                    <span style={{ fontFamily: INTER, fontSize: '0.8rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: SAND, opacity: 0.8 }}>{step.weeks}</span>
+                                </div>
+                                <h3 style={{ fontFamily: MONTSERRAT, fontSize: '1.3rem', fontWeight: 700, margin: 0 }}>{step.title}</h3>
+                                <p style={{ fontFamily: INTER, fontSize: '0.95rem', opacity: 0.75, lineHeight: 1.6, margin: 0 }}>{step.desc}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* ── 10. ERP Data Migration from Tally and Excel ──────────────────── */}
+            <section id="erp-data-migration" style={{ backgroundColor: SAND, color: DARK, padding: sectionPad }}>
+                <div style={{ maxWidth: '1400px', margin: '0 auto', display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'center', gap: isMobile ? '4rem' : '8rem' }}>
+                    <div style={{ flex: 1.2 }}>
+                        <span style={eyebrow}>Migration</span>
+                        <h2 style={h2Style}>ERP Data Migration from Tally and Excel</h2>
+                        <p style={{ ...lead, marginBottom: '2.5rem' }}>
+                            Every buyer asks the same thing: what happens to everything we already have? It comes across. Cleaned first — the vendor spelled three different ways, the item code that means two different parts — then checked line by line before anyone relies on it.
+                        </p>
+
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.1rem' }}>
+                            {MIGRATION.map((bullet) => (
+                                <div key={bullet} style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem' }}>
+                                    <div style={{ width: '8px', height: '8px', backgroundColor: DARK, borderRadius: '50%', marginTop: '0.55rem', flexShrink: 0 }} />
+                                    <p style={{ fontFamily: INTER, fontSize: '1.05rem', fontWeight: 600, margin: 0, lineHeight: 1.5 }}>{bullet}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div style={{ flex: 1, width: '100%', position: 'relative', aspectRatio: '4/5', borderRadius: '24px', overflow: 'hidden' }}>
+                        <Image
+                            src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200&auto=format&fit=crop"
+                            alt="Migrating manufacturing data from Tally and Excel into an ERP"
+                            fill
+                            style={{ objectFit: 'cover' }}
+                        />
+                    </div>
+                </div>
+            </section>
+
+            {/* ── 11. Cloud ERP for Manufacturing vs On-Premise ────────────────── */}
+            <section id="cloud-vs-on-premise-erp" style={{ backgroundColor: DARK, color: TEXT, padding: sectionPad, borderBottom: `1px solid ${BORDER}` }}>
+                <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
+                    <div style={{ maxWidth: '800px', marginBottom: '4rem' }}>
+                        <span style={eyebrow}>Deployment</span>
+                        <h2 style={h2Style}>Cloud ERP for Manufacturing vs On-Premise</h2>
+                        <p style={lead}>
+                            Cloud suits most plants. On-premise earns its keep where plant internet is unreliable or data has to stay on your own servers. We build for both.
+                        </p>
+                    </div>
+
+                    <div style={{ overflowX: 'auto', borderRadius: '20px', border: `1px solid ${BORDER}`, backgroundColor: 'rgba(232,223,211,0.02)' }}>
+                        <table style={{ width: '100%', minWidth: '640px', borderCollapse: 'collapse', fontFamily: INTER }}>
+                            <thead>
+                                <tr>
+                                    {['', 'Cloud ERP', 'On-Premise ERP'].map((heading, i) => (
+                                        <th key={i} scope="col" style={{ ...headCell(true), width: i === 0 ? '26%' : '37%' }}>{heading}</th>
+                                    ))}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {[
+                                    { label: 'Upfront cost', cloud: 'Lower — no servers to buy', onPrem: 'Higher — servers and setup' },
+                                    { label: 'Access', cloud: 'Plant, office, phone — anywhere', onPrem: 'On-site network, VPN for remote' },
+                                    { label: 'Updates', cloud: 'Handled for you', onPrem: 'Scheduled with your IT team' },
+                                    { label: 'Best for', cloud: 'Most Mumbai manufacturers', onPrem: 'Unreliable plant internet or strict data residency' },
+                                    { label: 'Maintenance', cloud: 'Handled by Nexona', onPrem: 'Your IT team, with our support' }
+                                ].map((row, i, rows) => (
+                                    <tr key={row.label}>
+                                        <th scope="row" style={{ ...cell(i === rows.length - 1, true), fontWeight: 700 }}>{row.label}</th>
+                                        <td style={{ ...cell(i === rows.length - 1, true), opacity: 0.8 }}>{row.cloud}</td>
+                                        <td style={{ ...cell(i === rows.length - 1, true), opacity: 0.8 }}>{row.onPrem}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            {/* ── 12. See It Working Before You Commit ─────────────────────────
+                Proof by process, not by testimonial — there are no case studies
+                to show yet, and nothing here should imply there are. */}
+            <section id="see-it-working" style={{ backgroundColor: PANEL, color: TEXT, padding: sectionPad, borderBottom: `1px solid ${BORDER}` }}>
+                <div style={{ maxWidth: '1400px', margin: '0 auto', display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'center', gap: isMobile ? '3rem' : '6rem' }}>
+                    <div style={{ flex: 1.1 }}>
+                        <span style={eyebrow}>Low risk</span>
+                        <h2 style={h2Style}>See It Working Before You Commit</h2>
+                        <p style={{ ...lead, marginBottom: '2.5rem' }}>
+                            Buying an ERP off a slide deck is how plants end up with the expensive invoice printer. So you don&apos;t. You see it run on your own data first.
+                        </p>
+                        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '1.5rem' }}>
+                            {SEE_IT.map((item) => (
+                                <div key={item.title} style={{ border: `1px solid ${BORDER}`, borderRadius: '16px', padding: '1.5rem', backgroundColor: 'rgba(232,223,211,0.02)' }}>
+                                    <h3 style={{ fontFamily: INTER, fontSize: '1.05rem', fontWeight: 700, color: TEXT, margin: '0 0 0.5rem 0' }}>{item.title}</h3>
+                                    <p style={{ fontFamily: INTER, fontSize: '0.93rem', opacity: 0.7, lineHeight: 1.65, margin: 0 }}>{item.body}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div style={{ flex: 1, width: '100%', position: 'relative', aspectRatio: '16 / 11', borderRadius: '16px', overflow: 'hidden', border: `1px solid ${BORDER}` }}>
+                        <Image
+                            src="/erp.png"
+                            alt="ERP dashboard with production plan, stock by location and dispatch status"
+                            fill
+                            sizes="(max-width: 768px) 100vw, 45vw"
+                            style={{ objectFit: 'cover', objectPosition: 'top' }}
+                        />
+                    </div>
+                </div>
+            </section>
+
+            {/* ── 13. What Decides ERP Cost in India ───────────────────────────
+                House rule: no price figures, no ranges, no "starting from". */}
+            <section id="erp-cost-india" style={{ backgroundColor: DARK, color: TEXT, padding: sectionPad, borderBottom: `1px solid ${BORDER}` }}>
+                <div style={{ maxWidth: '1400px', margin: '0 auto', display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'flex-start', gap: isMobile ? '3rem' : '6rem' }}>
+                    <div style={{ flex: 1.1 }}>
+                        <span style={eyebrow}>Cost</span>
+                        <h2 style={h2Style}>What Decides ERP Cost in India</h2>
+                        <p style={{ ...lead, marginBottom: '1.25rem' }}>
+                            No figure on this page, on purpose. A two-module build for one plant and a pharma rollout across three sites are not the same job, and any number printed here would be wrong for one of them.
+                        </p>
+                        <p style={{ ...lead, marginBottom: '1.25rem' }}>
+                            What we can tell you is what moves it. We scope first, then quote — in writing, after the plant walkthrough.
+                        </p>
+                        <p style={{ fontFamily: INTER, fontStyle: 'italic', fontWeight: 600, fontSize: '1.1rem', color: TEXT, margin: 0 }}>
+                            No per-user licence either way. You own what gets built.
+                        </p>
+                    </div>
+
+                    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '1.25rem', width: '100%' }}>
+                        {COST_DRIVERS.map((d) => (
+                            <div key={d.title} style={{ border: `1px solid ${BORDER}`, borderRadius: '16px', padding: '1.5rem', backgroundColor: 'rgba(232,223,211,0.02)' }}>
+                                <h3 style={{ fontFamily: INTER, fontSize: '1.05rem', fontWeight: 700, margin: '0 0 0.35rem 0', color: TEXT }}>{d.title}</h3>
+                                <p style={{ fontFamily: INTER, fontSize: '0.95rem', opacity: 0.7, lineHeight: 1.6, margin: 0 }}>{d.body}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* ── 14. FAQ (mirrors FAQPage schema via layout.tsx) ─────────────── */}
+            <section id="faq" style={{ backgroundColor: PANEL, color: TEXT, padding: sectionPad }}>
                 <div style={{ maxWidth: '900px', margin: '0 auto' }}>
                     <div style={{ textAlign: 'center', marginBottom: '5rem' }}>
-                        <span style={{ fontFamily: INTER, fontSize: '0.85rem', letterSpacing: '0.2em', textTransform: 'uppercase', opacity: 0.6, fontWeight: 700, display: 'block', marginBottom: '1rem' }}>FAQ</span>
-                        <h2 style={{
-                            fontFamily: "var(--font-montserrat), sans-serif",
-                            fontSize: 'clamp(2rem, 4vw, 3.5rem)',
-                            fontWeight: 800,
-                            lineHeight: 1.1,
-                            textTransform: 'uppercase',
-                            letterSpacing: '-0.02em',
-                            margin: 0
-                        }}>
-                            Frequently Asked Questions
-                        </h2>
+                        <span style={{ ...eyebrow, marginBottom: '1rem' }}>FAQ</span>
+                        <h2 style={{ ...h2Style, margin: 0 }}>Manufacturing ERP: Frequently Asked Questions</h2>
                     </div>
 
                     <div>
                         {FAQ_ITEMS.map((item, i) => {
                             const isOpen = openFaq === i
                             return (
-                                <div
-                                    key={i}
-                                    style={{ borderBottom: `1px solid rgba(232,223,211,0.12)` }}
-                                >
+                                <div key={item.question} style={{ borderBottom: `1px solid rgba(232,223,211,0.12)` }}>
                                     <button
                                         onClick={() => setOpenFaq(isOpen ? null : i)}
                                         aria-expanded={isOpen}
@@ -997,7 +787,7 @@ export default function ERPPage() {
                                             textAlign: 'left'
                                         }}
                                     >
-                                        <h3 style={{ fontFamily: "var(--font-montserrat), sans-serif", fontSize: isMobile ? '1.1rem' : '1.35rem', fontWeight: 700, margin: 0, lineHeight: 1.3 }}>
+                                        <h3 style={{ fontFamily: MONTSERRAT, fontSize: isMobile ? '1.1rem' : '1.35rem', fontWeight: 700, margin: 0, lineHeight: 1.3 }}>
                                             {item.question}
                                         </h3>
                                         <span style={{ fontFamily: INTER, fontSize: '1.75rem', fontWeight: 300, flexShrink: 0, transform: isOpen ? 'rotate(45deg)' : 'rotate(0deg)', transition: 'transform 0.3s ease' }}>+</span>
@@ -1021,49 +811,39 @@ export default function ERPPage() {
                 </div>
             </section>
 
-            {/* 14. Book a Demo and Request a Tailored ERP Assessment from Nexona (H2) */}
-            <section style={{ backgroundColor: SAND, color: DARK, padding: isMobile ? '6rem 5% 8rem' : '10rem 8%' }}>
+            {/* ── 15. Book an ERP assessment ───────────────────────────────── */}
+            <section id="erp-assessment" style={{ backgroundColor: SAND, color: DARK, padding: isMobile ? '6rem 5% 8rem' : '10rem 8%' }}>
                 <div style={{ maxWidth: '1400px', margin: '0 auto', display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: '5rem', alignItems: 'flex-start' }}>
                     <div style={{ flex: 1 }}>
-                        <span style={{ fontFamily: INTER, fontSize: '0.85rem', letterSpacing: '0.2em', textTransform: 'uppercase', opacity: 0.6, fontWeight: 700, display: 'block', marginBottom: '1.5rem' }}>Tailored Assessment</span>
-                        <h2 style={{
-                            fontFamily: "var(--font-montserrat), sans-serif",
-                            fontSize: 'clamp(2rem, 4.2vw, 3.2rem)',
-                            fontWeight: 800,
-                            lineHeight: 1.1,
-                            textTransform: 'uppercase',
-                            letterSpacing: '-0.02em',
-                            margin: '0 0 2rem 0'
-                        }}>
-                            Book a Demo and Request a Tailored ERP Assessment
+                        <span style={eyebrow}>Next step</span>
+                        <h2 style={{ ...h2Style, fontSize: 'clamp(2rem, 4.2vw, 3.2rem)' }}>
+                            Book a 45-Minute ERP Assessment
                         </h2>
-                        <p style={{ fontFamily: INTER, opacity: 0.8, lineHeight: 1.8, fontSize: '1.1rem', marginBottom: '3rem' }}>
-                            A proper Nexona ERP assessment takes 45 minutes and gives you a clear picture of what changes, what it costs, and how long it takes - before you commit. If your team spends its days reconciling spreadsheets and chasing approvals, that is exactly the problem production management software exists to remove.
+                        <p style={{ ...lead, marginBottom: '3rem' }}>
+                            Tell us what you make and where it hurts. We come back with a written scope — which modules, what order they go live in, how long it takes — before you commit to anything.
                         </p>
 
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', marginBottom: '3rem' }}>
                             {[
-                                'Book a Nexona manufacturing ERP demo - see your workflows in the system before deciding',
-                                'Request a workflow assessment - get a gap analysis of how you operate today',
-                                'Get a tailored implementation plan - timeline, modules, and investment scoped to your business'
-                            ].map((bullet, i) => (
-                                <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem' }}>
+                                'A walkthrough of your plant, stores, and accounts',
+                                'A gap analysis of how you run today',
+                                'A written plan: modules, sequence, timeline'
+                            ].map((bullet) => (
+                                <div key={bullet} style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem' }}>
                                     <div style={{ width: '8px', height: '8px', backgroundColor: DARK, borderRadius: '50%', marginTop: '0.55rem', flexShrink: 0 }} />
-                                    <h3 style={{ fontFamily: INTER, fontSize: '1.05rem', fontWeight: 600, margin: 0, lineHeight: 1.4 }}>
-                                        {bullet}
-                                    </h3>
+                                    <p style={{ fontFamily: INTER, fontSize: '1.05rem', fontWeight: 600, margin: 0, lineHeight: 1.4 }}>{bullet}</p>
                                 </div>
                             ))}
                         </div>
 
                         <div style={{ borderTop: `1px solid rgba(46,42,38,0.15)`, paddingTop: '1.5rem' }}>
                             <p style={{ fontFamily: INTER, fontSize: '0.95rem', opacity: 0.6, textTransform: 'uppercase', letterSpacing: '0.05em', margin: 0 }}>
-                                No sales pitch, no canned demo - just a conversation about your operation and whether Nexona ERP solves the right problems.
+                                No canned demo. A conversation about your plant.
                             </p>
                         </div>
                     </div>
 
-                    {/* Leads capturing form */}
+                    {/* Lead capture form */}
                     <div
                         style={{
                             flex: 1.2,
@@ -1074,9 +854,9 @@ export default function ERPPage() {
                             boxShadow: '0 20px 50px rgba(0, 0, 0, 0.05)'
                         }}
                     >
-                        <h3 style={{ fontFamily: "var(--font-montserrat), sans-serif", fontSize: '1.5rem', fontWeight: 800, textTransform: 'uppercase', marginBottom: '2rem', letterSpacing: '-0.02em' }}>
+                        <p style={{ fontFamily: MONTSERRAT, fontSize: '1.5rem', fontWeight: 800, textTransform: 'uppercase', margin: '0 0 2rem 0', letterSpacing: '-0.02em' }}>
                             Request ERP Assessment
-                        </h3>
+                        </p>
 
                         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                             <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '1.5rem' }}>
@@ -1096,8 +876,8 @@ export default function ERPPage() {
                             </div>
 
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                                <label htmlFor="requirement" style={{ fontFamily: INTER, fontSize: '0.8rem', fontWeight: 700, textTransform: 'uppercase', opacity: 0.6 }}>Requirement *</label>
-                                <textarea required id="requirement" name="requirement" rows={4} placeholder="Tell us what you're looking for" value={formData.requirement} onChange={handleInputChange} style={{ padding: '0.8rem 1rem', border: '1px solid rgba(46,42,38,0.15)', borderRadius: '8px', fontSize: '1rem', fontFamily: INTER, outline: 'none', backgroundColor: '#F8F6F2', resize: 'vertical' }} />
+                                <label htmlFor="requirement" style={{ fontFamily: INTER, fontSize: '0.8rem', fontWeight: 700, textTransform: 'uppercase', opacity: 0.6 }}>What do you make, and what hurts? *</label>
+                                <textarea required id="requirement" name="requirement" rows={4} placeholder="e.g. Chemical plant in Taloja, stock never matches Tally" value={formData.requirement} onChange={handleInputChange} style={{ padding: '0.8rem 1rem', border: '1px solid rgba(46,42,38,0.15)', borderRadius: '8px', fontSize: '1rem', fontFamily: INTER, outline: 'none', backgroundColor: '#F8F6F2', resize: 'vertical' }} />
                             </div>
 
                             <button
