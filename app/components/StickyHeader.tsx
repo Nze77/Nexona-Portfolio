@@ -38,6 +38,14 @@ const SERVICES: ServiceLink[] = [
             { name: 'College/School ERP', href: '/college-erp' },
         ],
     },
+    // Vertical business systems that aren't an ERP. No parent page yet —
+    // submenu parents don't link anywhere, so none is needed.
+    {
+        name: 'Niche Software',
+        children: [
+            { name: 'Distributor Management (DMS)', href: '/distributor-management-system' },
+        ],
+    },
     { name: 'Custom CRM', href: '/customer-retention-management-software' },
     { name: 'Software Development', href: '/software-development-agency-mumbai' },
     { name: 'Mobile App Development', href: '/mobile-app-development-company-in-mumbai' },

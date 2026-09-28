@@ -450,7 +450,7 @@ export default function BusinessManagementSoftwarePage() {
                             },
                             {
                                 title: 'Inventory & purchase',
-                                body: <>Live stock by location, reservations against confirmed orders, reorder points, GRN and supplier records. The rack and the screen finally agree. <Link href="/projects/froven" style={inlineLink}>Froven</Link> runs sales and rental stock this way.</>
+                                body: <>Live stock by location, reservations against confirmed orders, reorder points, GRN and supplier records. The rack and the screen finally agree. <Link href="/projects/froven" style={inlineLink}>Froven</Link> runs sales and rental stock this way. Stock sitting at your distributors instead? That is a <Link href="/distributor-management-system" style={inlineLink}>distributor management system</Link>.</>
                             },
                             {
                                 title: 'Operations & jobs',

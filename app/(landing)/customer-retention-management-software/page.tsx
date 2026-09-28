@@ -462,6 +462,13 @@ export default function CustomerRetentionPage() {
                         >
                             custom ERP software for manufacturers
                         </Link>
+                        . Selling through distributors instead of direct? Retailer churn lives in a{' '}
+                        <Link
+                            href="/distributor-management-system"
+                            style={{ color: SAND, textDecoration: 'underline', textUnderlineOffset: '3px' }}
+                        >
+                            distributor management system
+                        </Link>
                         , built the same way.
                     </p>
                 </div>

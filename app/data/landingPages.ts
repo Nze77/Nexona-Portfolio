@@ -519,6 +519,50 @@ export const LANDING_PAGES: LandingPage[] = [
         },
     },
     {
+        // Owns the "distributor management system" cluster (DMS, distribution
+        // management, DMS + SFA). Non-geographic. The manufacturing ERP pages
+        // link here for brands that sell through distributors; they keep the
+        // factory-side queries.
+        slug: 'distributor-management-system',
+        footerGroup: 'solutions',
+        title: 'Distributor Management System (DMS) Software, Custom-Built | Nexona',
+        description:
+            'Custom distributor management system for brands selling through distributors. Secondary sales, stock, schemes, claims and a field app, with Tally and GST built in. You own it.',
+        priority: 0.9,
+        navLabel: 'Distributor Management System',
+        updated: '2026-09-28',
+        keywords: [
+            'distributor management system',
+            'distribution management system',
+            'distributor management software',
+            'DMS software',
+            'custom distributor management system',
+            'distributor management system for FMCG',
+            'DMS for pharma distribution',
+            'DMS and SFA software',
+            'sales force automation software',
+            'secondary sales tracking software',
+            'scheme and claim management software',
+            'DMS with Tally integration',
+            'custom DMS vs off the shelf',
+            'distributor management system India',
+        ],
+        og: {
+            title: 'Custom Distributor Management System (DMS) | Nexona',
+            description:
+                'Secondary sales, distributor stock, schemes, claims and a field sales app — built around how you distribute, for about what you would spend renting a DMS.',
+        },
+        business: {
+            areaServedCity: 'Mumbai',
+            serviceType: [
+                'Distributor Management System Development',
+                'Sales Force Automation Software',
+                'Scheme & Claim Management Software',
+                'Secondary Sales Tracking',
+            ],
+        },
+    },
+    {
         slug: 'customer-retention-management-software',
         footerGroup: 'solutions',
         title: 'Customer Retention Management Software - Reduce Churn, Keep Customers',

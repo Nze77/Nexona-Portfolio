@@ -369,6 +369,18 @@ export default function ManufacturingErpPage() {
                         </Link>
                         , covering local implementation support, GST compliance and demos at your factory.
                     </p>
+
+                    <p style={{ ...LEAD, marginTop: '1.25rem', maxWidth: '660px', opacity: 0.8 }}>
+                        Sell through distributors? The other half of the picture — distributor stock,
+                        secondary sales, schemes and claims — is our{' '}
+                        <Link
+                            href="/distributor-management-system"
+                            style={{ color: SAND, textDecoration: 'underline', textUnderlineOffset: '3px' }}
+                        >
+                            custom distributor management system
+                        </Link>
+                        .
+                    </p>
                 </div>
             </section>
 

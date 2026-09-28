@@ -10,11 +10,12 @@
 
 import type { BlogBlock, BlogPost } from './types'
 import { POST as MANAGE_AND_SCALE_EVENT_BUSINESS } from './how-to-manage-and-scale-an-event-management-business'
+import { POST as READY_MADE_VS_CUSTOM_DMS } from './ready-made-vs-custom-distributor-management-system'
 
 export type { BlogBlock, BlogPost, BlogFaqItem } from './types'
 
 /** Newest first. */
-export const BLOG_POSTS: BlogPost[] = [MANAGE_AND_SCALE_EVENT_BUSINESS].sort((a, b) =>
+export const BLOG_POSTS: BlogPost[] = [MANAGE_AND_SCALE_EVENT_BUSINESS, READY_MADE_VS_CUSTOM_DMS].sort((a, b) =>
     b.published.localeCompare(a.published),
 )
 
