@@ -3,8 +3,8 @@ import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 
 export const size = {
-  width: 32,
-  height: 32,
+  width: 48,
+  height: 48,
 }
 export const contentType = 'image/png'
 
@@ -32,7 +32,7 @@ export default async function Icon() {
         {/* Satori (next/og) renders a restricted JSX subset to an image — it has
             no DOM and cannot resolve next/image, so a raw <img> with a data URI
             is the only option here. The LCP/alt-text rules don't apply to a
-            32x32 favicon that never reaches a browser as HTML. */}
+            48x48 favicon that never reaches a browser as HTML. */}
         {/* eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text */}
         <img
           src={logoSrc}

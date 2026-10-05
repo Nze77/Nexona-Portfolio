@@ -2,7 +2,6 @@ import { MetadataRoute } from 'next'
 import { SITE_URL } from './lib/constants'
 
 const DISALLOW = [
-    '/icon',
     '/_next/static/media/*.woff2$',
     '/_next/static/media/*.woff$',
     '/_next/static/media/*.ttf$',
@@ -21,11 +20,12 @@ const DISALLOW = [
  * these are the bots that build the indexes ChatGPT, Claude, Perplexity and
  * Google's AI surfaces answer from.
  *
- * The shared `disallow` list keeps non-content assets out of the index: the
- * generated favicon route (`/icon?<hash>`) and the hashed font files under
- * `/_next/static/media`. Neither is a page, and both otherwise show up as
- * stray URLs in coverage reports. The font rules are extension-scoped so
- * that images emitted into the same directory stay crawlable.
+ * The shared `disallow` list keeps non-content assets out of the index:
+ * the hashed font files under `/_next/static/media`. These are not pages
+ * and otherwise show up as stray URLs in coverage reports. The rules are
+ * extension-scoped so that images emitted into the same directory stay
+ * crawlable. The favicon route (`/icon?<hash>`) is intentionally left
+ * crawlable so that Google can discover and display it in search results.
  */
 export default function robots(): MetadataRoute.Robots {
     return {
