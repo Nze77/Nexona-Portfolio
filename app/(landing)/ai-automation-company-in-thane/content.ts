@@ -101,16 +101,6 @@ export const FAQ_ITEMS: FaqItem[] = [
             'Small teams often get more out of it, because the same four people absorb every repeat task and there is nobody to hand it to. The gym management system and CRM we built for Aim Fitness in Thane West is not an enterprise deployment. It is one business that was running memberships, renewals and follow-ups across a register, a spreadsheet and somebody\'s phone, and that now handles more than 500 members on the same front desk that was straining at ninety. You do not need an IT department to start. You need two processes removed.',
     },
     {
-        question: 'Are you based in Thane?',
-        answer:
-            'No. Nexona is registered in Mumbai and works across the MMR, including Thane — we have clients here, Aim Fitness in Thane West among them, and we come to site for discovery. We are telling you this directly because several firms ranking for this search claim a Thane address while operating from Nashik, Noida, Vadodara or Powai, and it takes about thirty seconds to check. Ask anyone you shortlist for the address on their GST registration. Where the engineering actually happens matters more than a pin on a page, but an honest answer to that question tells you something about everything else you will be told.',
-    },
-    {
-        question: 'Which is the best AI automation company in Thane?',
-        answer:
-            'There is no honest single answer, so use criteria instead of a ranking. Does the firm write code or resell a no-code subscription? Can they show you a working system they built rather than stock screenshots? Who owns the source code afterwards? What is their evaluation method before go-live, and who maintains it in month four when something breaks? Is the office they claim the office they have? Most firms ranking for this term are web-development or digital-marketing agencies that added an AI page. That is not disqualifying on its own, but it should change what you ask them.',
-    },
-    {
         question: 'What do you need from us to get started?',
         answer:
             'An hour, and an honest description of the part of your week that keeps going wrong. No spec, no process map, no shortlist of tools. We will want to see the real thing at some point — the actual invoice, the actual WhatsApp thread, the actual spreadsheet with the nine tabs — because clean examples hide the exact cases that make automation hard. After that we come back with what we would build first and what we expect it to save. If the answer is that automation is not your problem, we will say that instead.',
