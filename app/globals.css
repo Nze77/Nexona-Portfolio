@@ -161,3 +161,43 @@ body {
     margin-bottom: 0.7rem;
   }
 }
+
+/* Legal pages (e.g. /meta-privacy-policy): plain reading column */
+.policy-body {
+  font-family: "Inter", sans-serif;
+  font-size: 1rem;
+  line-height: 1.75;
+}
+.policy-body p,
+.policy-body ul,
+.policy-body ol {
+  margin: 0 0 1rem;
+  opacity: 0.85;
+}
+.policy-body ul,
+.policy-body ol {
+  padding-left: 1.25rem;
+}
+.policy-body li {
+  margin-bottom: 0.4rem;
+}
+.policy-body h3 {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin: 1.75rem 0 0.5rem;
+  opacity: 0.6;
+}
+.policy-body a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.policy-body code {
+  font-size: 0.88em;
+  padding: 0.05em 0.35em;
+  border-radius: 3px;
+  background: rgba(46, 42, 38, 0.08);
+}

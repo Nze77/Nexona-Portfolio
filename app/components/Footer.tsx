@@ -55,6 +55,7 @@ const LINK_COLUMNS = [
         links: [
             { name: 'Projects', href: '/projects' },
             { name: 'Blogs', href: '/blogs' },
+            { name: 'Privacy Policy', href: '/meta-privacy-policy' },
         ],
     },
 ]
