@@ -110,7 +110,9 @@ export default function LandingJsonLd({
             image: `${SITE_URL}/logo.png`,
             telephone: BUSINESS_PHONE,
             email: BUSINESS_EMAIL,
-            priceRange: '$$',
+            priceRange: page.business.startingPrice?.currency === 'INR'
+                ? `From ₹${page.business.startingPrice.amount.toLocaleString('en-IN')}`
+                : '$$',
             // Proves this node is the same entity as the Google Business
             // Profile / social listings Google already has on file.
             sameAs: BUSINESS_SAME_AS,
@@ -165,9 +167,19 @@ export default function LandingJsonLd({
                 name: page.navLabel ?? page.title,
                 itemListElement: page.business.serviceType.map((name) => ({
                     '@type': 'Offer',
-                    // Deliberately NO price/priceSpecification: engagements are
-                    // scoped per client, and a made-up figure in schema is a
-                    // structured-data violation as well as a commercial one.
+                    // No price unless the page publishes one in visible copy
+                    // too: engagements are scoped per client, and a figure in
+                    // schema that the page does not show is a structured-data
+                    // violation as well as a commercial one.
+                    ...(page.business?.startingPrice
+                        ? {
+                              priceSpecification: {
+                                  '@type': 'PriceSpecification',
+                                  minPrice: page.business.startingPrice.amount,
+                                  priceCurrency: page.business.startingPrice.currency,
+                              },
+                          }
+                        : {}),
                     itemOffered: { '@id': `${url}#service-${slugifyService(name)}` },
                 })),
             },

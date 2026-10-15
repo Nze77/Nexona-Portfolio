@@ -30,6 +30,9 @@ export interface LandingPageBusiness {
     alsoServed?: string[]
     /** Services offered, surfaced in ProfessionalService structured data. */
     serviceType: string[]
+    /** Public "from" price, emitted as a minPrice on every Offer. Only set it
+     *  where the user has approved publishing a price — most pages must not. */
+    startingPrice?: { amount: number; currency: string }
 }
 
 export interface LandingPage {
@@ -489,33 +492,50 @@ export const LANDING_PAGES: LandingPage[] = [
         },
     },
     {
+        // Owns the national "custom manufacturing ERP development company"
+        // cluster (custom vs ERPNext/Odoo, MES, cost, integrations). The Mumbai
+        // page erp-systems-for-manufacturers keeps the local/GBP queries.
+        // The ONLY landing page that publishes a price — user-requested.
         slug: 'manufacturing-erp',
         footerGroup: 'solutions',
-        title: 'Custom Manufacturing ERP Software Development | Nexona',
+        title: 'Custom Manufacturing ERP Development Company India | Nexona',
         description:
-            'Custom ERP software for manufacturers — production, inventory, BOM, quality, dispatch and GST. Affordable, mobile and app ready, built around your factory. Get a free quote.',
+            'Mumbai team building custom ERP, MES, inventory and production software for Indian manufacturers. Built from scratch. All modules from ₹70,000.',
         priority: 0.9,
         navLabel: 'Manufacturing ERP',
+        updated: '2026-10-15',
         keywords: [
-            'custom manufacturing ERP software',
-            'custom ERP software development company',
-            'affordable ERP software for manufacturers',
+            'custom manufacturing ERP software development company India',
+            'manufacturing ERP development company Mumbai',
+            'manufacturing ERP development company Thane',
+            'manufacturing ERP software Maharashtra',
+            'custom ERP software development for manufacturers',
+            'MES software development India',
+            'production planning and inventory management software',
+            'custom ERP vs ERPNext',
+            'custom ERP vs Odoo for manufacturing',
+            'build manufacturing ERP from scratch',
+            'industrial automation ERP software',
+            'manufacturing ERP with Tally integration',
+            'custom ERP development cost India',
             'ERP software for small manufacturing business',
-            'best ERP for small manufacturers',
-            'custom ERP vs off the shelf ERP',
             'manufacturing ERP with mobile app',
-            'production planning and inventory software',
-            'ERP software for factory',
-            'bespoke ERP development for manufacturing',
         ],
+        og: {
+            title: 'Custom Manufacturing ERP Development Company in India | Nexona',
+            description:
+                'Custom ERP and MES for Indian factories, built from scratch around your plant. Tally, GST and machine integration. Every module from ₹70,000.',
+        },
         business: {
             areaServedCity: 'Mumbai',
+            alsoServed: ['Thane', 'Bhiwandi', 'Navi Mumbai', 'Vasai', 'Palghar'],
             serviceType: [
-                'Custom Manufacturing ERP Software',
-                'ERP Development',
-                'Mobile ERP Applications',
-                'Production & Inventory Management',
+                'Custom Manufacturing ERP Software Development',
+                'MES Software Development',
+                'Production Planning & Inventory Management Software',
+                'ERP Integration (Tally, GST, Machines)',
             ],
+            startingPrice: { amount: 70000, currency: 'INR' },
         },
     },
     {
