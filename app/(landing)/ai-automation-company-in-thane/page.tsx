@@ -565,7 +565,7 @@ export default function AiAutomationCompanyInThanePage() {
                             {
                                 where: 'Ghodbunder Road & Kolshet',
                                 what: 'Real estate, hospitality, retail',
-                                body: 'Site enquiries arriving at all hours across WhatsApp, portals and walk-ins, then dying in a shared inbox. Capture, qualification and routing is nearly always the first build.'
+                                body: <>Site enquiries arriving at all hours across WhatsApp, portals and walk-ins, then dying in a shared inbox. Capture, qualification and routing is nearly always the first build. For event planners it grows into <Link href="/event-management-software" style={inlineLink}>event management software</Link>.</>
                             },
                             {
                                 where: 'Majiwada, Manpada, Hiranandani Estate',

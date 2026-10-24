@@ -44,6 +44,7 @@ const SERVICES: ServiceLink[] = [
         name: 'Niche Software',
         children: [
             { name: 'Distributor Management (DMS)', href: '/distributor-management-system' },
+            { name: 'Event Management Software', href: '/event-management-software' },
         ],
     },
     { name: 'Custom CRM', href: '/customer-retention-management-software' },

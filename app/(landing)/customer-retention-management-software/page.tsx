@@ -455,12 +455,19 @@ export default function CustomerRetentionPage() {
                         >
                             mobile apps
                         </Link>{' '}
-                        your customers open, and{' '}
+                        your customers open,{' '}
                         <Link
                             href="/manufacturing-erp"
                             style={{ color: SAND, textDecoration: 'underline', textUnderlineOffset: '3px' }}
                         >
                             custom ERP software for manufacturers
+                        </Link>{' '}
+                        and{' '}
+                        <Link
+                            href="/event-management-software"
+                            style={{ color: SAND, textDecoration: 'underline', textUnderlineOffset: '3px' }}
+                        >
+                            event management software
                         </Link>
                         . Selling through distributors instead of direct? Retailer churn lives in a{' '}
                         <Link

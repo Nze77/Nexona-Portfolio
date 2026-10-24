@@ -205,6 +205,36 @@ export default function LandingJsonLd({
         }
     }
 
+    // ── SoftwareApplication ───────────────────────────────────────────────
+    // Only where the page shows a real product screen AND a visible price.
+    // No aggregateRating: ratings in schema must come from real, on-page
+    // reviews, and none are published here.
+    if (page.software && page.business?.startingPrice) {
+        graph.push({
+            '@type': 'SoftwareApplication',
+            '@id': `${url}#software`,
+            name: page.software.name,
+            applicationCategory: page.software.applicationCategory,
+            operatingSystem: page.software.operatingSystem,
+            featureList: page.software.featureList,
+            screenshot: `${SITE_URL}${page.software.screenshot}`,
+            url,
+            mainEntityOfPage: { '@id': `${url}#webpage` },
+            publisher: { '@id': `${SITE_URL}/#organization` },
+            offers: {
+                '@type': 'Offer',
+                price: page.business.startingPrice.amount,
+                priceCurrency: page.business.startingPrice.currency,
+                priceSpecification: {
+                    '@type': 'PriceSpecification',
+                    minPrice: page.business.startingPrice.amount,
+                    priceCurrency: page.business.startingPrice.currency,
+                },
+                seller: { '@id': `${url}#business` },
+            },
+        })
+    }
+
     if (faqItems.length > 0) {
         graph.push({
             '@type': 'FAQPage',

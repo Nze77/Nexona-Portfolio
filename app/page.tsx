@@ -2,6 +2,7 @@
 
 import { useRef, useState, useEffect, useCallback, Children } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
     Factory,
@@ -118,7 +119,7 @@ const INDUSTRIES = [
         id: 'hospitality',
         Icon: UtensilsCrossed,
         title: 'Hospitality',
-        desc: 'Reservations, orders and staff scheduling handled from a single dashboard.',
+        desc: <>Reservations, orders, staff scheduling and <Link href="/event-management-software" style={{ color: 'inherit', textDecoration: 'underline', textUnderlineOffset: '3px' }}>event management</Link> handled from a single dashboard.</>,
     },
     {
         id: 'education',

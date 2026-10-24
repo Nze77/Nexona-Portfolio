@@ -35,6 +35,18 @@ export interface LandingPageBusiness {
     startingPrice?: { amount: number; currency: string }
 }
 
+/** Emits a SoftwareApplication node for pages that show a product screen.
+ *  Requires `business.startingPrice` for the Offer — no price, no node. */
+export interface LandingPageSoftware {
+    name: string
+    /** schema.org category, e.g. "BusinessApplication". */
+    applicationCategory: string
+    operatingSystem: string
+    featureList: string[]
+    /** Site-relative path to a real screenshot shown on the page. */
+    screenshot: string
+}
+
 export interface LandingPage {
     /** URL slug — must match the folder name under app/(landing)/ */
     slug: string
@@ -65,6 +77,8 @@ export interface LandingPage {
     updated?: string
     /** Local-SEO structured data (ProfessionalService schema). */
     business?: LandingPageBusiness
+    /** SoftwareApplication structured data. */
+    software?: LandingPageSoftware
 }
 
 export const LANDING_PAGES: LandingPage[] = [
@@ -501,7 +515,7 @@ export const LANDING_PAGES: LandingPage[] = [
         // Owns the national "custom manufacturing ERP development company"
         // cluster (custom vs ERPNext/Odoo, MES, cost, integrations). The Mumbai
         // page erp-systems-for-manufacturers keeps the local/GBP queries.
-        // The ONLY landing page that publishes a price — user-requested.
+        // Publishes a price — user-requested (so does event-management-software).
         slug: 'manufacturing-erp',
         footerGroup: 'solutions',
         title: 'Custom Manufacturing ERP Development Company India | Nexona',
@@ -542,6 +556,71 @@ export const LANDING_PAGES: LandingPage[] = [
                 'ERP Integration (Tally, GST, Machines)',
             ],
             startingPrice: { amount: 58000, currency: 'INR' },
+        },
+    },
+    {
+        // Owns the "event management software / system / app" cluster plus the
+        // wedding CRM, marriage planner and catering management terms until
+        // those get pages of their own. The blog post
+        // how-to-manage-and-scale-an-event-management-business stays
+        // informational and links here for the commercial intent.
+        // Publishes a price — user-approved 2026-10-24.
+        slug: 'event-management-software',
+        footerGroup: 'solutions',
+        title: 'Event Management Software for Indian Planners | Nexona Labs',
+        description:
+            'Event management system for planners, wedding and catering businesses. Track leads, vendors, budgets and GST invoices in one app. Get a free workflow audit.',
+        priority: 0.9,
+        navLabel: 'Event Management Software',
+        updated: '2026-10-24',
+        keywords: [
+            'event management software',
+            'event management software India',
+            'event management system',
+            'event management app',
+            'event planner software',
+            'marriage planner software',
+            'wedding planner software India',
+            'wedding CRM',
+            'catering management software',
+            'event vendor payment tracking',
+            'GST invoicing for event companies',
+            'WhatsApp CRM for wedding planners',
+            'event budget vs actual software',
+            'custom event management software',
+            'event management software cost India',
+        ],
+        og: {
+            title: 'Event Management Software for Indian Planners | Nexona Labs',
+            description:
+                'Leads, quotes, vendor payments, budgets, guest RSVPs and GST invoices in one system. Custom-built, from ₹19,000. You own the code.',
+        },
+        business: {
+            areaServedCity: 'Mumbai',
+            serviceType: [
+                'Event Management Software Development',
+                'Wedding Planner CRM',
+                'Catering Management Software',
+                'Vendor Payment & Budget Tracking',
+                'GST Invoicing for Event Companies',
+            ],
+            startingPrice: { amount: 19000, currency: 'INR' },
+        },
+        software: {
+            name: 'Nexona Event Management System',
+            applicationCategory: 'BusinessApplication',
+            operatingSystem: 'Web, Android, iOS',
+            featureList: [
+                'Lead tracking',
+                'Quotations',
+                'Vendor payments',
+                'Budget vs actual',
+                'Guest RSVPs',
+                'QR check-in',
+                'GST invoicing',
+                'WhatsApp Business API, Razorpay, Tally and Zoho Books integration',
+            ],
+            screenshot: '/eventsoftware.png',
         },
     },
     {

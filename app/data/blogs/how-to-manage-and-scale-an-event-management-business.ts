@@ -237,7 +237,7 @@ export const POST: BlogPost = {
         {
             type: 'callout',
             label: 'Where Nexona comes in',
-            text: 'Nexona is a software studio in Mumbai that builds [custom business management software](/business-management-software-development) — for an event company, that means the costing, vendor, crew, inventory and payments system described above, shaped around how your team already runs events. One module first, the rest once it’s in daily use. No per-seat fees, and you own the code. If three or more of that checklist sounded familiar, it’s probably worth a conversation.',
+            text: 'Nexona is a software studio in Mumbai that builds [custom event management software](/event-management-software) — for an event company, that means the costing, vendor, crew, inventory and payments system described above, shaped around how your team already runs events. One module first, the rest once it’s in daily use. No per-seat fees, and you own the code. If three or more of that checklist sounded familiar, it’s probably worth a conversation.',
         },
     ],
     cta: {

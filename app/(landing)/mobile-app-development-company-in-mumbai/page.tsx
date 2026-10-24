@@ -277,7 +277,7 @@ export default function MobileAppDevelopmentCompanyInMumbaiPage() {
                             },
                             {
                                 title: 'Businesses already running a system',
-                                body: <>An ERP, a CRM, a custom dashboard. The app becomes the front end for the people who never sit at a desk. Well, most of them. The desk side of this is on our <Link href="/business-management-software-development" style={inlineLink}>business management software</Link> page.</>
+                                body: <>An ERP, a CRM, an <Link href="/event-management-software" style={inlineLink}>event management system</Link>, a custom dashboard. The app becomes the front end for the people who never sit at a desk. Well, most of them. The desk side of this is on our <Link href="/business-management-software-development" style={inlineLink}>business management software</Link> page.</>
                             }
                         ].map((item, i) => (
                             <motion.div

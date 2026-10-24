@@ -340,7 +340,7 @@ export default function MumbaiAgencyPage() {
                                 <>Custom web applications, and <Link href="/mobile-app-development-company-in-mumbai" style={inlineLink}>mobile app development</Link> for Mumbai businesses</>,
                                 'Scalable cloud architecture and infrastructure',
                                 'Secure portals for fintech, real estate, and enterprise clients',
-                                <>ERP, CRM, and <Link href="/business-management-software-development" style={inlineLink}>internal business management software</Link></>,
+                                <>ERP, CRM, <Link href="/event-management-software" style={inlineLink}>event management software</Link> and <Link href="/business-management-software-development" style={inlineLink}>internal business management software</Link></>,
                                 'AI agents and workflow automation'
                             ].map((item, i) => (
                                 <motion.li key={i} variants={fadeInUp} style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', fontFamily: INTER, fontWeight: 600, fontSize: '1.1rem' }}>

@@ -698,7 +698,7 @@ export default function NaviMumbaiSoftwarePage() {
                             },
                             {
                                 title: 'Business Management Systems',
-                                desc: <>One place for orders, customers, inventory, invoicing and reporting. Call it an <Link href="/manufacturing-erp" style={inlineLink}>ERP</Link> if you like — the label matters less than the fact that your team stops asking three people where the number came from.</>,
+                                desc: <>One place for orders, customers, inventory, invoicing and reporting. Call it an <Link href="/manufacturing-erp" style={inlineLink}>ERP</Link> if you like, or <Link href="/event-management-software" style={inlineLink}>event management software</Link> if you run events — the label matters less than the fact that your team stops asking three people where the number came from.</>,
                                 img: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&q=80'
                             },
                             {
