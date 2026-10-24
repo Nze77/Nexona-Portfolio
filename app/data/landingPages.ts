@@ -71,12 +71,17 @@ export const LANDING_PAGES: LandingPage[] = [
     {
         slug: 'software-development-agency-mumbai',
         footerGroup: 'local',
-        title: 'Software Agency in Mumbai | Custom Software Development – Nexona',
+        title: 'Software Development Company in Mumbai | Software Agency – Nexona',
+        updated: '2026-10-24',
         description:
-            'Nexona is a software agency in Mumbai building custom web apps, AI agents, automations, and full-stack software for growing businesses.',
+            'Software development company in Mumbai building custom ERP, CRM, web apps and AI automation for Indian SMEs. You own the code. Book a free scoping call.',
         priority: 0.9,
         navLabel: 'Software Agency Mumbai',
         keywords: [
+            'software development company in Mumbai',
+            'software company in Mumbai',
+            'software development companies in Mumbai',
+            'software development services Mumbai',
             'software agency Mumbai',
             'software agency in Mumbai',
             'software development agency in Mumbai',
@@ -87,9 +92,9 @@ export const LANDING_PAGES: LandingPage[] = [
             'AI automation Mumbai',
         ],
         og: {
-            title: 'Nexona – Software Agency in Mumbai',
+            title: 'Software Development Company in Mumbai | Nexona',
             description:
-                'Custom software development, AI agents, and business automation from Mumbai’s trusted full-stack development partner.',
+                'Custom ERP, CRM, web apps and AI automation for Mumbai SMEs. Code in your name from day one. Book a free scoping call.',
         },
         business: {
             areaServedCity: 'Mumbai',
@@ -103,14 +108,15 @@ export const LANDING_PAGES: LandingPage[] = [
     },
     {
         // Sister page to software-development-agency-mumbai. Kept deliberately
-        // disjoint from it: that page owns "software agency (in) Mumbai", this
-        // one owns the Navi Mumbai / node-level queries. No shared keywords,
+        // disjoint from it: that page owns "software agency / software
+        // development company (in) Mumbai", this one owns the Navi Mumbai /
+        // node-level queries. No shared keywords,
         // no shared H1/H2 phrasing — the two support each other rather than
         // competing for the same SERP.
         slug: 'software-development-company-in-navi-mumbai',
         footerGroup: 'local',
         title: 'Software Development Company in Navi Mumbai | Custom Software – Nexona',
-        updated: '2026-09-23',
+        updated: '2026-10-24',
         description:
             'Nexona is a software company in Navi Mumbai building custom software, business management systems and process automation for startups and growing companies — Airoli and Vashi to Belapur, Kharghar and Panvel.',
         priority: 0.9,
@@ -300,7 +306,7 @@ export const LANDING_PAGES: LandingPage[] = [
         slug: 'mobile-app-development-company-in-mumbai',
         footerGroup: 'local',
         title: 'Mobile App Development Company in Mumbai | Nexona',
-        updated: '2026-09-26',
+        updated: '2026-10-24',
         description:
             'Mobile app development company in Mumbai building Android and iOS apps in Flutter, React Native and native code. You own the code. Our D2C app lifted AOV 57%.',
         priority: 0.95,

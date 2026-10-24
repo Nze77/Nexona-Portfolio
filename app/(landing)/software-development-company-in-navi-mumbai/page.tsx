@@ -11,7 +11,7 @@ import ContactSection from '../../components/ContactSection'
 import ContactOverlay from '../../components/ContactOverlay'
 import ParticleEffect from '../../components/ParticleEffect'
 import { useContactPopup } from '../../lib/useContactPopup'
-import { DARK, SAND, INTER, BUSINESS_PHONE, BUSINESS_PHONE_DISPLAY } from '../../lib/constants'
+import { DARK, SAND, INTER, BUSINESS_PHONE, BUSINESS_PHONE_DISPLAY, GBP_URL, CLUTCH_URL } from '../../lib/constants'
 import { FAQ_ITEMS } from './content'
 
 // Extracted animation variants
@@ -44,8 +44,6 @@ const NODES = [
     'Vashi', 'Sanpada', 'Nerul', 'Seawoods', 'CBD Belapur', 'Kharghar',
     'Kamothe', 'Ulwe', 'Panvel', 'Taloja'
 ]
-
-const CLUTCH_URL = 'https://clutch.co/profile/nexona-labs'
 
 // Five filled stars plus the score, linking out to the Clutch profile.
 function ClutchRating({ color }: { color: string }) {
@@ -327,10 +325,12 @@ export default function NaviMumbaiSoftwarePage() {
                     viewport={{ once: true, margin: "-10%" }}
                     style={{ maxWidth: '1400px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '3rem', textAlign: 'center' }}
                 >
+                    {/* Real, measured figures from the case study further down —
+                        do not swap back to round "10x" style claims. */}
                     {[
-                        { num: '50+', label: 'Projects Shipped' },
-                        { num: '24/7', label: 'Automations Running' },
-                        { num: '10x', label: 'Operational Scaling' }
+                        { num: '390+', label: 'Service Jobs a Month, Up From 300' },
+                        { num: '7 hrs', label: 'Weekly Admin, Down From ~20' },
+                        { num: '<10 min', label: 'To Build a Quote, Was 30' }
                     ].map((stat, i) => (
                         <motion.div key={i} variants={fadeInUp}>
                             <h3 style={{ fontFamily: "var(--font-montserrat), sans-serif", fontSize: '3rem', fontWeight: 800, margin: 0, color: SAND }}>{stat.num}</h3>
@@ -693,7 +693,7 @@ export default function NaviMumbaiSoftwarePage() {
                         {[
                             {
                                 title: 'Custom Software Development',
-                                desc: 'Built for your workflow from a blank page. Web, mobile, internal tools — React, Next.js, Node. Works on a four-year-old Android on patchy 4G somewhere past Kamothe, because that is what your team is holding.',
+                                desc: <>Built for your workflow from a blank page. Web, internal tools, and Android and iOS apps from our <Link href="/mobile-app-development-company-in-mumbai" style={inlineLink}>mobile app development company</Link> side — React, Next.js, Node. Works on a four-year-old Android on patchy 4G somewhere past Kamothe, because that is what your team is holding.</>,
                                 img: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600&q=80'
                             },
                             {
@@ -844,6 +844,82 @@ export default function NaviMumbaiSoftwarePage() {
                             go on retyping.
                         </p>
                         <ClutchRating color={SAND} />
+                    </motion.div>
+                </div>
+            </section>
+
+            {/* Reviews. Quotes are VERBATIM from the verified Clutch review
+                (Sep 2026) — never edit the wording. No AggregateRating schema:
+                Google treats self-hosted review markup as spam. */}
+            <section style={{ backgroundColor: SAND, color: DARK, padding: isMobile ? '6rem 5%' : '10rem 8%' }}>
+                <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
+                    <motion.div
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, margin: "-10%" }}
+                        variants={staggerContainer}
+                    >
+                        <motion.span variants={fadeInUp} style={{ fontFamily: INTER, fontSize: '0.85rem', letterSpacing: '0.2em', textTransform: 'uppercase', opacity: 0.6, fontWeight: 700, display: 'block', marginBottom: '1.5rem' }}>Reviews</motion.span>
+                        <motion.h2 variants={fadeInUp} style={{
+                            fontFamily: "var(--font-montserrat), sans-serif",
+                            fontSize: 'clamp(2rem, 4vw, 3.5rem)',
+                            fontWeight: 800,
+                            textTransform: 'uppercase',
+                            lineHeight: 1.08,
+                            letterSpacing: '-0.02em',
+                            margin: '0 0 3.5rem 0'
+                        }}>
+                            In a Client’s Own Words
+                        </motion.h2>
+
+                        <motion.blockquote variants={fadeInUp} cite={CLUTCH_URL} style={{ margin: 0, borderLeft: `2px solid rgba(46,42,38,0.3)`, paddingLeft: isMobile ? '1.5rem' : '2.5rem' }}>
+                            <p style={{ fontFamily: "var(--font-montserrat), sans-serif", fontSize: isMobile ? '1.25rem' : '1.6rem', fontWeight: 600, lineHeight: 1.45, margin: '0 0 1.5rem 0', letterSpacing: '-0.01em' }}>
+                                “The thing I found most impressive was that Nexona did not approach the
+                                project as a simple ‘build what the client asks for’ engagement.”
+                            </p>
+                            <p style={{ fontFamily: INTER, fontSize: '1.08rem', lineHeight: 1.8, opacity: 0.8, margin: '0 0 1.75rem 0' }}>
+                                “When they believed there was a better technical approach, they explained
+                                the relevant context, discussed the trade-offs, and gave their own
+                                recommendation.”
+                            </p>
+                            <footer style={{ fontFamily: INTER, fontSize: '0.8rem', letterSpacing: '0.14em', textTransform: 'uppercase', fontWeight: 700, opacity: 0.55 }}>
+                                Founder &amp; CEO, Valyrian Voice &middot; AI voice project &middot; Verified on Clutch
+                            </footer>
+                        </motion.blockquote>
+
+                        <motion.p variants={fadeInUp} style={{ fontFamily: INTER, fontSize: '1rem', lineHeight: 1.75, opacity: 0.65, margin: '2.5rem 0 0 0', maxWidth: '720px' }}>
+                            That is the scoping step above, from the other side of the table. Same review,
+                            the one thing they’d change: “more formal documentation and planning around
+                            certain architectural decisions.” Fair. We left it in.
+                        </motion.p>
+
+                        <motion.div variants={fadeInUp} style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', marginTop: '3rem' }}>
+                            {[
+                                { href: GBP_URL, label: 'Read our Google reviews' },
+                                { href: CLUTCH_URL, label: 'Read the full review on Clutch' }
+                            ].map((l) => (
+                                <a
+                                    key={l.href}
+                                    href={l.href}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    style={{
+                                        fontFamily: INTER,
+                                        fontSize: '0.8rem',
+                                        letterSpacing: '0.16em',
+                                        textTransform: 'uppercase',
+                                        fontWeight: 700,
+                                        color: DARK,
+                                        textDecoration: 'none',
+                                        border: `1px solid rgba(46,42,38,0.35)`,
+                                        borderRadius: '99px',
+                                        padding: '0.85rem 1.75rem'
+                                    }}
+                                >
+                                    {l.label} &rarr;
+                                </a>
+                            ))}
+                        </motion.div>
                     </motion.div>
                 </div>
             </section>

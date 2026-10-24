@@ -14,8 +14,9 @@
 // "mobile app development company in india" and "mobile app development
 // services". Keep "India" out of this page's title and H1.
 //
-// NO PRICING FIGURES anywhere on this page. Cost questions are answered with
-// what drives the number, then "we scope first, then quote".
+// PRICING: starting prices approved by the user on 2026-10-24 (this page and
+// the Mumbai software page only). Always "starts from" — never a flat price or
+// a range. Mirrored in APP_STARTING_PRICES on the Mumbai page; keep in step.
 //
 // NDA: the D2C case study client is never named, and the ClientStrip is left
 // off this page on purpose — its logo wall sits too close to the case study.
@@ -24,6 +25,12 @@ export interface FaqItem {
     question: string
     answer: string
 }
+
+export const APP_PRICE_TIERS: { tier: string; price: string; scope: string; time: string }[] = [
+    { tier: 'MVP', price: '₹25,000', scope: 'One type of user, one core flow, one way to pay. Enough to test the idea with real people.', time: '8–12 weeks' },
+    { tier: 'Mid-size', price: '₹1.53 lakh', scope: 'Two types of user, or several outside systems to talk to — your ERP, a courier API, a loyalty programme.', time: 'Around 16 weeks' },
+    { tier: 'Complex', price: '₹4 lakh', scope: 'On-demand and multi-app platforms, offline sync, hardware like printers and scanners, heavy integrations.', time: 'Scoped per project' }
+]
 
 export const FAQ_ITEMS: FaqItem[] = [
     {
@@ -34,7 +41,7 @@ export const FAQ_ITEMS: FaqItem[] = [
     {
         question: 'How much does mobile app development cost in Mumbai?',
         answer:
-            'It depends on scope, and we quote after scoping rather than before. What moves the number: one platform or both, how many types of user the app has, how many outside systems it talks to (payments, your ERP, a courier API), whether it needs a custom backend and admin panel or one already exists, offline use, and how custom the design is. What does not move it: the number of people who download it. There is no per-user licence. You own the app.',
+            'An MVP app starts from ₹25,000. A mid-size app starts from ₹1.53 lakh, and a complex one from ₹4 lakh. Where yours lands above that depends on scope, and we give the exact number after scoping. What moves it: one platform or both, how many types of user the app has, how many outside systems it talks to (payments, your ERP, a courier API), whether it needs a custom backend and admin panel or one already exists, offline use, and how custom the design is. What does not move it: the number of people who download it. There is no per-user licence. You own the app.',
     },
     {
         question: 'Should I build for Android or iOS first?',

@@ -11,7 +11,7 @@ import ContactOverlay from '../../components/ContactOverlay'
 import ParticleEffect from '../../components/ParticleEffect'
 import { useContactPopup } from '../../lib/useContactPopup'
 import { DARK, SAND, INTER, GBP_URL, CLUTCH_URL } from '../../lib/constants'
-import { FAQ_ITEMS } from './content'
+import { FAQ_ITEMS, APP_PRICE_TIERS } from './content'
 
 const fadeInUp = {
     hidden: { opacity: 0, y: 40 },
@@ -311,7 +311,7 @@ export default function MobileAppDevelopmentCompanyInMumbaiPage() {
                     >
                         <motion.span variants={fadeInUp} style={EYEBROW_STYLE}>What We Build</motion.span>
                         <motion.h2 variants={fadeInUp} style={H2_STYLE}>
-                            Mobile App Development Services
+                            Mobile App Development Services in Mumbai
                         </motion.h2>
                         <motion.p variants={fadeInUp} style={INTRO_STYLE}>
                             Six kinds of work. One team — the same engineers from the first scoping call
@@ -322,15 +322,15 @@ export default function MobileAppDevelopmentCompanyInMumbaiPage() {
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(310px, 1fr))', gap: '2rem' }}>
                         {[
                             {
-                                title: 'Android App Development',
+                                title: 'Android App Development in Mumbai',
                                 body: 'Kotlin, when the app needs deep hardware access — Bluetooth printers, barcode scanners, background location. Most of India is on Android, so this is where a Mumbai business usually starts.'
                             },
                             {
-                                title: 'iOS App Development',
+                                title: 'iOS App Development for Mumbai Brands',
                                 body: 'Swift and SwiftUI. Worth building natively when your buyers skew premium or the app leans on Apple Pay, HealthKit or widgets. Otherwise, honestly — go cross-platform.'
                             },
                             {
-                                title: 'Flutter App Development',
+                                title: 'Flutter App Development, Mumbai',
                                 body: 'One codebase, identical on both platforms down to the pixel. Our default when the design has to look exactly the same everywhere and there is no web codebase to share.'
                             },
                             {
@@ -684,6 +684,47 @@ export default function MobileAppDevelopmentCompanyInMumbaiPage() {
                 </div>
             </section>
 
+            {/* ── S4c · Mobile app developers in Mumbai ────────────────────────
+                Carries "app developers in mumbai" / "mobile app developers in
+                mumbai" / "best mobile app developers mumbai" — once each, in
+                natural sentences. Do not add more variants. */}
+            <section style={{ backgroundColor: SAND, color: DARK, padding: isMobile ? '6rem 5%' : '10rem 8%' }}>
+                <div style={{ maxWidth: '1100px', margin: '0 auto', display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: isMobile ? '3rem' : '5rem', alignItems: 'start' }}>
+                    <motion.div
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, margin: "-10%" }}
+                        variants={staggerContainer}
+                    >
+                        <motion.span variants={fadeInUp} style={EYEBROW_STYLE}>Who Builds It</motion.span>
+                        <motion.h2 variants={fadeInUp} style={H2_STYLE}>
+                            Mobile App Developers in Mumbai You Can Actually Meet
+                        </motion.h2>
+                        <motion.p variants={fadeInUp} style={INTRO_STYLE}>
+                            Search for the best mobile app developers in Mumbai and the first page is
+                            mostly lists. Lists of agencies, ranked by whoever paid for the slot. Useful,
+                            kind of. They will not tell you who writes the code.
+                        </motion.p>
+                    </motion.div>
+
+                    <motion.div
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, margin: "-10%" }}
+                        variants={staggerContainer}
+                        style={{ paddingTop: isMobile ? 0 : '3.25rem' }}
+                    >
+                        {[
+                            'Our app developers in Mumbai are the same people on your scoping call. No hand-off to a subcontractor after the contract is signed, no account manager translating between you and someone you never meet.',
+                            'One engineer owns your app end to end — the React Native or Flutter code, the backend, the admin panel. When Apple rejects a build at 6pm on a Friday, that person already knows why.',
+                            'Ask to meet them before you sign. Ask them which phone they test on. If the answer is only the latest iPhone, keep looking — and that goes for us too.'
+                        ].map((p, i) => (
+                            <motion.p key={i} variants={fadeInUp} style={{ fontFamily: INTER, fontSize: '1.06rem', lineHeight: 1.8, opacity: 0.8, margin: '0 0 1.4rem 0' }}>{p}</motion.p>
+                        ))}
+                    </motion.div>
+                </div>
+            </section>
+
             {/* ── S5 · Process ─────────────────────────────────────────────────
                 Timings per phase — no competitor in this SERP publishes them. */}
             <section style={{ backgroundColor: DARK, color: SAND, padding: isMobile ? '6rem 5%' : '10rem 8%', borderBottom: `1px solid rgba(232,223,211,0.1)` }}>
@@ -818,9 +859,9 @@ export default function MobileAppDevelopmentCompanyInMumbaiPage() {
             </section>
 
             {/* ── S7 · Cost drivers ────────────────────────────────────────────
-                NO FIGURES. Site-wide rule: engagements are scoped per client.
-                Captures the cost-question intent that Duplex and Metaminds win
-                with price tables, by answering the question behind it. */}
+                Starting prices (APP_PRICE_TIERS in content.ts), then what moves
+                them. Captures the "app development cost in Mumbai" intent that
+                Duplex and Metaminds win with price tables. */}
             <section style={{ backgroundColor: DARK, color: SAND, padding: isMobile ? '6rem 5%' : '10rem 8%', borderBottom: `1px solid rgba(232,223,211,0.1)` }}>
                 <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
                     <motion.div
@@ -832,14 +873,43 @@ export default function MobileAppDevelopmentCompanyInMumbaiPage() {
                     >
                         <motion.span variants={fadeInUp} style={EYEBROW_STYLE}>Budget</motion.span>
                         <motion.h2 variants={fadeInUp} style={H2_STYLE}>
-                            What Drives The Cost Of An App
+                            App Development Cost in Mumbai
                         </motion.h2>
                         <motion.p variants={fadeInUp} style={INTRO_STYLE}>
-                            We don’t publish a price. A number quoted before anyone has seen your
-                            screens is a guess with a rupee sign on it. Here is what actually moves it,
-                            so you can judge the size of your project before you talk to anyone.
+                            Three starting points. Each is the smallest version of that kind of app
+                            that is genuinely usable — where yours lands above it depends on the six
+                            things further down.
                         </motion.p>
                     </motion.div>
+
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem', marginBottom: '4.5rem' }}>
+                        {APP_PRICE_TIERS.map((t, i) => (
+                            <motion.div
+                                key={t.tier}
+                                initial={{ opacity: 0, y: 30 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true, margin: "-8%" }}
+                                transition={{ delay: i * 0.1, duration: 0.7, ease: [0.23, 1, 0.32, 1] as const }}
+                                style={{ border: `1px solid rgba(232,223,211,0.25)`, borderRadius: '24px', padding: '2.5rem', backgroundColor: 'rgba(232,223,211,0.05)', display: 'flex', flexDirection: 'column' }}
+                            >
+                                <h3 style={{ fontFamily: "var(--font-montserrat), sans-serif", fontSize: '1.2rem', fontWeight: 800, textTransform: 'uppercase', margin: '0 0 1.5rem 0', letterSpacing: '-0.01em' }}>{t.tier} app</h3>
+                                <p style={{ fontFamily: INTER, fontSize: '0.72rem', letterSpacing: '0.16em', textTransform: 'uppercase', opacity: 0.55, fontWeight: 700, margin: 0 }}>Starts from</p>
+                                <p style={{ fontFamily: "var(--font-montserrat), sans-serif", fontSize: '2.4rem', fontWeight: 800, margin: '0.2rem 0 1.5rem 0', letterSpacing: '-0.02em', lineHeight: 1.1 }}>{t.price}</p>
+                                <p style={{ fontFamily: INTER, fontSize: '0.98rem', lineHeight: 1.7, opacity: 0.75, margin: '0 0 1.5rem 0', flex: 1 }}>{t.scope}</p>
+                                <p style={{ fontFamily: INTER, fontSize: '0.78rem', letterSpacing: '0.14em', textTransform: 'uppercase', fontWeight: 700, opacity: 0.6, margin: 0, borderTop: `1px solid rgba(232,223,211,0.15)`, paddingTop: '1.25rem' }}>Timeline &middot; {t.time}</p>
+                            </motion.div>
+                        ))}
+                    </div>
+
+                    <motion.h3
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, margin: "-10%" }}
+                        transition={{ duration: 0.6 }}
+                        style={{ fontFamily: "var(--font-montserrat), sans-serif", fontSize: '1.5rem', fontWeight: 800, textTransform: 'uppercase', margin: '0 0 2rem 0', letterSpacing: '-0.01em' }}
+                    >
+                        What Moves The Number
+                    </motion.h3>
 
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
                         {[
@@ -873,7 +943,8 @@ export default function MobileAppDevelopmentCompanyInMumbaiPage() {
                     >
                         Three ways to work with us: a fixed scope for a defined first version, a
                         dedicated team billed monthly, or a retainer after launch. Not a cost driver —
-                        how many people download it. No per-user licence, ever. We scope first, then quote.
+                        how many people download it. No per-user licence, ever. We scope first, then
+                        give you the exact number in writing.
                     </motion.p>
                 </div>
             </section>
