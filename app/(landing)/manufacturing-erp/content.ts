@@ -7,7 +7,7 @@ export interface FaqItem {
 // (2026-10-15). Every other landing page stays price-free. Keep this in step
 // with `startingPrice` on the manufacturing-erp entry in landingPages.ts,
 // which feeds the Offer schema.
-export const STARTING_PRICE = '₹70,000'
+export const STARTING_PRICE = '₹58,000'
 
 // FAQ doubles as FAQPage structured data, so every answer opens with the actual
 // answer — the rest is explanation for whoever keeps reading.

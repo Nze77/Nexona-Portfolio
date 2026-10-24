@@ -506,10 +506,10 @@ export const LANDING_PAGES: LandingPage[] = [
         footerGroup: 'solutions',
         title: 'Custom Manufacturing ERP Development Company India | Nexona',
         description:
-            'Mumbai team building custom ERP, MES, inventory and production software for Indian manufacturers. Built from scratch. All modules from ₹70,000.',
+            'Mumbai team building custom ERP, MES, inventory and production software for Indian manufacturers. Built from scratch. All modules from ₹58,000.',
         priority: 0.9,
         navLabel: 'Manufacturing ERP',
-        updated: '2026-10-15',
+        updated: '2026-10-24',
         keywords: [
             'custom manufacturing ERP software development company India',
             'manufacturing ERP development company Mumbai',
@@ -530,7 +530,7 @@ export const LANDING_PAGES: LandingPage[] = [
         og: {
             title: 'Custom Manufacturing ERP Development Company in India | Nexona',
             description:
-                'Custom ERP and MES for Indian factories, built from scratch around your plant. Tally, GST and machine integration. Every module from ₹70,000.',
+                'Custom ERP and MES for Indian factories, built from scratch around your plant. Tally, GST and machine integration. Every module from ₹58,000.',
         },
         business: {
             areaServedCity: 'Mumbai',
@@ -541,7 +541,7 @@ export const LANDING_PAGES: LandingPage[] = [
                 'Production Planning & Inventory Management Software',
                 'ERP Integration (Tally, GST, Machines)',
             ],
-            startingPrice: { amount: 70000, currency: 'INR' },
+            startingPrice: { amount: 58000, currency: 'INR' },
         },
     },
     {
