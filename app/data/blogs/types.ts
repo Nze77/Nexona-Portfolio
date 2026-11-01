@@ -20,6 +20,10 @@ export type BlogBlock =
     | { type: 'callout'; label?: string; text: string }
     /** Rendered as a real <table>: the most extractable element on a page. */
     | { type: 'table'; caption?: string; columns: string[]; rows: string[][] }
+    /** Mid-article lead box: heading, one line, a button that opens the
+     *  contact form, plus phone/WhatsApp/email as plain text. Use it right
+     *  after the numbers a reader came for — two or three per post at most. */
+    | { type: 'cta'; heading: string; text: string; buttonLabel?: string }
 
 export interface BlogFaqItem {
     question: string
@@ -29,6 +33,12 @@ export interface BlogFaqItem {
 export interface BlogPost {
     /** URL slug — served at /blogs/<slug>. Never change it once published. */
     slug: string
+    /** Optional root-level path (e.g. "/business-app-development-cost-in-india")
+     *  for a post that targets a commercial query and should not sit under
+     *  /blogs. It then needs its own app/<path>/page.tsx rendering
+     *  <ArticleView>, and /blogs/<slug> is not generated. Use postPath() —
+     *  never build the URL by hand. */
+    path?: string
     /** Visible H1. Can be longer than the meta title. */
     title: string
     /** <title> tag. Aim for under 60 characters. */

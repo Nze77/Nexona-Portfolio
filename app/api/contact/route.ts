@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import nodemailer from 'nodemailer'
+import { aiSourceOf } from '../../lib/aiSource'
 
 // nodemailer requires the Node.js runtime (not edge)
 export const runtime = 'nodejs'
@@ -69,6 +70,9 @@ const TRIGGER_LABELS: Record<string, string> = {
 function buildJourneyLines(meta: ContactMeta | undefined, serverInfo: string[]): string[] {
     const lines: string[] = []
     if (!meta) return serverInfo
+
+    const ai = aiSourceOf(clean(meta.referrerDomain), clean(meta.utm?.utm_source))
+    if (ai) lines.push(`AI assistant: ${ai} (this lead found you through ${ai})`)
 
     const submittedFrom = clean(meta.page?.url) || clean(meta.page?.path)
     if (submittedFrom) lines.push(`Submitted from: ${submittedFrom}`)
@@ -195,13 +199,15 @@ export async function POST(request: Request) {
 
     // The page the lead came from is the most useful thing to see in an inbox.
     const source = clean(body.meta?.page?.path) || clean(body.meta?.landingPage)
+    // Flag AI-assistant leads in the subject so they can be filtered and counted.
+    const ai = aiSourceOf(clean(body.meta?.referrerDomain), clean(body.meta?.utm?.utm_source))
 
     try {
         await transporter.sendMail({
             from: `"Nexona Website" <${SMTP_USER}>`,
             to: recipient,
             replyTo: email,
-            subject: `New inquiry from ${name}${source ? ` — ${source}` : ''}`,
+            subject: `${ai ? `[${ai} lead] ` : ''}New inquiry from ${name}${source ? ` — ${source}` : ''}`,
             text:
                 `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\n\nMessage:\n${message}\n\n` +
                 `----- Visitor context -----\n${journeyText}`,

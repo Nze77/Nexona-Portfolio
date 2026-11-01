@@ -944,7 +944,9 @@ export default function MobileAppDevelopmentCompanyInMumbaiPage() {
                         Three ways to work with us: a fixed scope for a defined first version, a
                         dedicated team billed monthly, or a retainer after launch. Not a cost driver —
                         how many people download it. No per-user licence, ever. We scope first, then
-                        give you the exact number in writing.
+                        give you the exact number in writing. Want the hours behind it? Price per
+                        feature, designer cost and running costs are in our{' '}
+                        <Link href="/business-app-development-cost-in-india" style={inlineLink}>business app development cost guide</Link>.
                     </motion.p>
                 </div>
             </section>

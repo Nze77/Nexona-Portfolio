@@ -1,7 +1,7 @@
 import { SECTIONS } from '../data/sections'
 import { LANDING_PAGES } from '../data/landingPages'
 import { PROJECT_DETAILS } from '../data/projectDetails'
-import { BLOG_POSTS, postToMarkdown } from '../data/blogs'
+import { BLOG_POSTS, postPath, postToMarkdown } from '../data/blogs'
 import { SITE_URL, BUSINESS_ADDRESS } from '../lib/constants'
 
 import { FAQ_ITEMS as AI_AUTOMATION_AGENCY_FAQ } from '../(landing)/ai-automation-agency/content'
@@ -77,7 +77,7 @@ ${served}${faqBlock}`
         const updated = post.updated ? `\nUpdated: ${post.updated}` : ''
         return `### ${post.title}
 
-URL: ${SITE_URL}/blogs/${post.slug}
+URL: ${SITE_URL}${postPath(post)}
 Published: ${post.published}${updated}
 Author: Nexona
 

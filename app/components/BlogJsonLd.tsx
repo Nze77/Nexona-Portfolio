@@ -1,4 +1,4 @@
-import type { BlogPost } from '../data/blogs'
+import { postPath, type BlogPost } from '../data/blogs'
 import { SITE_URL } from '../lib/constants'
 
 /**
@@ -14,7 +14,7 @@ import { SITE_URL } from '../lib/constants'
  * that sells the fix".
  */
 export default function BlogJsonLd({ post }: { post: BlogPost }) {
-    const url = `${SITE_URL}/blogs/${post.slug}`
+    const url = `${SITE_URL}${postPath(post)}`
     const org = { '@id': `${SITE_URL}/#organization` }
 
     const graph: Record<string, unknown>[] = [

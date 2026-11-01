@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import type { BlogPost } from '../data/blogs'
+import { postPath, type BlogPost } from '../data/blogs'
 import { SITE_URL } from './constants'
 
 /**
@@ -8,7 +8,7 @@ import { SITE_URL } from './constants'
  * because Next.js merges `openGraph` shallowly over the root layout's.
  */
 export function buildBlogMetadata(post: BlogPost): Metadata {
-    const path = `/blogs/${post.slug}`
+    const path = postPath(post)
     const image = { url: `${SITE_URL}/logo.png`, width: 1080, height: 1080, alt: post.title }
 
     return {

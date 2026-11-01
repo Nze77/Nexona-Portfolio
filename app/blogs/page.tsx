@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import StickyHeader from '../components/StickyHeader'
 import Footer from '../components/Footer'
-import { BLOG_POSTS } from '../data/blogs'
+import { BLOG_POSTS, postPath } from '../data/blogs'
 import { DARK, SAND, HELVETICA, INTER } from '../lib/constants'
 import { formatPostDate } from './format'
 
@@ -41,7 +41,7 @@ export default function BlogIndexPage() {
                         {BLOG_POSTS.map((post) => (
                             <Link
                                 key={post.slug}
-                                href={`/blogs/${post.slug}`}
+                                href={postPath(post)}
                                 style={{
                                     display: 'block',
                                     color: 'inherit',

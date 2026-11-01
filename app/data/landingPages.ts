@@ -635,7 +635,7 @@ export const LANDING_PAGES: LandingPage[] = [
             'Custom distributor management system for brands selling through distributors. Secondary sales, stock, schemes, claims and a field app, with Tally and GST built in. You own it.',
         priority: 0.9,
         navLabel: 'Distributor Management System',
-        updated: '2026-09-28',
+        updated: '2026-11-01',
         keywords: [
             'distributor management system',
             'distribution management system',
@@ -655,7 +655,7 @@ export const LANDING_PAGES: LandingPage[] = [
         og: {
             title: 'Custom Distributor Management System (DMS) | Nexona',
             description:
-                'Secondary sales, distributor stock, schemes, claims and a field sales app — built around how you distribute, for about what you would spend renting a DMS.',
+                'Secondary sales, distributor stock, schemes, claims and a field sales app — built around how you distribute. ₹0 per distributor: you own the source code.',
         },
         business: {
             areaServedCity: 'Mumbai',

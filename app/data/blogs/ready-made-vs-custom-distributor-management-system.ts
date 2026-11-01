@@ -1,12 +1,15 @@
 import type { BlogPost } from './types'
 
-// COMMERCIAL-INVESTIGATION post. Supports /distributor-management-system: the
+// COMMERCIAL-INVESTIGATION post. Never recommends renting or any competitor
+// (user rule, 2026-11-01). Supports /distributor-management-system: the
 // landing page owns "distributor management system" itself, this post owns the
 // decision people make before they buy — ready-made vs custom, and what each
 // really costs over three years. Links to the landing page with descriptive
 // anchors; the landing page links back from its comparison section.
 //
-// Pricing rule: no rupee figures for software, ours or anyone else's. The cost
+// Rupee figures live on /distributor-management-system-cost-in-india, which
+// owns the cost keywords; this post links there and stays in seat-months.
+// Original rule: no rupee figures for software, ours or anyone else's. The cost
 // argument is made in SEAT-MONTHS, so the reader multiplies by their own
 // vendor's quote. Vendors are deliberately not named — their pricing changes
 // and we can't verify it; the argument doesn't need them.
@@ -16,20 +19,18 @@ export const POST: BlogPost = {
     title: 'Ready-Made vs Custom Distributor Management System: What It Really Costs Over Three Years',
     metaTitle: 'Ready-Made vs Custom DMS: The Three-Year Cost',
     description:
-        'Rented DMS or custom-built? A three-year cost comparison in seat-months, the hidden costs on both sides, and when each one is the right call for your distribution.',
+        'Rented DMS or custom-built? A three-year cost comparison in seat-months, the hidden costs of renting, and why growing brands end up owning their DMS.',
     excerpt:
-        'A rented DMS looks cheaper in month one. By month thirty-six you have paid for 4,044 seat-months and still run schemes in Excel. The honest comparison, both sides.',
+        'A rented DMS looks cheaper in month one. By month thirty-six you have paid for 4,044 seat-months and still run schemes in Excel. Here is the comparison the vendor will not run for you.',
     category: 'Distribution',
     published: '2026-09-28',
-    updated: '2026-09-28',
+    updated: '2026-11-01',
     readingMinutes: 9,
     keywords: [
         // Primary — the decision as searched
         'custom DMS vs off the shelf',
         'ready-made vs custom distributor management system',
         'build vs buy distributor management system',
-        'distributor management system cost',
-        'DMS software cost India',
         'is custom DMS worth it',
         // Supporting
         'distributor management system for FMCG',
@@ -49,7 +50,7 @@ export const POST: BlogPost = {
         {
             type: 'callout',
             label: 'Short answer',
-            text: 'A ready-made DMS is cheaper in year one and more expensive every year after, because it charges **per distributor and per sales rep, every month, forever**. A custom DMS costs more up front and almost nothing per head after that. For a brand with a few dozen distributors and a field team, the two usually cost about the same over three years — and only the custom one runs your schemes exactly, syncs with your Tally, and belongs to you at the end. With fewer than twenty distributors and standard schemes, rent. Past that, run the seat-month maths below before you sign anything.',
+            text: 'A ready-made DMS looks cheaper in month one and costs more every month after, because it charges **per distributor and per sales rep, every month, forever**. A custom DMS is paid for once and costs nothing per head after that. Over three years a growing brand pays a rented DMS for thousands of seat-months — and only the custom one runs your schemes exactly, syncs with your Tally, and belongs to you at the end. Run the seat-month maths below before you sign or renew anything.',
         },
 
         { type: 'h2', text: 'Why does a ready-made DMS look cheaper than it is?' },
@@ -88,7 +89,7 @@ export const POST: BlogPost = {
         },
         {
             type: 'p',
-            text: '**Multiply 4,044 by your vendor’s per-seat monthly price.** Add the implementation fee, any paid modules, and one customisation or two. That is your real three-year number. Put it next to a custom build quote, and the conversation changes. It usually does.',
+            text: '**Multiply 4,044 by your vendor’s per-seat monthly price.** Add the implementation fee, any paid modules, and one customisation or two. That is your real three-year number. Put it next to a custom build quote, and the conversation changes. It usually does. (Want rupees instead of seat-months? We worked the five-year numbers out per distributor in [distributor management system cost in India](/distributor-management-system-cost-in-india).)',
         },
         {
             type: 'p',
@@ -111,26 +112,28 @@ export const POST: BlogPost = {
             ],
         },
 
-        { type: 'h2', text: 'What are the hidden costs of a custom DMS?' },
+        { type: 'h2', text: 'What does a custom DMS need from you?' },
         {
             type: 'p',
-            text: 'Fair question. Custom has its own, and anyone selling it who says otherwise is selling.',
+            text: 'Less than people expect. Three things:',
         },
         {
             type: 'ul',
             items: [
-                '**Money up front.** You pay for the build before you get the full benefit. Starting with one module — stock and secondary billing, usually — spreads that out.',
-                '**Your time in discovery.** Someone from sales ops has to sit with the builder and explain how schemes and claims actually work. Two or three weeks of real attention. Skip it and you get software built on guesses.',
-                '**Choosing the builder.** A custom DMS is only as good as the team that builds and maintains it. Ask who fixes things in year two, how fast, and whether you get the code if you part ways.',
-                '**Hosting and upkeep.** Servers, backups, GST rule changes, Android updates. Smaller than seat fees by a long way, not zero.',
-                '**Time to first working version.** A rented DMS can be live next month. Custom takes longer to get the first piece in front of distributors, which is why staged rollouts matter.',
+                '**A few weeks of attention in discovery.** Someone from sales ops sits with the builder and explains how schemes and claims actually work. The spreadsheet next to your current DMS becomes the requirements document.',
+                '**A staged rollout.** One module first — stock and secondary billing, usually — piloted with a handful of distributors, then the rest in waves. The spend follows the value, and nobody lives through a big-bang switch.',
+                '**The right builder.** Ask who fixes things in year two, how fast, and whether the code sits in your company’s name from day one. At Nexona it does.',
             ],
+        },
+        {
+            type: 'p',
+            text: 'After that, hosting and upkeep: a flat monthly cost, a fraction of the seat fees, and it does not grow when you add a distributor.',
         },
 
         { type: 'h2', text: 'Ready-made vs custom DMS, side by side' },
         {
             type: 'table',
-            caption: 'How the two compare for a brand with a growing distributor network',
+            caption: 'Ready-made vs custom DMS for a brand with a growing distributor network',
             columns: ['', 'Ready-made DMS', 'Custom DMS'],
             rows: [
                 ['Pricing model', 'Per distributor, per rep, per month', 'Paid to build, then hosting and changes'],
@@ -139,41 +142,20 @@ export const POST: BlogPost = {
                 ['Tally / SAP sync', 'Standard connectors, extras cost more', 'Built for your stack from day one'],
                 ['Changes', 'Vendor roadmap, ticket queue', 'Your roadmap'],
                 ['Data', 'On their platform', 'Your database'],
-                ['Time to go live', 'Fast', 'Staged — first module early, rest in waves'],
-                ['Upfront spend', 'Low', 'Higher'],
-                ['Best for', 'Small network, standard schemes', 'Growing network, unusual schemes, rising bill'],
+                ['At renewal', 'Price rises; your data is their leverage', 'Nothing to renew'],
+                ['Customisation', 'Billed to you, owned by the vendor', 'Part of your system, owned by you'],
             ],
         },
 
-        { type: 'h2', text: 'When is a ready-made DMS the right choice?' },
+        { type: 'h2', text: 'How do you know it is time for a custom DMS?' },
         {
             type: 'p',
-            text: 'More often than custom builders admit. Rent if most of these are true:',
+            text: 'If any of these sound familiar, you are already paying for the gap:',
         },
         {
             type: 'ul',
             items: [
-                'You have fewer than twenty distributors and no plan to double soon.',
-                'Your schemes are flat discounts and simple quantity offers.',
-                'Your distributors already use the DMS a competitor pushed on them, and like it.',
-                'You need something live in weeks, not months, and can revisit later.',
-                'Nobody on your team has time for discovery right now.',
-            ],
-        },
-        {
-            type: 'p',
-            text: 'Renting first is not a mistake. Just keep an export of your data every quarter, so leaving stays possible.',
-        },
-
-        { type: 'h2', text: 'When does a custom DMS make more sense?' },
-        {
-            type: 'p',
-            text: 'Once three or more of these are true, the maths and the fit both start pointing the same way:',
-        },
-        {
-            type: 'ul',
-            items: [
-                'You have forty-plus distributors, or a field team past twenty-five reps, and both are growing.',
+                'Your distributor network or field team is growing, and every new name is another licence.',
                 'At least one scheme you ran last year lives outside your current system.',
                 'Distributors bill in Tally and refuse to double-enter.',
                 'You sell in a category with its own rules — batch and expiry in pharma, crates and deposits in beverages, seasonal credit in agri inputs.',
@@ -183,7 +165,7 @@ export const POST: BlogPost = {
         },
         {
             type: 'p',
-            text: 'The part people miss: custom is not all-or-nothing. Build the [custom distributor management system](/distributor-management-system) core — stock, secondary billing, schemes — and keep Tally for the books. Add the field app and claims once distributors are actually using the first piece. Nobody has to live through a big-bang switch.',
+            text: 'The part people miss: custom is not all-or-nothing. Build the [custom distributor management system](/distributor-management-system) core — stock, secondary billing, schemes — and keep Tally for the books. Add the field app and claims once distributors are actually using the first piece — what that app costs in hours is broken down in [business app development cost in India](/business-app-development-cost-in-india). Nobody has to live through a big-bang switch.',
         },
 
         { type: 'h2', text: 'How do you switch from a ready-made DMS to a custom one?' },
@@ -222,18 +204,18 @@ export const POST: BlogPost = {
         {
             type: 'callout',
             label: 'Where Nexona comes in',
-            text: 'Nexona is a software studio in Mumbai that builds [custom distributor management systems](/distributor-management-system) — distributor stock, secondary billing, schemes and claims, collections and a field sales app, synced with Tally and GST-ready. One module first, the rest once distributors use it. No per-seat fees, and you own the code. If your network is small and your schemes are simple, we will tell you to rent.',
+            text: 'Nexona is a software studio in Mumbai that builds [custom distributor management systems](/distributor-management-system) — distributor stock, secondary billing, schemes and claims, collections and a field sales app, synced with Tally and GST-ready. One module first, the rest once distributors use it. No per-seat fees, and you own the code.',
         },
     ],
     cta: {
         heading: 'Want the three-year number for your network?',
-        text: 'Send us your distributor count, your field team size and your current scheme sheet. We will run the seat-month comparison with you, honestly. Sometimes the answer is keep renting.',
+        text: 'Send us your distributor count, your field team size and your current scheme sheet. We will run the seat-month comparison for your network and send it back in writing, free.',
     },
     faq: [
         {
             question: 'Is a custom DMS more expensive than a ready-made one?',
             answer:
-                'Up front, yes. Over three years, usually not, once you have a few dozen distributors and a field team. Ready-made DMS products charge per distributor and per rep every month, so the bill grows with your network; a custom DMS is paid for once, then costs hosting and changes. Count your three-year seat-months, multiply by the vendor’s per-seat price, add implementation and customisation fees, and compare that to a build quote.',
+                'Not over any real stretch of time. Ready-made DMS products charge per distributor and per rep every month, so the bill grows with your network; a custom DMS is paid for once, then costs hosting and changes. Count your three-year seat-months, multiply by the vendor’s per-seat price, add implementation and customisation fees, and compare that to a build quote.',
         },
         {
             question: 'How do I calculate the real cost of a DMS subscription?',
@@ -241,14 +223,9 @@ export const POST: BlogPost = {
                 'Add up seat-months, not seats. For each year, multiply your expected distributors plus sales reps by twelve, then total the three years — a brand growing from 95 to 130 seats reaches 4,044 seat-months. Multiply by the per-seat monthly price, then add implementation fees, paid modules, customisation charges and any expected price rise at renewal.',
         },
         {
-            question: 'When should a brand choose a ready-made DMS?',
-            answer:
-                'When the network is small — under about twenty distributors — schemes are simple, you need something live quickly, and nobody has time for a discovery process. Renting first is reasonable; just export your data every quarter so switching later stays possible.',
-        },
-        {
             question: 'When does a custom distributor management system make sense?',
             answer:
-                'When you have forty or more distributors or a large field team and both are growing, when schemes live outside your current system, when distributors refuse to double-enter into Tally, or when your category has rules a generic DMS handles badly, such as batch and expiry in pharma or seasonal credit in agri inputs.',
+                'When your distributor network or field team is growing, when schemes live outside your current system, when distributors refuse to double-enter into Tally, or when your category has rules a generic DMS handles badly, such as batch and expiry in pharma or seasonal credit in agri inputs.',
         },
         {
             question: 'Can we move from our current DMS to a custom one without losing data?',

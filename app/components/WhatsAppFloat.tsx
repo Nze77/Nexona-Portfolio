@@ -2,6 +2,17 @@
 
 import Image from 'next/image'
 import { useState } from 'react'
+import { getAiSource } from '../lib/visitorContext'
+
+const WA_BASE = 'https://wa.me/919082207416'
+
+/** Built at click time so it names the page the visitor is on and, when an AI
+ *  assistant sent them, says so — WhatsApp leads are otherwise unattributed. */
+function waHref(): string {
+  const ai = getAiSource()
+  const text = `Hi Nexona, I was reading "${document.title}"${ai ? ` (found you through ${ai})` : ''}.`
+  return `${WA_BASE}?text=${encodeURIComponent(text)}`
+}
 
 export default function WhatsAppFloat() {
   const [hovered, setHovered] = useState(false)
@@ -18,7 +29,8 @@ export default function WhatsAppFloat() {
       }}
     >
       <a
-        href="https://wa.me/919082207416"
+        href={WA_BASE}
+        onClick={(e) => { e.currentTarget.href = waHref() }}
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Chat with us on WhatsApp"

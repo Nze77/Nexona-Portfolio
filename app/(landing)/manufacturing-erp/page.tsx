@@ -440,7 +440,9 @@ export default function ManufacturingErpPage() {
                     <p style={{ ...LEAD, marginTop: '1.25rem', maxWidth: '660px', opacity: 0.75 }}>
                         Yes. Your accountant keeps Tally if they want to. E-invoices come off the dispatch screen.
                         And the machines — the ones that matter, anyway — report in by themselves. Not every
-                        machine needs to be wired. The bottleneck ones do.
+                        machine needs to be wired. The bottleneck ones do. Hours and price for each
+                        integration — Tally one-way or two-way, SAP Business One, GST e-invoicing — are in our{' '}
+                        <Link href="/business-app-development-cost-in-india" style={INLINE_LINK}>Tally and ERP integration cost breakdown</Link>.
                     </p>
                     <div style={{ ...grid(4), marginTop: '3rem' }}>
                         {INTEGRATIONS.map((item) => (

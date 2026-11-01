@@ -3,21 +3,33 @@
 // HOW TO ADD A POST:
 //   1. Create app/data/blogs/<slug>.ts exporting `POST: BlogPost`.
 //   2. Import it below and add it to BLOG_POSTS.
+//   3. Only if it sets `path` (a root-level URL): add app/<path>/page.tsx
+//      rendering <ArticleView> — see app/business-app-development-cost-in-india.
 //
 // That is all. The route, metadata, canonical, BlogPosting + FAQPage schema,
 // sitemap entry, /llms.txt link and /llms-full.txt export are all generated
 // from this list.
 
 import type { BlogBlock, BlogPost } from './types'
+import { BUSINESS_EMAIL, BUSINESS_PHONE_DISPLAY } from '../../lib/constants'
 import { POST as MANAGE_AND_SCALE_EVENT_BUSINESS } from './how-to-manage-and-scale-an-event-management-business'
 import { POST as READY_MADE_VS_CUSTOM_DMS } from './ready-made-vs-custom-distributor-management-system'
+import { POST as BUSINESS_APP_COST_INDIA } from './business-app-development-cost-in-india'
+import { POST as DMS_COST_INDIA } from './distributor-management-system-cost-in-india'
 
 export type { BlogBlock, BlogPost, BlogFaqItem } from './types'
 
 /** Newest first. */
-export const BLOG_POSTS: BlogPost[] = [MANAGE_AND_SCALE_EVENT_BUSINESS, READY_MADE_VS_CUSTOM_DMS].sort((a, b) =>
+export const BLOG_POSTS: BlogPost[] = [MANAGE_AND_SCALE_EVENT_BUSINESS, READY_MADE_VS_CUSTOM_DMS, BUSINESS_APP_COST_INDIA, DMS_COST_INDIA].sort((a, b) =>
     b.published.localeCompare(a.published),
 )
+
+/** Site-relative URL of a post: its root-level `path` if it has one,
+ *  otherwise /blogs/<slug>. Every link, canonical, sitemap and llms.txt
+ *  entry goes through this. */
+export function postPath(post: BlogPost): string {
+    return post.path ?? `/blogs/${post.slug}`
+}
 
 export function getPost(slug: string): BlogPost | undefined {
     return BLOG_POSTS.find((p) => p.slug === slug)
@@ -48,6 +60,8 @@ export function postToMarkdown(post: BlogPost): string {
                 return b.items.map((i, n) => `${n + 1}. ${i}`).join('\n')
             case 'callout':
                 return `> **${b.label ?? 'Note'}:** ${b.text}`
+            case 'cta':
+                return `**${b.heading}** ${b.text} Contact Nexona: WhatsApp or call ${BUSINESS_PHONE_DISPLAY}, email ${BUSINESS_EMAIL}.`
             case 'table': {
                 const row = (cells: string[]) => `| ${cells.join(' | ')} |`
                 return [

@@ -9,6 +9,12 @@ import ContactOverlay from '../../components/ContactOverlay'
 import Footer from '../../components/Footer'
 import { useContactPopup } from '../../lib/useContactPopup'
 import { DARK, SAND, INTER } from '../../lib/constants'
+import { RENT_PER_DISTRIBUTOR_MONTH, rented, inr } from '../../data/dmsCost'
+
+// Rows for the rent-vs-own table: what ready-made vendors charge. Nexona's
+// own DMS price is never published — see app/data/dmsCost.ts.
+const RENTED_ROWS = [50, 100, 250, 500].map(rented)
+const COST_GUIDE = '/distributor-management-system-cost-in-india'
 import {
     FAQ_ITEMS,
     SIGNALS,
@@ -209,9 +215,8 @@ export default function DistributorManagementSystemPage() {
                         You know what you billed your distributors. What they sold to the shops — that is
                         the number you are missing. We build DMS software that captures it: distributor stock,
                         secondary billing, schemes, claims, collections, and a field app your reps will
-                        actually open. Custom. Owned by you. And once your network has any real size to it,
-                        costing about what you would spend renting a DMS for a few years — well, sometimes
-                        less.
+                        actually open. Custom. Owned by you. No fee per distributor, ever — which against
+                        renting one saves lakhs, and for a big network, crores.
                     </p>
                     <div style={{ marginTop: '2.5rem', display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
                         <button type="button" onClick={openContact} style={CTA}>
@@ -251,11 +256,14 @@ export default function DistributorManagementSystemPage() {
             </section>
 
             {/* Rent vs own — third section, one of the two contact-popup triggers.
-                No figures here, per the site-wide pricing rule. */}
+                Shows what rented DMS vendors charge; never Nexona's price (dmsCost.ts).
+                The full breakdown lives on the cost guide, which this links to. */}
             <section ref={thirdSectionRef} data-theme="dark" style={{ backgroundColor: ALT_BG, padding: pad }}>
                 <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
                     <span style={EYEBROW}>Rent or own</span>
-                    <h2 style={H2}>Custom DMS for about what you&rsquo;d pay to rent one</h2>
+                    <h2 style={H2}>
+                        Rented DMS: {inr(RENT_PER_DISTRIBUTOR_MONTH)} per distributor, every month. Custom: &#8377;0.
+                    </h2>
                     <div
                         style={{
                             marginTop: '2.5rem',
@@ -265,18 +273,51 @@ export default function DistributorManagementSystemPage() {
                         }}
                     >
                         <p style={{ ...LEAD, opacity: 0.8, margin: 0 }}>
-                            Ready-made DMS products charge by the head. Per distributor login, per sales rep,
-                            per month. A brand with sixty distributors and thirty-five reps is paying for
-                            ninety-five seats — every month, and more the month after it hires. The bill
-                            follows your growth. It never stops.
+                            Ready-made DMS products with a distributor portal, CRM and loyalty average about{' '}
+                            {inr(RENT_PER_DISTRIBUTOR_MONTH)} per distributor per month. A hundred distributors is{' '}
+                            {inr(rented(100).year)} a year — before per-rep seats — and the bill grows
+                            every time sales signs someone new.
                         </p>
                         <p style={{ ...LEAD, opacity: 0.8, margin: 0 }}>
-                            A custom build is paid for once. Put the two side by side over a few years and
-                            they usually land in the same range, except one of them runs your schemes exactly,
-                            talks to your Tally, and belongs to you when the few years are up. Small network,
-                            standard schemes? Rent. We will tell you that on the first call, and mean it.
+                            Own a custom DMS and that fee becomes zero, because you own the source code. You pay
+                            a one-time build, then AMC and hosting — nothing per head. That saves lakhs for most
+                            brands, and crores for big networks — and the system runs your schemes exactly, talks
+                            to your Tally, and belongs to you.
                         </p>
                     </div>
+
+                    <div style={{ overflowX: 'auto', marginTop: '3rem' }}>
+                        <table style={{ width: '100%', minWidth: 560, borderCollapse: 'collapse', fontFamily: INTER, color: TEXT }}>
+                            <caption style={{ captionSide: 'top', textAlign: 'left', fontSize: '0.75rem', letterSpacing: '0.14em', textTransform: 'uppercase', opacity: 0.55, paddingBottom: '0.9rem' }}>
+                                What a ready-made DMS costs at {inr(RENT_PER_DISTRIBUTOR_MONTH)} per distributor per month
+                            </caption>
+                            <thead>
+                                <tr>
+                                    {['Distributors', 'Per year', 'Over 3 years', 'Over 5 years'].map((h) => (
+                                        <th key={h} scope="col" style={{ textAlign: 'left', padding: '0.85rem 1rem', borderBottom: '2px solid rgba(242,238,232,0.5)', fontSize: '0.9rem' }}>{h}</th>
+                                    ))}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {RENTED_ROWS.map((r) => (
+                                    <tr key={r.distributors}>
+                                        <th scope="row" style={{ textAlign: 'left', padding: '0.85rem 1rem', borderBottom: '1px solid rgba(242,238,232,0.14)', fontSize: '0.95rem' }}>{r.distributors}</th>
+                                        <td style={{ padding: '0.85rem 1rem', borderBottom: '1px solid rgba(242,238,232,0.14)', opacity: 0.8 }}>{inr(r.year)}</td>
+                                        <td style={{ padding: '0.85rem 1rem', borderBottom: '1px solid rgba(242,238,232,0.14)', opacity: 0.8 }}>{inr(r.threeYears)}</td>
+                                        <td style={{ padding: '0.85rem 1rem', borderBottom: '1px solid rgba(242,238,232,0.14)', fontWeight: 700 }}>{inr(r.fiveYears)}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                    <p style={{ ...LEAD, marginTop: '1.75rem', maxWidth: '760px', opacity: 0.75 }}>
+                        That last column is the money a custom DMS stops — per-rep seats, implementation and
+                        renewal increases not included. What you pay instead, and how to compare the two, is in our{' '}
+                        <Link href={COST_GUIDE} style={{ ...INLINE_LINK, color: SAND }}>
+                            distributor management system cost guide
+                        </Link>
+                        . Send us your current DMS invoice and we will send back the five-year comparison for your network, free.
+                    </p>
                 </div>
             </section>
 
@@ -393,9 +434,8 @@ export default function DistributorManagementSystemPage() {
                     <span style={EYEBROW}>Custom vs ready-made</span>
                     <h2 style={H2}>Ready-made DMS or custom-built?</h2>
                     <p style={{ ...LEAD, marginTop: '1.25rem', maxWidth: '660px', opacity: 0.75 }}>
-                        Ready-made is the right call sometimes. Fifteen distributors, one flat discount, no
-                        plans to double — rent, and do not overthink it. Everyone else, read the last row
-                        first.
+                        A rented DMS bills you for every distributor, every month, and still sends your
+                        slab scheme to Excel. Start with the last row — it is the one vendors skip.
                     </p>
                     <CompareTable
                         isMobile={isMobile}
@@ -410,7 +450,15 @@ export default function DistributorManagementSystemPage() {
                         >
                             the three-year cost of a ready-made vs custom DMS
                         </Link>{' '}
-                        in seat-months, so you can plug in your own vendor&rsquo;s quote.
+                        in seat-months, so you can plug in your own vendor&rsquo;s quote. Pricing the field-sales app on
+                        its own? Offline order capture, GPS check-in and Tally sync are costed line by line in{' '}
+                        <Link
+                            href="/business-app-development-cost-in-india"
+                            style={{ ...INLINE_LINK, color: SAND }}
+                        >
+                            business app development cost in India
+                        </Link>
+                        .
                     </p>
                 </div>
             </section>
@@ -625,14 +673,18 @@ export default function DistributorManagementSystemPage() {
                 </div>
             </section>
 
-            {/* Cost drivers — no figures, ever */}
+            {/* Cost drivers — the figures live in the rent-vs-own section and the cost guide */}
             <section data-theme="dark" style={{ padding: pad }}>
                 <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
                     <span style={EYEBROW}>Cost</span>
                     <h2 style={H2}>What a custom DMS costs depends on four things</h2>
                     <p style={{ ...LEAD, marginTop: '1.25rem', maxWidth: '660px', opacity: 0.75 }}>
-                        No number on this page. Anyone quoting a DMS before seeing your scheme sheet is
-                        guessing. We scope first, then quote.
+                        Anyone quoting a DMS before seeing your scheme sheet is guessing. These four things move
+                        the number, so we scope first, then quote in writing.{' '}
+                        <Link href={COST_GUIDE} style={INLINE_LINK}>
+                            See the full DMS cost breakdown
+                        </Link>
+                        .
                     </p>
                     <p style={{ ...LEAD, marginTop: '1rem', maxWidth: '660px', opacity: 0.75 }}>
                         Evaluating ready-made vendors and want someone technical on your side of the table,
@@ -734,7 +786,7 @@ export default function DistributorManagementSystemPage() {
                     <p style={{ ...LEAD, marginTop: '1.25rem', opacity: 0.78 }}>
                         The messy one. The Excel file with eleven tabs and a column nobody remembers adding.
                         That tells us more about the DMS you need than any requirements document — and we
-                        will tell you honestly whether to build or rent.
+                        will tell you exactly what to build first.
                     </p>
                     <div style={{ marginTop: '2.25rem' }}>
                         <button type="button" onClick={openContact} style={CTA}>

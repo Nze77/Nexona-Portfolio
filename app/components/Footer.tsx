@@ -55,6 +55,8 @@ const LINK_COLUMNS = [
         links: [
             { name: 'Projects', href: '/projects' },
             { name: 'Blogs', href: '/blogs' },
+            // Commercial cost guide — a sitewide link so it is never orphaned.
+            { name: 'App Development Cost', href: '/business-app-development-cost-in-india' },
             { name: 'Privacy Policy', href: '/meta-privacy-policy' },
         ],
     },

@@ -753,7 +753,9 @@ export default function MumbaiAgencyPage() {
                     >
                         Where a project lands above its starting price comes down to six things. Judge
                         yours against them before talking to anyone. App details are on our{' '}
-                        <Link href="/mobile-app-development-company-in-mumbai" style={inlineLink}>mobile app development</Link> page.
+                        <Link href="/mobile-app-development-company-in-mumbai" style={inlineLink}>mobile app development</Link> page,
+                        and the hours behind every feature in{' '}
+                        <Link href="/business-app-development-cost-in-india" style={inlineLink}>what a business app costs in India</Link>.
                     </motion.p>
 
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>

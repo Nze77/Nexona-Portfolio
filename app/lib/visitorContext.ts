@@ -23,6 +23,8 @@
  * Nothing leaves the browser until the visitor actually submits a form.
  */
 
+import { aiSourceOf } from './aiSource'
+
 const UTM_KEYS = [
     'utm_source',
     'utm_medium',
@@ -140,6 +142,13 @@ export function recordPageView(path: string, title?: string) {
     // from, so fill in anything the landing URL did not carry.
     session.utm = { ...collectUtm(), ...session.utm }
     session.journey = [...session.journey, { path, title, at: now }].slice(-MAX_JOURNEY_STEPS)
+}
+
+/** The AI assistant that sent this visitor, if any (see lib/aiSource.ts). */
+export function getAiSource(): string | undefined {
+    if (!isBrowser()) return undefined
+    if (!session) recordPageView(window.location.pathname, document.title)
+    return aiSourceOf(domainOf(session?.referrer ?? ''), session?.utm.utm_source)
 }
 
 /**

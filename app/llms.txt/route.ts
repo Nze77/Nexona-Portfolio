@@ -1,6 +1,6 @@
 import { SECTIONS } from '../data/sections'
 import { LANDING_PAGES } from '../data/landingPages'
-import { BLOG_POSTS } from '../data/blogs'
+import { BLOG_POSTS, postPath } from '../data/blogs'
 import { SITE_URL } from '../lib/constants'
 
 /**
@@ -23,7 +23,7 @@ export function GET() {
     ).join('\n')
 
     const blogLinks = BLOG_POSTS.map(
-        (post) => `- [${post.title}](${SITE_URL}/blogs/${post.slug}): ${post.excerpt}`,
+        (post) => `- [${post.title}](${SITE_URL}${postPath(post)}): ${post.excerpt}`,
     ).join('\n')
 
     const projectLinks = SECTIONS.map((section) => {

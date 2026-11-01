@@ -1,3 +1,5 @@
+import { RENT_PER_DISTRIBUTOR_MONTH, rented, inr } from '../../data/dmsCost'
+
 export interface FaqItem {
     question: string
     answer: string
@@ -6,8 +8,8 @@ export interface FaqItem {
 // FAQ doubles as FAQPage structured data, so every answer opens with the actual
 // answer — the rest is explanation for whoever keeps reading.
 //
-// Pricing rule applies here as everywhere: no figures. Cost questions are
-// answered with what drives the number and the rent-vs-own comparison.
+// Pricing (user, 2026-11-01): publish what READY-MADE vendors charge (from
+// app/data/dmsCost.ts), never Nexona's own DMS price, AMC or exact savings.
 export const FAQ_ITEMS: FaqItem[] = [
     {
         question: 'What is a distributor management system (DMS)?',
@@ -19,7 +21,7 @@ export const FAQ_ITEMS: FaqItem[] = [
     },
     {
         question: 'Is a custom DMS more expensive than a ready-made one?',
-        answer: 'Not once your network has any size to it. A rented DMS charges per distributor and per sales rep, every month, for as long as you use it — so the bill grows every time you do. A custom build is paid for once and then it is yours. Over a few years the two usually end up in the same range, and only one of them fits your schemes. Small network, simple schemes? Rent. We will tell you that on the call.',
+        answer: `No — not over any real stretch of time. A ready-made DMS with portal, CRM and loyalty averages ${inr(RENT_PER_DISTRIBUTOR_MONTH)} per distributor per month, forever — ${inr(rented(100).fiveYears)} over five years at 100 distributors. With a custom DMS that fee is ₹0, because you own the source code; you pay a one-time build plus AMC and hosting. That saves lakhs for most brands, crores for large networks.`,
     },
     {
         question: 'Can a DMS integrate with Tally?',
@@ -247,9 +249,9 @@ export const COMPARISON: { point: string; rented: string; nexona: string }[] = [
         nexona: 'Onboard as many as you have. Nobody bills you per head.',
     },
     {
-        point: 'Best for',
-        rented: 'A small network with standard schemes. Honestly.',
-        nexona: 'A growing network, unusual schemes, or a bill that keeps climbing.',
+        point: 'At renewal',
+        rented: 'The price goes up, and your own data is their leverage.',
+        nexona: 'Nothing to renew. It is already yours.',
     },
 ]
 

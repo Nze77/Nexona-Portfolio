@@ -2,6 +2,7 @@ import Link from 'next/link'
 import type { BlogBlock } from '../data/blogs'
 import { headingId } from '../data/blogs'
 import { DARK, HELVETICA, INTER } from '../lib/constants'
+import InlineCta from './InlineCta'
 
 /* Server-rendered on purpose: the article text ships as plain HTML in the
    first response, which is what crawlers and answer engines read. No motion
@@ -110,6 +111,8 @@ function Block({ block }: { block: BlogBlock }) {
                     <p style={{ ...p, margin: 0, opacity: 1 }}><Inline text={block.text} /></p>
                 </aside>
             )
+        case 'cta':
+            return <InlineCta heading={block.heading} text={block.text} buttonLabel={block.buttonLabel ?? 'Get my estimate'} />
         case 'table':
             return (
                 <div style={{ overflowX: 'auto', margin: '0.5rem 0 2rem', WebkitOverflowScrolling: 'touch' }}>
