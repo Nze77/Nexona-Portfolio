@@ -1,4 +1,4 @@
-// Public DMS cost figures — used by /distributor-management-system-cost-in-india
+// Public DMS cost figures — used by /blogs/ready-made-vs-custom-distributor-management-system
 // and the rent-vs-own section + FAQ on /distributor-management-system.
 //
 // RULE (user, 2026-11-01): publish what READY-MADE DMS vendors charge, never

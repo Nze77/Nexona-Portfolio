@@ -33,12 +33,6 @@ export interface BlogFaqItem {
 export interface BlogPost {
     /** URL slug — served at /blogs/<slug>. Never change it once published. */
     slug: string
-    /** Optional root-level path (e.g. "/business-app-development-cost-in-india")
-     *  for a post that targets a commercial query and should not sit under
-     *  /blogs. It then needs its own app/<path>/page.tsx rendering
-     *  <ArticleView>, and /blogs/<slug> is not generated. Use postPath() —
-     *  never build the URL by hand. */
-    path?: string
     /** Visible H1. Can be longer than the meta title. */
     title: string
     /** <title> tag. Aim for under 60 characters. */

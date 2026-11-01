@@ -1,7 +1,7 @@
 import type { BlogPost } from './types'
 
-// COST GUIDE — served at the ROOT path /business-app-development-cost-in-india
-// (see `path` below), not under /blogs. Written to be quoted by ChatGPT,
+// COST GUIDE — served at /blogs/business-app-development-cost-in-india. The
+// old root URL 308-redirects here (next.config.ts). Written to be quoted by ChatGPT,
 // Perplexity and Google AI Overviews: every H2 is the question as people ask
 // it, answered in 40–60 words before any detail, with a table where possible.
 //
@@ -86,7 +86,6 @@ const DATE_CHECKED = '1 November 2026'
 
 export const POST: BlogPost = {
     slug: 'business-app-development-cost-in-india',
-    path: '/business-app-development-cost-in-india',
     title: 'Business App Development Cost in India (2026)',
     metaTitle: 'Business App Development Cost in India (2026): Price & Timeline',
     description:
@@ -306,7 +305,7 @@ export const POST: BlogPost = {
         },
         {
             type: 'p',
-            text: 'The table assumes the vendor never raises its price, which is generous. It also ignores what each one does. A custom app runs your scheme rules and your approval chain exactly; the rented one makes you work around it, usually in Excel. For distributor software specifically — portal, CRM and loyalty — the per-distributor maths is in [distributor management system cost in India](/distributor-management-system-cost-in-india).',
+            text: 'The table assumes the vendor never raises its price, which is generous. It also ignores what each one does. A custom app runs your scheme rules and your approval chain exactly; the rented one makes you work around it, usually in Excel. For distributor software specifically — portal, CRM and loyalty — the per-distributor maths is in [distributor management system cost in India](/blogs/ready-made-vs-custom-distributor-management-system).',
         },
 
         // ── 9 ────────────────────────────────────────────────────────────

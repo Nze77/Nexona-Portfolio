@@ -14,7 +14,7 @@ import { RENT_PER_DISTRIBUTOR_MONTH, rented, inr } from '../../data/dmsCost'
 // Rows for the rent-vs-own table: what ready-made vendors charge. Nexona's
 // own DMS price is never published — see app/data/dmsCost.ts.
 const RENTED_ROWS = [50, 100, 250, 500].map(rented)
-const COST_GUIDE = '/distributor-management-system-cost-in-india'
+const COST_GUIDE = '/blogs/ready-made-vs-custom-distributor-management-system'
 import {
     FAQ_ITEMS,
     SIGNALS,
@@ -448,12 +448,12 @@ export default function DistributorManagementSystemPage() {
                             href="/blogs/ready-made-vs-custom-distributor-management-system"
                             style={{ ...INLINE_LINK, color: SAND }}
                         >
-                            the three-year cost of a ready-made vs custom DMS
+                            ready-made vs custom DMS cost
                         </Link>{' '}
-                        in seat-months, so you can plug in your own vendor&rsquo;s quote. Pricing the field-sales app on
+                        per distributor, from 25 distributors to 1,000, plus how to switch. Pricing the field-sales app on
                         its own? Offline order capture, GPS check-in and Tally sync are costed line by line in{' '}
                         <Link
-                            href="/business-app-development-cost-in-india"
+                            href="/blogs/business-app-development-cost-in-india"
                             style={{ ...INLINE_LINK, color: SAND }}
                         >
                             business app development cost in India

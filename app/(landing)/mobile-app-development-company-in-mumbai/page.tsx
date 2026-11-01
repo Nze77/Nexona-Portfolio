@@ -946,7 +946,7 @@ export default function MobileAppDevelopmentCompanyInMumbaiPage() {
                         how many people download it. No per-user licence, ever. We scope first, then
                         give you the exact number in writing. Want the hours behind it? Price per
                         feature, designer cost and running costs are in our{' '}
-                        <Link href="/business-app-development-cost-in-india" style={inlineLink}>business app development cost guide</Link>.
+                        <Link href="/blogs/business-app-development-cost-in-india" style={inlineLink}>business app development cost guide</Link>.
                     </motion.p>
                 </div>
             </section>

@@ -14,16 +14,15 @@
 const SITE = 'https://www.nexonalabs.com'
 const KEY = 'e69bf3f700ee41ba93a51bb5a4e92228'
 
-// Pages changed with the business app cost guide (2026-11-01).
+// Pages changed with the cost guides and the DMS merge (2026-11-01).
 const DEFAULT_PATHS = [
-    '/business-app-development-cost-in-india',
-    '/distributor-management-system-cost-in-india',
+    '/blogs/business-app-development-cost-in-india',
+    '/blogs/ready-made-vs-custom-distributor-management-system',
+    '/distributor-management-system',
     '/mobile-app-development-company-in-mumbai',
     '/software-development-agency-mumbai',
     '/manufacturing-erp',
     '/business-management-software-development',
-    '/distributor-management-system',
-    '/blogs/ready-made-vs-custom-distributor-management-system',
     '/blogs',
     '/llms.txt',
     '/llms-full.txt',

@@ -566,7 +566,7 @@ export default function BusinessManagementSoftwarePage() {
                             },
                             {
                                 title: 'Custom Internal Tools',
-                                desc: <>One sharp tool for one painful workflow. An internal tools development company is really just people who will build the thing four staff open forty times a day — a <Link href="/projects/multi-tenant-chat" style={inlineLink}>secure internal platform</Link>, say — properly, instead of selling you a seat licence. What one costs, feature by feature: <Link href="/business-app-development-cost-in-india" style={inlineLink}>internal app development cost in India</Link>.</>,
+                                desc: <>One sharp tool for one painful workflow. An internal tools development company is really just people who will build the thing four staff open forty times a day — a <Link href="/projects/multi-tenant-chat" style={inlineLink}>secure internal platform</Link>, say — properly, instead of selling you a seat licence. What one costs, feature by feature: <Link href="/blogs/business-app-development-cost-in-india" style={inlineLink}>internal app development cost in India</Link>.</>,
                                 img: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600&q=80'
                             },
                             {

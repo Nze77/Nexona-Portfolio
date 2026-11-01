@@ -9,8 +9,7 @@ import { DARK, SAND, HELVETICA, INTER, CLUTCH_URL, GBP_URL } from '../lib/consta
 import { formatPostDate } from '../blogs/format'
 
 /* The full article page — header, meta row, contents, body, FAQ, author box,
-   related links, CTA. Shared by /blogs/[slug] and by posts served at a
-   root-level `path`, so both render (and are marked up) identically. */
+   related links, CTA. Rendered by /blogs/[slug]. */
 
 const eyebrow: React.CSSProperties = {
     fontFamily: INTER,
