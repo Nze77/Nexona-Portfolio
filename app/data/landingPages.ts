@@ -79,6 +79,13 @@ export interface LandingPage {
     business?: LandingPageBusiness
     /** SoftwareApplication structured data. */
     software?: LandingPageSoftware
+    /** schema.org nodes for real named clients written up on the page. Emitted
+     *  as `mentions` on the WebPage so engines can tie the client to Nexona.
+     *  Only for entities the visible copy actually names. */
+    mentions?: Record<string, unknown>[]
+    /** Also emit an Article node, for pages written to be read and cited as a
+     *  technical reference as well as a service page. Needs `updated`. */
+    article?: boolean
 }
 
 export const LANDING_PAGES: LandingPage[] = [
@@ -622,6 +629,272 @@ export const LANDING_PAGES: LandingPage[] = [
             ],
             screenshot: '/eventsoftware.png',
         },
+    },
+    {
+        // Owns "AI voice agent development": custom AI calling platforms, dialers,
+        // Vapi/Retell comparisons. Build intent for voice. ai-agent-development-company
+        // keeps general agents. Not in the header by user request: internal links
+        // only. No Nexona price yet: the user has not supplied the cost table.
+        slug: 'ai-voice-agent-development',
+        footerGroup: 'services',
+        title: 'AI Voice Agent Development Company | Custom AI Calling Platforms | Nexonalabs',
+        description:
+            'AI voice agent development: we build custom AI calling platforms, dialers and voice agents. We built Valyrian Voice, running AI dial sessions at 100 lines.',
+        priority: 0.9,
+        navLabel: 'AI Voice Agent Development',
+        updated: '2026-11-05',
+        keywords: [
+            'AI voice agent development',
+            'AI voice agent development company',
+            'custom AI calling platform',
+            'AI dialer development',
+            'build an AI voice agent',
+            'cost to build an AI voice agent',
+            'custom AI dialer vs Vapi',
+            'Vapi alternative',
+            'Retell alternative',
+            'AI call center software development',
+            'AI outbound calling platform',
+            'voice AI development company India',
+            'TCPA AI voice compliance',
+            'SIP AI voice agent integration',
+        ],
+        og: {
+            title: 'AI Voice Agent Development Company | Nexonalabs',
+            description:
+                'Custom AI voice agent and dialer platforms. We built Valyrian Voice: AI dial sessions at 100 lines, with AI calls from 1¢ a minute.',
+        },
+        business: {
+            areaServedCity: 'Mumbai',
+            serviceType: [
+                'AI Voice Agent Development',
+                'AI Dialer Development',
+                'SIP & Telephony Integration',
+                'AI Call Center Platform Development',
+            ],
+        },
+        mentions: [
+            {
+                '@type': 'SoftwareApplication',
+                name: 'Valyrian Voice',
+                url: 'https://valyrianvoice.com/',
+                applicationCategory: 'BusinessApplication',
+                operatingSystem: 'Web',
+                description: 'Dialer and AI voice agents for call centers.',
+                creator: { '@id': 'https://www.nexonalabs.com/#organization' },
+            },
+        ],
+    },
+    {
+        // Owns "email infrastructure development": cold email platforms, sending
+        // systems, warmup, Gmail/Graph integration. Legitimate B2B sending only.
+        // Not in the header by user request: internal links only. No Nexona price
+        // yet: the user has not supplied the cost table.
+        slug: 'email-infrastructure-development',
+        footerGroup: 'services',
+        title: 'Email Infrastructure Development | Cold Email Platform & Sending System Builders | Nexonalabs',
+        description:
+            'Email infrastructure development: we build cold email platforms and sending systems for agencies and SaaS teams. We built Mailnitrix. No inbox guarantees.',
+        priority: 0.9,
+        navLabel: 'Email Infrastructure Development',
+        updated: '2026-11-05',
+        article: true,
+        keywords: [
+            'email infrastructure development',
+            'cold email platform development',
+            'build a cold email platform',
+            'Instantly alternative development',
+            'email sending platform development',
+            'email warmup system development',
+            'Gmail API vs SMTP vs Microsoft Graph',
+            'white-label cold email tool',
+            'multi-mailbox rotation',
+            'email deliverability engineering',
+            'cost to build a cold email platform',
+            'bulk sender requirements 2026',
+        ],
+        og: {
+            title: 'Email Infrastructure Development | Nexonalabs',
+            description:
+                'Cold email platforms and sending systems, built for legitimate B2B outreach. We built Mailnitrix: 20,000 emails for $19 a month.',
+        },
+        business: {
+            areaServedCity: 'Mumbai',
+            serviceType: [
+                'Email Infrastructure Development',
+                'Cold Email Platform Development',
+                'Email Warmup System Development',
+                'Gmail & Microsoft Graph Integration',
+            ],
+        },
+        mentions: [
+            {
+                '@type': 'SoftwareApplication',
+                name: 'Mailnitrix',
+                url: 'https://mailnitrix.com/',
+                applicationCategory: 'BusinessApplication',
+                operatingSystem: 'Web',
+                description: 'Cold email SaaS for Gmail and Outlook.',
+                creator: { '@id': 'https://www.nexonalabs.com/#organization' },
+            },
+        ],
+    },
+    {
+        // Owns the "SaaS development services" cluster: custom SaaS development
+        // company, SaaS MVP, multi-tenant and white-label, AI SaaS, PaaS. Global,
+        // not geographic. Proof is Valyrian Voice and Mailnitrix. Publishes a
+        // "starts from" price: user-approved 2026-11-05.
+        slug: 'saas-development-services',
+        footerGroup: 'services',
+        title: 'SaaS Development Services in India | Nexona Labs',
+        description:
+            'SaaS development services for startups, from ₹73,000: MVPs, multi-tenant platforms and AI SaaS, code handed over. We built Valyrian Voice and Mailnitrix.',
+        priority: 0.9,
+        navLabel: 'SaaS Development Services',
+        updated: '2026-11-05',
+        keywords: [
+            'SaaS development services',
+            'custom SaaS development company',
+            'SaaS development agency',
+            'PaaS development services',
+            'build a SaaS product for my startup',
+            'SaaS MVP development',
+            'white-label SaaS development',
+            'multi-tenant SaaS development',
+            'AI SaaS development company',
+            'custom software development company India',
+            'offshore SaaS development company India',
+            'SaaS development cost 2026',
+            'SaaS MVP cost India vs US',
+            'voice AI SaaS development',
+            'email SaaS development',
+        ],
+        og: {
+            title: 'SaaS Development Services in India | Nexona Labs',
+            description:
+                'MVPs, multi-tenant platforms and AI SaaS, custom-built from ₹73,000. See two live products we built: Valyrian Voice and Mailnitrix.',
+        },
+        business: {
+            areaServedCity: 'Mumbai',
+            serviceType: [
+                'SaaS Development Services',
+                'SaaS MVP Development',
+                'Multi-Tenant & White-Label SaaS Development',
+                'AI SaaS Development',
+                'PaaS Development Services',
+            ],
+            startingPrice: { amount: 73000, currency: 'INR' },
+        },
+        mentions: [
+            {
+                '@type': 'SoftwareApplication',
+                name: 'Valyrian Voice',
+                url: 'https://valyrianvoice.com/',
+                applicationCategory: 'BusinessApplication',
+                operatingSystem: 'Web',
+                description: 'Dialer and AI voice agents for call centers.',
+                creator: { '@id': 'https://www.nexonalabs.com/#organization' },
+            },
+            {
+                '@type': 'SoftwareApplication',
+                name: 'Mailnitrix',
+                url: 'https://mailnitrix.com/',
+                applicationCategory: 'BusinessApplication',
+                operatingSystem: 'Web',
+                description: 'Cold email SaaS for Gmail and Outlook.',
+                creator: { '@id': 'https://www.nexonalabs.com/#organization' },
+            },
+        ],
+    },
+    {
+        // Owns the "custom gym management software" cluster plus gym management
+        // system / app / software India and fitness management system. Proof is
+        // Aim Fitness, a real client, also written up on the Thane AI page.
+        // Publishes a "starts from" price: user-approved 2026-11-05, gym only.
+        // Also takes Pilates, yoga and other fitness-business
+        // long tail (user-requested 2026-11-05) until those get their own pages.
+        slug: 'custom-gym-management-software',
+        footerGroup: 'solutions',
+        title: 'Custom Gym Management Software in India | Nexona Labs',
+        description:
+            'Custom gym management software from ₹22,000, plus Pilates and yoga studio systems. Members, renewals, attendance, billing you own. Aim Fitness renewals up 88%.',
+        priority: 0.9,
+        navLabel: 'Custom Gym Management Software',
+        updated: '2026-11-05',
+        keywords: [
+            'custom gym management software',
+            'gym management system',
+            'gym management app',
+            'gym management software India',
+            'fitness management system',
+            'gym CRM',
+            'gym membership management software',
+            'gym software with biometric attendance',
+            'gym software with WhatsApp renewal reminders',
+            'gym billing software with GST',
+            'multi branch gym management software',
+            'Pilates studio management software',
+            'yoga studio management software India',
+            'fitness studio management software',
+            'custom software for fitness business',
+            'dance academy management software',
+            'martial arts academy software',
+            'swimming pool management software',
+            'sports club and turf booking software',
+            'gym management software cost India',
+            'custom vs ready-made gym software',
+            'gym software without monthly fee',
+        ],
+        og: {
+            image: '/gymsoftware/aim-fitness-og.jpg',
+            title: 'Custom Gym Management Software in India | Nexona Labs',
+            description:
+                'Members, renewals, attendance and payments in one system you own, from ₹22,000. Built for Aim Fitness in Thane West, where renewals are up 88%.',
+        },
+        business: {
+            areaServedCity: 'Mumbai',
+            alsoServed: ['Thane', 'Navi Mumbai'],
+            serviceType: [
+                'Custom Gym Management Software Development',
+                'Gym Management App Development',
+                'Fitness Management System Development',
+                'Pilates & Yoga Studio Management Software',
+                'Sports Academy & Court Booking Software',
+                'Gym CRM & Renewal Automation',
+                'Biometric Attendance Integration',
+            ],
+            startingPrice: { amount: 22000, currency: 'INR' },
+        },
+        software: {
+            name: 'Nexona Gym Management System',
+            applicationCategory: 'BusinessApplication',
+            operatingSystem: 'Web',
+            featureList: [
+                'Member management',
+                'Membership plans',
+                'Payments',
+                'Check-in and attendance',
+                'Renewal tracking',
+                'Automated follow-ups',
+                'Enquiries and CRM',
+                'Data export',
+            ],
+            screenshot: '/gymsoftware/aim-fitness-gym-management-dashboard.webp',
+        },
+        mentions: [
+            {
+                '@type': 'ExerciseGym',
+                name: 'Aim Fitness',
+                address: {
+                    '@type': 'PostalAddress',
+                    streetAddress: 'In front of TMC School, Pada No. 2, Lokmanya Nagar',
+                    addressLocality: 'Thane West',
+                    addressRegion: 'Maharashtra',
+                    postalCode: '400606',
+                    addressCountry: 'IN',
+                },
+            },
+        ],
     },
     {
         // Owns the "distributor management system" cluster (DMS, distribution

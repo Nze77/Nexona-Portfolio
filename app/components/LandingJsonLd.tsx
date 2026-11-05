@@ -78,7 +78,23 @@ export default function LandingJsonLd({
         primaryImageOfPage: `${SITE_URL}${page.og?.image ?? '/logo.png'}`,
         breadcrumb: { '@id': `${url}#breadcrumb` },
         ...(page.updated ? { dateModified: page.updated } : {}),
+        ...(page.mentions?.length ? { mentions: page.mentions } : {}),
     })
+
+    // ── Article ────────────────────────────────────────────────────────────
+    if (page.article && page.updated) {
+        graph.push({
+            '@type': 'Article',
+            '@id': `${url}#article`,
+            headline: page.navLabel ?? page.title,
+            description: page.description,
+            dateModified: page.updated,
+            author: { '@id': `${SITE_URL}/#organization` },
+            publisher: { '@id': `${SITE_URL}/#organization` },
+            mainEntityOfPage: { '@id': `${url}#webpage` },
+            image: `${SITE_URL}${page.og?.image ?? '/logo.png'}`,
+        })
+    }
 
     // ── BreadcrumbList ────────────────────────────────────────────────────
     graph.push({

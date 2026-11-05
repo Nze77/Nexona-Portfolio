@@ -45,10 +45,12 @@ const SERVICES: ServiceLink[] = [
         children: [
             { name: 'Distributor Management (DMS)', href: '/distributor-management-system' },
             { name: 'Event Management Software', href: '/event-management-software' },
+            { name: 'Gym Management Software', href: '/custom-gym-management-software' },
         ],
     },
     { name: 'Custom CRM', href: '/customer-retention-management-software' },
     { name: 'Software Development', href: '/software-development-agency-mumbai' },
+    { name: 'SaaS Development', href: '/saas-development-services' },
     { name: 'Mobile App Development', href: '/mobile-app-development-company-in-mumbai' },
     { name: 'Website Development' },
     { name: 'Automations', href: '/ai-automation-agency' },

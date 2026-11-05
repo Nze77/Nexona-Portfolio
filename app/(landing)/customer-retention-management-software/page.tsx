@@ -469,6 +469,20 @@ export default function CustomerRetentionPage() {
                         >
                             event management software
                         </Link>
+                        . Calling or emailing that list at volume is a build of its own:{' '}
+                        <Link
+                            href="/ai-voice-agent-development"
+                            style={{ color: SAND, textDecoration: 'underline', textUnderlineOffset: '3px' }}
+                        >
+                            AI voice agent development
+                        </Link>{' '}
+                        and{' '}
+                        <Link
+                            href="/email-infrastructure-development"
+                            style={{ color: SAND, textDecoration: 'underline', textUnderlineOffset: '3px' }}
+                        >
+                            email infrastructure development
+                        </Link>
                         . Selling through distributors instead of direct? Retailer churn lives in a{' '}
                         <Link
                             href="/distributor-management-system"

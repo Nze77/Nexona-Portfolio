@@ -72,7 +72,8 @@ We transform traditional business websites into intelligent, interactive experie
 This AI voice agent is built for high-volume calling without relying on per-call API pricing, reducing operational costs from $200–300/day to $7–12/day for ~1000 calls. It runs the entire Agentic AI pipeline on a single GPU, achieving 600–800 ms response latency, compared to ~3000 ms in multi-provider setups. The system supports 100s of concurrent calls per GPU, scaling based on compute rather than vendor limits. It not only handles conversations but also acts on them, automatically updating CRM data, scheduling callbacks, setting next dial times, and managing lead states in real time. This improves outcomes from ~5 to 30-35 successful engagements per 1000 calls while reducing manual effort. With no dependency on proprietary AI services, it offers lower cost, lower latency, and full control over call workflows.
         `,
         image: '/logos/voice-agent-ai.png',
-        deliverables: ['Sales & Lead Engagement Automation', 'Agentic AI', 'CRM AI Automation']
+        deliverables: ['Sales & Lead Engagement Automation', 'Agentic AI', 'CRM AI Automation'],
+        relatedPage: { href: '/ai-voice-agent-development', label: 'AI voice agent development' }
     },
     {
         id: 'ai-support-hub',

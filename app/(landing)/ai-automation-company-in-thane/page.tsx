@@ -509,7 +509,7 @@ export default function AiAutomationCompanyInThanePage() {
                                 More of what we have shipped is on the{' '}
                                 <Link href="/projects" style={inlineLink}>projects page</Link>, and the
                                 systems side of this work is covered on{' '}
-                                <Link href="/business-management-software-development" style={inlineLink}>business management software</Link>.
+                                <Link href="/business-management-software-development" style={inlineLink}>business management software</Link>. The gym side of this build is written up on <Link href="/custom-gym-management-software" style={inlineLink}>custom gym management software</Link>. Bigger outreach builds live under <Link href="/ai-voice-agent-development" style={inlineLink}>AI voice agent development</Link> and <Link href="/email-infrastructure-development" style={inlineLink}>email infrastructure development</Link>.
                             </motion.p>
                         </motion.div>
                     </div>

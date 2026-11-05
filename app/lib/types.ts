@@ -25,6 +25,8 @@ export interface ProjectDetail {
     image: string
     deliverables: string[]
     landingPage?: string
+    /** Internal page covering this kind of work, linked under the description. */
+    relatedPage?: { href: string; label: string }
     caseStudy?: {
         images: string[]
         title: string

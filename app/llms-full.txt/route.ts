@@ -9,7 +9,11 @@ import { FAQ_ITEMS as AI_AGENT_DEV_FAQ } from '../(landing)/ai-agent-development
 import { FAQ_ITEMS as BUSINESS_MGMT_SOFTWARE_FAQ } from '../(landing)/business-management-software-development/content'
 import { FAQ_ITEMS as COLLEGE_ERP_FAQ } from '../(landing)/college-erp/content'
 import { FAQ_ITEMS as CRM_FAQ } from '../(landing)/customer-retention-management-software/content'
+import { FAQ_ITEMS as GYM_FAQ } from '../(landing)/custom-gym-management-software/content'
 import { FAQ_ITEMS as DMS_FAQ } from '../(landing)/distributor-management-system/content'
+import { FAQ_ITEMS as SAAS_FAQ } from '../(landing)/saas-development-services/content'
+import { FAQ_ITEMS as VOICE_FAQ } from '../(landing)/ai-voice-agent-development/content'
+import { FAQ_ITEMS as EMAIL_FAQ } from '../(landing)/email-infrastructure-development/content'
 import { FAQ_ITEMS as FRACTIONAL_CTO_FAQ } from '../(landing)/fractional-cto-as-a-service/content'
 import { FAQ_ITEMS as MFG_ERP_MUMBAI_FAQ } from '../(landing)/erp-systems-for-manufacturers/content'
 import { FAQ_ITEMS as MFG_ERP_FAQ } from '../(landing)/manufacturing-erp/content'
@@ -38,7 +42,11 @@ const FAQ_BY_SLUG: Record<string, FaqItem[]> = {
     'business-management-software-development': BUSINESS_MGMT_SOFTWARE_FAQ,
     'college-erp': COLLEGE_ERP_FAQ,
     'customer-retention-management-software': CRM_FAQ,
+    'custom-gym-management-software': GYM_FAQ,
     'distributor-management-system': DMS_FAQ,
+    'saas-development-services': SAAS_FAQ,
+    'ai-voice-agent-development': VOICE_FAQ,
+    'email-infrastructure-development': EMAIL_FAQ,
     'fractional-cto-as-a-service': FRACTIONAL_CTO_FAQ,
     'erp-systems-for-manufacturers': MFG_ERP_MUMBAI_FAQ,
     'manufacturing-erp': MFG_ERP_FAQ,

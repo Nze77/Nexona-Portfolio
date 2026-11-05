@@ -42,3 +42,6 @@ next-env.d.ts
 
 # Internal copywriting rules (not for the repo)
 contentwritingrules.txt
+
+# Raw Aim Fitness screenshots contain real member names and phone numbers. Never publish.
+public/gymsoftware/Screenshot*

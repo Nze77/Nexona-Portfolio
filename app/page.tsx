@@ -73,7 +73,7 @@ const SOLUTIONS = [
     {
         id: 'automation',
         title: 'Automation',
-        desc: 'AI-powered automation that takes repetitive workflows off your team’s plate so the business scales without the overhead.',
+        desc: <>AI-powered automation that takes repetitive workflows off your team’s plate so the business scales without the overhead, up to <Link href="/ai-voice-agent-development" style={{ color: 'inherit', textDecoration: 'underline', textUnderlineOffset: '3px' }}>AI voice agents</Link> and <Link href="/email-infrastructure-development" style={{ color: 'inherit', textDecoration: 'underline', textUnderlineOffset: '3px' }}>email sending platforms</Link>.</>,
     },
 ] as const
 
@@ -89,7 +89,7 @@ const INDUSTRIES = [
         id: 'gym',
         Icon: Dumbbell,
         title: 'Gym & Fitness',
-        desc: 'Membership, bookings and billing automated so members stay engaged and retained.',
+        desc: <>Membership, bookings and billing automated with <Link href="/custom-gym-management-software" style={{ color: 'inherit', textDecoration: 'underline', textUnderlineOffset: '3px' }}>custom gym management software</Link>, so members stay engaged and retained.</>,
     },
     {
         id: 'healthcare',

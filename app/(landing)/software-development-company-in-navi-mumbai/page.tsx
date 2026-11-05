@@ -718,7 +718,7 @@ export default function NaviMumbaiSoftwarePage() {
                             },
                             {
                                 title: 'AI Agents & Integration',
-                                desc: 'Voice and chat agents that pick up at 11pm, qualify the caller, and write the enquiry into your system. Plus the plumbing — Tally, payment gateways, courier APIs, the WhatsApp number everyone actually uses.',
+                                desc: <>Voice and chat agents that pick up at 11pm, qualify the caller, and write the enquiry into your system. Plus the plumbing — Tally, payment gateways, courier APIs, the WhatsApp number everyone actually uses. Larger outreach builds run as <Link href="/ai-voice-agent-development" style={inlineLink}>AI voice agent platforms</Link> and <Link href="/email-infrastructure-development" style={inlineLink}>email sending systems</Link>.</>,
                                 img: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=600&q=80'
                             }
                         ].map((s, i) => (

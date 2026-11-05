@@ -433,7 +433,7 @@ export default function AiAgentDevelopmentCompanyPage() {
                             },
                             {
                                 title: 'Voice Agents',
-                                desc: <>Picks up, understands what the caller wants, checks the real system, books or answers or escalates. Our <Link href="/projects/voice-agent" style={inlineLink}>AI voice agent</Link> work — latency matters more than cleverness here, by a lot.</>,
+                                desc: <>Picks up, understands what the caller wants, checks the real system, books or answers or escalates. Our <Link href="/projects/voice-agent" style={inlineLink}>AI voice agent</Link> work — latency matters more than cleverness here, by a lot. When the whole calling platform is the project, that is <Link href="/ai-voice-agent-development" style={inlineLink}>AI voice agent development</Link>.</>,
                                 img: 'https://images.unsplash.com/photo-1589254065878-42c9da997008?w=600&q=80'
                             },
                             {

@@ -753,6 +753,16 @@ export default function BusinessManagementSoftwarePage() {
                                 body: 'Picks up when nobody can, checks order status against your live system, logs the call.'
                             },
                             {
+                                href: '/ai-voice-agent-development',
+                                label: 'AI voice agent platform',
+                                body: 'Dial sessions at 100 lines, inbound routing and handoff to people. Valyrian Voice runs on it.'
+                            },
+                            {
+                                href: '/email-infrastructure-development',
+                                label: 'Email sending platform',
+                                body: 'Mailbox rotation, warmup and per-error cooldowns across Gmail and Outlook. Mailnitrix runs on it.'
+                            },
+                            {
                                 href: '/projects/rag-chatbot',
                                 label: 'Enterprise RAG chatbot',
                                 body: 'Answers staff and customer questions from your own documents instead of a guess.'

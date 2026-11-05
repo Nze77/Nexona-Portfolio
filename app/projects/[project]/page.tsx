@@ -33,6 +33,7 @@ export default function ProjectDetailsPage({ params }: { params: Promise<{ proje
         image: detailedProject?.image || foundSectionProduct?.src || '/logos/1327.png',
         deliverables: detailedProject?.deliverables || ['Web Design', 'Development', 'Brand Identity', '3D Motion'],
         landingPage: detailedProject?.landingPage,
+        relatedPage: detailedProject?.relatedPage,
         caseStudy: detailedProject?.caseStudy
     }
 
@@ -79,6 +80,14 @@ export default function ProjectDetailsPage({ params }: { params: Promise<{ proje
                                 priority
                             />
                         </div>
+
+                        {dummyData.relatedPage && (
+                            <p style={{ textAlign: 'center', fontFamily: INTER, fontSize: '0.95rem', margin: 0 }}>
+                                <Link href={dummyData.relatedPage.href} style={{ color: DARK, textDecoration: 'underline', textUnderlineOffset: '3px' }}>
+                                    {dummyData.relatedPage.label}
+                                </Link>
+                            </p>
+                        )}
 
                         {dummyData.landingPage && (
                             <div style={{ display: 'flex', justifyContent: 'center' }}>
