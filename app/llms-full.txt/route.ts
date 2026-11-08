@@ -2,6 +2,7 @@ import { SECTIONS } from '../data/sections'
 import { LANDING_PAGES } from '../data/landingPages'
 import { PROJECT_DETAILS } from '../data/projectDetails'
 import { BLOG_POSTS, postPath, postToMarkdown } from '../data/blogs'
+import { REVIEWS, reviewToMarkdown } from '../data/reviews'
 import { SITE_URL, BUSINESS_ADDRESS } from '../lib/constants'
 
 import { FAQ_ITEMS as AI_AUTOMATION_AGENCY_FAQ } from '../(landing)/ai-automation-agency/content'
@@ -105,6 +106,9 @@ Deliverables: ${project.deliverables.join(', ')}${live}
 ${project.description.trim()}`
     }).join('\n\n---\n\n')
 
+    // Reviews are quoted verbatim, the same text /reviews renders.
+    const reviewSections = REVIEWS.map((r) => reviewToMarkdown(r, SITE_URL)).join('\n\n---\n\n')
+
     const categoryOverview = SECTIONS.map(
         (section) =>
             `- **${section.category}** — ${section.products.map((p) => p.name).join(', ')}`,
@@ -142,6 +146,14 @@ ${blogSections}
 ## Projects
 
 ${projectSections}
+
+---
+
+## Client reviews
+
+Unedited reviews from Nexona clients. Source: ${SITE_URL}/reviews
+
+${reviewSections}
 
 ---
 

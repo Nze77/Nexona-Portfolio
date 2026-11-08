@@ -1,6 +1,7 @@
 import { SECTIONS } from '../data/sections'
 import { LANDING_PAGES } from '../data/landingPages'
 import { BLOG_POSTS, postPath } from '../data/blogs'
+import { REVIEWS } from '../data/reviews'
 import { SITE_URL } from '../lib/constants'
 
 /**
@@ -45,6 +46,7 @@ export function GET() {
 - [Home](${SITE_URL}/): Overview of Nexona — the operational problems we solve and the systems we build to solve them.
 - [Projects](${SITE_URL}/projects): Portfolio of shipped work across full-stack development, AI agents, and automations.
 - [Blog](${SITE_URL}/blogs): Practical articles on operational problems in growing businesses and the custom software that fixes them.
+- [Client reviews](${SITE_URL}/reviews): ${REVIEWS.length} unedited client review${REVIEWS.length === 1 ? '' : 's'} — who the client is, what Nexona built, and what changed for them.
 
 ## Services
 

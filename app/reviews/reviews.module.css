@@ -1,0 +1,46 @@
+/* Layout only — colours and type come from the shared constants inline, the
+   same way the blog pages do it. This file exists for the one thing inline
+   styles cannot do: switch the review card to two columns above 860px. */
+
+.card {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: clamp(1.5rem, 4vw, 3rem);
+    border: 1px solid rgba(46, 42, 38, 0.16);
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.32);
+    scroll-margin-top: 7rem;
+}
+
+.aside {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+}
+
+@media (min-width: 860px) {
+    .card {
+        grid-template-columns: 260px 1fr;
+        gap: 4rem;
+    }
+
+    .aside {
+        position: sticky;
+        top: 8rem;
+        align-self: start;
+        padding-right: 2.5rem;
+        border-right: 1px solid rgba(46, 42, 38, 0.14);
+    }
+}
+
+.link {
+    color: inherit;
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: 1px;
+    transition: opacity 0.2s ease;
+}
+
+.link:hover {
+    opacity: 0.6;
+}
