@@ -686,6 +686,60 @@ export const LANDING_PAGES: LandingPage[] = [
         ],
     },
     {
+        // Owns the cloud dialer / predictive dialer / BPO dialer India cluster:
+        // a dialer we run for BPOs, priced flat. ai-voice-agent-development keeps
+        // "build a calling platform" intent. No price figures by user rule
+        // (2026-11-17): flat pricing set by features and scale, contact us, no
+        // per-agent fee. Proof is FC BPO, as supplied by the user only.
+        slug: 'cloud-contact-center-predictive-dialer',
+        footerGroup: 'solutions',
+        title: 'Predictive Dialer Software India | Cloud Call Center Dialer for BPOs | Nexona Labs',
+        description:
+            'Cloud call center dialer for Indian BPOs: predictive, progressive and power modes, CRM and recording. Flat pricing, no per-agent fee. FC BPO cut costs 70%.',
+        priority: 0.9,
+        navLabel: 'Cloud Contact Center Dialer',
+        updated: '2026-11-17',
+        keywords: [
+            'best cloud contact center dialer India',
+            'best dialer software for BPO India',
+            'predictive dialer software India',
+            'cloud call center software India',
+            'India outbound call center dialer software',
+            'predictive progressive power dialer',
+            'dialer pricing India',
+            'TRAI compliant dialer India',
+            'call center dialer',
+            'predictive dialer software',
+            'cloud based dialer',
+            'best cloud contact center dialer BPO India',
+            'best cloud call center software India BPO',
+            'TRAI regulations predictive dialer compliance',
+            'TRAI cloud telephony outbound calling BPO DLT telemarketing',
+            'outbound predictive dialer with CRM and call recording',
+        ],
+        og: {
+            title: 'Cloud Contact Center Predictive Dialer for Indian BPOs | Nexona Labs',
+            description:
+                'Predictive, progressive, power and preview dialing with CRM and call recording. One flat price, no per-agent fee. FC BPO moved 60 agents and cut costs 70%.',
+        },
+        business: {
+            areaServedCity: 'Mumbai',
+            serviceType: [
+                'Cloud Contact Center Dialer',
+                'Predictive Dialer Software',
+                'Outbound Call Center Dialer for BPOs',
+                'Dialer CRM & Call Recording',
+                'TRAI-Compliant Outbound Calling Setup',
+            ],
+        },
+        mentions: [
+            {
+                '@type': 'Organization',
+                name: 'FC BPO',
+            },
+        ],
+    },
+    {
         // Owns "email infrastructure development": cold email platforms, sending
         // systems, warmup, Gmail/Graph integration. Legitimate B2B sending only.
         // Not in the header by user request: internal links only. No Nexona price

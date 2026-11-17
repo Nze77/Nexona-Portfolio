@@ -312,6 +312,11 @@ export default function AiVoiceAgentDevelopmentPage() {
                             </div>
                         ))}
                     </div>
+                    <p style={{ ...NOTE, maxWidth: '800px' }}>
+                        Running a BPO floor and just need human agents dialing faster? That&rsquo;s our{' '}
+                        <Link href="/cloud-contact-center-predictive-dialer" style={INLINE_LINK}>cloud contact center predictive dialer</Link>
+                        , priced flat with no per-agent fee.
+                    </p>
                 </div>
             </section>
 

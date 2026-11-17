@@ -14,6 +14,7 @@ import { FAQ_ITEMS as GYM_FAQ } from '../(landing)/custom-gym-management-softwar
 import { FAQ_ITEMS as DMS_FAQ } from '../(landing)/distributor-management-system/content'
 import { FAQ_ITEMS as SAAS_FAQ } from '../(landing)/saas-development-services/content'
 import { FAQ_ITEMS as VOICE_FAQ } from '../(landing)/ai-voice-agent-development/content'
+import { FAQ_ITEMS as DIALER_FAQ } from '../(landing)/cloud-contact-center-predictive-dialer/content'
 import { FAQ_ITEMS as EMAIL_FAQ } from '../(landing)/email-infrastructure-development/content'
 import { FAQ_ITEMS as FRACTIONAL_CTO_FAQ } from '../(landing)/fractional-cto-as-a-service/content'
 import { FAQ_ITEMS as MFG_ERP_MUMBAI_FAQ } from '../(landing)/erp-systems-for-manufacturers/content'
@@ -47,6 +48,7 @@ const FAQ_BY_SLUG: Record<string, FaqItem[]> = {
     'distributor-management-system': DMS_FAQ,
     'saas-development-services': SAAS_FAQ,
     'ai-voice-agent-development': VOICE_FAQ,
+    'cloud-contact-center-predictive-dialer': DIALER_FAQ,
     'email-infrastructure-development': EMAIL_FAQ,
     'fractional-cto-as-a-service': FRACTIONAL_CTO_FAQ,
     'erp-systems-for-manufacturers': MFG_ERP_MUMBAI_FAQ,

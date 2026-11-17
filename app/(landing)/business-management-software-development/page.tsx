@@ -758,6 +758,11 @@ export default function BusinessManagementSoftwarePage() {
                                 body: 'Dial sessions at 100 lines, inbound routing and handoff to people. Valyrian Voice runs on it.'
                             },
                             {
+                                href: '/cloud-contact-center-predictive-dialer',
+                                label: 'Cloud predictive dialer',
+                                body: 'Predictive, progressive and power dialing for BPO floors, flat-priced. FC BPO runs 60 agents on it.'
+                            },
+                            {
                                 href: '/email-infrastructure-development',
                                 label: 'Email sending platform',
                                 body: 'Mailbox rotation, warmup and per-error cooldowns across Gmail and Outlook. Mailnitrix runs on it.'
